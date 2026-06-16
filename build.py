@@ -113,6 +113,10 @@ def page_html(d, slug):
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#2563EB">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="64x64" href="icons/favicon-64.png">
   <title>{e(d["nombre"])} · Horario y dirección · Madrid</title>
   <meta name="description" content="{e(desc)}">
   <link rel="canonical" href="{e(canonical)}">
