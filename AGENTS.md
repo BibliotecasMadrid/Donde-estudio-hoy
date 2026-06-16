@@ -19,6 +19,10 @@ Minimalista: solo mapa + marcadores + panel. Sin menús, buscador ni backend.
 - **`<slug>.html`** (×137) — páginas de detalle generadas (NO editar a mano; se regeneran).
 - **`sitemap.xml`** — generado por `build.py`.
 - **`google….html`** — verificación de Google Search Console.
+- **`manifest.json` + `sw.js` + `icons/`** — hacen la web una **PWA instalable**. El service
+  worker es "siempre online" (no cachea datos: un cambio en la web se ve al instante). Es además
+  la base para la **app Android (TWA)** publicable en Google Play, que envuelve esta misma web,
+  así que **no hay datos duplicados**: se edita solo aquí.
 
 Stack: [Leaflet](https://leafletjs.com/) 1.9.4 (CDN) sobre teselas CARTO Positron. Hosting en
 GitHub Pages (rama `main`, raíz).
@@ -66,6 +70,22 @@ git add -A && git commit -m "..." && git push origin main   # Pages reconstruye 
 
 **Importante:** después de añadir/editar lugares en `index.html`, ejecuta `python build.py`
 para regenerar las páginas y el sitemap antes de commitear.
+
+## App Android (PWA → TWA en Google Play)
+
+La app de la tienda es una **Trusted Web Activity**: una cáscara que abre esta web a pantalla
+completa. No tiene datos propios; siempre carga la web en vivo. Pasos para publicarla:
+
+1. La web ya es PWA válida (`manifest.json` + `sw.js` + iconos, sobre HTTPS).
+2. En [PWABuilder](https://www.pwabuilder.com) introducir la URL del sitio, generar el paquete
+   **Android (AAB)** y descargarlo. Anotar la **huella SHA-256** del certificado de firma que
+   indica PWABuilder.
+3. Crear `/.well-known/assetlinks.json` en el repo con esa huella (Digital Asset Links) para
+   verificar el dominio y quitar la barra de URL en la app.
+4. Subir el AAB a **Google Play Console** (cuenta de pago único 25 $) y publicar.
+
+Para actualizar la app basta con actualizar la web: el contenido es el mismo. Solo hay que
+volver a publicar el AAB si cambian icono, nombre o configuración de la propia cáscara.
 
 ## Datos y licencia
 
