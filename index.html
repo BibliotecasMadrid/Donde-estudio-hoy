@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dónde estudiar en Madrid</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+    #map { height: 100vh; width: 100%; }
+
+    /* Legend */
+    .legend {
+      position: absolute;
+      bottom: 28px;
+      left: 12px;
+      z-index: 1000;
+      background: rgba(255,255,255,0.95);
+      padding: 10px 14px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+      font-size: 12px;
+      line-height: 1.8;
+    }
+    .legend-item { display: flex; align-items: center; gap: 8px; }
+    .dot {
+      width: 11px; height: 11px; border-radius: 50%;
+      border: 2px solid rgba(0,0,0,0.25); flex-shrink: 0;
+    }
+
+    /* Popup */
+    .leaflet-popup-content-wrapper {
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.18);
+      padding: 0;
+      overflow: hidden;
+    }
+    .leaflet-popup-content { margin: 0; min-width: 240px; max-width: 300px; }
+    .popup-inner { padding: 14px 16px 12px; }
+    .popup-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      border-radius: 4px;
+      margin-bottom: 6px;
+      color: #fff;
+    }
+    .popup-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+    .popup-address {
+      font-size: 11px;
+      color: #888;
+      margin-bottom: 10px;
+    }
+    .popup-schedule {
+      font-size: 12px;
+      color: #333;
+      border-top: 1px solid #f0f0f0;
+      padding-top: 9px;
+      line-height: 1.6;
+    }
+    .schedule-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #aaa;
+      margin-bottom: 3px;
+    }
+  </style>
+</head>
+<body>
+<div id="map"></div>
+<div class="legend">
+  <div class="legend-item"><span class="dot" style="background:#3B82F6"></span> Biblioteca pública</div>
+  <div class="legend-item"><span class="dot" style="background:#10B981"></span> Sala de estudio</div>
+  <div class="legend-item"><span class="dot" style="background:#8B5CF6"></span> Universidad / BNE</div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+// ─────────────────────────────────────────────
+//  DATOS
+//  Fuentes: datos.madrid.es (CC BY 4.0)
+//  Última actualización: junio 2026
+// ─────────────────────────────────────────────
+
+const lugares = [
+
+  // ── BIBLIOTECAS PÚBLICAS (Comunidad de Madrid) ──────────────────────────
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Pública Rafael Alberti",
+    distrito: "Fuencarral-El Pardo",
+    direccion: "Calle Rafael Alberti, 35, 28029 Madrid",
+    lat: 40.4792, lng: -3.7096,
+    horario: "Lun–Vie 9–21h · Sáb 9–14h\n(Horario 24h en época de exámenes)"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Pública Elena Fortún",
+    distrito: "Retiro",
+    direccion: "Calle Doctor Esquerdo, 189, 28007 Madrid",
+    lat: 40.4036, lng: -3.6724,
+    horario: "Lun–Vie 9–21h · Sáb 9–14h\n(Horario 24h en época de exámenes)"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Pública José Luis Sampedro",
+    distrito: "Chamberí",
+    direccion: "Calle Felipe el Hermoso, 4, 28010 Madrid",
+    lat: 40.4354, lng: -3.6997,
+    horario: "Lun–Vie 9–21h · Sáb 9–14h"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Pública Pedro Salinas",
+    distrito: "Centro",
+    direccion: "Calle Agustín de Foxá, 2, 28036 Madrid",
+    lat: 40.4578, lng: -3.6933,
+    horario: "Lun–Vie 9–21h · Sáb 9–14h"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Pública José Acuña",
+    distrito: "Moncloa-Aravaca",
+    direccion: "Calle Quintana, 9, 28008 Madrid",
+    lat: 40.4279, lng: -3.7170,
+    horario: "Lun–Vie 9–21h · Sáb 9–14h"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Pública Antonio Mingote",
+    distrito: "Latina",
+    direccion: "Calle Rafael Finat, 51, 28044 Madrid",
+    lat: 40.3794, lng: -3.7694,
+    horario: "Lun–Vie 9–21h · Sáb 9–14h"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Pública Javier Marías",
+    distrito: "Moratalaz",
+    direccion: "Calle Corregidor Alonso de Tobar, 5, 28030 Madrid",
+    lat: 40.4040, lng: -3.6494,
+    horario: "Lun–Vie 9–21h · Sáb 9–14h"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Pública José Hierro",
+    distrito: "Usera",
+    direccion: "Avenida Rafaela Ybarra, 43, 28026 Madrid",
+    lat: 40.3819, lng: -3.7106,
+    horario: "Lun–Vie 9–21h · Fines de semana y festivos 11–19h"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Pública Miguel Hernández",
+    distrito: "Puente de Vallecas",
+    direccion: "Avenida Rafael Alberti, 36, 28018 Madrid",
+    lat: 40.3845, lng: -3.6429,
+    horario: "Lun–Vie 9–21h · Sáb 9–14h"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Pública Luis Rosales",
+    distrito: "Carabanchel",
+    direccion: "Calle Antonia Rodríguez Sacristán, 7, 28044 Madrid",
+    lat: 40.3734, lng: -3.7481,
+    horario: "Lun–Vie 9–21h · Fines de semana y festivos 11–19h"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Pública María Moliner",
+    distrito: "Villaverde",
+    direccion: "Calle Villalonso, 16, 28021 Madrid",
+    lat: 40.3495, lng: -3.7101,
+    horario: "Lun–Vie 9–21h · Sáb 9–14h"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Pública Hortaleza",
+    distrito: "Hortaleza",
+    direccion: "Calle Abertura, 2, 28033 Madrid",
+    lat: 40.4772, lng: -3.6496,
+    horario: "Lun–Jue 9–20:30h · Vie 9–14:30h"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Pública Luis Martín Santos",
+    distrito: "Villa de Vallecas",
+    direccion: "Plaza Antonio María Segovia, 2, 28031 Madrid",
+    lat: 40.3809, lng: -3.6137,
+    horario: "Lun–Vie 9–21h · Fines de semana y festivos 11–19h"
+  },
+
+  // ── BIBLIOTECAS MUNICIPALES (Ayuntamiento de Madrid) ───────────────────
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal Aluche",
+    distrito: "Latina",
+    direccion: "Calle Camarena, 10, 28047 Madrid",
+    lat: 40.3960, lng: -3.7563,
+    horario: "Lun–Vie 8:30–21h\n(Verano: 8:30–20h)"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal Ana María Matute",
+    distrito: "Carabanchel",
+    direccion: "Calle Isaac Albéniz, 1, 28019 Madrid",
+    lat: 40.3979, lng: -3.7201,
+    horario: "Lun–Vie 8:30–21h\n(Verano: 8:30–20h)"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal Benito Pérez Galdós",
+    distrito: "Centro",
+    direccion: "Calle Conde Duque, 9, 28015 Madrid",
+    lat: 40.4274, lng: -3.7106,
+    horario: "Lun–Vie 8:30–21h · Sáb–Dom 8:30–15h\n(Verano: Lun–Vie 8:30–20h)"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal Canillejas",
+    distrito: "San Blas-Canillejas",
+    direccion: "Calle Boltaña, 23, 28022 Madrid",
+    lat: 40.4464, lng: -3.6118,
+    horario: "Lun–Vie 8:30–21h\n(Verano: 8:30–20h)"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal Ciudad Lineal",
+    distrito: "Ciudad Lineal",
+    direccion: "Calle Hermanos García Noblejas, 14, 28037 Madrid",
+    lat: 40.4364, lng: -3.6373,
+    horario: "Lun–Vie 8:30–21h\n(Verano: 8:30–20h)"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal David Gistau",
+    distrito: "Salamanca",
+    direccion: "Avenida de los Toreros, 5, 28028 Madrid",
+    lat: 40.4320, lng: -3.6709,
+    horario: "Lun–Vie 8:30–21h\n(Verano: 8:30–20h)"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal Dámaso Alonso",
+    distrito: "Chamartín",
+    direccion: "Calle Manuel Ferrero, 1, 28036 Madrid",
+    lat: 40.4675, lng: -3.6846,
+    horario: "Lun–Vie 8:30–21h\n(Verano: 8:30–20h)"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal Eugenio Trías",
+    distrito: "Retiro",
+    direccion: "Paseo Fernán Núñez, 24, 28009 Madrid",
+    lat: 40.4166, lng: -3.6796,
+    horario: "Lun–Vie 8:30–21h · Sáb–Dom 8:30–15h\n(Verano: Lun–Vie 8:30–20h)"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal Francisco Ayala",
+    distrito: "Vicálvaro",
+    direccion: "Bulevar Indalecio Prieto, 21, 28032 Madrid",
+    lat: 40.3998, lng: -3.6213,
+    horario: "Lun–Vie 8:30–21h\n(Verano: 8:30–20h)"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal Francisco Ibáñez",
+    distrito: "Chamartín",
+    direccion: "Calle Mantuano, 51, 28002 Madrid",
+    lat: 40.4481, lng: -3.6762,
+    horario: "Lun–Vie 8:30–21h\n(Verano: 8:30–20h)"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal Francisco Umbral",
+    distrito: "Villaverde",
+    direccion: "Calle Calcio, 1, 28021 Madrid",
+    lat: 40.3512, lng: -3.6793,
+    horario: "Lun–Vie 8:30–21h\n(Verano: 8:30–20h)"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal Gabriel García Márquez",
+    distrito: "Usera",
+    direccion: "Plaza del Pueblo, 2, 28041 Madrid",
+    lat: 40.3668, lng: -3.7011,
+    horario: "Lun–Vie 8:30–21h\n(Verano: 8:30–20h)"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal Gerardo Diego",
+    distrito: "Villa de Vallecas",
+    direccion: "Calle Monte Aya, 12, 28031 Madrid",
+    lat: 40.3779, lng: -3.6227,
+    horario: "Lun–Vie 8:30–21h\n(Verano: 8:30–20h)"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal Gloria Fuertes",
+    distrito: "Barajas",
+    direccion: "Avenida de Logroño, 179, 28042 Madrid",
+    lat: 40.4606, lng: -3.5937,
+    horario: "Lun–Vie 8:30–21h\n(Verano: 8:30–20h)"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal Huerta de la Salud",
+    distrito: "Hortaleza",
+    direccion: "Calle Mar de las Antillas, 10, 28033 Madrid",
+    lat: 40.4757, lng: -3.6467,
+    horario: "Lun–Vie 8:30–21h\n(Verano: 8:30–20h)"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal Iván de Vargas",
+    distrito: "Centro",
+    direccion: "Calle San Justo, 5, 28005 Madrid",
+    lat: 40.4141, lng: -3.7099,
+    horario: "Lun–Vie 8:30–21h · Sáb–Dom 8:30–15h\n(Verano: 8:30–20h)"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal José Hierro (San Blas)",
+    distrito: "San Blas-Canillejas",
+    direccion: "Calle María Sevilla Diago, 15, 28022 Madrid",
+    lat: 40.4333, lng: -3.6106,
+    horario: "Lun–Vie 8:30–21h\n(Verano: 8:30–20h)"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal José Saramago",
+    distrito: "Fuencarral-El Pardo",
+    direccion: "Avenida Monforte de Lemos, 38, 28029 Madrid",
+    lat: 40.4786, lng: -3.7094,
+    horario: "Lun–Vie 8:30–21h\n(Verano: 8:30–20h)"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal La Chata",
+    distrito: "Carabanchel",
+    direccion: "Calle General Ricardos, 252, 28025 Madrid",
+    lat: 40.3833, lng: -3.7421,
+    horario: "Lun–Vie 8:30–21h\n(Verano: 8:30–20h)"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal La Elipa",
+    distrito: "Ciudad Lineal",
+    direccion: "Calle Nuestra Señora del Villar, 6, 28017 Madrid",
+    lat: 40.4234, lng: -3.6518,
+    horario: "Lun–Vie 8:30–21h\n(Verano: 8:30–20h)"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal Manuel Vázquez Montalbán",
+    distrito: "Tetuán",
+    direccion: "Calle Francos Rodríguez, 67, 28039 Madrid",
+    lat: 40.4575, lng: -3.7105,
+    horario: "Lun–Vie 8:30–21h\n(Verano: 8:30–20h)"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal Mario Vargas Llosa",
+    distrito: "Centro",
+    direccion: "Calle Barceló, 4, 28004 Madrid",
+    lat: 40.4266, lng: -3.6997,
+    horario: "Lun–Vie 8:30–21h\n(Verano: 8:30–20h)"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal María Lejárraga",
+    distrito: "Hortaleza",
+    direccion: "Calle Princesa de Éboli, 29, 28050 Madrid",
+    lat: 40.4904, lng: -3.6554,
+    horario: "Lun–Vie 8:30–21h · Sáb–Dom 8:30–15h\n(Verano: 8:30–20h)"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal María Zambrano",
+    distrito: "Tetuán",
+    direccion: "Plaza Donoso, 5, 28029 Madrid",
+    lat: 40.4690, lng: -3.6977,
+    horario: "Lun–Vie 8:30–21h\n(Verano: 8:30–20h)"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal Miguel Delibes",
+    distrito: "Moratalaz",
+    direccion: "Calle Arroyo Belincoso, 11, 28030 Madrid",
+    lat: 40.4097, lng: -3.6530,
+    horario: "Lun–Vie 8:30–21h\n(Verano: 8:30–20h)"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal Pablo Neruda",
+    distrito: "Ciudad Lineal",
+    direccion: "Calle Ascao, 4, 28017 Madrid",
+    lat: 40.4294, lng: -3.6417,
+    horario: "Lun–Vie 8:30–21h\n(Verano: 8:30–20h)"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal Portazgo",
+    distrito: "Puente de Vallecas",
+    direccion: "Calle Cantalapiedra, 11, 28038 Madrid",
+    lat: 40.3932, lng: -3.6554,
+    horario: "Lun–Vie 8:30–21h\n(Verano: 8:30–20h)"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal Pozo del Tío Raimundo",
+    distrito: "Puente de Vallecas",
+    direccion: "Avenida Glorietas, 19, 28053 Madrid",
+    lat: 40.3736, lng: -3.6603,
+    horario: "Lun–Vie 8:30–21h\n(Verano: 8:30–20h)"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal Pío Baroja",
+    distrito: "Arganzuela",
+    direccion: "Calle Arganda, 12, 28005 Madrid",
+    lat: 40.4000, lng: -3.7074,
+    horario: "Lun–Vie 8:30–21h\n(Verano: 8:30–20h)"
+  },
+
+  // ── SALAS DE ESTUDIO MUNICIPALES ────────────────────────────────────────
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Alfredo Kraus",
+    distrito: "Fuencarral-El Pardo",
+    direccion: "Glorieta Pradera de Vaquerizas, 9, 28035 Madrid",
+    lat: 40.4908, lng: -3.7216,
+    horario: "Lun–Vie 9–14h y 16–21h · Sáb 9:30–13:45h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Fernando Vizcaíno Casas",
+    distrito: "Chamberí",
+    direccion: "Calle Blasco de Garay, 40, 28015 Madrid",
+    lat: 40.4338, lng: -3.7114,
+    horario: "Lun–Dom 8:30–21:30h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Carril del Conde",
+    distrito: "Hortaleza",
+    direccion: "Calle Carril del Conde, 57, 28043 Madrid",
+    lat: 40.4609, lng: -3.6544,
+    horario: "Lun–Dom y festivos 9–22h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Sanchinarro",
+    distrito: "Hortaleza",
+    direccion: "Calle Princesa de Éboli, 29, 28050 Madrid",
+    lat: 40.4904, lng: -3.6553,
+    horario: "Lun–Vie 9–22h · Fines de semana y festivos 10–22h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Francisco José González Tejera",
+    distrito: "Hortaleza",
+    direccion: "Calle Santa Virgilia, 15, 28033 Madrid",
+    lat: 40.4768, lng: -3.6421,
+    horario: "Lun–Dom y festivos 9–22h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Motilla del Palancar",
+    distrito: "Hortaleza",
+    direccion: "Calle Motilla del Palancar, 13, 28043 Madrid",
+    lat: 40.4653, lng: -3.6333,
+    horario: "Lun–Dom y festivos 9–22h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Clara Campoamor",
+    distrito: "Retiro",
+    direccion: "Plaza Daoiz y Velarde, 1, 28007 Madrid",
+    lat: 40.4023, lng: -3.6774,
+    horario: "Lun–Vie 9–21h · Sáb–Dom 10–21h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Salas de Estudio Mercado de Ibiza",
+    distrito: "Retiro",
+    direccion: "Calle Ibiza, 8, planta 1ª, 28009 Madrid",
+    lat: 40.4182, lng: -3.6774,
+    horario: "Lun–Vie 9–14h y 16:30–20:30h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio del C.C. Las Californias",
+    distrito: "Retiro",
+    direccion: "Calle Luis Peidró, 2, 28007 Madrid",
+    lat: 40.3970, lng: -3.6735,
+    horario: "Lun–Vie 9–14h y 16–22h · Sáb 10–14h y 16–21h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Luis Gonzaga",
+    distrito: "Chamartín",
+    direccion: "Calle Príncipe de Vergara, 142, 28002 Madrid",
+    lat: 40.4449, lng: -3.6781,
+    horario: "Lun–Dom 9–21:30h\n(Horario 24h en época de exámenes)"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Antonio López",
+    distrito: "Chamartín",
+    direccion: "Calle Pastora Imperio, 4, 28036 Madrid",
+    lat: 40.4449, lng: -3.6781,
+    horario: "Lun–Dom 9–21h (cerrado Sáb, Dom y festivos)"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Galileo",
+    distrito: "Chamberí",
+    direccion: "Calle Galileo, 39, 28015 Madrid",
+    lat: 40.4337, lng: -3.7104,
+    horario: "Lun–Dom 8–21h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Núñez de Balboa",
+    distrito: "Salamanca",
+    direccion: "Calle Núñez de Balboa, 40, 28001 Madrid",
+    lat: 40.4268, lng: -3.6825,
+    horario: "Lun–Dom 7:30–21:45h (festivos cerrado)"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Quinta del Berro",
+    distrito: "Salamanca",
+    direccion: "Calle Enrique d'Almonte, 1, 28028 Madrid",
+    lat: 40.4221, lng: -3.6630,
+    horario: "Lun–Dom 8–21:30h (festivos cerrado)"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Emilia Pardo Bazán",
+    distrito: "Salamanca",
+    direccion: "Calle Goya, 1 (subterráneo), 28001 Madrid",
+    lat: 40.4259, lng: -3.6896,
+    horario: "Lun–Dom 7:30–21:30h (festivos cerrado)"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Montecarmelo",
+    distrito: "Fuencarral-El Pardo",
+    direccion: "Avenida Santuario de Valverde, 114, 28049 Madrid",
+    lat: 40.5164, lng: -3.6859,
+    horario: "Lun–Vie 8:30–14:30h y 16–21h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Alfonso XII",
+    distrito: "Fuencarral-El Pardo",
+    direccion: "Calle Mira el Río, 4, 28048 Madrid",
+    lat: 40.5197, lng: -3.7779,
+    horario: "Lun–Vie 8:30–21h · Sáb–Dom 9:30–20h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Luis García Berlanga",
+    distrito: "Tetuán",
+    direccion: "Calle Viña Virgen, 2, 28029 Madrid",
+    lat: 40.4653, lng: -3.6941,
+    horario: "Lun–Dom y festivos 9–21h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Julio Cortázar",
+    distrito: "Moncloa-Aravaca",
+    direccion: "Calle Antonio Machado, 20, 28035 Madrid",
+    lat: 40.4668, lng: -3.7196,
+    horario: "Lun–Dom 9–21h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Corín Tellado",
+    distrito: "Moncloa-Aravaca",
+    direccion: "Calle Santa Pola, 22, 28008 Madrid",
+    lat: 40.4322, lng: -3.7367,
+    horario: "Lun–Dom 9–21h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Fernando Lázaro Carreter",
+    distrito: "Carabanchel",
+    direccion: "Calle Verdad, 29, 28019 Madrid",
+    lat: 40.3916, lng: -3.7171,
+    horario: "Lun–Vie 9–21h · Sáb 10–13:30h y 16:30–21h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Oporto",
+    distrito: "Carabanchel",
+    direccion: "Avenida de Oporto, 78, 28019 Madrid",
+    lat: 40.3868, lng: -3.7277,
+    horario: "Lun–Sáb 8:30–21:30h · Dom 11:30–14:30h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Almirante Churruca",
+    distrito: "Latina",
+    direccion: "Calle Fuente del Tiro, 72 (planta 1ª), 28024 Madrid",
+    lat: 40.3830, lng: -3.7801,
+    horario: "Lun–Vie 9–21:30h · Sáb 9–13:30h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio El Greco",
+    distrito: "Latina",
+    direccion: "Calle El Greco, 29, 28011 Madrid",
+    lat: 40.4084, lng: -3.7444,
+    horario: "Lun–Vie 9–21:30h · Sáb 9–13:30h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Arquitecto Juan de Herrera",
+    distrito: "Latina",
+    direccion: "Calle María del Carmen, 65, 28011 Madrid",
+    lat: 40.4065, lng: -3.7327,
+    horario: "Lun–Vie 9–21:30h · Sáb 10–13:30h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Paseo de Extremadura",
+    distrito: "Latina",
+    direccion: "Paseo de Extremadura, 128, 28011 Madrid",
+    lat: 40.4111, lng: -3.7358,
+    horario: "Lun–Vie 8–22h · Sáb 9–14h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Cayetano Pando",
+    distrito: "Latina",
+    direccion: "Calle Cayetano Pando, 8, 28047 Madrid",
+    lat: 40.4028, lng: -3.7465,
+    horario: "Lun–Vie 8–22h · Sáb 9–14h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Cebreros",
+    distrito: "Latina",
+    direccion: "Calle Cebreros, 66, 28011 Madrid",
+    lat: 40.4051, lng: -3.7485,
+    horario: "Lun–Vie 8–22h · Sáb 9–14h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Maqueda",
+    distrito: "Latina",
+    direccion: "Calle Maqueda, 5, 28024 Madrid",
+    lat: 40.3947, lng: -3.7646,
+    horario: "Lun–Vie 8–22h · Sáb 9–14h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Sara Montiel",
+    distrito: "Latina",
+    direccion: "Carretera de Boadilla del Monte, 40, 28024 Madrid",
+    lat: 40.3995, lng: -3.7750,
+    horario: "Lun–Vie 9–21:30h · Sáb 9–13:30h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio José Luis Sampedro (Latina)",
+    distrito: "Latina",
+    direccion: "Calle Castroserna, 4, 28047 Madrid",
+    lat: 40.4018, lng: -3.7492,
+    horario: "Lun–Vie 9–21:30h · Sáb 9–13:30h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Escritor Pedro de Répide",
+    distrito: "Latina",
+    direccion: "Calle María del Carmen, 65, 28011 Madrid",
+    lat: 40.4065, lng: -3.7333,
+    horario: "Lun–Vie 9:30–21h · Sáb 10–13h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Miguel Hernández (Latina)",
+    distrito: "Latina",
+    direccion: "Calle Serradilla, 13, 28044 Madrid",
+    lat: 40.3789, lng: -3.7820,
+    horario: "Lun–Vie 9–21:30h · Sáb 9–13:30h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Centro Sociocultural Latina",
+    distrito: "Latina",
+    direccion: "Calle Rodrigo de Arana, 50, 28044 Madrid",
+    lat: 40.3796, lng: -3.7659,
+    horario: "Lun–Vie 9–21:30h · Sáb 9–13:30h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Centro Dotacional Arganzuela",
+    distrito: "Arganzuela",
+    direccion: "Calle Canarias, 17, 28045 Madrid",
+    lat: 40.4024, lng: -3.6954,
+    horario: "Lun–Sáb 9–21h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Villa del Prado",
+    distrito: "Arganzuela",
+    direccion: "Calle Villa del Prado, 27, 28045 Madrid",
+    lat: 40.3995, lng: -3.6866,
+    horario: "Lun–Dom 8–21h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio El Madroño",
+    distrito: "Vicálvaro",
+    direccion: "Calle Villardondiego, 36, 28032 Madrid",
+    lat: 40.4053, lng: -3.6086,
+    horario: "Sáb–Dom y festivos 9–19:45h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Fuente de San Pedro",
+    distrito: "Vicálvaro",
+    direccion: "Calle Titanio, 5, 28032 Madrid",
+    lat: 40.4022, lng: -3.6014,
+    horario: "Lun–Vie 9–21h · Sáb–Dom y festivos 9:30–20:30h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Ciudad Pegaso",
+    distrito: "San Blas-Canillejas",
+    direccion: "Avenida Séptima, 11, 28022 Madrid",
+    lat: 40.4484, lng: -3.5981,
+    horario: "Lun–Dom 9:30–14:30h y 16:30–21:30h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Salas de Estudio Miguel de Cervantes",
+    distrito: "San Blas-Canillejas",
+    direccion: "Calle Aliaga, 5, 28022 Madrid",
+    lat: 40.4367, lng: -3.6114,
+    horario: "Lun–Vie 10–21h · Sáb–Dom y festivos 10–14:30h y 16:30–20h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio José Luis López Vázquez",
+    distrito: "San Blas-Canillejas",
+    direccion: "Calle Febrero, 4, 28022 Madrid",
+    lat: 40.4468, lng: -3.5727,
+    horario: "Lun–Dom y festivos 9–13:30h y 15–21:30h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Teresa de Calcuta",
+    distrito: "Barajas",
+    direccion: "Plaza Navío, 4, 28042 Madrid",
+    lat: 40.4553, lng: -3.5876,
+    horario: "Lun–Vie 8:30–21:30h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Lectura Pilares",
+    distrito: "Barajas",
+    direccion: "Calle Los Pilares, 3, 28042 Madrid",
+    lat: 40.4751, lng: -3.5778,
+    horario: "Lun–Vie 8–21h (ininterrumpido)"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Centro Cultural El Torito",
+    distrito: "Moratalaz",
+    direccion: "Avenida de Moratalaz, 130, 28030 Madrid",
+    lat: 40.4061, lng: -3.6465,
+    horario: "Lun–Vie 9–13h y 15–21:30h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Centro Sociocultural Moratalaz",
+    distrito: "Moratalaz",
+    direccion: "Calle Fuente Carrantona, 10, 28030 Madrid",
+    lat: 40.3993, lng: -3.6366,
+    horario: "Lun–Vie 9–13:50h y 15:05–20:50h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Lope de Vega",
+    distrito: "Puente de Vallecas",
+    direccion: "Calle Concejo de Teverga, 1, 28053 Madrid",
+    lat: 40.3863, lng: -3.6719,
+    horario: "Lun–Vie 9–21:30h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Talleres de Creatividad",
+    distrito: "Puente de Vallecas",
+    direccion: "Calle Sierra Carbonera, 74, 28053 Madrid",
+    lat: 40.3901, lng: -3.6653,
+    horario: "Jue–Vie 13:30–17h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Salas de Estudio Pozo del Tío Raimundo",
+    distrito: "Puente de Vallecas",
+    direccion: "Avenida Glorietas, 19, 28053 Madrid",
+    lat: 40.3738, lng: -3.6599,
+    horario: "Lun–Vie 8:30–21:30h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Cánovas del Castillo",
+    distrito: "Usera",
+    direccion: "Calle Julio Aguirre, 10, 28026 Madrid",
+    lat: 40.3863, lng: -3.7001,
+    horario: "Lun–Vie 9–14h y 15–21:30h · Sáb 9–14h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Centro Sociocultural Siena",
+    distrito: "Ciudad Lineal",
+    direccion: "Calle Siena, 52, 28027 Madrid",
+    lat: 40.4332, lng: -3.6519,
+    horario: "Lun–Vie 9–21h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Centro Sociocultural Ciudad Lineal",
+    distrito: "Ciudad Lineal",
+    direccion: "Calle Poeta Blas de Otero, 81, 28017 Madrid",
+    lat: 40.4229, lng: -3.6517,
+    horario: "Lun–Vie 9–13:45h y 14:15–20:30h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio San Juan Bautista",
+    distrito: "Ciudad Lineal",
+    direccion: "Calle San Nemesio, 4, 28043 Madrid",
+    lat: 40.4522, lng: -3.6580,
+    horario: "Lun–Sáb 9–22h (julio: Lun–Vie 9–15h)"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Lectura León Felipe",
+    distrito: "Villaverde",
+    direccion: "Calle Encarnación Oviol, 47, 28021 Madrid",
+    lat: 40.3508, lng: -3.6872,
+    horario: "Lun–Sáb (incluso festivos) 9:30–21h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Río Esmeralda",
+    distrito: "Puente de Vallecas",
+    direccion: "Calle Lago Maracaibo, 8, 28018 Madrid",
+    lat: 40.3832, lng: -3.6520,
+    horario: "Sáb–Dom 10–13h y 16–20h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Dolores Catarineu",
+    distrito: "Moncloa-Aravaca",
+    direccion: "Calle Caroli, 1, 28023 Madrid",
+    lat: 40.4587, lng: -3.7847,
+    horario: "Lun–Dom 9–21h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio Manoteras",
+    distrito: "Hortaleza",
+    direccion: "Calle Cuevas del Almanzora, 187, 28033 Madrid",
+    lat: 40.4778, lng: -3.6583,
+    horario: "Lun–Dom 9–14h y 15–21h"
+  },
+  {
+    tipo: "sala",
+    nombre: "Sala de Estudio El Sitio de mi Recreo",
+    distrito: "Villa de Vallecas",
+    direccion: "Calle Real de Arganda, 39, 28031 Madrid",
+    lat: 40.3795, lng: -3.6169,
+    horario: "Consultar horario por teléfono"
+  },
+
+  // ── UNIVERSIDADES Y GRANDES BIBLIOTECAS ─────────────────────────────────
+  {
+    tipo: "universidad",
+    nombre: "Biblioteca UCM – Edificio Multiusos",
+    distrito: "Moncloa (Ciudad Universitaria)",
+    direccion: "Calle del Noviciado, 3 / Ciudad Universitaria, 28040 Madrid",
+    lat: 40.4462, lng: -3.7274,
+    horario: "Lun–Vie 8:30–21h\n(Varía por sede; consulta biblioagenda.ucm.es)"
+  },
+  {
+    tipo: "universidad",
+    nombre: "Biblioteca UAM – Biblioteca General",
+    distrito: "Cantoblanco",
+    direccion: "Campus de Cantoblanco, 28049 Madrid",
+    lat: 40.5449, lng: -3.6897,
+    horario: "Lun–Vie 9–21h\n(Ampliado en época de exámenes)"
+  },
+  {
+    tipo: "universidad",
+    nombre: "Biblioteca UPM – ETSI Caminos",
+    distrito: "Moncloa (Ciudad Universitaria)",
+    direccion: "Calle Profesor Aranguren, s/n, 28040 Madrid",
+    lat: 40.4467, lng: -3.7335,
+    horario: "Lun–Vie 9–21:30h"
+  },
+  {
+    tipo: "universidad",
+    nombre: "Biblioteca UNED – Sede Central",
+    distrito: "Moncloa (Ciudad Universitaria)",
+    direccion: "Calle Bravo Murillo, 38, 28015 Madrid",
+    lat: 40.4441, lng: -3.7018,
+    horario: "Lun–Vie 9–22h"
+  },
+  {
+    tipo: "universidad",
+    nombre: "Biblioteca Nacional de España",
+    distrito: "Almagro",
+    direccion: "Paseo de Recoletos, 20-22, 28001 Madrid",
+    lat: 40.4239, lng: -3.6907,
+    horario: "Mar–Sáb 9–21h · Dom 9–14h\n(Lun cerrado · Acceso con carnet lector)"
+  },
+  {
+    tipo: "universidad",
+    nombre: "Biblioteca Regional Joaquín Leguina",
+    distrito: "Arganzuela",
+    direccion: "Calle Ramírez de Prado, 3, 28045 Madrid",
+    lat: 40.4044, lng: -3.6718,
+    horario: "Lun–Vie 9–21h · Sáb 9–14h"
+  },
+  {
+    tipo: "universidad",
+    nombre: "Biblioteca UC3M – Campus de Getafe",
+    distrito: "Getafe (sur de Madrid)",
+    direccion: "Calle Madrid, 126, 28903 Getafe",
+    lat: 40.3087, lng: -3.7347,
+    horario: "Lun–Vie 8:30–21:30h · Sáb 9–14h"
+  },
+  {
+    tipo: "universidad",
+    nombre: "Biblioteca URJC – Campus Móstoles",
+    distrito: "Móstoles",
+    direccion: "Calle Tulipán, s/n, 28933 Móstoles",
+    lat: 40.3219, lng: -3.8651,
+    horario: "Lun–Vie 8:30–21h · Sáb 9–14h"
+  }
+];
+
+// ─────────────────────────────────────────────
+//  MAPA
+// ─────────────────────────────────────────────
+
+const map = L.map('map', {
+  center: [40.4168, -3.7038],
+  zoom: 12,
+  zoomControl: true
+});
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · Datos: <a href="https://datos.madrid.es">datos.madrid.es</a> (CC BY 4.0)',
+  maxZoom: 19
+}).addTo(map);
+
+const colores = {
+  biblioteca:  { fill: '#3B82F6', label: 'Biblioteca pública' },
+  sala:        { fill: '#10B981', label: 'Sala de estudio'    },
+  universidad: { fill: '#8B5CF6', label: 'Universidad / BNE'  }
+};
+
+function makeIcon(tipo) {
+  const c = colores[tipo].fill;
+  return L.divIcon({
+    className: '',
+    html: `<svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="11" cy="11" r="8" fill="${c}" fill-opacity="0.9" stroke="white" stroke-width="2.5"/>
+    </svg>`,
+    iconSize: [22, 22],
+    iconAnchor: [11, 11],
+    popupAnchor: [0, -14]
+  });
+}
+
+function buildPopup(d) {
+  const c = colores[d.tipo];
+  const horarioHtml = d.horario
+    .split('\n')
+    .map(l => `<div>${l}</div>`)
+    .join('');
+
+  return `
+    <div class="popup-inner">
+      <span class="popup-badge" style="background:${c.fill}">${c.label}</span>
+      <div class="popup-name">${d.nombre}</div>
+      <div class="popup-address">${d.distrito} · ${d.direccion}</div>
+      <div class="popup-schedule">
+        <div class="schedule-label">Horario</div>
+        ${horarioHtml}
+      </div>
+    </div>`;
+}
+
+lugares.forEach(d => {
+  L.marker([d.lat, d.lng], { icon: makeIcon(d.tipo) })
+    .bindPopup(buildPopup(d), { maxWidth: 320 })
+    .addTo(map);
+});
+</script>
+</body>
+</html>
