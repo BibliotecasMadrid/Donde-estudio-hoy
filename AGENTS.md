@@ -1,21 +1,35 @@
 # Dónde estudiar en Madrid
 
 Mapa web que muestra lugares para estudiar en Madrid (bibliotecas, salas de estudio y
-bibliotecas universitarias). Al pulsar un marcador aparece su nombre, dirección, horario y un
-enlace a su web. Minimalista: solo mapa + marcadores + popups. Sin menús, buscador ni backend.
+bibliotecas universitarias). Al pulsar un marcador se abre un **panel lateral** con su nombre,
+dirección, horario y enlace a su web, y la URL cambia a la página propia de ese centro.
+Minimalista: solo mapa + marcadores + panel. Sin menús, buscador ni backend.
 
 - **Web:** https://bibliotecasmadrid.github.io/Donde-estudio-hoy/
 - **Repo:** https://github.com/bibliotecasmadrid/Donde-estudio-hoy
 
 ## Estructura
 
-Todo vive en **`index.html`** (HTML + CSS + JS en un solo archivo, sin build ni dependencias):
-1. `<style>` — estilos del mapa, cabecera, leyenda y popups.
-2. `<body>` — `#map`, `.topbar`, `.legend`.
-3. `<script>` — el array `lugares` (los datos) + la lógica de Leaflet.
+- **`index.html`** — la app del mapa (HTML + CSS + JS en un archivo). Contiene el array
+  `lugares` (fuente única de datos), la lógica de Leaflet y el panel lateral.
+- **`build.py`** — script que **lee el array `lugares` de `index.html`** y genera:
+  - una página HTML por cada centro (`<slug>.html`, p. ej. `clara-campoamor.html`), optimizada
+    para SEO (title, meta, canonical, JSON-LD propio);
+  - el `sitemap.xml`.
+- **`<slug>.html`** (×137) — páginas de detalle generadas (NO editar a mano; se regeneran).
+- **`sitemap.xml`** — generado por `build.py`.
+- **`google….html`** — verificación de Google Search Console.
 
 Stack: [Leaflet](https://leafletjs.com/) 1.9.4 (CDN) sobre teselas CARTO Positron. Hosting en
 GitHub Pages (rama `main`, raíz).
+
+### Slugs (URL de cada centro)
+
+Cada centro tiene su URL `…/Donde-estudio-hoy/<slug>` (sin extensión; GitHub Pages sirve
+`<slug>.html`). El slug se calcula desde `nombre` quitando prefijos genéricos
+("Sala de Estudio", "Biblioteca Pública/Municipal"…) y normalizando. **El algoritmo está
+duplicado** en `slugify()` de `index.html` (JS) y `slugify()` de `build.py` (Python) y **deben
+ser idénticos** para que el panel enlace a la página correcta. Si tocas uno, toca el otro.
 
 ## Datos: array `lugares`
 
@@ -45,9 +59,13 @@ Para añadir un lugar, copia un objeto del array y rellénalo. Coordenadas con N
 ## Local y despliegue
 
 ```bash
+python build.py                # REGENERA las páginas por centro + sitemap (tras tocar los datos)
 python -m http.server 3456     # luego abrir http://localhost:3456
-git add index.html && git commit -m "..." && git push origin main   # Pages reconstruye en ~1-2 min
+git add -A && git commit -m "..." && git push origin main   # Pages reconstruye en ~1-2 min
 ```
+
+**Importante:** después de añadir/editar lugares en `index.html`, ejecuta `python build.py`
+para regenerar las páginas y el sitemap antes de commitear.
 
 ## Datos y licencia
 

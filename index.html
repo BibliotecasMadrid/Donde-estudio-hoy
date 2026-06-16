@@ -182,6 +182,45 @@
     .leaflet-popup-content a.popup-link:hover { filter: brightness(1.08); }
     .popup-link svg { width: 13px; height: 13px; }
 
+    /* ── Panel lateral ───────────────────────────── */
+    .panel {
+      position: fixed; top: 0; right: 0; height: 100%;
+      width: 384px; max-width: 100%;
+      background: #fff; z-index: 1200;
+      box-shadow: -12px 0 44px rgba(20,30,60,0.18);
+      transform: translateX(102%);
+      transition: transform 0.28s cubic-bezier(.4,0,.2,1);
+      overflow-y: auto;
+    }
+    .panel.open { transform: translateX(0); }
+    .panel-close {
+      position: absolute; top: 14px; right: 14px;
+      width: 34px; height: 34px; border: none; border-radius: 50%;
+      background: #F1F3F7; color: var(--ink-2); font-size: 17px; line-height: 1;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+    }
+    .panel-close:hover { background: #E7EAF0; color: var(--ink); }
+    .panel-inner { padding: 56px 26px 32px; }
+    .panel-badge {
+      display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.06em;
+      text-transform: uppercase; padding: 3px 10px; border-radius: 999px; color: #fff; margin-bottom: 12px;
+    }
+    .panel-name { font-size: 21px; font-weight: 800; letter-spacing: -0.01em; line-height: 1.25; color: var(--ink); margin-bottom: 8px; }
+    .panel-address { font-size: 13px; color: var(--ink-3); margin-bottom: 18px; line-height: 1.5; }
+    .panel-schedule { font-size: 14px; color: var(--ink); border-top: 1px solid var(--line); padding-top: 14px; line-height: 1.7; }
+    .panel-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-3); margin-bottom: 5px; }
+    .panel-actions { display: flex; flex-direction: column; gap: 10px; margin-top: 24px; }
+    .panel-link, .panel-page {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      font-size: 13.5px; font-weight: 600; text-decoration: none; padding: 11px 16px; border-radius: 12px;
+      transition: filter 0.12s ease, background 0.12s ease;
+    }
+    .panel-link { color: #fff; }
+    .panel-link:hover { filter: brightness(1.08); }
+    .panel-link svg { width: 14px; height: 14px; }
+    .panel-page { background: #F1F3F7; color: var(--ink); }
+    .panel-page:hover { background: #E7EAF0; }
+
     /* Zoom control: softer, modern */
     .leaflet-control-zoom a {
       border-radius: 10px !important;
@@ -208,6 +247,11 @@
   <div class="legend-item"><span class="dot" style="background:#059669"></span> Sala de estudio</div>
   <div class="legend-item"><span class="dot" style="background:#7C3AED"></span> Universidad / BNE</div>
 </div>
+
+<aside class="panel" id="panel" aria-hidden="true" aria-label="Información del centro">
+  <button class="panel-close" id="panel-close" aria-label="Cerrar">✕</button>
+  <div class="panel-inner" id="panel-body"></div>
+</aside>
 
 <noscript>
   <h1>Bibliotecas y salas de estudio en Madrid con horarios</h1>
@@ -1421,35 +1465,103 @@ function webUrl(d) {
   return 'https://www.google.com/search?q=' + encodeURIComponent(d.nombre + ' Madrid');
 }
 
-function buildPopup(d) {
-  const c = colores[d.tipo];
-  const horarioHtml = d.horario
-    .split('\n')
-    .map(l => `<div>${l}</div>`)
-    .join('');
-  const label = d.web ? 'Web oficial' : 'Buscar web y horario';
+// ─────────────────────────────────────────────
+//  SLUGS — deben ser IDÉNTICOS a build.py para que
+//  las URLs del panel coincidan con las páginas generadas.
+// ─────────────────────────────────────────────
+const BASE_URL = 'https://bibliotecasmadrid.github.io/Donde-estudio-hoy/';
+const PREFIJOS = ["biblioteca pública ", "biblioteca municipal ", "salas de estudio ",
+  "sala de estudio del ", "sala de estudio de la ", "sala de estudio ", "sala de lectura ", "biblioteca "];
 
+function slugify(nombre) {
+  let base = nombre;
+  const low = nombre.toLowerCase();
+  for (const p of PREFIJOS) { if (low.startsWith(p)) { base = nombre.slice(p.length); break; } }
+  base = base.normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase();
+  base = base.replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  return base || 'centro';
+}
+
+const slugOf = new Map(), placeOf = new Map();
+(function buildSlugs() {
+  const seen = {};
+  lugares.forEach(d => {
+    let s = slugify(d.nombre);
+    if (seen[s]) { seen[s]++; s = s + '-' + seen[s]; } else { seen[s] = 1; }
+    slugOf.set(d, s); placeOf.set(s, d);
+  });
+})();
+
+// ─────────────────────────────────────────────
+//  PANEL LATERAL
+// ─────────────────────────────────────────────
+const panel = document.getElementById('panel');
+const panelBody = document.getElementById('panel-body');
+
+function panelHtml(d) {
+  const c = colores[d.tipo];
+  const horarioHtml = d.horario.split('\n').map(l => `<div>${l}</div>`).join('');
+  const label = d.web ? 'Web oficial' : 'Buscar web y horario';
   return `
-    <div class="popup-inner">
-      <span class="popup-badge" style="background:${c.fill}">${c.label}</span>
-      <div class="popup-name">${d.nombre}</div>
-      <div class="popup-address">${d.distrito} · ${d.direccion}</div>
-      <div class="popup-schedule">
-        <div class="schedule-label">Horario</div>
-        ${horarioHtml}
-      </div>
-      <a class="popup-link" style="background:${c.fill}" href="${webUrl(d)}" target="_blank" rel="noopener noreferrer">
+    <span class="panel-badge" style="background:${c.fill}">${c.label}</span>
+    <h2 class="panel-name">${d.nombre}</h2>
+    <p class="panel-address">${d.distrito} · ${d.direccion}</p>
+    <div class="panel-schedule"><div class="panel-label">Horario</div>${horarioHtml}</div>
+    <div class="panel-actions">
+      <a class="panel-link" style="background:${c.fill}" href="${webUrl(d)}" target="_blank" rel="noopener noreferrer">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
         ${label}
       </a>
+      <a class="panel-page" href="${slugOf.get(d)}">Página de este centro ↗</a>
     </div>`;
 }
 
+let current = null;
+function openPlace(d, push) {
+  current = d;
+  panelBody.innerHTML = panelHtml(d);
+  panel.classList.add('open');
+  panel.setAttribute('aria-hidden', 'false');
+  if (push) history.pushState({ slug: slugOf.get(d) }, '', slugOf.get(d));
+  map.panTo([d.lat, d.lng], { animate: true });
+}
+function closePanel(push) {
+  current = null;
+  panel.classList.remove('open');
+  panel.setAttribute('aria-hidden', 'true');
+  if (push) history.pushState({}, '', './');
+}
+
+document.getElementById('panel-close').addEventListener('click', () => closePanel(true));
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && current) closePanel(true); });
+map.on('click', () => { if (current) closePanel(true); });
+
+// ─────────────────────────────────────────────
+//  MARCADORES
+// ─────────────────────────────────────────────
 lugares.forEach(d => {
-  L.marker([d.lat, d.lng], { icon: makeIcon(d.tipo) })
-    .bindPopup(buildPopup(d), { maxWidth: 320 })
-    .addTo(map);
+  L.marker([d.lat, d.lng], { icon: makeIcon(d.tipo), title: d.nombre })
+    .addTo(map)
+    .on('click', () => openPlace(d, true));
 });
+
+// Sincronizar con la URL: back/forward del navegador y enlaces #slug
+function placeFromUrl() {
+  let slug = location.hash.slice(1);
+  if (!slug) {
+    const path = location.pathname.replace(/\/+$/, '');
+    slug = path.substring(path.lastIndexOf('/') + 1);
+  }
+  return placeOf.get(decodeURIComponent(slug)) || null;
+}
+window.addEventListener('popstate', () => {
+  const d = placeFromUrl();
+  if (d) openPlace(d, false); else closePanel(false);
+});
+(function initFromUrl() {
+  const d = placeFromUrl();
+  if (d) { openPlace(d, false); history.replaceState({ slug: slugOf.get(d) }, '', slugOf.get(d)); }
+})();
 
 // ─────────────────────────────────────────────
 //  SEO: datos estructurados (ItemList) generados
@@ -1476,7 +1588,7 @@ lugares.forEach(d => {
           "addressCountry": "ES"
         },
         "geo": { "@type": "GeoCoordinates", "latitude": d.lat, "longitude": d.lng },
-        "url": d.web || ("https://www.google.com/search?q=" + encodeURIComponent(d.nombre + " Madrid"))
+        "url": BASE_URL + slugOf.get(d)
       }
     }))
   };
