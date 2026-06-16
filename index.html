@@ -4,7 +4,39 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="google-site-verification" content="ZLl5e9mEtkFwg9fsvwYkKV8fQAYVogRI-qvxS_RWZkg" />
-  <title>Dónde estudiar en Madrid</title>
+
+  <!-- ── SEO ─────────────────────────────────────── -->
+  <title>Bibliotecas y salas de estudio en Madrid · Mapa con horarios</title>
+  <meta name="description" content="Mapa con todas las bibliotecas públicas, salas de estudio y bibliotecas universitarias de Madrid: ubicación, dirección y horarios actualizados. Descubre dónde estudiar hoy y qué bibliotecas están abiertas cerca de ti.">
+  <meta name="keywords" content="bibliotecas madrid, bibliotecas madrid horarios, salas de estudio madrid, bibliotecas abiertas madrid, dónde estudiar madrid, bibliotecas universitarias madrid, salas de estudio 24h madrid">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://bibliotecasmadrid.github.io/Donde-estudio-hoy/">
+  <meta name="geo.region" content="ES-MD">
+  <meta name="geo.placename" content="Madrid">
+
+  <!-- Open Graph / redes sociales -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:title" content="Bibliotecas y salas de estudio en Madrid · Mapa con horarios">
+  <meta property="og:description" content="Mapa con todas las bibliotecas, salas de estudio y bibliotecas universitarias de Madrid y sus horarios. Encuentra dónde estudiar hoy.">
+  <meta property="og:url" content="https://bibliotecasmadrid.github.io/Donde-estudio-hoy/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Bibliotecas y salas de estudio en Madrid · Mapa con horarios">
+  <meta name="twitter:description" content="Mapa con todas las bibliotecas y salas de estudio de Madrid y sus horarios.">
+
+  <!-- Datos estructurados -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Bibliotecas y salas de estudio en Madrid",
+    "url": "https://bibliotecasmadrid.github.io/Donde-estudio-hoy/",
+    "inLanguage": "es",
+    "description": "Mapa con todas las bibliotecas públicas, salas de estudio y bibliotecas universitarias de Madrid, con su ubicación, dirección y horarios.",
+    "about": { "@type": "Place", "name": "Madrid", "address": { "@type": "PostalAddress", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES" } }
+  }
+  </script>
+
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
     :root {
@@ -176,6 +208,14 @@
   <div class="legend-item"><span class="dot" style="background:#059669"></span> Sala de estudio</div>
   <div class="legend-item"><span class="dot" style="background:#7C3AED"></span> Universidad / BNE</div>
 </div>
+
+<noscript>
+  <h1>Bibliotecas y salas de estudio en Madrid con horarios</h1>
+  <p>Mapa con todas las bibliotecas públicas, salas de estudio municipales y bibliotecas
+  universitarias de Madrid. Consulta la dirección y los horarios de cada centro para saber
+  dónde estudiar hoy y qué bibliotecas están abiertas cerca de ti. Para ver el mapa interactivo
+  activa JavaScript en tu navegador.</p>
+</noscript>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
@@ -1410,6 +1450,41 @@ lugares.forEach(d => {
     .bindPopup(buildPopup(d), { maxWidth: 320 })
     .addTo(map);
 });
+
+// ─────────────────────────────────────────────
+//  SEO: datos estructurados (ItemList) generados
+//  desde el propio array, sin duplicar datos.
+// ─────────────────────────────────────────────
+(function injectStructuredData() {
+  const itemList = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Bibliotecas y salas de estudio en Madrid",
+    "numberOfItems": lugares.length,
+    "itemListElement": lugares.map((d, i) => ({
+      "@type": "ListItem",
+      "position": i + 1,
+      "item": {
+        "@type": "Library",
+        "name": d.nombre,
+        "description": "Horario: " + d.horario.replace(/\n/g, ' '),
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": d.direccion,
+          "addressLocality": "Madrid",
+          "addressRegion": "Comunidad de Madrid",
+          "addressCountry": "ES"
+        },
+        "geo": { "@type": "GeoCoordinates", "latitude": d.lat, "longitude": d.lng },
+        "url": d.web || ("https://www.google.com/search?q=" + encodeURIComponent(d.nombre + " Madrid"))
+      }
+    }))
+  };
+  const s = document.createElement('script');
+  s.type = 'application/ld+json';
+  s.textContent = JSON.stringify(itemList);
+  document.head.appendChild(s);
+})();
 </script>
 </body>
 </html>
