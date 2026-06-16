@@ -6,84 +6,172 @@
   <title>Dónde estudiar en Madrid</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
+    :root {
+      --c-biblioteca: #2563EB;
+      --c-sala:       #059669;
+      --c-universidad:#7C3AED;
+      --ink:    #1A1F36;
+      --ink-2:  #5A6172;
+      --ink-3:  #9AA0AE;
+      --line:   #ECEEF2;
+      --card:   rgba(255,255,255,0.88);
+    }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { height: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
-    #map { height: 100vh; width: 100%; }
+    html, body {
+      height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    #map { height: 100vh; width: 100%; background: #EAEDF0; }
 
-    /* Legend */
+    /* ── Floating header ─────────────────────────── */
+    .topbar {
+      position: absolute;
+      top: 14px; left: 14px;
+      z-index: 1000;
+      background: var(--card);
+      backdrop-filter: blur(14px) saturate(160%);
+      -webkit-backdrop-filter: blur(14px) saturate(160%);
+      padding: 12px 18px;
+      border-radius: 16px;
+      box-shadow: 0 6px 28px rgba(20,30,60,0.14), 0 0 0 1px rgba(255,255,255,0.6) inset;
+    }
+    .topbar h1 {
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      line-height: 1.15;
+    }
+    .topbar p {
+      font-size: 11.5px;
+      color: var(--ink-2);
+      margin-top: 2px;
+    }
+
+    /* ── Legend ──────────────────────────────────── */
     .legend {
       position: absolute;
-      bottom: 28px;
-      left: 12px;
+      bottom: 22px;
+      left: 14px;
       z-index: 1000;
-      background: rgba(255,255,255,0.95);
-      padding: 10px 14px;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-      font-size: 12px;
-      line-height: 1.8;
+      background: var(--card);
+      backdrop-filter: blur(14px) saturate(160%);
+      -webkit-backdrop-filter: blur(14px) saturate(160%);
+      padding: 11px 14px;
+      border-radius: 14px;
+      box-shadow: 0 6px 28px rgba(20,30,60,0.14), 0 0 0 1px rgba(255,255,255,0.6) inset;
+      font-size: 12.5px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
     }
-    .legend-item { display: flex; align-items: center; gap: 8px; }
+    .legend-item { display: flex; align-items: center; gap: 9px; color: var(--ink); font-weight: 500; }
     .dot {
-      width: 11px; height: 11px; border-radius: 50%;
-      border: 2px solid rgba(0,0,0,0.25); flex-shrink: 0;
+      width: 12px; height: 12px; border-radius: 50%;
+      box-shadow: 0 0 0 2px #fff, 0 1px 3px rgba(0,0,0,0.3);
+      flex-shrink: 0;
     }
 
-    /* Popup */
+    /* ── Markers ─────────────────────────────────── */
+    .study-marker {
+      filter: drop-shadow(0 2px 3px rgba(20,30,60,0.35));
+      transition: transform 0.12s ease;
+      cursor: pointer;
+    }
+    .study-marker:hover { transform: scale(1.22); z-index: 999 !important; }
+
+    /* ── Popup ───────────────────────────────────── */
     .leaflet-popup-content-wrapper {
-      border-radius: 10px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.18);
+      border-radius: 16px;
+      box-shadow: 0 12px 40px rgba(20,30,60,0.22);
       padding: 0;
       overflow: hidden;
     }
-    .leaflet-popup-content { margin: 0; min-width: 240px; max-width: 300px; }
-    .popup-inner { padding: 14px 16px 12px; }
+    .leaflet-popup-content { margin: 0; min-width: 244px; max-width: 300px; }
+    .leaflet-popup-tip { box-shadow: 0 12px 40px rgba(20,30,60,0.22); }
+    .popup-inner { padding: 15px 17px 14px; }
     .popup-badge {
       display: inline-block;
       font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.05em;
+      font-weight: 700;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      padding: 2px 7px;
-      border-radius: 4px;
-      margin-bottom: 6px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      margin-bottom: 8px;
       color: #fff;
     }
     .popup-name {
-      font-size: 14px;
-      font-weight: 700;
-      color: #111;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: var(--ink);
       margin-bottom: 6px;
       line-height: 1.3;
     }
     .popup-address {
-      font-size: 11px;
-      color: #888;
-      margin-bottom: 10px;
+      font-size: 11.5px;
+      color: var(--ink-3);
+      margin-bottom: 11px;
+      line-height: 1.45;
     }
     .popup-schedule {
-      font-size: 12px;
-      color: #333;
-      border-top: 1px solid #f0f0f0;
-      padding-top: 9px;
-      line-height: 1.6;
+      font-size: 12.5px;
+      color: var(--ink);
+      border-top: 1px solid var(--line);
+      padding-top: 10px;
+      line-height: 1.65;
     }
     .schedule-label {
       font-size: 10px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: #aaa;
-      margin-bottom: 3px;
+      letter-spacing: 0.07em;
+      color: var(--ink-3);
+      margin-bottom: 4px;
+    }
+    .popup-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 12px;
+      font-size: 12.5px;
+      font-weight: 600;
+      text-decoration: none;
+      color: #fff;
+      padding: 7px 13px;
+      border-radius: 999px;
+      transition: filter 0.12s ease;
+    }
+    .popup-link:hover { filter: brightness(1.08); }
+    .popup-link svg { width: 13px; height: 13px; }
+
+    /* Zoom control: softer, modern */
+    .leaflet-control-zoom a {
+      border-radius: 10px !important;
+      color: var(--ink) !important;
+      box-shadow: 0 2px 8px rgba(20,30,60,0.12);
+      border: none !important;
+    }
+    .leaflet-bar { border: none !important; }
+    .leaflet-control-attribution {
+      background: rgba(255,255,255,0.75) !important;
+      border-radius: 8px 0 0 0;
+      font-size: 10px;
     }
   </style>
 </head>
 <body>
 <div id="map"></div>
+<div class="topbar">
+  <h1>Dónde estudiar en Madrid</h1>
+  <p>Bibliotecas, salas de estudio y universidades · pulsa un punto</p>
+</div>
 <div class="legend">
-  <div class="legend-item"><span class="dot" style="background:#3B82F6"></span> Biblioteca pública</div>
-  <div class="legend-item"><span class="dot" style="background:#10B981"></span> Sala de estudio</div>
-  <div class="legend-item"><span class="dot" style="background:#8B5CF6"></span> Universidad / BNE</div>
+  <div class="legend-item"><span class="dot" style="background:#2563EB"></span> Biblioteca pública</div>
+  <div class="legend-item"><span class="dot" style="background:#059669"></span> Sala de estudio</div>
+  <div class="legend-item"><span class="dot" style="background:#7C3AED"></span> Universidad / BNE</div>
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -901,7 +989,8 @@ const lugares = [
     distrito: "Moncloa (Ciudad Universitaria)",
     direccion: "Calle del Noviciado, 3 / Ciudad Universitaria, 28040 Madrid",
     lat: 40.4462, lng: -3.7274,
-    horario: "Lun–Vie 8:30–21h\n(Varía por sede; consulta biblioagenda.ucm.es)"
+    horario: "Lun–Vie 8:30–21h\n(Varía por sede; consulta biblioagenda.ucm.es)",
+    web: "https://biblioteca.ucm.es"
   },
   {
     tipo: "universidad",
@@ -909,7 +998,8 @@ const lugares = [
     distrito: "Cantoblanco",
     direccion: "Campus de Cantoblanco, 28049 Madrid",
     lat: 40.5449, lng: -3.6897,
-    horario: "Lun–Vie 9–21h\n(Ampliado en época de exámenes)"
+    horario: "Lun–Vie 9–21h\n(Ampliado en época de exámenes)",
+    web: "https://biblioteca.uam.es"
   },
   {
     tipo: "universidad",
@@ -917,7 +1007,8 @@ const lugares = [
     distrito: "Moncloa (Ciudad Universitaria)",
     direccion: "Calle Profesor Aranguren, s/n, 28040 Madrid",
     lat: 40.4467, lng: -3.7335,
-    horario: "Lun–Vie 9–21:30h"
+    horario: "Lun–Vie 9–21:30h",
+    web: "https://www.upm.es/UPM/Biblioteca"
   },
   {
     tipo: "universidad",
@@ -925,7 +1016,8 @@ const lugares = [
     distrito: "Moncloa (Ciudad Universitaria)",
     direccion: "Calle Bravo Murillo, 38, 28015 Madrid",
     lat: 40.4441, lng: -3.7018,
-    horario: "Lun–Vie 9–22h"
+    horario: "Lun–Vie 9–22h",
+    web: "https://biblioteca.uned.es"
   },
   {
     tipo: "universidad",
@@ -933,7 +1025,8 @@ const lugares = [
     distrito: "Almagro",
     direccion: "Paseo de Recoletos, 20-22, 28001 Madrid",
     lat: 40.4239, lng: -3.6907,
-    horario: "Mar–Sáb 9–21h · Dom 9–14h\n(Lun cerrado · Acceso con carnet lector)"
+    horario: "Mar–Sáb 9–21h · Dom 9–14h\n(Lun cerrado · Acceso con carnet lector)",
+    web: "https://www.bne.es"
   },
   {
     tipo: "universidad",
@@ -941,7 +1034,8 @@ const lugares = [
     distrito: "Arganzuela",
     direccion: "Calle Ramírez de Prado, 3, 28045 Madrid",
     lat: 40.4044, lng: -3.6718,
-    horario: "Lun–Vie 9–21h · Sáb 9–14h"
+    horario: "Lun–Vie 9–21h · Sáb 9–14h",
+    web: "https://www.comunidad.madrid/centros/biblioteca-regional-madrid-joaquin-leguina"
   },
   {
     tipo: "universidad",
@@ -949,7 +1043,8 @@ const lugares = [
     distrito: "Getafe (sur de Madrid)",
     direccion: "Calle Madrid, 126, 28903 Getafe",
     lat: 40.3087, lng: -3.7347,
-    horario: "Lun–Vie 8:30–21:30h · Sáb 9–14h"
+    horario: "Lun–Vie 8:30–21:30h · Sáb 9–14h",
+    web: "https://www.uc3m.es/biblioteca"
   },
   {
     tipo: "universidad",
@@ -957,7 +1052,8 @@ const lugares = [
     distrito: "Móstoles",
     direccion: "Calle Tulipán, s/n, 28933 Móstoles",
     lat: 40.3219, lng: -3.8651,
-    horario: "Lun–Vie 8:30–21h · Sáb 9–14h"
+    horario: "Lun–Vie 8:30–21h · Sáb 9–14h",
+    web: "https://www.urjc.es/biblioteca"
   }
 ];
 
@@ -971,28 +1067,39 @@ const map = L.map('map', {
   zoomControl: true
 });
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · Datos: <a href="https://datos.madrid.es">datos.madrid.es</a> (CC BY 4.0)',
-  maxZoom: 19
+// Base limpia y moderna (CARTO Positron) con respaldo retina
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+  attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · © <a href="https://carto.com/attributions">CARTO</a> · Datos: <a href="https://datos.madrid.es">datos.madrid.es</a> (CC BY 4.0)',
+  subdomains: 'abcd',
+  maxZoom: 20
 }).addTo(map);
 
 const colores = {
-  biblioteca:  { fill: '#3B82F6', label: 'Biblioteca pública' },
-  sala:        { fill: '#10B981', label: 'Sala de estudio'    },
-  universidad: { fill: '#8B5CF6', label: 'Universidad / BNE'  }
+  biblioteca:  { fill: '#2563EB', label: 'Biblioteca pública' },
+  sala:        { fill: '#059669', label: 'Sala de estudio'    },
+  universidad: { fill: '#7C3AED', label: 'Universidad / BNE'  }
 };
 
 function makeIcon(tipo) {
   const c = colores[tipo].fill;
   return L.divIcon({
-    className: '',
-    html: `<svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="11" cy="11" r="8" fill="${c}" fill-opacity="0.9" stroke="white" stroke-width="2.5"/>
+    className: 'study-marker',
+    html: `<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="12" cy="12" r="9" fill="#fff"/>
+      <circle cx="12" cy="12" r="7" fill="${c}"/>
+      <circle cx="12" cy="12" r="2.6" fill="#fff" fill-opacity="0.92"/>
     </svg>`,
-    iconSize: [22, 22],
-    iconAnchor: [11, 11],
-    popupAnchor: [0, -14]
+    iconSize: [24, 24],
+    iconAnchor: [12, 12],
+    popupAnchor: [0, -13]
   });
+}
+
+// Enlace a la web del centro: usa la URL oficial si existe;
+// si no, una búsqueda que siempre resuelve a su web/horario.
+function webUrl(d) {
+  if (d.web) return d.web;
+  return 'https://www.google.com/search?q=' + encodeURIComponent(d.nombre + ' Madrid');
 }
 
 function buildPopup(d) {
@@ -1001,6 +1108,7 @@ function buildPopup(d) {
     .split('\n')
     .map(l => `<div>${l}</div>`)
     .join('');
+  const label = d.web ? 'Web oficial' : 'Buscar web y horario';
 
   return `
     <div class="popup-inner">
@@ -1011,6 +1119,10 @@ function buildPopup(d) {
         <div class="schedule-label">Horario</div>
         ${horarioHtml}
       </div>
+      <a class="popup-link" style="background:${c.fill}" href="${webUrl(d)}" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        ${label}
+      </a>
     </div>`;
 }
 
