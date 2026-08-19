@@ -301,44 +301,6 @@ def get_today_info(d, slug, now=None):
     }
 
 
-PHOTO_POOLS = {
-    "universidad": [
-        "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1568667256549-094345857637?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1463320726281-696a485928c7?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1519791883288-dc8bd696e667?auto=format&fit=crop&w=800&q=80",
-    ],
-    "biblioteca": [
-        "https://images.unsplash.com/photo-1507842229451-2292f75a74ff?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1505664194779-8beaceb93744?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1532012164546-f432f2e37b73?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1529148482759-b35b282fb7be?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1576872381149-7847515ce5d8?auto=format&fit=crop&w=800&q=80",
-    ],
-    "sala": [
-        "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80",
-        "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80",
-    ]
-}
-
-
-def get_image_for_place(d):
-    pool = PHOTO_POOLS.get(d.get("tipo", "biblioteca"), PHOTO_POOLS["biblioteca"])
-    h = 0
-    for ch in d["nombre"]:
-        h = ((h << 5) - h) + ord(ch)
-    idx = abs(h) % len(pool)
-    return pool[idx]
 
 
 def page_html(d, slug):
@@ -350,7 +312,8 @@ def page_html(d, slug):
     web, web_label = web_url(d)
     desc = f'{d["nombre"]}: {d["direccion"]}. Horario: {horario_inline}. {c["label"]} en Madrid.'
     canonical = BASE + slug
-    img_url = get_image_for_place(d)
+    streetview_url = f"https://maps.google.com/maps?q=&layer=c&cbll={d['lat']},{d['lng']}&cbp=11,0,0,0,0&output=svembed"
+    maps_sv_link = f"https://www.google.com/maps/@?api=1&map_action=pano&viewpoint={d['lat']},{d['lng']}"
 
     ld = {
         "@context": "https://schema.org",
@@ -367,7 +330,6 @@ def page_html(d, slug):
         "geo": {"@type": "GeoCoordinates", "latitude": d["lat"], "longitude": d["lng"]},
         "maximumAttendeeCapacity": d.get("plazas", 100),
         "url": canonical,
-        "image": img_url,
         "areaServed": "Madrid",
     }
 
@@ -392,9 +354,6 @@ def page_html(d, slug):
   <meta property="og:title" content="{e(d["nombre"])} · Horario y dirección">
   <meta property="og:description" content="{e(desc)}">
   <meta property="og:url" content="{e(canonical)}">
-  <meta property="og:image" content="{e(img_url)}">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="{e(img_url)}">
   <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>
   <style>
     :root {{ --ink:#1A1F36; --ink-2:#5A6172; --ink-3:#9AA0AE; --line:#ECEEF2; }}
@@ -406,42 +365,60 @@ def page_html(d, slug):
     }}
     .card {{
       background:#fff; max-width:460px; width:100%; border-radius:20px; padding:28px 28px 24px;
-      box-shadow:0 12px 40px rgba(20,30,60,0.14);
+      box-shadow:0 12px 40px rgba(20,30,60,0.14); overflow:hidden;
     }}
     .back {{ display:inline-block; font-size:13px; color:var(--ink-2); text-decoration:none; margin-bottom:16px; }}
     .back:hover {{ color:var(--ink); }}
+    
+    /* ── Street View Cover ─────────────────── */
+    .card-cover {{
+      position: relative;
+      width: calc(100% + 56px);
+      margin: -28px -28px 20px -28px;
+      height: 220px;
+      overflow: hidden;
+      background: #0f172a;
+    }}
+    .streetview-iframe {{
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }}
+    .badge-cover {{
+      position: absolute;
+      bottom: 12px;
+      left: 18px;
+      margin-bottom: 0;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+      z-index: 2;
+    }}
+    .btn-sv {{
+      position: absolute;
+      bottom: 12px;
+      right: 18px;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.65);
+      color: #fff;
+      text-decoration: none;
+      backdrop-filter: blur(4px);
+      z-index: 2;
+      transition: background .12s;
+    }}
+    .btn-sv:hover {{
+      background: rgba(0,0,0,0.85);
+    }}
+
     .badge {{
       display:inline-block; font-size:10px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase;
       padding:3px 10px; border-radius:999px; color:#fff; margin-bottom:12px; background:{c["fill"]};
     }}
     h1 {{ font-size:23px; font-weight:800; letter-spacing:-0.01em; line-height:1.25; margin-bottom:8px; }}
-    .card-cover {{
-      position: relative;
-      width: calc(100% + 56px);
-      margin: -28px -28px 20px -28px;
-      height: 190px;
-      overflow: hidden;
-      border-top-left-radius: 20px;
-      border-top-right-radius: 20px;
-      background: #E2E8F0;
-    }}
-    .cover-img {{
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }}
-    .badge-cover {{
-      position: absolute;
-      bottom: 14px;
-      left: 22px;
-      margin-bottom: 0;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.22);
-    }}
-
-    .addr {{ font-size:13.5px; color:var(--ink-3); margin-bottom:16px; line-height:1.5; }}
+    .addr {{ font-size:13.5px; color:var(--ink-3); margin-bottom:12px; line-height:1.5; }}
     
-
     .capacity-tag {{
       display: inline-flex;
       align-items: center;
@@ -458,6 +435,7 @@ def page_html(d, slug):
       color: var(--ink-3);
       flex-shrink: 0;
     }}
+
     /* ── Box HOY ───────────────────────────── */
     .today-card {{
       background: #F8FAFC;
@@ -540,8 +518,9 @@ def page_html(d, slug):
 <body>
   <main class="card">
     <div class="card-cover">
-      <img src="{e(img_url)}" alt="{e(d["nombre"])}" class="cover-img" loading="lazy">
+      <iframe class="streetview-iframe" src="{streetview_url}" allowfullscreen loading="lazy"></iframe>
       <span class="badge badge-cover">{e(c["label"])}</span>
+      <a class="btn-sv" href="{maps_sv_link}" target="_blank" rel="noopener noreferrer">Street View 360° ↗</a>
     </div>
     <a class="back" href="./">← Mapa de bibliotecas y salas de estudio de Madrid</a>
     <h1>{e(d["nombre"])}</h1>
@@ -551,7 +530,7 @@ def page_html(d, slug):
       <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
       <span>{d.get("plazas", 100)} puestos de estudio</span>
     </div>
-    
+
     <div class="today-card" id="today-card">
       <div class="today-head">
         <span class="today-title" id="today-title">HOY · {today['date_formatted']}</span>
@@ -608,7 +587,7 @@ def page_html(d, slug):
       
       function parseIntervals(text) {{
         const intervals = [];
-        const re = /(\\d{{1,2}})(?::(\\d{{2}}))?\\s*[–\\-—a]\\s*(\\d{{1,2}})(?::(\\d{{2}}))?h?/gi;
+        const re = /(\d{{1,2}})(?::(\d{{2}}))?\s*[–\-—a]\s*(\d{{1,2}})(?::(\d{{2}}))?h?/gi;
         let m;
         while ((m = re.exec(text)) !== null) {{
           const sh = parseInt(m[1], 10), sm = m[2] ? parseInt(m[2], 10) : 0;
@@ -684,18 +663,18 @@ def page_html(d, slug):
       }}
 
       // 5. Normal
-      const lines = d.horario.split('\\n');
+      const lines = d.horario.split('\n');
       let target = '';
       if (day === 0) {{
         if (h.includes('dom') || h.includes('fines de semana') || h.includes('lun–dom') || h.includes('lun-dom')) {{
           if (h.includes('sáb–dom') || h.includes('sab-dom')) {{
-            const m = d.horario.match(/S[áa]b[–\\-—]Dom\\s+([^\\n·]+)/i);
+            const m = d.horario.match(/S[áa]b[–\-—]Dom\s+([^\n·]+)/i);
             if (m) target = m[1];
           }} else if (h.includes('fines de semana')) {{
-            const m = d.horario.match(/Fines de semana[^\\d]*(\\d[^\\n·]+)/i);
+            const m = d.horario.match(/Fines de semana[^\d]*(\d[^\n·]+)/i);
             if (m) target = m[1];
           }} else if (h.includes('dom') && !h.includes('cerrado')) {{
-            const m = d.horario.match(/Dom\\s+([^\\n·]+)/i);
+            const m = d.horario.match(/Dom\s+([^\n·]+)/i);
             if (m) target = m[1];
           }} else if (h.includes('lun–dom') || h.includes('lun-dom')) {{
             target = lines[0];
@@ -704,13 +683,13 @@ def page_html(d, slug):
       }} else if (day === 6) {{
         if (h.includes('sáb') || h.includes('sab') || h.includes('fines de semana') || h.includes('lun–dom') || h.includes('lun-dom') || h.includes('lun–sáb') || h.includes('lun-sab')) {{
           if (h.includes('sáb–dom') || h.includes('sab-dom')) {{
-            const m = d.horario.match(/S[áa]b[–\\-—]Dom\\s+([^\\n·]+)/i);
+            const m = d.horario.match(/S[áa]b[–\-—]Dom\s+([^\n·]+)/i);
             if (m) target = m[1];
           }} else if (h.includes('sáb') || h.includes('sab')) {{
-            const m = d.horario.match(/S[áa]b\\s+([^\\n·\\(\\)]+)/i);
+            const m = d.horario.match(/S[áa]b\s+([^\n·\(\)]+)/i);
             if (m) target = m[1];
           }} else if (h.includes('fines de semana')) {{
-            const m = d.horario.match(/Fines de semana[^\\d]*(\\d[^\\n·\\(\\)]+)/i);
+            const m = d.horario.match(/Fines de semana[^\d]*(\d[^\n·\(\)]+)/i);
             if (m) target = m[1];
           }} else if (h.includes('lun–sáb') || h.includes('lun-sab') || h.includes('lun–dom') || h.includes('lun-dom')) {{
             target = lines[0];

@@ -16,10 +16,7 @@
   <meta property="og:title" content="Biblioteca UPM – ETS Arquitectura (ETSAM) · Horario y dirección">
   <meta property="og:description" content="Biblioteca UPM – ETS Arquitectura (ETSAM): Avenida Juan de Herrera, 4, 28040 Madrid. Horario: Lun–Vie 8:30–20:45h (Ampliado en época de exámenes). Biblioteca universitaria en Madrid.">
   <meta property="og:url" content="https://bibliotecasmadrid.github.io/Donde-estudio-hoy/upm-ets-arquitectura-etsam">
-  <meta property="og:image" content="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&amp;fit=crop&amp;w=800&amp;q=80">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&amp;fit=crop&amp;w=800&amp;q=80">
-  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Library", "name": "Biblioteca UPM – ETS Arquitectura (ETSAM)", "description": "Horario: Lun–Vie 8:30–20:45h (Ampliado en época de exámenes)", "address": {"@type": "PostalAddress", "streetAddress": "Avenida Juan de Herrera, 4, 28040 Madrid", "addressLocality": "Madrid", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.4402099, "longitude": -3.7310053}, "maximumAttendeeCapacity": 450, "url": "https://bibliotecasmadrid.github.io/Donde-estudio-hoy/upm-ets-arquitectura-etsam", "image": "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=800&q=80", "areaServed": "Madrid"}</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Library", "name": "Biblioteca UPM – ETS Arquitectura (ETSAM)", "description": "Horario: Lun–Vie 8:30–20:45h (Ampliado en época de exámenes)", "address": {"@type": "PostalAddress", "streetAddress": "Avenida Juan de Herrera, 4, 28040 Madrid", "addressLocality": "Madrid", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.4402099, "longitude": -3.7310053}, "maximumAttendeeCapacity": 450, "url": "https://bibliotecasmadrid.github.io/Donde-estudio-hoy/upm-ets-arquitectura-etsam", "areaServed": "Madrid"}</script>
   <style>
     :root { --ink:#1A1F36; --ink-2:#5A6172; --ink-3:#9AA0AE; --line:#ECEEF2; }
     * { margin:0; padding:0; box-sizing:border-box; }
@@ -30,42 +27,60 @@
     }
     .card {
       background:#fff; max-width:460px; width:100%; border-radius:20px; padding:28px 28px 24px;
-      box-shadow:0 12px 40px rgba(20,30,60,0.14);
+      box-shadow:0 12px 40px rgba(20,30,60,0.14); overflow:hidden;
     }
     .back { display:inline-block; font-size:13px; color:var(--ink-2); text-decoration:none; margin-bottom:16px; }
     .back:hover { color:var(--ink); }
+    
+    /* ── Street View Cover ─────────────────── */
+    .card-cover {
+      position: relative;
+      width: calc(100% + 56px);
+      margin: -28px -28px 20px -28px;
+      height: 220px;
+      overflow: hidden;
+      background: #0f172a;
+    }
+    .streetview-iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+    .badge-cover {
+      position: absolute;
+      bottom: 12px;
+      left: 18px;
+      margin-bottom: 0;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+      z-index: 2;
+    }
+    .btn-sv {
+      position: absolute;
+      bottom: 12px;
+      right: 18px;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.65);
+      color: #fff;
+      text-decoration: none;
+      backdrop-filter: blur(4px);
+      z-index: 2;
+      transition: background .12s;
+    }
+    .btn-sv:hover {
+      background: rgba(0,0,0,0.85);
+    }
+
     .badge {
       display:inline-block; font-size:10px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase;
       padding:3px 10px; border-radius:999px; color:#fff; margin-bottom:12px; background:#7C3AED;
     }
     h1 { font-size:23px; font-weight:800; letter-spacing:-0.01em; line-height:1.25; margin-bottom:8px; }
-    .card-cover {
-      position: relative;
-      width: calc(100% + 56px);
-      margin: -28px -28px 20px -28px;
-      height: 190px;
-      overflow: hidden;
-      border-top-left-radius: 20px;
-      border-top-right-radius: 20px;
-      background: #E2E8F0;
-    }
-    .cover-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .badge-cover {
-      position: absolute;
-      bottom: 14px;
-      left: 22px;
-      margin-bottom: 0;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.22);
-    }
-
-    .addr { font-size:13.5px; color:var(--ink-3); margin-bottom:16px; line-height:1.5; }
+    .addr { font-size:13.5px; color:var(--ink-3); margin-bottom:12px; line-height:1.5; }
     
-
     .capacity-tag {
       display: inline-flex;
       align-items: center;
@@ -82,6 +97,7 @@
       color: var(--ink-3);
       flex-shrink: 0;
     }
+
     /* ── Box HOY ───────────────────────────── */
     .today-card {
       background: #F8FAFC;
@@ -164,8 +180,9 @@
 <body>
   <main class="card">
     <div class="card-cover">
-      <img src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Biblioteca UPM – ETS Arquitectura (ETSAM)" class="cover-img" loading="lazy">
+      <iframe class="streetview-iframe" src="https://maps.google.com/maps?q=&layer=c&cbll=40.4402099,-3.7310053&cbp=11,0,0,0,0&output=svembed" allowfullscreen loading="lazy"></iframe>
       <span class="badge badge-cover">Biblioteca universitaria</span>
+      <a class="btn-sv" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=40.4402099,-3.7310053" target="_blank" rel="noopener noreferrer">Street View 360° ↗</a>
     </div>
     <a class="back" href="./">← Mapa de bibliotecas y salas de estudio de Madrid</a>
     <h1>Biblioteca UPM – ETS Arquitectura (ETSAM)</h1>
@@ -175,7 +192,7 @@
       <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
       <span>450 puestos de estudio</span>
     </div>
-    
+
     <div class="today-card" id="today-card">
       <div class="today-head">
         <span class="today-title" id="today-title">HOY · Miércoles, 19 de agosto</span>
@@ -308,18 +325,22 @@
       }
 
       // 5. Normal
-      const lines = d.horario.split('\n');
+      const lines = d.horario.split('
+');
       let target = '';
       if (day === 0) {
         if (h.includes('dom') || h.includes('fines de semana') || h.includes('lun–dom') || h.includes('lun-dom')) {
           if (h.includes('sáb–dom') || h.includes('sab-dom')) {
-            const m = d.horario.match(/S[áa]b[–\-—]Dom\s+([^\n·]+)/i);
+            const m = d.horario.match(/S[áa]b[–\-—]Dom\s+([^
+·]+)/i);
             if (m) target = m[1];
           } else if (h.includes('fines de semana')) {
-            const m = d.horario.match(/Fines de semana[^\d]*(\d[^\n·]+)/i);
+            const m = d.horario.match(/Fines de semana[^\d]*(\d[^
+·]+)/i);
             if (m) target = m[1];
           } else if (h.includes('dom') && !h.includes('cerrado')) {
-            const m = d.horario.match(/Dom\s+([^\n·]+)/i);
+            const m = d.horario.match(/Dom\s+([^
+·]+)/i);
             if (m) target = m[1];
           } else if (h.includes('lun–dom') || h.includes('lun-dom')) {
             target = lines[0];
@@ -328,13 +349,16 @@
       } else if (day === 6) {
         if (h.includes('sáb') || h.includes('sab') || h.includes('fines de semana') || h.includes('lun–dom') || h.includes('lun-dom') || h.includes('lun–sáb') || h.includes('lun-sab')) {
           if (h.includes('sáb–dom') || h.includes('sab-dom')) {
-            const m = d.horario.match(/S[áa]b[–\-—]Dom\s+([^\n·]+)/i);
+            const m = d.horario.match(/S[áa]b[–\-—]Dom\s+([^
+·]+)/i);
             if (m) target = m[1];
           } else if (h.includes('sáb') || h.includes('sab')) {
-            const m = d.horario.match(/S[áa]b\s+([^\n·\(\)]+)/i);
+            const m = d.horario.match(/S[áa]b\s+([^
+·\(\)]+)/i);
             if (m) target = m[1];
           } else if (h.includes('fines de semana')) {
-            const m = d.horario.match(/Fines de semana[^\d]*(\d[^\n·\(\)]+)/i);
+            const m = d.horario.match(/Fines de semana[^\d]*(\d[^
+·\(\)]+)/i);
             if (m) target = m[1];
           } else if (h.includes('lun–sáb') || h.includes('lun-sab') || h.includes('lun–dom') || h.includes('lun-dom')) {
             target = lines[0];
