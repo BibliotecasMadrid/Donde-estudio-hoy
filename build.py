@@ -301,6 +301,46 @@ def get_today_info(d, slug, now=None):
     }
 
 
+PHOTO_POOLS = {
+    "universidad": [
+        "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1568667256549-094345857637?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1463320726281-696a485928c7?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1519791883288-dc8bd696e667?auto=format&fit=crop&w=800&q=80",
+    ],
+    "biblioteca": [
+        "https://images.unsplash.com/photo-1507842229451-2292f75a74ff?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1505664194779-8beaceb93744?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1532012164546-f432f2e37b73?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1529148482759-b35b282fb7be?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1576872381149-7847515ce5d8?auto=format&fit=crop&w=800&q=80",
+    ],
+    "sala": [
+        "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80",
+    ]
+}
+
+
+def get_image_for_place(d):
+    pool = PHOTO_POOLS.get(d.get("tipo", "biblioteca"), PHOTO_POOLS["biblioteca"])
+    h = 0
+    for ch in d["nombre"]:
+        h = ((h << 5) - h) + ord(ch)
+    idx = abs(h) % len(pool)
+    return pool[idx]
+
+
 def page_html(d, slug):
     c = COLORES[d["tipo"]]
     e = html.escape
@@ -310,6 +350,7 @@ def page_html(d, slug):
     web, web_label = web_url(d)
     desc = f'{d["nombre"]}: {d["direccion"]}. Horario: {horario_inline}. {c["label"]} en Madrid.'
     canonical = BASE + slug
+    img_url = get_image_for_place(d)
 
     ld = {
         "@context": "https://schema.org",
@@ -326,6 +367,7 @@ def page_html(d, slug):
         "geo": {"@type": "GeoCoordinates", "latitude": d["lat"], "longitude": d["lng"]},
         "maximumAttendeeCapacity": d.get("plazas", 100),
         "url": canonical,
+        "image": img_url,
         "areaServed": "Madrid",
     }
 
@@ -350,6 +392,9 @@ def page_html(d, slug):
   <meta property="og:title" content="{e(d["nombre"])} · Horario y dirección">
   <meta property="og:description" content="{e(desc)}">
   <meta property="og:url" content="{e(canonical)}">
+  <meta property="og:image" content="{e(img_url)}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="{e(img_url)}">
   <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>
   <style>
     :root {{ --ink:#1A1F36; --ink-2:#5A6172; --ink-3:#9AA0AE; --line:#ECEEF2; }}
@@ -370,6 +415,30 @@ def page_html(d, slug):
       padding:3px 10px; border-radius:999px; color:#fff; margin-bottom:12px; background:{c["fill"]};
     }}
     h1 {{ font-size:23px; font-weight:800; letter-spacing:-0.01em; line-height:1.25; margin-bottom:8px; }}
+    .card-cover {{
+      position: relative;
+      width: calc(100% + 56px);
+      margin: -28px -28px 20px -28px;
+      height: 190px;
+      overflow: hidden;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      background: #E2E8F0;
+    }}
+    .cover-img {{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }}
+    .badge-cover {{
+      position: absolute;
+      bottom: 14px;
+      left: 22px;
+      margin-bottom: 0;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.22);
+    }}
+
     .addr {{ font-size:13.5px; color:var(--ink-3); margin-bottom:16px; line-height:1.5; }}
     
 
@@ -470,8 +539,11 @@ def page_html(d, slug):
 </head>
 <body>
   <main class="card">
+    <div class="card-cover">
+      <img src="{e(img_url)}" alt="{e(d["nombre"])}" class="cover-img" loading="lazy">
+      <span class="badge badge-cover">{e(c["label"])}</span>
+    </div>
     <a class="back" href="./">← Mapa de bibliotecas y salas de estudio de Madrid</a>
-    <span class="badge">{e(c["label"])}</span>
     <h1>{e(d["nombre"])}</h1>
     <p class="addr">{e(d["distrito"])} · {e(d["direccion"])}</p>
     

@@ -16,7 +16,10 @@
   <meta property="og:title" content="Mediateca Anabel Segura · Horario y dirección">
   <meta property="og:description" content="Mediateca Anabel Segura: Avenida de Bruselas, 19, 28108 Alcobendas. Horario: Lun–Vie 9–21h · Sáb 9–14h. Biblioteca en Madrid.">
   <meta property="og:url" content="https://bibliotecasmadrid.github.io/Donde-estudio-hoy/mediateca-anabel-segura">
-  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Library", "name": "Mediateca Anabel Segura", "description": "Horario: Lun–Vie 9–21h · Sáb 9–14h", "address": {"@type": "PostalAddress", "streetAddress": "Avenida de Bruselas, 19, 28108 Alcobendas", "addressLocality": "Madrid", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.5302, "longitude": -3.6358}, "maximumAttendeeCapacity": 180, "url": "https://bibliotecasmadrid.github.io/Donde-estudio-hoy/mediateca-anabel-segura", "areaServed": "Madrid"}</script>
+  <meta property="og:image" content="https://images.unsplash.com/photo-1532012164546-f432f2e37b73?auto=format&amp;fit=crop&amp;w=800&amp;q=80">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1532012164546-f432f2e37b73?auto=format&amp;fit=crop&amp;w=800&amp;q=80">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Library", "name": "Mediateca Anabel Segura", "description": "Horario: Lun–Vie 9–21h · Sáb 9–14h", "address": {"@type": "PostalAddress", "streetAddress": "Avenida de Bruselas, 19, 28108 Alcobendas", "addressLocality": "Madrid", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.5302, "longitude": -3.6358}, "maximumAttendeeCapacity": 180, "url": "https://bibliotecasmadrid.github.io/Donde-estudio-hoy/mediateca-anabel-segura", "image": "https://images.unsplash.com/photo-1532012164546-f432f2e37b73?auto=format&fit=crop&w=800&q=80", "areaServed": "Madrid"}</script>
   <style>
     :root { --ink:#1A1F36; --ink-2:#5A6172; --ink-3:#9AA0AE; --line:#ECEEF2; }
     * { margin:0; padding:0; box-sizing:border-box; }
@@ -36,6 +39,30 @@
       padding:3px 10px; border-radius:999px; color:#fff; margin-bottom:12px; background:#2563EB;
     }
     h1 { font-size:23px; font-weight:800; letter-spacing:-0.01em; line-height:1.25; margin-bottom:8px; }
+    .card-cover {
+      position: relative;
+      width: calc(100% + 56px);
+      margin: -28px -28px 20px -28px;
+      height: 190px;
+      overflow: hidden;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      background: #E2E8F0;
+    }
+    .cover-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .badge-cover {
+      position: absolute;
+      bottom: 14px;
+      left: 22px;
+      margin-bottom: 0;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.22);
+    }
+
     .addr { font-size:13.5px; color:var(--ink-3); margin-bottom:16px; line-height:1.5; }
     
 
@@ -136,8 +163,11 @@
 </head>
 <body>
   <main class="card">
+    <div class="card-cover">
+      <img src="https://images.unsplash.com/photo-1532012164546-f432f2e37b73?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Mediateca Anabel Segura" class="cover-img" loading="lazy">
+      <span class="badge badge-cover">Biblioteca</span>
+    </div>
     <a class="back" href="./">← Mapa de bibliotecas y salas de estudio de Madrid</a>
-    <span class="badge">Biblioteca</span>
     <h1>Mediateca Anabel Segura</h1>
     <p class="addr">Alcobendas · Avenida de Bruselas, 19, 28108 Alcobendas</p>
     

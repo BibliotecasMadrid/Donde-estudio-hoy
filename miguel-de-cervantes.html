@@ -16,7 +16,10 @@
   <meta property="og:title" content="Salas de Estudio Miguel de Cervantes · Horario y dirección">
   <meta property="og:description" content="Salas de Estudio Miguel de Cervantes: Calle Aliaga, 5, 28022 Madrid. Horario: Lun–Vie 10–21h · Sáb–Dom y festivos 10–14:30h y 16:30–20h. Sala de estudio en Madrid.">
   <meta property="og:url" content="https://bibliotecasmadrid.github.io/Donde-estudio-hoy/miguel-de-cervantes">
-  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Library", "name": "Salas de Estudio Miguel de Cervantes", "description": "Horario: Lun–Vie 10–21h · Sáb–Dom y festivos 10–14:30h y 16:30–20h", "address": {"@type": "PostalAddress", "streetAddress": "Calle Aliaga, 5, 28022 Madrid", "addressLocality": "Madrid", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.4367, "longitude": -3.6114}, "maximumAttendeeCapacity": 110, "url": "https://bibliotecasmadrid.github.io/Donde-estudio-hoy/miguel-de-cervantes", "areaServed": "Madrid"}</script>
+  <meta property="og:image" content="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&amp;fit=crop&amp;w=800&amp;q=80">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&amp;fit=crop&amp;w=800&amp;q=80">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Library", "name": "Salas de Estudio Miguel de Cervantes", "description": "Horario: Lun–Vie 10–21h · Sáb–Dom y festivos 10–14:30h y 16:30–20h", "address": {"@type": "PostalAddress", "streetAddress": "Calle Aliaga, 5, 28022 Madrid", "addressLocality": "Madrid", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.4367, "longitude": -3.6114}, "maximumAttendeeCapacity": 110, "url": "https://bibliotecasmadrid.github.io/Donde-estudio-hoy/miguel-de-cervantes", "image": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80", "areaServed": "Madrid"}</script>
   <style>
     :root { --ink:#1A1F36; --ink-2:#5A6172; --ink-3:#9AA0AE; --line:#ECEEF2; }
     * { margin:0; padding:0; box-sizing:border-box; }
@@ -36,6 +39,30 @@
       padding:3px 10px; border-radius:999px; color:#fff; margin-bottom:12px; background:#059669;
     }
     h1 { font-size:23px; font-weight:800; letter-spacing:-0.01em; line-height:1.25; margin-bottom:8px; }
+    .card-cover {
+      position: relative;
+      width: calc(100% + 56px);
+      margin: -28px -28px 20px -28px;
+      height: 190px;
+      overflow: hidden;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      background: #E2E8F0;
+    }
+    .cover-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .badge-cover {
+      position: absolute;
+      bottom: 14px;
+      left: 22px;
+      margin-bottom: 0;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.22);
+    }
+
     .addr { font-size:13.5px; color:var(--ink-3); margin-bottom:16px; line-height:1.5; }
     
 
@@ -136,8 +163,11 @@
 </head>
 <body>
   <main class="card">
+    <div class="card-cover">
+      <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Salas de Estudio Miguel de Cervantes" class="cover-img" loading="lazy">
+      <span class="badge badge-cover">Sala de estudio</span>
+    </div>
     <a class="back" href="./">← Mapa de bibliotecas y salas de estudio de Madrid</a>
-    <span class="badge">Sala de estudio</span>
     <h1>Salas de Estudio Miguel de Cervantes</h1>
     <p class="addr">San Blas-Canillejas · Calle Aliaga, 5, 28022 Madrid</p>
     
