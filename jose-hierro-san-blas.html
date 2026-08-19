@@ -20,78 +20,121 @@
   <style>
     :root { --ink:#1A1F36; --ink-2:#5A6172; --ink-3:#9AA0AE; --line:#ECEEF2; }
     * { margin:0; padding:0; box-sizing:border-box; }
-    body {
+    html, body {
+      width:100%; height:100%; overflow:hidden;
       font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
-      -webkit-font-smoothing:antialiased; background:#EAEDF0; color:var(--ink);
-      min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px;
+      -webkit-font-smoothing:antialiased; color:var(--ink);
     }
-    .card {
-      background:#fff; max-width:460px; width:100%; border-radius:20px; padding:28px 28px 24px;
-      box-shadow:0 12px 40px rgba(20,30,60,0.14); overflow:hidden;
-    }
-    .back { display:inline-block; font-size:13px; color:var(--ink-2); text-decoration:none; margin-bottom:16px; }
-    .back:hover { color:var(--ink); }
     
-    /* ── Street View Cover ─────────────────── */
-    .card-cover {
-      position: relative;
-      width: calc(100% + 56px);
-      margin: -28px -28px 20px -28px;
-      height: 220px;
-      overflow: hidden;
+    /* ── Fondo Street View 1:1 a pantalla completa sin zoom ── */
+    .bg-streetview {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
       background: #0f172a;
     }
-    .streetview-iframe {
+    .bg-streetview iframe {
       width: 100%;
       height: 100%;
       border: 0;
       display: block;
     }
-    .badge-cover {
-      position: absolute;
-      bottom: 12px;
-      left: 18px;
-      margin-bottom: 0;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+    
+    /* Cubierta sutil inferior para ocultar la barra de botones de Google */
+    .bottom-cover-bar {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      width: 380px;
+      height: 24px;
+      background: #000;
       z-index: 2;
+      pointer-events: none;
     }
-    .btn-sv {
-      position: absolute;
-      bottom: 12px;
-      right: 18px;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: rgba(0,0,0,0.65);
-      color: #fff;
+    
+    /* ── Tarjeta flotante horizontal centrada abajo ── */
+    .card {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 860px;
+      width: calc(100% - 48px);
+      max-height: calc(100vh - 48px);
+      overflow-y: auto;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: 24px;
+      padding: 22px 28px 20px;
+      box-shadow: 0 24px 50px rgba(0,0,0,0.28), 0 4px 12px rgba(0,0,0,0.08);
+      z-index: 10;
+    }
+    
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .back {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-2);
       text-decoration: none;
-      backdrop-filter: blur(4px);
-      z-index: 2;
-      transition: background .12s;
+      transition: color .12s;
     }
-    .btn-sv:hover {
-      background: rgba(0,0,0,0.85);
-    }
-
+    .back:hover { color: var(--ink); }
     .badge {
-      display:inline-block; font-size:10px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase;
-      padding:3px 10px; border-radius:999px; color:#fff; margin-bottom:12px; background:#2563EB;
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 999px;
+      color: #fff;
+      background: #2563EB;
     }
-    h1 { font-size:23px; font-weight:800; letter-spacing:-0.01em; line-height:1.25; margin-bottom:8px; }
-    .addr { font-size:13.5px; color:var(--ink-3); margin-bottom:12px; line-height:1.5; }
+    
+    .card-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+    
+    h1 {
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      line-height: 1.25;
+      margin-bottom: 6px;
+    }
+    .addr {
+      font-size: 13px;
+      color: var(--ink-3);
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
     
     .capacity-tag {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 600;
       color: var(--ink-2);
       background: #F1F5F9;
-      padding: 5px 12px;
+      padding: 5px 11px;
       border-radius: 8px;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
     .capacity-tag svg {
       color: var(--ink-3);
@@ -103,14 +146,14 @@
       background: #F8FAFC;
       border: 1px solid var(--line);
       border-radius: 14px;
-      padding: 12px 15px;
-      margin-bottom: 16px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
     }
     .today-head {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 5px;
+      margin-bottom: 4px;
     }
     .today-title {
       font-size: 10.5px;
@@ -157,59 +200,93 @@
       color: #0369A1;
     }
     .today-hours {
-      font-size: 14px;
+      font-size: 13.5px;
       font-weight: 700;
       color: var(--ink);
     }
 
-    .sched h2 { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-3); margin-bottom: 6px; }
-    .sched { font-size:14.5px; line-height:1.7; border-top:1px solid var(--line); padding-top:16px; }
-    .actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:22px; }
+    .sched h2 { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-3); margin-bottom: 4px; }
+    .sched { font-size:13px; line-height:1.55; border-top:1px solid var(--line); padding-top:10px; }
+    .actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
     .btn {
-      display:inline-flex; align-items:center; gap:6px; font-size:13.5px; font-weight:600;
-      text-decoration:none; padding:9px 16px; border-radius:999px; transition:filter .12s ease;
+      display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:600;
+      text-decoration:none; padding:8px 14px; border-radius:999px; transition:filter .12s ease;
     }
     .btn-primary { background:#2563EB; color:#fff; }
     .btn-primary:hover { filter:brightness(1.08); }
     .btn-ghost { background:#F1F3F7; color:var(--ink); }
     .btn-ghost:hover { background:#E7EAF0; }
-    footer { margin-top:22px; font-size:11px; color:var(--ink-3); line-height:1.5; }
+    footer { margin-top:14px; font-size:10px; color:var(--ink-3); line-height:1.4; }
     footer a { color:var(--ink-3); }
+    
+    @media (max-width: 768px) {
+      .card {
+        bottom: 16px;
+        padding: 20px 18px 16px;
+        width: calc(100% - 32px);
+        max-height: 80vh;
+      }
+      .card-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .bottom-cover-bar {
+        width: 100%;
+      }
+    }
   </style>
 </head>
 <body>
+  <!-- Fondo Google Street View a tamaño natural 1:1 -->
+  <div class="bg-streetview">
+    <iframe src="https://maps.google.com/maps?q=&layer=c&cbll=40.4333,-3.6106&cbp=11,0,0,0,0&output=svembed" allowfullscreen loading="lazy"></iframe>
+  </div>
+  
+  <div class="bottom-cover-bar"></div>
+
+  <!-- Tarjeta horizontal centrada abajo -->
   <main class="card">
-    <div class="card-cover">
-      <iframe class="streetview-iframe" src="https://maps.google.com/maps?q=&layer=c&cbll=40.4333,-3.6106&cbp=11,0,0,0,0&output=svembed" allowfullscreen loading="lazy"></iframe>
-      <span class="badge badge-cover">Biblioteca</span>
-      <a class="btn-sv" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=40.4333,-3.6106" target="_blank" rel="noopener noreferrer">Street View 360° ↗</a>
+    <div class="card-header">
+      <a class="back" href="./">← Volver al mapa</a>
+      <span class="badge">Biblioteca</span>
     </div>
-    <a class="back" href="./">← Mapa de bibliotecas y salas de estudio de Madrid</a>
-    <h1>Biblioteca Municipal José Hierro (San Blas)</h1>
-    <p class="addr">San Blas-Canillejas · Calle María Sevilla Diago, 15, 28022 Madrid</p>
     
-    <div class="capacity-tag">
-      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      <span>190 puestos de estudio</span>
-    </div>
+    <div class="card-grid">
+      <div class="card-main-col">
+        <h1>Biblioteca Municipal José Hierro (San Blas)</h1>
+        <p class="addr">San Blas-Canillejas · Calle María Sevilla Diago, 15, 28022 Madrid</p>
+        
+        <div class="capacity-tag">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span>190 puestos de estudio</span>
+        </div>
 
-    <div class="today-card" id="today-card">
-      <div class="today-head">
-        <span class="today-title" id="today-title">HOY · Miércoles, 19 de agosto</span>
-        <span class="status-badge status-open" id="status-badge">Abierto</span>
+        <div class="actions">
+          <a class="btn btn-primary" href="./#jose-hierro-san-blas">Ver en el mapa</a>
+          <a class="btn btn-ghost" href="https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&amp;vgnextoid=338879262ef5d010VgnVCM1000000b205a0aRCRD#:~:text=Apertura%20de%20lunes%20a%20viernes.,8%3A30%20a%2021%20horas" target="_blank" rel="noopener noreferrer">Web oficial ↗</a>
+          <a class="btn btn-ghost" href="https://www.google.com/maps/@40.4333,-3.6106,3a,70.2y,0h,80t/data=!3m7!1e1!3m5!1e0!5m1!1e4" target="_blank" rel="noopener noreferrer">Street View 360° ↗</a>
+        </div>
       </div>
-      <div class="today-hours" id="today-hours">8:30–20:00h (Horario de verano)</div>
-    </div>
 
-    <div class="sched"><h2>Horario habitual</h2><div>Lun–Vie 8:30–21h</div><div>(Verano: 8:30–20h)</div></div>
-    <div class="actions">
-      <a class="btn btn-primary" href="./#jose-hierro-san-blas">Ver en el mapa</a>
-      <a class="btn btn-ghost" href="https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&amp;vgnextoid=338879262ef5d010VgnVCM1000000b205a0aRCRD#:~:text=Apertura%20de%20lunes%20a%20viernes.,8%3A30%20a%2021%20horas" target="_blank" rel="noopener noreferrer">Web oficial ↗</a>
+      <div class="card-side-col">
+        <div class="today-card" id="today-card">
+          <div class="today-head">
+            <span class="today-title" id="today-title">HOY · Miércoles, 19 de agosto</span>
+            <span class="status-badge status-open" id="status-badge">Abierto</span>
+          </div>
+          <div class="today-hours" id="today-hours">8:30–20:00h (Horario de verano)</div>
+        </div>
+
+        <div class="sched">
+          <h2>Horario habitual</h2>
+          <div>Lun–Vie 8:30–21h</div><div>(Verano: 8:30–20h)</div>
+        </div>
+        
+        <footer>
+          Datos: <a href="https://datos.madrid.es" target="_blank" rel="noopener">datos.madrid.es</a> (CC BY 4.0).
+        </footer>
+      </div>
     </div>
-    <footer>
-      Datos: <a href="https://datos.madrid.es" target="_blank" rel="noopener">datos.madrid.es</a> (CC BY 4.0).
-      Horarios orientativos; confirma siempre en la web del centro.
-    </footer>
   </main>
 
   <script>
