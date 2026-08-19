@@ -79,7 +79,7 @@ def extract_lugares(index_html):
     end = src.index("\n];", arr_start)
     body = src[arr_start + 1:end]
     body = "\n".join(ln for ln in body.split("\n") if not ln.strip().startswith("//"))
-    body = re.sub(r'(?<![\w"])(tipo|nombre|distrito|direccion|lat|lng|horario|web)\s*:',
+    body = re.sub(r'(?<![\w"])(tipo|nombre|distrito|direccion|lat|lng|plazas|horario|web)\s*:',
                   r'"\1":', body)
     jtext = "[" + body + "]"
     jtext = re.sub(r",(\s*[}\]])", r"\1", jtext)
@@ -324,6 +324,7 @@ def page_html(d, slug):
             "addressCountry": "ES",
         },
         "geo": {"@type": "GeoCoordinates", "latitude": d["lat"], "longitude": d["lng"]},
+        "maximumAttendeeCapacity": d.get("plazas", 100),
         "url": canonical,
         "areaServed": "Madrid",
     }
@@ -371,6 +372,23 @@ def page_html(d, slug):
     h1 {{ font-size:23px; font-weight:800; letter-spacing:-0.01em; line-height:1.25; margin-bottom:8px; }}
     .addr {{ font-size:13.5px; color:var(--ink-3); margin-bottom:16px; line-height:1.5; }}
     
+
+    .capacity-tag {{
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-2);
+      background: #F1F5F9;
+      padding: 5px 12px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+    }}
+    .capacity-tag svg {{
+      color: var(--ink-3);
+      flex-shrink: 0;
+    }}
     /* ── Box HOY ───────────────────────────── */
     .today-card {{
       background: #F8FAFC;
@@ -456,6 +474,11 @@ def page_html(d, slug):
     <span class="badge">{e(c["label"])}</span>
     <h1>{e(d["nombre"])}</h1>
     <p class="addr">{e(d["distrito"])} · {e(d["direccion"])}</p>
+    
+    <div class="capacity-tag">
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <span>{d.get("plazas", 100)} puestos de estudio</span>
+    </div>
     
     <div class="today-card" id="today-card">
       <div class="today-head">

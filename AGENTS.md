@@ -16,7 +16,8 @@ Minimalista: solo mapa + marcadores + panel. Sin menús, buscador ni backend.
   - una página HTML por cada centro (`<slug>.html`, p. ej. `clara-campoamor.html`), optimizada
     para SEO (title, meta, canonical, JSON-LD propio);
   - el `sitemap.xml`.
-- **`<slug>.html`** (×137) — páginas de detalle generadas (NO editar a mano; se regeneran).
+- **`<slug>.html`** (×216) — páginas de detalle generadas (NO editar a mano; se regeneran).
+- **`calendario.json`** — calendario interno 2026 con festivos, periodos estivales y excepciones.
 - **`sitemap.xml`** — generado por `build.py`.
 - **`google….html`** — verificación de Google Search Console.
 - **`manifest.json` + `sw.js` + `icons/`** — hacen la web una **PWA instalable**. El service
@@ -46,6 +47,7 @@ Cada lugar es un objeto:
   distrito: "...",
   direccion: "...",
   lat: 40.4274, lng: -3.7106,                   // grados decimales
+  plazas: 250,                                  // aforo / puestos de estudio disponibles
   horario: "Lun–Vie 9–21h\n(...)",              // \n = nueva línea en el popup
   web: "https://..."                            // OPCIONAL: si falta, el botón enlaza a una
                                                 // búsqueda en Google del nombre
