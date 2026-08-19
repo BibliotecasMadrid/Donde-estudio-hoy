@@ -26,22 +26,32 @@
       -webkit-font-smoothing:antialiased; color:var(--ink);
     }
     
-    /* ── Fondo Street View a pantalla completa (barra inferior de Google recortada) ── */
+    /* ── Fondo Street View 1:1 a pantalla completa sin zoom ── */
     .bg-streetview {
       position: fixed;
-      top: 0;
-      left: 0;
+      inset: 0;
       width: 100vw;
       height: 100vh;
-      overflow: hidden;
       z-index: 1;
       background: #0f172a;
     }
     .bg-streetview iframe {
       width: 100%;
-      height: calc(100vh + 38px);
+      height: 100%;
       border: 0;
       display: block;
+    }
+    
+    /* Cubierta sutil inferior para ocultar la barra de botones de Google */
+    .bottom-cover-bar {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      width: 380px;
+      height: 24px;
+      background: #000;
+      z-index: 2;
+      pointer-events: none;
     }
     
     /* ── Tarjeta flotante horizontal centrada abajo ── */
@@ -220,14 +230,19 @@
         grid-template-columns: 1fr;
         gap: 16px;
       }
+      .bottom-cover-bar {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- Fondo Google Street View a pantalla completa con vista exacta solicitada -->
+  <!-- Fondo Google Street View a tamaño natural 1:1 -->
   <div class="bg-streetview">
-    <iframe src="https://maps.google.com/maps?q=&layer=c&cbll=40.4808034,-3.6909622&cbp=11,9.01,0,5.27,0&output=svembed" allowfullscreen loading="lazy"></iframe>
+    <iframe src="https://maps.google.com/maps?q=&layer=c&cbll=40.4808034,-3.6909622&cbp=11,18.31,0,0,0&output=svembed" allowfullscreen loading="lazy"></iframe>
   </div>
+  
+  <div class="bottom-cover-bar"></div>
 
   <!-- Tarjeta horizontal centrada abajo -->
   <main class="card">
@@ -249,7 +264,7 @@
         <div class="actions">
           <a class="btn btn-primary" href="./#uam-facultad-de-medicina">Ver en el mapa</a>
           <a class="btn btn-ghost" href="https://biblioagenda.uam.es/hours#:~:text=Horarios" target="_blank" rel="noopener noreferrer">Web oficial ↗</a>
-          <a class="btn btn-ghost" href="https://www.google.com/maps/@40.4808034,-3.6909622,3a,69y,9.01h,84.73t/data=!3m7!1e1!3m5!1sJuOIwfAAooTfctXEuYorMQ!2e0" target="_blank" rel="noopener noreferrer">Street View 360° ↗</a>
+          <a class="btn btn-ghost" href="https://www.google.com/maps/@40.4808034,-3.6909622,3a,70.2y,18.31h,79.67t/data=!3m7!1e1!3m5!1sJuOIwfAAooTfctXEuYorMQ!2e0" target="_blank" rel="noopener noreferrer">Street View 360° ↗</a>
         </div>
       </div>
 
