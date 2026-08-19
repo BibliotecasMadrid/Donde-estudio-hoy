@@ -383,18 +383,7 @@ def page_html(d, slug):
       display: block;
     }}
     
-    /* Cubierta sutil inferior para ocultar la barra de botones de Google */
-    .bottom-cover-bar {{
-      position: fixed;
-      bottom: 0;
-      right: 0;
-      width: 380px;
-      height: 24px;
-      background: #000;
-      z-index: 2;
-      pointer-events: none;
-    }}
-    
+        
     /* ── Tarjeta flotante horizontal centrada abajo ── */
     .card {{
       position: fixed;
@@ -571,9 +560,6 @@ def page_html(d, slug):
         grid-template-columns: 1fr;
         gap: 16px;
       }}
-      .bottom-cover-bar {{
-        width: 100%;
-      }}
     }}
   </style>
 </head>
@@ -583,7 +569,6 @@ def page_html(d, slug):
     <iframe src="{streetview_url}" allowfullscreen loading="lazy"></iframe>
   </div>
   
-  <div class="bottom-cover-bar"></div>
 
   <!-- Tarjeta horizontal centrada abajo -->
   <main class="card">

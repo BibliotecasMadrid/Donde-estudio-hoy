@@ -42,18 +42,7 @@
       display: block;
     }
     
-    /* Cubierta sutil inferior para ocultar la barra de botones de Google */
-    .bottom-cover-bar {
-      position: fixed;
-      bottom: 0;
-      right: 0;
-      width: 380px;
-      height: 24px;
-      background: #000;
-      z-index: 2;
-      pointer-events: none;
-    }
-    
+        
     /* ── Tarjeta flotante horizontal centrada abajo ── */
     .card {
       position: fixed;
@@ -230,9 +219,6 @@
         grid-template-columns: 1fr;
         gap: 16px;
       }
-      .bottom-cover-bar {
-        width: 100%;
-      }
     }
   </style>
 </head>
@@ -242,7 +228,6 @@
     <iframe src="https://maps.google.com/maps?q=&layer=c&cbll=40.3845,-3.6429&cbp=11,0,0,0,0&output=svembed" allowfullscreen loading="lazy"></iframe>
   </div>
   
-  <div class="bottom-cover-bar"></div>
 
   <!-- Tarjeta horizontal centrada abajo -->
   <main class="card">
