@@ -13,7 +13,7 @@ import re, json, unicodedata, html, os, sys
 
 BASE = "https://bibliotecasmadrid.github.io/Donde-estudio-hoy/"
 ROOT = os.path.dirname(os.path.abspath(__file__))
-LASTMOD = "2026-06-16"
+LASTMOD = "2026-08-19"
 
 COLORES = {
     "biblioteca":  {"fill": "#2563EB", "label": "Biblioteca pública"},
