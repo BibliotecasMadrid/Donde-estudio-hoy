@@ -79,7 +79,7 @@ def extract_lugares(index_html):
     end = src.index("\n];", arr_start)
     body = src[arr_start + 1:end]
     body = "\n".join(ln for ln in body.split("\n") if not ln.strip().startswith("//"))
-    body = re.sub(r'(?<![\w"])(tipo|nombre|distrito|direccion|lat|lng|plazas|horario|web)\s*:',
+    body = re.sub(r'(?<![\w"])(tipo|nombre|distrito|direccion|lat|lng|plazas|foto|horario|web)\s*:',
                   r'"\1":', body)
     jtext = "[" + body + "]"
     jtext = re.sub(r",(\s*[}\]])", r"\1", jtext)

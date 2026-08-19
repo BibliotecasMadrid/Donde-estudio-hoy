@@ -228,21 +228,21 @@
     /* ── Sección HOY ───────────────────────────── */
     
     
-    /* Cover Street View del panel */
+    /* Cover foto limpia en el panel lateral */
     .panel-cover {
       position: relative;
       width: calc(100% + 48px);
       margin: -24px -24px 16px -24px;
-      height: 180px;
+      height: 160px;
       overflow: hidden;
       border-top-left-radius: 18px;
       border-top-right-radius: 18px;
-      background: #0f172a;
+      background: #E2E8F0;
     }
-    .streetview-iframe {
+    .panel-img {
       width: 100%;
       height: 100%;
-      border: 0;
+      object-fit: cover;
       display: block;
     }
     .panel-cover .panel-badge {
@@ -250,26 +250,8 @@
       bottom: 12px;
       left: 18px;
       margin-bottom: 0;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.25);
       z-index: 2;
-    }
-    .panel-sv-btn {
-      position: absolute;
-      bottom: 12px;
-      right: 18px;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: rgba(0,0,0,0.65);
-      color: #fff;
-      text-decoration: none;
-      backdrop-filter: blur(4px);
-      z-index: 2;
-      transition: background .12s;
-    }
-    .panel-sv-btn:hover {
-      background: rgba(0,0,0,0.85);
     }
 
     /* Capacidad / Aforo */
@@ -2393,6 +2375,7 @@ const lugares = [
     direccion: "Calle del Arzobispo Morcillo, 4, 28029 Madrid",
     lat: 40.4799359, lng: -3.6882841,
     plazas: 380,
+    foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnZ6wcSDgjfefmD-EYUC_jlwybfEKRfsFa2cUXF_WxoLtq1cLlAhb-W3hs91XXmeue5fUAJtaxlNMMluTLJRqdBI6jwazNkI2KTmOM0zHcLGTZG4YikGgm-s9nyT5B3oJK0KShG1g=w800-h500-k-no",
     horario: "Lun–Vie 9–21h\n(Ampliado en época de exámenes)",
     web: "https://biblioagenda.uam.es/hours#:~:text=Horarios"
   },
@@ -3586,18 +3569,49 @@ const panelBody = document.getElementById('panel-body');
 
 
 
+
+const PHOTO_POOLS = {
+  universidad: [
+    "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1568667256549-094345857637?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=800&q=80"
+  ],
+  biblioteca: [
+    "https://images.unsplash.com/photo-1507842229451-2292f75a74ff?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1505664194779-8beaceb93744?auto=format&fit=crop&w=800&q=80"
+  ],
+  sala: [
+    "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80"
+  ]
+};
+
+function getPlaceImage(d) {
+  if (d.foto) return d.foto;
+  const pool = PHOTO_POOLS[d.tipo] || PHOTO_POOLS.biblioteca;
+  let hash = 0;
+  for (let i = 0; i < d.nombre.length; i++) hash = (hash << 5) - hash + d.nombre.charCodeAt(i);
+  const idx = Math.abs(hash) % pool.length;
+  return pool[idx];
+}
+
 function panelHtml(d) {
   const c = colores[d.tipo];
   const today = getTodayInfo(d);
   const horarioHtml = d.horario.split('\n').map(l => `<div>${l}</div>`).join('');
   const label = d.web ? 'Web oficial' : 'Buscar web y horario';
-  const svUrl = `https://maps.google.com/maps?q=&layer=c&cbll=${d.lat},${d.lng}&cbp=11,0,0,0,0&output=svembed`;
-  const svLink = `https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${d.lat},${d.lng}`;
+  const imgUrl = getPlaceImage(d);
   return `
     <div class="panel-cover">
-      <iframe class="streetview-iframe" src="${svUrl}" allowfullscreen loading="lazy"></iframe>
+      <img src="${imgUrl}" alt="${d.nombre}" class="panel-img" loading="lazy">
       <span class="panel-badge" style="background:${c.fill}">${c.label}</span>
-      <a class="panel-sv-btn" href="${svLink}" target="_blank" rel="noopener noreferrer">360° ↗</a>
     </div>
     <h2 class="panel-name">${d.nombre}</h2>
     <p class="panel-address">${d.distrito} · ${d.direccion}</p>
