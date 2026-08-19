@@ -353,7 +353,7 @@
 
 const lugares = [
 
-  // ── BIBLIOTECAS PÚBLICAS (Comunidad de Madrid) ──────────────────────────
+  // ── BIBLIOTECAS PÚBLICAS (Comunidad de Madrid - Capital) ─────────────────,
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Pública Rafael Alberti",
@@ -472,7 +472,7 @@ const lugares = [
     web: "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=09ac38d60b41c010VgnVCM2000000c205a0aRCRD#:~:text=Apertura%20de%20lunes%20a%20domingo"
   },
 
-  // ── BIBLIOTECAS MUNICIPALES (Ayuntamiento de Madrid) ───────────────────
+  // ── BIBLIOTECAS MUNICIPALES (Ayuntamiento de Madrid) ───────────────────,
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal Aluche",
@@ -735,7 +735,7 @@ const lugares = [
     web: "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=17f879262ef5d010VgnVCM1000000b205a0aRCRD#:~:text=Apertura%20de%20lunes%20a%20viernes.,8%3A30%20a%2021%20horas"
   },
 
-  // ── SALAS DE ESTUDIO MUNICIPALES (Ayuntamiento de Madrid) ───────────────
+  // ── SALAS DE ESTUDIO MUNICIPALES (Ayuntamiento de Madrid) ───────────────,
   {
     tipo: "sala",
     nombre: "Sala de Estudio Alfredo Kraus",
@@ -1250,7 +1250,621 @@ const lugares = [
     web: "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=af2192cfd9558110VgnVCM1000000b205a0aRCRD#:~:text=Consultar%20telefonicamente"
   },
 
-  // ── BIBLIOTECAS UNIVERSITARIAS Y OTRAS ──────────────────────────────────
+  // ── BIBLIOTECAS MUNICIPALES DE LA COMUNIDAD DE MADRID ───────────────────,
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Central Cardenal Cisneros",
+    distrito: "Alcalá de Henares",
+    direccion: "Plaza San Julián, 1, 28801 Alcalá de Henares",
+    lat: 40.4816, lng: -3.3688,
+    horario: "Lun–Vie 8:30–21h · Sáb 9–14h",
+    web: "https://bibliotecas.ayto-alcaladehenares.es/#:~:text=Horario"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal Pío Baroja (Alcalá)",
+    distrito: "Alcalá de Henares",
+    direccion: "Calle Torrelaguna, 33, 28807 Alcalá de Henares",
+    lat: 40.4932, lng: -3.3647,
+    horario: "Lun–Vie 8:30–21h",
+    web: "https://bibliotecas.ayto-alcaladehenares.es/#:~:text=Horario"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal Rosa Chacel (Alcalá)",
+    distrito: "Alcalá de Henares",
+    direccion: "Parque Juan de la Cueva, s/n, 28806 Alcalá de Henares",
+    lat: 40.4789, lng: -3.3854,
+    horario: "Lun–Vie 8:30–21h",
+    web: "https://bibliotecas.ayto-alcaladehenares.es/#:~:text=Horario"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal María Moliner (Alcalá)",
+    distrito: "Alcalá de Henares",
+    direccion: "Calle San Vidal, 33, 28803 Alcalá de Henares",
+    lat: 40.4741, lng: -3.3762,
+    horario: "Lun–Vie 8:30–21h",
+    web: "https://bibliotecas.ayto-alcaladehenares.es/#:~:text=Horario"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Mediateca Centro de Arte Alcobendas",
+    distrito: "Alcobendas",
+    direccion: "Calle Mariano Sebastián Izuel, 9, 28100 Alcobendas",
+    lat: 40.5435, lng: -3.6398,
+    horario: "Lun–Sáb 10–21h · Dom 10–14h",
+    web: "https://www.alcobendas.org/es/servicios/cultura/mediatecas#:~:text=Horario"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Mediateca Anabel Segura",
+    distrito: "Alcobendas",
+    direccion: "Avenida de Bruselas, 19, 28108 Alcobendas",
+    lat: 40.5302, lng: -3.6358,
+    horario: "Lun–Vie 9–21h · Sáb 9–14h",
+    web: "https://www.alcobendas.org/es/servicios/cultura/mediatecas#:~:text=Horario"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Mediateca Pablo Iglesias",
+    distrito: "Alcobendas",
+    direccion: "Paseo de la Chopera, 59, 28100 Alcobendas",
+    lat: 40.5484, lng: -3.6481,
+    horario: "Lun–Vie 9–21h · Sáb 9–14h",
+    web: "https://www.alcobendas.org/es/servicios/cultura/mediatecas#:~:text=Horario"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Mediateca José Hierro (Alcobendas)",
+    distrito: "Alcobendas",
+    direccion: "Avenida de Europa, 1, 28108 Alcobendas",
+    lat: 40.5361, lng: -3.6482,
+    horario: "Lun–Vie 9–21h",
+    web: "https://www.alcobendas.org/es/servicios/cultura/mediatecas#:~:text=Horario"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Central de San Sebastián de los Reyes",
+    distrito: "San Sebastián de los Reyes",
+    direccion: "Plaza de Andrés Caballero, 2, 28701 San Sebastián de los Reyes",
+    lat: 40.5471, lng: -3.6264,
+    horario: "Lun–Vie 9–21h · Sáb 9–14h",
+    web: "https://www.ssreyes.org/es/portal.do?IDM=63&NM=2#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Claudio Rodríguez (San Sebastián de los Reyes)",
+    distrito: "San Sebastián de los Reyes",
+    direccion: "Avenida Maximiliano Puerro del Tell, s/n, 28701 San Sebastián de los Reyes",
+    lat: 40.5539, lng: -3.6298,
+    horario: "Lun–Vie 9–21h · Sáb 9–14h",
+    web: "https://www.ssreyes.org/es/portal.do?IDM=63&NM=2#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Plaza de la Iglesia (San Sebastián de los Reyes)",
+    distrito: "San Sebastián de los Reyes",
+    direccion: "Plaza de la Iglesia, 4, 28701 San Sebastián de los Reyes",
+    lat: 40.5463, lng: -3.6231,
+    horario: "Lun–Vie 9–21h",
+    web: "https://www.ssreyes.org/es/portal.do?IDM=63&NM=2#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal Ricardo de la Vega",
+    distrito: "Getafe",
+    direccion: "Calle Caldas de Reyes, s/n, 28901 Getafe",
+    lat: 40.3061, lng: -3.7312,
+    horario: "Lun–Vie 9–21h",
+    web: "https://getafe.es/areas-tematicas/cultura/bibliotecas/#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Jorge Luis Borges (Getafe)",
+    distrito: "Getafe",
+    direccion: "Calle Perú, 2, 28903 Getafe",
+    lat: 40.3015, lng: -3.7226,
+    horario: "Lun–Vie 9–21h · Sáb 9–14h",
+    web: "https://getafe.es/areas-tematicas/cultura/bibliotecas/#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca José Luis Sampedro (Getafe)",
+    distrito: "Getafe",
+    direccion: "Calle Rosa de Luxemburgo, s/n, 28903 Getafe",
+    lat: 40.3152, lng: -3.7208,
+    horario: "Lun–Vie 9–21h",
+    web: "https://getafe.es/areas-tematicas/cultura/bibliotecas/#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Carmen Martín Gaite (Getafe Sector III)",
+    distrito: "Getafe",
+    direccion: "Calle Joan Font, 5, 28905 Getafe",
+    lat: 40.2926, lng: -3.7431,
+    horario: "Lun–Vie 9–21h",
+    web: "https://getafe.es/areas-tematicas/cultura/bibliotecas/#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Central Julio Caro Baroja (Leganés)",
+    distrito: "Leganés",
+    direccion: "Avenida Reina Sofía, 4, 28919 Leganés",
+    lat: 40.3421, lng: -3.7618,
+    horario: "Lun–Vie 8:30–21h · Sáb 9–14h",
+    web: "https://www.leganes.org/portal/cultura/bibliotecas#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Enrique Tierno Galván (Leganés)",
+    distrito: "Leganés",
+    direccion: "Calle San Amado, 20, 28917 Leganés",
+    lat: 40.3342, lng: -3.7541,
+    horario: "Lun–Vie 9–21h",
+    web: "https://www.leganes.org/portal/cultura/bibliotecas#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Rigoberta Menchú (Leganés)",
+    distrito: "Leganés",
+    direccion: "Avenida Rey Juan Carlos I, 100, 28915 Leganés",
+    lat: 40.3276, lng: -3.7742,
+    horario: "Lun–Vie 9–21h",
+    web: "https://www.leganes.org/portal/cultura/bibliotecas#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Julián Besteiro (Leganés)",
+    distrito: "Leganés",
+    direccion: "Avenida Juan Carlos I, 30, 28915 Leganés",
+    lat: 40.3312, lng: -3.7665,
+    horario: "Lun–Vie 9–21h",
+    web: "https://www.leganes.org/portal/cultura/bibliotecas#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Central Almudena Grandes (Móstoles)",
+    distrito: "Móstoles",
+    direccion: "Calle Pintor Velázquez, 68, 28935 Móstoles",
+    lat: 40.3235, lng: -3.8712,
+    horario: "Lun–Vie 8:30–20:30h · Sáb 9–14h",
+    web: "https://www.mostoles.es/es/cultura/bibliotecas-municipales#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Norte (Móstoles)",
+    distrito: "Móstoles",
+    direccion: "Calle Coronel de Palma, 1, 28934 Móstoles",
+    lat: 40.3289, lng: -3.8631,
+    horario: "Lun–Vie 9–21h",
+    web: "https://www.mostoles.es/es/cultura/bibliotecas-municipales#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca El Soto (Móstoles)",
+    distrito: "Móstoles",
+    direccion: "Avenida de los Deportes, s/n, 28935 Móstoles",
+    lat: 40.3182, lng: -3.8821,
+    horario: "Lun–Vie 9–21h",
+    web: "https://www.mostoles.es/es/cultura/bibliotecas-municipales#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Parque Coimbra",
+    distrito: "Móstoles",
+    direccion: "Calle de los Cedros, 71, 28937 Móstoles",
+    lat: 40.3012, lng: -3.9314,
+    horario: "Lun–Vie 9–21h",
+    web: "https://www.mostoles.es/es/cultura/bibliotecas-municipales#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Central José Hierro (Alcorcón)",
+    distrito: "Alcorcón",
+    direccion: "Calle de los Robles, s/n, 28922 Alcorcón",
+    lat: 40.3475, lng: -3.8291,
+    horario: "Lun–Vie 8:30–20:30h · Sáb 9–14h",
+    web: "https://www.ayto-alcorcon.es/es/servicios/cultura/red-de-bibliotecas#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca El Parque (Alcorcón)",
+    distrito: "Alcorcón",
+    direccion: "Avenida de Leganés, 31, 28921 Alcorcón",
+    lat: 40.3491, lng: -3.8215,
+    horario: "Lun–Vie 9–21h",
+    web: "https://www.ayto-alcorcon.es/es/servicios/cultura/red-de-bibliotecas#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Ciudad de Nejapa (Alcorcón)",
+    distrito: "Alcorcón",
+    direccion: "Calle Pintor Picasso, 2, 28922 Alcorcón",
+    lat: 40.3429, lng: -3.8342,
+    horario: "Lun–Vie 9–21h",
+    web: "https://www.ayto-alcorcon.es/es/servicios/cultura/red-de-bibliotecas#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Joaquín Vilumbrales (Alcorcón)",
+    distrito: "Alcorcón",
+    direccion: "Calle Alcorcón, s/n, 28925 Alcorcón",
+    lat: 40.3541, lng: -3.8162,
+    horario: "Lun–Vie 9–21h",
+    web: "https://www.ayto-alcorcon.es/es/servicios/cultura/red-de-bibliotecas#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Tomás y Valiente (Fuenlabrada)",
+    distrito: "Fuenlabrada",
+    direccion: "Calle Leganés, 51, 28945 Fuenlabrada",
+    lat: 40.2872, lng: -3.7915,
+    horario: "Lun–Vie 8:30–21h · Sáb 9–14h",
+    web: "https://www.ayto-fuenlabrada.es/servicios/cultura/bibliotecas#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Fernando de los Ríos (Fuenlabrada)",
+    distrito: "Fuenlabrada",
+    direccion: "Calle Andorra, 3, 28943 Fuenlabrada",
+    lat: 40.2915, lng: -3.8052,
+    horario: "Lun–Vie 9–21h",
+    web: "https://www.ayto-fuenlabrada.es/servicios/cultura/bibliotecas#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Antonio Machado (Fuenlabrada)",
+    distrito: "Fuenlabrada",
+    direccion: "Calle Sevilla, 9, 28941 Fuenlabrada",
+    lat: 40.2829, lng: -3.7981,
+    horario: "Lun–Vie 9–21h",
+    web: "https://www.ayto-fuenlabrada.es/servicios/cultura/bibliotecas#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Caballero Bonald (Fuenlabrada)",
+    distrito: "Fuenlabrada",
+    direccion: "Calle Creta, 32, 28944 Fuenlabrada",
+    lat: 40.2762, lng: -3.8115,
+    horario: "Lun–Vie 9–21h",
+    web: "https://www.ayto-fuenlabrada.es/servicios/cultura/bibliotecas#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Miguel de Cervantes (Pozuelo)",
+    distrito: "Pozuelo de Alarcón",
+    direccion: "Plaza Mayor, 1, 28223 Pozuelo de Alarcón",
+    lat: 40.4358, lng: -3.8152,
+    horario: "Lun–Vie 8:30–21h · Sáb 9–14h",
+    web: "https://cultura.pozuelodealarcon.org/cultura-y-ocio/bibliotecas#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Rosalía de Castro (Pozuelo)",
+    distrito: "Pozuelo de Alarcón",
+    direccion: "Calle Estación, 2, 28224 Pozuelo de Alarcón",
+    lat: 40.4441, lng: -3.8049,
+    horario: "Lun–Vie 8:30–21h · Sáb 9–14h",
+    web: "https://cultura.pozuelodealarcon.org/cultura-y-ocio/bibliotecas#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal Volturno",
+    distrito: "Pozuelo de Alarcón",
+    direccion: "Calle Volturno, 2, 28223 Pozuelo de Alarcón",
+    lat: 40.4285, lng: -3.7925,
+    horario: "Lun–Vie 8:30–21h",
+    web: "https://cultura.pozuelodealarcon.org/cultura-y-ocio/bibliotecas#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Leon Tolstoi (Las Rozas)",
+    distrito: "Las Rozas de Madrid",
+    direccion: "Calle Octavio Paz, 2, 28232 Las Rozas de Madrid",
+    lat: 40.4998, lng: -3.8821,
+    horario: "Lun–Vie 9–21h · Sáb 9–14h\n(Ampliado en exámenes)",
+    web: "https://www.lasrozas.es/cultura-y-deportes/bibliotecas#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Las Matas (Marga Gil Roësset)",
+    distrito: "Las Rozas de Madrid",
+    direccion: "Plaza Gabriel María Cárdenas, s/n, 28290 Las Rozas de Madrid",
+    lat: 40.5542, lng: -3.8961,
+    horario: "Lun–Vie 9–21h",
+    web: "https://www.lasrozas.es/cultura-y-deportes/bibliotecas#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal de Las Rozas",
+    distrito: "Las Rozas de Madrid",
+    direccion: "Calle Juan Barjola, s/n, 28231 Las Rozas de Madrid",
+    lat: 40.4921, lng: -3.8742,
+    horario: "Lun–Vie 9–21h",
+    web: "https://www.lasrozas.es/cultura-y-deportes/bibliotecas#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal Francisco Umbral (Majadahonda)",
+    distrito: "Majadahonda",
+    direccion: "Calle Las Norias, 39, 28220 Majadahonda",
+    lat: 40.4721, lng: -3.8722,
+    horario: "Lun–Vie 9–21h · Sáb 10–14h",
+    web: "https://www.majadahonda.org/biblioteca-municipal-francisco-umbral#:~:text=Horario"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Princesa Doña Leonor (Boadilla)",
+    distrito: "Boadilla del Monte",
+    direccion: "Calle Mártires, 1, 28660 Boadilla del Monte",
+    lat: 40.4072, lng: -3.8751,
+    horario: "Lun–Vie 9–22h · Sáb–Dom 10–22h",
+    web: "https://ayuntamientoboadilladelmonte.org/bibliotecas#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Gloria Fuertes (Rivas)",
+    distrito: "Rivas-Vaciamadrid",
+    direccion: "Calle Jovellanos, 30, 28522 Rivas-Vaciamadrid",
+    lat: 40.3541, lng: -3.5381,
+    horario: "Lun–Vie 10–21h · Sáb 10–14h",
+    web: "https://www.rivasciudad.es/servicio/bibliotecas-municipales/#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Federico García Lorca (Rivas)",
+    distrito: "Rivas-Vaciamadrid",
+    direccion: "Plaza de la Constitución, 1, 28522 Rivas-Vaciamadrid",
+    lat: 40.3512, lng: -3.5315,
+    horario: "Lun–Vie 10–21h",
+    web: "https://www.rivasciudad.es/servicio/bibliotecas-municipales/#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca José Saramago (Rivas)",
+    distrito: "Rivas-Vaciamadrid",
+    direccion: "Avenida de Covibar, 10, 28523 Rivas-Vaciamadrid",
+    lat: 40.3582, lng: -3.5491,
+    horario: "Lun–Vie 10–21h",
+    web: "https://www.rivasciudad.es/servicio/bibliotecas-municipales/#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Central Federico García Lorca (Torrejón)",
+    distrito: "Torrejón de Ardoz",
+    direccion: "Plaza del Maestro, s/n, 28850 Torrejón de Ardoz",
+    lat: 40.4578, lng: -3.4795,
+    horario: "Lun–Vie 8:30–21:15h · Sáb 9–13:45h",
+    web: "https://www.ayto-torrejon.es/areas-municipales/cultura/bibliotecas#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Gabriel Celaya (Torrejón)",
+    distrito: "Torrejón de Ardoz",
+    direccion: "Calle Salvador Allende, 7, 28850 Torrejón de Ardoz",
+    lat: 40.4632, lng: -3.4691,
+    horario: "Lun–Vie 8:30–21:15h",
+    web: "https://www.ayto-torrejon.es/areas-municipales/cultura/bibliotecas#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca La Caja del Arte (Torrejón)",
+    distrito: "Torrejón de Ardoz",
+    direccion: "Calle Joaquín Blume, 4, 28850 Torrejón de Ardoz",
+    lat: 40.4491, lng: -3.4652,
+    horario: "Lun–Vie 8:30–21:15h",
+    web: "https://www.ayto-torrejon.es/areas-municipales/cultura/bibliotecas#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Central de Coslada",
+    distrito: "Coslada",
+    direccion: "Calle Luisa Muñoz, 1, 28821 Coslada",
+    lat: 40.4261, lng: -3.5652,
+    horario: "Lun–Vie 9–21h · Sáb 9–14h",
+    web: "https://coslada.es/cultura/bibliotecas/#:~:text=Horario"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca La Jaramilla (Coslada)",
+    distrito: "Coslada",
+    direccion: "Avenida de la Constitución, 47, 28821 Coslada",
+    lat: 40.4285, lng: -3.5591,
+    horario: "Lun–Vie 9–21h",
+    web: "https://coslada.es/cultura/bibliotecas/#:~:text=Horario"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Rafael Alberti (San Fernando de Henares)",
+    distrito: "San Fernando de Henares",
+    direccion: "Calle Real, 40, 28830 San Fernando de Henares",
+    lat: 40.4239, lng: -3.5358,
+    horario: "Lun–Vie 9–21h",
+    web: "https://ayto-sanfernando.com/areas-municipales/cultura/biblioteca/#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal Lope de Vega (Tres Cantos)",
+    distrito: "Tres Cantos",
+    direccion: "Avenida de los Labradores, 28, 28760 Tres Cantos",
+    lat: 40.6015, lng: -3.7082,
+    horario: "Lun–Vie 9–21h · Sáb–Dom 9–21h",
+    web: "https://www.trescantos.es/cultura/bibliotecas/#:~:text=Horario"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal Pablo Neruda (Colmenar Viejo)",
+    distrito: "Colmenar Viejo",
+    direccion: "Calle Real, 42, 28770 Colmenar Viejo",
+    lat: 40.6582, lng: -3.7661,
+    horario: "Lun–Vie 9–21h · Sáb 9–14h",
+    web: "https://www.colmenarviejo.com/cultura/bibliotecas-municipales#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Mario Vargas Llosa (Colmenar Viejo)",
+    distrito: "Colmenar Viejo",
+    direccion: "Calle de la Soledad, 2, 28770 Colmenar Viejo",
+    lat: 40.6621, lng: -3.7712,
+    horario: "Lun–Vie 9–21h",
+    web: "https://www.colmenarviejo.com/cultura/bibliotecas-municipales#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal Miguel Hernández (Collado Villalba)",
+    distrito: "Collado Villalba",
+    direccion: "Calle Batalla de Bailén, 7, 28400 Collado Villalba",
+    lat: 40.6315, lng: -4.0082,
+    horario: "Lun–Vie 8:30–20:30h · Sáb 9–14h",
+    web: "https://colladovillalba.es/es/servicios-municipales/cultura/bibliotecas/#:~:text=Horario"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Sancho Panza (Collado Villalba)",
+    distrito: "Collado Villalba",
+    direccion: "Calle Torrelodones, 8, 28400 Collado Villalba",
+    lat: 40.6271, lng: -4.0152,
+    horario: "Lun–Vie 9–20:30h",
+    web: "https://colladovillalba.es/es/servicios-municipales/cultura/bibliotecas/#:~:text=Horario"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal Álvarez de Quindós (Aranjuez)",
+    distrito: "Aranjuez",
+    direccion: "Plaza de San Antonio, 9, 28300 Aranjuez",
+    lat: 40.0332, lng: -3.6025,
+    horario: "Lun–Vie 9–21h · Sáb 9–14h",
+    web: "https://www.aranjuez.es/cultura/bibliotecas-municipales/#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal Ana María Matute (Valdemoro)",
+    distrito: "Valdemoro",
+    direccion: "Avenida de Hispanoamérica, 2, 28341 Valdemoro",
+    lat: 40.1872, lng: -3.6821,
+    horario: "Lun–Vie 9–21h · Sáb 9–14h",
+    web: "https://www.valdemoro.es/bibliotecas#:~:text=Horario"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Juan Prado (Valdemoro)",
+    distrito: "Valdemoro",
+    direccion: "Calle de la Estrella de Elola, 27, 28341 Valdemoro",
+    lat: 40.1915, lng: -3.6765,
+    horario: "Lun–Vie 9–21h",
+    web: "https://www.valdemoro.es/bibliotecas#:~:text=Horario"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Javier Lapeña (Pinto)",
+    distrito: "Pinto",
+    direccion: "Calle Emilio Zola, 2, 28320 Pinto",
+    lat: 40.2441, lng: -3.6982,
+    horario: "Lun–Vie 9–21h · Sáb 9–14h",
+    web: "https://ayto-pinto.es/areas-municipales/cultura/bibliotecas/#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Casa de la Cadena (Pinto)",
+    distrito: "Pinto",
+    direccion: "Calle de la Cadena, s/n, 28320 Pinto",
+    lat: 40.2412, lng: -3.7015,
+    horario: "Lun–Vie 9–21h",
+    web: "https://ayto-pinto.es/areas-municipales/cultura/bibliotecas/#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Gloria Fuertes (Parla)",
+    distrito: "Parla",
+    direccion: "Calle Alfonso X El Sabio, 3, 28982 Parla",
+    lat: 40.2361, lng: -3.7725,
+    horario: "Lun–Vie 9–21h · Sáb 9–14h",
+    web: "https://www.ayuntamientoparla.es/servicios/cultura/bibliotecas#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Isaac Albéniz (Parla)",
+    distrito: "Parla",
+    direccion: "Calle Lago Blanco, 5, 28981 Parla",
+    lat: 40.2415, lng: -3.7651,
+    horario: "Lun–Vie 9–21h",
+    web: "https://www.ayuntamientoparla.es/servicios/cultura/bibliotecas#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Pablo Neruda (Arganda del Rey)",
+    distrito: "Arganda del Rey",
+    direccion: "Calle Real, 36, 28500 Arganda del Rey",
+    lat: 40.3012, lng: -3.4435,
+    horario: "Lun–Vie 9–21h · Sáb 9–14h",
+    web: "https://www.ayto-arganda.es/servicios/cultura/bibliotecas/#:~:text=Horario"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Manuel Vázquez Montalbán (San Lorenzo)",
+    distrito: "San Lorenzo de El Escorial",
+    direccion: "Calle Teresa Berganza, 2, 28200 San Lorenzo de El Escorial",
+    lat: 40.5912, lng: -4.1481,
+    horario: "Lun–Vie 9–21h · Sáb 10–14h",
+    web: "https://sanlorenzodeelescorial.org/cultura/biblioteca-municipal/#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal Luis de Góngora",
+    distrito: "Villaviciosa de Odón",
+    direccion: "Calle Nueva, 8, 28670 Villaviciosa de Odón",
+    lat: 40.3582, lng: -3.9015,
+    horario: "Lun–Vie 9–21h · Sáb 9–14h",
+    web: "https://www.ayto-villaviciosadeodon.es/servicios/cultura/biblioteca-municipal#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca F. Lázaro Carreter (Villanueva de la Cañada)",
+    distrito: "Villanueva de la Cañada",
+    direccion: "Calle Folías, 4, 28691 Villanueva de la Cañada",
+    lat: 40.4491, lng: -3.9982,
+    horario: "Lun–Vie 9–21h",
+    web: "https://www.ayto-villacanada.es/cultura/biblioteca-municipal/#:~:text=Horario"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca José Vicente Muñoz (Torrelodones)",
+    distrito: "Torrelodones",
+    direccion: "Calle Jesusa Lara, 47, 28250 Torrelodones",
+    lat: 40.5752, lng: -3.9312,
+    horario: "Lun–Vie 9–21h · Sáb 9–14h",
+    web: "https://www.torrelodones.es/cultura/bibliotecas#:~:text=Horarios"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Ricardo León (Galapagar)",
+    distrito: "Galapagar",
+    direccion: "Plaza de la Constitución, 3, 28260 Galapagar",
+    lat: 40.5791, lng: -4.0042,
+    horario: "Lun–Vie 9–21h · Sáb 9–14h",
+    web: "https://galapagar.es/servicios/cultura/biblioteca-municipal/#:~:text=Horario"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal de Guadarrama",
+    distrito: "Guadarrama",
+    direccion: "Calle de las Carretas, 1, 28440 Guadarrama",
+    lat: 40.6721, lng: -4.0891,
+    horario: "Lun–Vie 9–21h",
+    web: "https://www.guadarrama.es/cultura/biblioteca/#:~:text=Horario"
+  },
+  {
+    tipo: "biblioteca",
+    nombre: "Biblioteca Municipal de Navalcarnero",
+    distrito: "Navalcarnero",
+    direccion: "Calle de la Cruz Verde, 1, 28600 Navalcarnero",
+    lat: 40.2882, lng: -4.0152,
+    horario: "Lun–Vie 9–21h",
+    web: "https://www.navalcarnero.es/servicios/cultura/biblioteca-municipal/#:~:text=Horarios"
+  },
+
+  // ── BIBLIOTECAS UNIVERSITARIAS Y CENTROS DE INVESTIGACIÓN ───────────────,
   {
     tipo: "universidad",
     nombre: "Biblioteca UCM – Edificio Multiusos",
@@ -1592,6 +2206,105 @@ const lugares = [
     lat: 40.4402647, lng: -3.8339056,
     horario: "Lun–Vie 8–22h · Sáb 9–14h\n(Acceso preferente a la comunidad universitaria)",
     web: "https://www.ufv.es/biblioteca/#:~:text=Horarios"
+  },
+  {
+    tipo: "universidad",
+    nombre: "Biblioteca UAH – Edificio CRAI (Alcalá Centro)",
+    distrito: "Alcalá de Henares",
+    direccion: "Plaza de San Diego, s/n, 28801 Alcalá de Henares",
+    lat: 40.4827, lng: -3.3635,
+    horario: "Lun–Dom 8:30–21:30h\n(Ampliado 24h en exámenes)",
+    web: "https://biblioteca.uah.es/es/conoce-la-biblioteca/horarios/#:~:text=Horarios"
+  },
+  {
+    tipo: "universidad",
+    nombre: "Biblioteca UAH – Campus Científico Tecnológico",
+    distrito: "Alcalá de Henares",
+    direccion: "Ctra. Madrid-Barcelona, km 33.6, 28805 Alcalá de Henares",
+    lat: 40.5123, lng: -3.3488,
+    horario: "Lun–Vie 8:30–21h\n(Politécnica, Farmacia y Medicina)",
+    web: "https://biblioteca.uah.es/es/conoce-la-biblioteca/horarios/#:~:text=Horarios"
+  },
+  {
+    tipo: "universidad",
+    nombre: "Biblioteca UAM – Facultad de Ciencias (Cantoblanco)",
+    distrito: "Madrid (Fuencarral-El Pardo / Cantoblanco)",
+    direccion: "Calle Francisco Tomás y Valiente, 7, 28049 Madrid",
+    lat: 40.5482, lng: -3.6941,
+    horario: "Lun–Vie 8:30–21h\n(Ampliado en época de exámenes)",
+    web: "https://biblioagenda.uam.es/hours#:~:text=Horarios"
+  },
+  {
+    tipo: "universidad",
+    nombre: "Biblioteca UAM – Facultad de Derecho (Cantoblanco)",
+    distrito: "Madrid (Fuencarral-El Pardo / Cantoblanco)",
+    direccion: "Calle Kelsen, 1, 28049 Madrid",
+    lat: 40.5441, lng: -3.6932,
+    horario: "Lun–Vie 8:30–21h\n(Ampliado en época de exámenes)",
+    web: "https://biblioagenda.uam.es/hours#:~:text=Horarios"
+  },
+  {
+    tipo: "universidad",
+    nombre: "Biblioteca UAM – Humanidades (Cantoblanco)",
+    distrito: "Madrid (Fuencarral-El Pardo / Cantoblanco)",
+    direccion: "Calle Francisco Tomás y Valiente, 1, 28049 Madrid",
+    lat: 40.5465, lng: -3.6912,
+    horario: "Lun–Vie 8:30–21h\n(Filosofía y Letras)",
+    web: "https://biblioagenda.uam.es/hours#:~:text=Horarios"
+  },
+  {
+    tipo: "universidad",
+    nombre: "Biblioteca UAM – Facultad de Psicología (Cantoblanco)",
+    distrito: "Madrid (Fuencarral-El Pardo / Cantoblanco)",
+    direccion: "Calle Iván Pavlov, 6, 28049 Madrid",
+    lat: 40.5491, lng: -3.6965,
+    horario: "Lun–Vie 8:30–20:30h\n(Ampliado en época de exámenes)",
+    web: "https://biblioagenda.uam.es/hours#:~:text=Horarios"
+  },
+  {
+    tipo: "universidad",
+    nombre: "Biblioteca UAM – Ciencias Económicas (Cantoblanco)",
+    distrito: "Madrid (Fuencarral-El Pardo / Cantoblanco)",
+    direccion: "Calle Francisco Tomás y Valiente, 5, 28049 Madrid",
+    lat: 40.5452, lng: -3.6958,
+    horario: "Lun–Vie 8:30–21h\n(Ampliado en época de exámenes)",
+    web: "https://biblioagenda.uam.es/hours#:~:text=Horarios"
+  },
+  {
+    tipo: "universidad",
+    nombre: "Biblioteca UAM – Escuela Politécnica Superior",
+    distrito: "Madrid (Fuencarral-El Pardo / Cantoblanco)",
+    direccion: "Calle Francisco Tomás y Valiente, 11, 28049 Madrid",
+    lat: 40.5498, lng: -3.6895,
+    horario: "Lun–Vie 8:30–20:30h\n(Ampliado en época de exámenes)",
+    web: "https://biblioagenda.uam.es/hours#:~:text=Horarios"
+  },
+  {
+    tipo: "universidad",
+    nombre: "Biblioteca UC3M – Campus Colmenarejo (Menéndez Pidal)",
+    distrito: "Colmenarejo",
+    direccion: "Avenida de la Universidad, 1, 28270 Colmenarejo",
+    lat: 40.5572, lng: -4.0125,
+    horario: "Lun–Vie 8:30–21:30h · Sáb 9–14h",
+    web: "https://www.uc3m.es/biblioteca/horarios-calendario#:~:text=Horarios%20habituales"
+  },
+  {
+    tipo: "universidad",
+    nombre: "Biblioteca UPM – Campus Montegancedo (Informática)",
+    distrito: "Boadilla del Monte / Pozuelo",
+    direccion: "Calle Cirilo Amorós, s/n, 28660 Boadilla del Monte",
+    lat: 40.4061, lng: -3.8385,
+    horario: "Lun–Vie 8:30–20:45h\n(Facultad de Informática)",
+    web: "https://www.upm.es/UPM/Biblioteca/NuestraBiblioteca/Horarios#:~:text=Horarios"
+  },
+  {
+    tipo: "universidad",
+    nombre: "Biblioteca CSIC – Tomás Navarro Tomás",
+    distrito: "Madrid (San Blas-Canillejas)",
+    direccion: "Calle Albasanz, 26, 28037 Madrid",
+    lat: 40.4358, lng: -3.6305,
+    horario: "Lun–Vie 8:30–20:30h\n(Centro de Ciencias Humanas y Sociales)",
+    web: "https://biblioteca.cchs.csic.es/#:~:text=Horario"
   }
 ];
 
