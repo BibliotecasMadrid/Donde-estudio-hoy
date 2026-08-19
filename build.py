@@ -679,6 +679,19 @@ def page_html(d, slug):
     const slug = "{slug}";
     const CALENDARIO = JSON.parse({cal_json_esc});
     
+    // Interceptar botón 'Atrás' del navegador para ir a "Ver en el mapa"
+    try {{
+      const mapTarget = './#' + encodeURIComponent(slug);
+      if (!history.state || history.state.view !== 'detail') {{
+        history.replaceState({{ view: 'map' }}, '', mapTarget);
+        history.pushState({{ view: 'detail' }}, '', window.location.href);
+      }}
+      window.addEventListener('popstate', function(e) {{
+        window.location.href = mapTarget;
+        window.location.reload();
+      }});
+    }} catch (err) {{}}
+    
     function updateToday() {{
       const date = new Date();
       const day = date.getDay();
