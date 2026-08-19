@@ -20,78 +20,95 @@
   <style>
     :root { --ink:#1A1F36; --ink-2:#5A6172; --ink-3:#9AA0AE; --line:#ECEEF2; }
     * { margin:0; padding:0; box-sizing:border-box; }
-    body {
+    html, body {
+      width:100%; height:100%; overflow:hidden;
       font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
-      -webkit-font-smoothing:antialiased; background:#EAEDF0; color:var(--ink);
-      min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px;
+      -webkit-font-smoothing:antialiased; color:var(--ink);
     }
-    .card {
-      background:#fff; max-width:460px; width:100%; border-radius:20px; padding:28px 28px 24px;
-      box-shadow:0 12px 40px rgba(20,30,60,0.14); overflow:hidden;
-    }
-    .back { display:inline-block; font-size:13px; color:var(--ink-2); text-decoration:none; margin-bottom:16px; }
-    .back:hover { color:var(--ink); }
     
-    /* ── Street View Cover ─────────────────── */
-    .card-cover {
-      position: relative;
-      width: calc(100% + 56px);
-      margin: -28px -28px 20px -28px;
-      height: 220px;
-      overflow: hidden;
+    /* ── Fondo Street View a pantalla completa ── */
+    .bg-streetview {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
       background: #0f172a;
     }
-    .streetview-iframe {
+    .bg-streetview iframe {
       width: 100%;
       height: 100%;
       border: 0;
       display: block;
     }
-    .badge-cover {
-      position: absolute;
-      bottom: 12px;
-      left: 18px;
-      margin-bottom: 0;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.35);
-      z-index: 2;
+    
+    /* ── Tarjeta flotante arriba a la derecha ── */
+    .card {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      max-width: 430px;
+      width: calc(100% - 48px);
+      max-height: calc(100vh - 48px);
+      overflow-y: auto;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      border-radius: 20px;
+      padding: 24px 24px 20px;
+      box-shadow: 0 20px 45px rgba(0,0,0,0.22), 0 4px 12px rgba(0,0,0,0.08);
+      z-index: 10;
     }
-    .btn-sv {
-      position: absolute;
-      bottom: 12px;
-      right: 18px;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: rgba(0,0,0,0.65);
-      color: #fff;
+    .back {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-2);
       text-decoration: none;
-      backdrop-filter: blur(4px);
-      z-index: 2;
-      transition: background .12s;
+      margin-bottom: 14px;
+      transition: color .12s;
     }
-    .btn-sv:hover {
-      background: rgba(0,0,0,0.85);
-    }
-
+    .back:hover { color: var(--ink); }
     .badge {
-      display:inline-block; font-size:10px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase;
-      padding:3px 10px; border-radius:999px; color:#fff; margin-bottom:12px; background:#7C3AED;
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 999px;
+      color: #fff;
+      margin-bottom: 10px;
+      background: #7C3AED;
     }
-    h1 { font-size:23px; font-weight:800; letter-spacing:-0.01em; line-height:1.25; margin-bottom:8px; }
-    .addr { font-size:13.5px; color:var(--ink-3); margin-bottom:12px; line-height:1.5; }
+    h1 {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      line-height: 1.25;
+      margin-bottom: 6px;
+    }
+    .addr {
+      font-size: 13px;
+      color: var(--ink-3);
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
     
     .capacity-tag {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 600;
       color: var(--ink-2);
       background: #F1F5F9;
-      padding: 5px 12px;
+      padding: 5px 11px;
       border-radius: 8px;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
     .capacity-tag svg {
       color: var(--ink-3);
@@ -103,8 +120,8 @@
       background: #F8FAFC;
       border: 1px solid var(--line);
       border-radius: 14px;
-      padding: 12px 15px;
-      margin-bottom: 16px;
+      padding: 12px 14px;
+      margin-bottom: 14px;
     }
     .today-head {
       display: flex;
@@ -157,34 +174,48 @@
       color: #0369A1;
     }
     .today-hours {
-      font-size: 14px;
+      font-size: 13.5px;
       font-weight: 700;
       color: var(--ink);
     }
 
     .sched h2 { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-3); margin-bottom: 6px; }
-    .sched { font-size:14.5px; line-height:1.7; border-top:1px solid var(--line); padding-top:16px; }
-    .actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:22px; }
+    .sched { font-size:13.5px; line-height:1.6; border-top:1px solid var(--line); padding-top:14px; }
+    .actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:18px; }
     .btn {
-      display:inline-flex; align-items:center; gap:6px; font-size:13.5px; font-weight:600;
-      text-decoration:none; padding:9px 16px; border-radius:999px; transition:filter .12s ease;
+      display:inline-flex; align-items:center; gap:6px; font-size:13px; font-weight:600;
+      text-decoration:none; padding:8px 14px; border-radius:999px; transition:filter .12s ease;
     }
     .btn-primary { background:#7C3AED; color:#fff; }
     .btn-primary:hover { filter:brightness(1.08); }
     .btn-ghost { background:#F1F3F7; color:var(--ink); }
     .btn-ghost:hover { background:#E7EAF0; }
-    footer { margin-top:22px; font-size:11px; color:var(--ink-3); line-height:1.5; }
+    footer { margin-top:18px; font-size:10.5px; color:var(--ink-3); line-height:1.4; }
     footer a { color:var(--ink-3); }
+    
+    @media (max-width: 640px) {
+      .card {
+        top: auto;
+        bottom: 16px;
+        right: 16px;
+        left: 16px;
+        width: auto;
+        max-height: 75vh;
+        padding: 20px 18px 16px;
+      }
+    }
   </style>
 </head>
 <body>
+  <!-- Fondo Google Street View a pantalla completa -->
+  <div class="bg-streetview">
+    <iframe src="https://maps.google.com/maps?q=&layer=c&cbll=40.4799359,-3.6882841&cbp=11,0,0,0,0&output=svembed" allowfullscreen loading="lazy"></iframe>
+  </div>
+
+  <!-- Tarjeta con la información arriba a la derecha -->
   <main class="card">
-    <div class="card-cover">
-      <iframe class="streetview-iframe" src="https://maps.google.com/maps?q=&layer=c&cbll=40.4799359,-3.6882841&cbp=11,0,0,0,0&output=svembed" allowfullscreen loading="lazy"></iframe>
-      <span class="badge badge-cover">Biblioteca universitaria</span>
-      <a class="btn-sv" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=40.4799359,-3.6882841" target="_blank" rel="noopener noreferrer">Street View 360° ↗</a>
-    </div>
-    <a class="back" href="./">← Mapa de bibliotecas y salas de estudio de Madrid</a>
+    <a class="back" href="./">← Mapa de Madrid</a>
+    <div><span class="badge">Biblioteca universitaria</span></div>
     <h1>Biblioteca UAM – Facultad de Medicina</h1>
     <p class="addr">Fuencarral-El Pardo · Calle del Arzobispo Morcillo, 4, 28029 Madrid</p>
     
@@ -195,7 +226,7 @@
 
     <div class="today-card" id="today-card">
       <div class="today-head">
-        <span class="today-title" id="today-title">HOY · Miércoles, 19 de agosto</span>
+        <span class="today-title" id="today-title">HOY</span>
         <span class="status-badge status-open" id="status-badge">Abierto</span>
       </div>
       <div class="today-hours" id="today-hours">9:00–21:00h</div>
@@ -205,6 +236,7 @@
     <div class="actions">
       <a class="btn btn-primary" href="./#uam-facultad-de-medicina">Ver en el mapa</a>
       <a class="btn btn-ghost" href="https://biblioagenda.uam.es/hours#:~:text=Horarios" target="_blank" rel="noopener noreferrer">Web oficial ↗</a>
+      <a class="btn btn-ghost" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=40.4799359,-3.6882841" target="_blank" rel="noopener noreferrer">Street View 360° ↗</a>
     </div>
     <footer>
       Datos: <a href="https://datos.madrid.es" target="_blank" rel="noopener">datos.madrid.es</a> (CC BY 4.0).
@@ -212,7 +244,7 @@
     </footer>
   </main>
 
-  <script>
+<script>
   (function() {
     const d = {"tipo": "universidad", "nombre": "Biblioteca UAM – Facultad de Medicina", "distrito": "Fuencarral-El Pardo", "direccion": "Calle del Arzobispo Morcillo, 4, 28029 Madrid", "lat": 40.4799359, "lng": -3.6882841, "plazas": 380, "horario": "Lun–Vie 9–21h\n(Ampliado en época de exámenes)", "web": "https://biblioagenda.uam.es/hours#:~:text=Horarios"};
     const slug = "uam-facultad-de-medicina";
