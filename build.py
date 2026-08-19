@@ -79,7 +79,7 @@ def extract_lugares(index_html):
     end = src.index("\n];", arr_start)
     body = src[arr_start + 1:end]
     body = "\n".join(ln for ln in body.split("\n") if not ln.strip().startswith("//"))
-    body = re.sub(r'(?<![\w"])(tipo|nombre|distrito|direccion|lat|lng|plazas|foto|horario|web)\s*:',
+    body = re.sub(r'(?<![\w"])(tipo|nombre|distrito|direccion|lat|lng|plazas|foto|horario|web|libcal_lid|libcal_iid)\s*:',
                   r'"\1":', body)
     jtext = "[" + body + "]"
     jtext = re.sub(r",(\s*[}\]])", r"\1", jtext)
@@ -327,7 +327,7 @@ def page_html(d, slug):
             "@type": "PostalAddress",
             "streetAddress": d["direccion"],
             "addressLocality": "Madrid",
-            "addressRegion": "Comunidad de Madrid",
+        "addressRegion": "Comunidad de Madrid",
             "addressCountry": "ES",
         },
         "geo": {"@type": "GeoCoordinates", "latitude": lat, "longitude": lng},
@@ -335,9 +335,19 @@ def page_html(d, slug):
         "url": canonical,
         "areaServed": "Madrid",
     }
+    if d.get("foto"):
+        ld["image"] = d["foto"]
+
+    live_tag_html = """
+          <div class="panel-live-tag" title="Sincronizado en tiempo real con BiblioAgenda UAM">
+            <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            En directo · BiblioAgenda UAM
+          </div>""" if d.get("libcal_lid") else ""
+    week_container_html = '<div id="panel-uam-week" class="panel-live-week"></div>' if d.get("libcal_lid") else ""
 
     d_json = json.dumps(d, ensure_ascii=False)
     cal_json_esc = json.dumps(json.dumps(CALENDARIO, ensure_ascii=False))
+    og_img = d.get("foto", "https://bibliotecasmadrid.github.io/Donde-estudio-hoy/icons/icon-512.png")
 
     return f"""<!DOCTYPE html>
 <html lang="es">
@@ -357,6 +367,7 @@ def page_html(d, slug):
   <meta property="og:title" content="{e(d["nombre"])} · Horario y dirección">
   <meta property="og:description" content="{e(desc)}">
   <meta property="og:url" content="{e(canonical)}">
+  <meta property="og:image" content="{e(og_img)}">
   <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>
   <style>
     :root {{ --ink:#1A1F36; --ink-2:#5A6172; --ink-3:#9AA0AE; --line:#ECEEF2; }}
@@ -448,10 +459,10 @@ def page_html(d, slug):
       margin-bottom: 6px;
     }}
     .addr {{
-      font-size: 13px;
-      color: var(--ink-3);
+      font-size: 13.5px;
+      color: var(--ink-2);
+      line-height: 1.45;
       margin-bottom: 12px;
-      line-height: 1.5;
     }}
     
     .capacity-tag {{
@@ -461,10 +472,10 @@ def page_html(d, slug):
       font-size: 12.5px;
       font-weight: 600;
       color: var(--ink-2);
-      background: #F1F5F9;
-      padding: 5px 11px;
-      border-radius: 8px;
-      margin-bottom: 14px;
+      background: #F1F3F7;
+      padding: 6px 12px;
+      border-radius: 10px;
+      margin-bottom: 16px;
     }}
     .capacity-tag svg {{
       color: var(--ink-3);
@@ -534,6 +545,51 @@ def page_html(d, slug):
       font-weight: 700;
       color: var(--ink);
     }}
+    .panel-live-tag {{
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 10px;
+      font-weight: 700;
+      color: #0369A1;
+      background: #E0F2FE;
+      padding: 3px 8px;
+      border-radius: 6px;
+      margin-top: 6px;
+    }}
+    .panel-live-tag svg {{
+      width: 10px;
+      height: 10px;
+      fill: #0284C7;
+      flex-shrink: 0;
+    }}
+    .panel-live-week {{
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px dashed var(--line);
+    }}
+    .panel-week-table {{
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11.5px;
+      margin-top: 4px;
+    }}
+    .panel-week-table td {{
+      padding: 2.5px 2px;
+      color: var(--ink-2);
+    }}
+    .panel-week-table tr.day-row-today td {{
+      font-weight: 700;
+      color: #1D4ED8;
+    }}
+    .panel-week-table td.day-hours {{
+      text-align: right;
+      font-weight: 600;
+      color: var(--ink);
+    }}
+    .panel-week-table tr.day-row-today td.day-hours {{
+      color: #1D4ED8;
+    }}
 
     .sched h2 {{ font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-3); margin-bottom: 4px; }}
     .sched {{ font-size:13px; line-height:1.55; border-top:1px solid var(--line); padding-top:10px; }}
@@ -601,6 +657,8 @@ def page_html(d, slug):
             <span class="status-badge {today['status_class']}" id="status-badge">{today['status_text']}</span>
           </div>
           <div class="today-hours" id="today-hours">{today['today_schedule']}</div>
+          {live_tag_html}
+          {week_container_html}
         </div>
 
         <div class="sched">
@@ -781,6 +839,71 @@ def page_html(d, slug):
     }}
     updateToday();
     setInterval(updateToday, 60000);
+
+    if (d.libcal_lid) {{
+      function fTime(t) {{
+        if (!t) return '';
+        const m = t.trim().match(/^(\\d{1,2})(?::(\\d{{2}}))?\\s*(am|pm)?$/i);
+        if (!m) return t;
+        let h = parseInt(m[1], 10);
+        const min = m[2] || '00';
+        if (m[3] && m[3].toLowerCase() === 'pm' && h < 12) h += 12;
+        if (m[3] && m[3].toLowerCase() === 'am' && h === 12) h = 0;
+        return h + ':' + min;
+      }}
+
+      fetch('https://biblioagenda.uam.es/api_hours_today.php?iid=3941&lid=' + d.libcal_lid + '&format=json')
+        .then(r => r.json())
+        .then(data => {{
+          const loc = (data.locations && data.locations.length > 0) ? data.locations[0] : null;
+          if (!loc) return;
+          const status = loc.times ? loc.times.status : null;
+          const isClosed = status === 'closed' || (status === 'text' && /cerrad/i.test(loc.rendered || loc.times.text || '')) || /cerrad/i.test(loc.rendered || '');
+          const badgeEl = document.getElementById('status-badge');
+          const hoursEl = document.getElementById('today-hours');
+          if (!badgeEl || !hoursEl) return;
+          if (isClosed) {{
+            badgeEl.className = 'status-badge status-closed';
+            badgeEl.textContent = 'Cerrado';
+            hoursEl.textContent = 'Cerrado hoy';
+          }} else if (status === 'open' && loc.times.hours) {{
+            const str = loc.times.hours.map(h => fTime(h.from) + '–' + fTime(h.to) + 'h').join(' y ');
+            const isOpen = !!loc.times.currently_open;
+            badgeEl.className = 'status-badge ' + (isOpen ? 'status-open' : 'status-closed');
+            badgeEl.textContent = isOpen ? 'Abierto' : 'Cerrado';
+            hoursEl.textContent = str;
+          }}
+        }})
+        .catch(() => {{}});
+
+      fetch('https://biblioagenda.uam.es/api_hours_grid.php?iid=3941&format=json')
+        .then(r => r.json())
+        .then(data => {{
+          const loc = (data.locations || []).find(l => l.lid === d.libcal_lid);
+          if (!loc || !loc.weeks || loc.weeks.length === 0) return;
+          const week = loc.weeks[0];
+          const weekEl = document.getElementById('panel-uam-week');
+          if (!weekEl) return;
+          const dayLabels = {{ Monday: 'Lun', Tuesday: 'Mar', Wednesday: 'Mié', Thursday: 'Jue', Friday: 'Vie', Saturday: 'Sáb', Sunday: 'Dom' }};
+          const now = new Date();
+          const todayStr = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
+          let rowsHtml = '';
+          for (const [dayName, dayInfo] of Object.entries(week)) {{
+            const isToday = dayInfo.date === todayStr;
+            const label = dayLabels[dayName] || dayName;
+            const dayNum = dayInfo.date ? dayInfo.date.slice(8) : '';
+            let hoursText = 'Cerrado';
+            if (dayInfo.times && dayInfo.times.status === 'open' && dayInfo.times.hours) {{
+              hoursText = dayInfo.times.hours.map(h => fTime(h.from) + '–' + fTime(h.to) + 'h').join(' y ');
+            }} else if (dayInfo.rendered && !/cerrad/i.test(dayInfo.rendered) && /\\d/.test(dayInfo.rendered)) {{
+              hoursText = dayInfo.rendered;
+            }}
+            rowsHtml += '<tr class="' + (isToday ? 'day-row-today' : '') + '"><td>' + label + ' ' + dayNum + (isToday ? ' (Hoy)' : '') + '</td><td class="day-hours">' + hoursText + '</td></tr>';
+          }}
+          weekEl.innerHTML = '<div style="font-size:9.5px; font-weight:700; text-transform:uppercase; color:var(--ink-3); margin-top:8px; margin-bottom:4px;">Semana en directo (BiblioAgenda)</div><table class="panel-week-table"><tbody>' + rowsHtml + '</tbody></table>';
+        }})
+        .catch(() => {{}});
+    }}
   }})();
   </script>
 </body>

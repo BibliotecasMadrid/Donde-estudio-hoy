@@ -289,7 +289,14 @@
           "end": "06-30",
           "schedule": "24h / Horario ampliado"
         }
-      ]
+      ],
+      "august_schedule": {
+        "closure_start": "08-17",
+        "closure_end": "08-23",
+        "reduced_start": "08-24",
+        "reduced_end": "08-31",
+        "reduced_schedule": "9:00–14:00h"
+      }
     },
     "ucm-facultad-de-medicina": {
       "exam_periods": [
@@ -583,7 +590,14 @@
           "end": "06-30",
           "schedule": "24h / Horario ampliado"
         }
-      ]
+      ],
+      "august_schedule": {
+        "closure_start": "08-17",
+        "closure_end": "08-31",
+        "reduced_start": "08-24",
+        "reduced_end": "08-31",
+        "reduced_schedule": "9:00–14:00h"
+      }
     },
     "uah-edificio-crai-alcala-centro": {
       "exam_periods": [
@@ -611,7 +625,14 @@
           "end": "06-30",
           "schedule": "24h / Horario ampliado"
         }
-      ]
+      ],
+      "august_schedule": {
+        "closure_start": "08-17",
+        "closure_end": "08-23",
+        "reduced_start": "08-24",
+        "reduced_end": "08-31",
+        "reduced_schedule": "9:00–14:00h"
+      }
     },
     "uam-facultad-de-derecho-cantoblanco": {
       "exam_periods": [
@@ -625,7 +646,14 @@
           "end": "06-30",
           "schedule": "24h / Horario ampliado"
         }
-      ]
+      ],
+      "august_schedule": {
+        "closure_start": "08-17",
+        "closure_end": "08-31",
+        "reduced_start": "08-24",
+        "reduced_end": "08-31",
+        "reduced_schedule": "9:00–14:00h"
+      }
     },
     "uam-facultad-de-psicologia-cantoblanco": {
       "exam_periods": [
@@ -639,7 +667,14 @@
           "end": "06-30",
           "schedule": "24h / Horario ampliado"
         }
-      ]
+      ],
+      "august_schedule": {
+        "closure_start": "08-17",
+        "closure_end": "08-23",
+        "reduced_start": "08-24",
+        "reduced_end": "08-31",
+        "reduced_schedule": "9:00–14:00h"
+      }
     },
     "uam-ciencias-economicas-cantoblanco": {
       "exam_periods": [
@@ -653,7 +688,14 @@
           "end": "06-30",
           "schedule": "24h / Horario ampliado"
         }
-      ]
+      ],
+      "august_schedule": {
+        "closure_start": "08-17",
+        "closure_end": "08-23",
+        "reduced_start": "08-24",
+        "reduced_end": "08-31",
+        "reduced_schedule": "9:00–14:00h"
+      }
     },
     "uam-escuela-politecnica-superior": {
       "exam_periods": [
@@ -667,7 +709,56 @@
           "end": "06-30",
           "schedule": "24h / Horario ampliado"
         }
-      ]
+      ],
+      "august_schedule": {
+        "closure_start": "08-17",
+        "closure_end": "08-31",
+        "reduced_start": "08-24",
+        "reduced_end": "08-31",
+        "reduced_schedule": "9:00–14:00h"
+      }
+    },
+    "uam-facultad-de-educacion-cantoblanco": {
+      "exam_periods": [
+        {
+          "start": "01-08",
+          "end": "02-15",
+          "schedule": "24h / Horario ampliado"
+        },
+        {
+          "start": "05-10",
+          "end": "06-30",
+          "schedule": "24h / Horario ampliado"
+        }
+      ],
+      "august_schedule": {
+        "closure_start": "08-17",
+        "closure_end": "08-23",
+        "reduced_start": "08-24",
+        "reduced_end": "08-31",
+        "reduced_schedule": "9:00–14:00h"
+      }
+    },
+    "uam-humanidades-cantoblanco": {
+      "exam_periods": [
+        {
+          "start": "01-08",
+          "end": "02-15",
+          "schedule": "24h / Horario ampliado"
+        },
+        {
+          "start": "05-10",
+          "end": "06-30",
+          "schedule": "24h / Horario ampliado"
+        }
+      ],
+      "august_schedule": {
+        "closure_start": "08-17",
+        "closure_end": "08-23",
+        "reduced_start": "08-24",
+        "reduced_end": "08-31",
+        "reduced_schedule": "9:00–14:00h"
+      }
     }
   }
 }

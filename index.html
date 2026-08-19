@@ -334,6 +334,51 @@
       font-weight: 700;
       color: var(--ink);
     }
+    .panel-live-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #0369A1;
+      background: #E0F2FE;
+      padding: 3px 8px;
+      border-radius: 6px;
+      margin-top: 7px;
+    }
+    .panel-live-tag svg {
+      width: 11px;
+      height: 11px;
+      fill: #0284C7;
+      flex-shrink: 0;
+    }
+    .panel-live-week {
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px dashed var(--line);
+    }
+    .panel-week-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      margin-top: 4px;
+    }
+    .panel-week-table td {
+      padding: 3px 2px;
+      color: var(--ink-2);
+    }
+    .panel-week-table tr.day-row-today td {
+      font-weight: 700;
+      color: #1D4ED8;
+    }
+    .panel-week-table td.day-hours {
+      text-align: right;
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .panel-week-table tr.day-row-today td.day-hours {
+      color: #1D4ED8;
+    }
 
     .panel-schedule { font-size: 14px; color: var(--ink); border-top: 1px solid var(--line); padding-top: 14px; line-height: 1.7; }
     .panel-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-3); margin-bottom: 5px; }
@@ -403,6 +448,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Pública Rafael Alberti",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Biblioteca_P%C3%BAblica_Rafael_Alberti_%28Madrid%29_01.jpg/960px-Biblioteca_P%C3%BAblica_Rafael_Alberti_%28Madrid%29_01.jpg",
     distrito: "Fuencarral-El Pardo",
     direccion: "Calle Rafael Alberti, 35, 28029 Madrid",
     lat: 40.4792, lng: -3.7096,
@@ -413,6 +459,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Pública Elena Fortún",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Mejora_la_eficiencia_energ%C3%A9tica_de_las_bibliotecas_de_Centro%2C_Retiro%2C_Usera%2C_Ciudad_Lineal%2C_Villa_de_Vallecas%2C_San_Blas-Canillejas_y_Tetu%C3%A1n_%2801%29.jpg/960px-Mejora_la_eficiencia_energ%C3%A9tica_de_las_bibliotecas_de_Centro%2C_Retiro%2C_Usera%2C_Ciudad_Lineal%2C_Villa_de_Vallecas%2C_San_Blas-Canillejas_y_Tetu%C3%A1n_%2801%29.jpg",
     distrito: "Retiro",
     direccion: "Calle Doctor Esquerdo, 189, 28007 Madrid",
     lat: 40.4036, lng: -3.6724,
@@ -423,6 +470,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Pública José Luis Sampedro",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/El_escritor_Jos%C3%A9_Luis_Sampedro_da_nombre_a_espacios_de_Chamber%C3%AD_01.jpg/960px-El_escritor_Jos%C3%A9_Luis_Sampedro_da_nombre_a_espacios_de_Chamber%C3%AD_01.jpg",
     distrito: "Chamberí",
     direccion: "Calle Felipe el Hermoso, 4, 28010 Madrid",
     lat: 40.4354, lng: -3.6997,
@@ -433,6 +481,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Pública Pedro Salinas",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Biblioteca_P%C3%BAblica_Pedro_Salinas_%28Madrid%29_01.jpg/960px-Biblioteca_P%C3%BAblica_Pedro_Salinas_%28Madrid%29_01.jpg",
     distrito: "Centro",
     direccion: "Calle Agustín de Foxá, 2, 28036 Madrid",
     lat: 40.4578, lng: -3.6933,
@@ -443,6 +492,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Pública José Acuña",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Madrid_-_Latina%2C_Aluche%2C_Biblioteca_P%C3%BAblica_Municipal_%C3%81ngel_Gonz%C3%A1lez_1.jpg/960px-Madrid_-_Latina%2C_Aluche%2C_Biblioteca_P%C3%BAblica_Municipal_%C3%81ngel_Gonz%C3%A1lez_1.jpg",
     distrito: "Moncloa-Aravaca",
     direccion: "Calle Quintana, 9, 28008 Madrid",
     lat: 40.4279, lng: -3.717,
@@ -453,6 +503,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Pública Antonio Mingote",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Biblioteca_P%C3%BAblica_Antonio_Mingote_Madrid.jpg/960px-Biblioteca_P%C3%BAblica_Antonio_Mingote_Madrid.jpg",
     distrito: "Latina",
     direccion: "Calle Rafael Finat, 51, 28044 Madrid",
     lat: 40.3794, lng: -3.7694,
@@ -463,6 +514,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Pública Javier Marías",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Biblioteca_P%C3%BAblica_Javier_Mar%C3%ADas_%28Madrid%29.jpg/960px-Biblioteca_P%C3%BAblica_Javier_Mar%C3%ADas_%28Madrid%29.jpg",
     distrito: "Moratalaz",
     direccion: "Calle Corregidor Alonso de Tobar, 5, 28030 Madrid",
     lat: 40.404, lng: -3.6494,
@@ -473,6 +525,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Pública José Hierro",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Biblioteca_P%C3%BAblica_Jos%C3%A9_Hierro_%28Madrid%29_01.jpg/960px-Biblioteca_P%C3%BAblica_Jos%C3%A9_Hierro_%28Madrid%29_01.jpg",
     distrito: "Usera",
     direccion: "Avenida Rafaela Ybarra, 43, 28026 Madrid",
     lat: 40.3819, lng: -3.7106,
@@ -483,6 +536,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Pública Miguel Hernández",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Biblioteca_P%C3%BAblica_Vallecas_%289_de_enero_de_2015%2C_Madrid%29.JPG/960px-Biblioteca_P%C3%BAblica_Vallecas_%289_de_enero_de_2015%2C_Madrid%29.JPG",
     distrito: "Puente de Vallecas",
     direccion: "Avenida Rafael Alberti, 36, 28018 Madrid",
     lat: 40.3845, lng: -3.6429,
@@ -493,6 +547,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Pública Luis Rosales",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/1/17/Biblioteca_P%C3%BAblica_Luis_Rosales_de_Carabanchel.jpg",
     distrito: "Carabanchel",
     direccion: "Calle Antonia Rodríguez Sacristán, 7, 28044 Madrid",
     lat: 40.3734, lng: -3.7481,
@@ -503,6 +558,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Pública María Moliner",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Biblioteca_P%C3%BAblica_Villaverde_Mar%C3%ADa_Moliner.jpg/960px-Biblioteca_P%C3%BAblica_Villaverde_Mar%C3%ADa_Moliner.jpg",
     distrito: "Villaverde",
     direccion: "Calle Villalonso, 16, 28021 Madrid",
     lat: 40.3495, lng: -3.7101,
@@ -513,6 +569,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Pública Hortaleza",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Biblioteca_P%C3%BAblica_Hortaleza_%28Madrid%29.jpg/960px-Biblioteca_P%C3%BAblica_Hortaleza_%28Madrid%29.jpg",
     distrito: "Hortaleza",
     direccion: "Calle Abertura, 2, 28033 Madrid",
     lat: 40.4772, lng: -3.6496,
@@ -523,6 +580,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Pública Luis Martín Santos",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Biblioteca_P%C3%BAblica_de_Villa_de_Vallecas_%22Luis_Mart%C3%ADn-Santos%22.jpg/960px-Biblioteca_P%C3%BAblica_de_Villa_de_Vallecas_%22Luis_Mart%C3%ADn-Santos%22.jpg",
     distrito: "Villa de Vallecas",
     direccion: "Plaza Antonio María Segovia, 2, 28031 Madrid",
     lat: 40.3809, lng: -3.6137,
@@ -535,6 +593,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal Aluche",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Madrid_-_Latina%2C_Aluche%2C_Biblioteca_P%C3%BAblica_Municipal_%C3%81ngel_Gonz%C3%A1lez_1.jpg/960px-Madrid_-_Latina%2C_Aluche%2C_Biblioteca_P%C3%BAblica_Municipal_%C3%81ngel_Gonz%C3%A1lez_1.jpg",
     distrito: "Latina",
     direccion: "Calle Camarena, 10, 28047 Madrid",
     lat: 40.396, lng: -3.7563,
@@ -545,6 +604,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal Ana María Matute",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Biblioteca_Municipal_Ana_Mar%C3%ADa_Matute_%28Madrid%29_01.jpg/960px-Biblioteca_Municipal_Ana_Mar%C3%ADa_Matute_%28Madrid%29_01.jpg",
     distrito: "Carabanchel",
     direccion: "Calle Isaac Albéniz, 1, 28019 Madrid",
     lat: 40.3979, lng: -3.7201,
@@ -555,6 +615,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal Benito Pérez Galdós",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Cuartel_del_Conde_Duque_%28Madrid%29_16.jpg/960px-Cuartel_del_Conde_Duque_%28Madrid%29_16.jpg",
     distrito: "Centro",
     direccion: "Calle Conde Duque, 9, 28015 Madrid",
     lat: 40.4274, lng: -3.7106,
@@ -565,6 +626,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal Canillejas",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Biblioteca_Canillejas_Madrid.jpg/960px-Biblioteca_Canillejas_Madrid.jpg",
     distrito: "San Blas-Canillejas",
     direccion: "Calle Boltaña, 23, 28022 Madrid",
     lat: 40.4464, lng: -3.6118,
@@ -575,6 +637,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal Ciudad Lineal",
+    foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmRpgMTQEBVMlex8vIhynqxmpQTVUuwyJEiUe3evmrE2yuhi9eBLmxP-DKeax4AlV3TwEtzxUrRoyKu1qkkxTt9B2vWfjOfN9YEmOc3MCugpZNMRlnGCo57kQVQCGJdm1bViwRP=w800-h500-k-no",
     distrito: "Ciudad Lineal",
     direccion: "Calle Hermanos García Noblejas, 14, 28037 Madrid",
     lat: 40.4364, lng: -3.6373,
@@ -585,6 +648,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal David Gistau",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Centro_Cultural_Buenavista_Madrid.jpg/960px-Centro_Cultural_Buenavista_Madrid.jpg",
     distrito: "Salamanca",
     direccion: "Avenida de los Toreros, 5, 28028 Madrid",
     lat: 40.432, lng: -3.6709,
@@ -595,6 +659,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal Dámaso Alonso",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Biblioteca_Damaso_Alonso_Chamartin.jpg/960px-Biblioteca_Damaso_Alonso_Chamartin.jpg",
     distrito: "Chamartín",
     direccion: "Calle Manuel Ferrero, 1, 28036 Madrid",
     lat: 40.4675, lng: -3.6846,
@@ -605,6 +670,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal Eugenio Trías",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/077_Biblioteca_Eugenio_Tr%C3%ADas%2C_Parque_del_Retiro_%28Madrid%29%2C_antiga_Casa_de_Fieras.jpg/960px-077_Biblioteca_Eugenio_Tr%C3%ADas%2C_Parque_del_Retiro_%28Madrid%29%2C_antiga_Casa_de_Fieras.jpg",
     distrito: "Retiro",
     direccion: "Paseo Fernán Núñez, 24, 28009 Madrid",
     lat: 40.4166, lng: -3.6796,
@@ -615,6 +681,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal Francisco Ayala",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Fachada_de_la_Biblioteca_P%C3%BAblica_Municipal_Francisco_Ayala.jpg/960px-Fachada_de_la_Biblioteca_P%C3%BAblica_Municipal_Francisco_Ayala.jpg",
     distrito: "Vicálvaro",
     direccion: "Bulevar Indalecio Prieto, 21, 28032 Madrid",
     lat: 40.3998, lng: -3.6213,
@@ -625,6 +692,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal Francisco Ibáñez",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Sala_infantil_Biblioteca_Municipal_Biblioteca_Francisco_Ib%C3%A1%C3%B1ez.jpg/960px-Sala_infantil_Biblioteca_Municipal_Biblioteca_Francisco_Ib%C3%A1%C3%B1ez.jpg",
     distrito: "Chamartín",
     direccion: "Calle Mantuano, 51, 28002 Madrid",
     lat: 40.4481, lng: -3.6762,
@@ -635,6 +703,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal Francisco Umbral",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Majadahonda_-_Biblioteca_Municipal_Francisco_Umbral_1.JPG/960px-Majadahonda_-_Biblioteca_Municipal_Francisco_Umbral_1.JPG",
     distrito: "Villaverde",
     direccion: "Calle Calcio, 1, 28021 Madrid",
     lat: 40.3512, lng: -3.6793,
@@ -645,6 +714,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal Gabriel García Márquez",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Biblioteca_P%C3%BAblica_Municipal_Gabriel_Garc%C3%ADa_M%C3%A1rquez%2C_Madrid.jpg/960px-Biblioteca_P%C3%BAblica_Municipal_Gabriel_Garc%C3%ADa_M%C3%A1rquez%2C_Madrid.jpg",
     distrito: "Usera",
     direccion: "Plaza del Pueblo, 2, 28041 Madrid",
     lat: 40.3668, lng: -3.7011,
@@ -655,6 +725,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal Gerardo Diego",
+    foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWk7h0fVd1dtOESPNQIQNvYQVfPJGJzgsdKXyOLFunNfsegySule1EiPdJutgHPWo__vv0OiuqCgugM4Dlra_qnT0S4CWypckTKMHR60V_0KnBYkHhvTpgFWYrEkNG44arRk_xP4kQ=w800-h500-k-no",
     distrito: "Villa de Vallecas",
     direccion: "Calle Monte Aya, 12, 28031 Madrid",
     lat: 40.3779, lng: -3.6227,
@@ -665,6 +736,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal Gloria Fuertes",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Centro_Cultural_Gloria_Fuertes_Barajas.jpg/960px-Centro_Cultural_Gloria_Fuertes_Barajas.jpg",
     distrito: "Barajas",
     direccion: "Avenida de Logroño, 179, 28042 Madrid",
     lat: 40.4606, lng: -3.5937,
@@ -675,6 +747,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal Huerta de la Salud",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Silos_de_la_Huerta_de_la_Salud_01.jpg/960px-Silos_de_la_Huerta_de_la_Salud_01.jpg",
     distrito: "Hortaleza",
     direccion: "Calle Mar de las Antillas, 10, 28033 Madrid",
     lat: 40.4757, lng: -3.6467,
@@ -685,6 +758,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal Iván de Vargas",
+    foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkzsZ_2qdNW6ljxSXSdD76fo-HBb9qjtBZHROzVpVnEKJn0j_5trrDQ40vMEqlqMAZ-NSorORfPhb-53BpaJsonWQi8irOtjsfLZnwnk9YW7Wq-NxfaC6ZY1MYIOa5is0Q43dVe=w800-h500-k-no",
     distrito: "Centro",
     direccion: "Calle San Justo, 5, 28005 Madrid",
     lat: 40.4141, lng: -3.7099,
@@ -695,6 +769,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal José Hierro (San Blas)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Biblioteca_P%C3%BAblica_Jos%C3%A9_Hierro_%28Madrid%29_01.jpg/960px-Biblioteca_P%C3%BAblica_Jos%C3%A9_Hierro_%28Madrid%29_01.jpg",
     distrito: "San Blas-Canillejas",
     direccion: "Calle María Sevilla Diago, 15, 28022 Madrid",
     lat: 40.4333, lng: -3.6106,
@@ -705,6 +780,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal José Saramago",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Centro_Cultural_Jose_Saramago_Madrid.jpg/960px-Centro_Cultural_Jose_Saramago_Madrid.jpg",
     distrito: "Fuencarral-El Pardo",
     direccion: "Avenida Monforte de Lemos, 38, 28029 Madrid",
     lat: 40.4786, lng: -3.7094,
@@ -715,6 +791,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal La Chata",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Centro_Cultural_La_Chata_Carabanchel.jpg/960px-Centro_Cultural_La_Chata_Carabanchel.jpg",
     distrito: "Carabanchel",
     direccion: "Calle General Ricardos, 252, 28025 Madrid",
     lat: 40.3833, lng: -3.7421,
@@ -725,6 +802,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal La Elipa",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Biblioteca_La_Elipa_Madrid.jpg/960px-Biblioteca_La_Elipa_Madrid.jpg",
     distrito: "Ciudad Lineal",
     direccion: "Calle Nuestra Señora del Villar, 6, 28017 Madrid",
     lat: 40.4234, lng: -3.6518,
@@ -735,6 +813,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal Manuel Vázquez Montalbán",
+    foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkrEdJqAZzg_Ak0EwN6xo1I6-CGdjvrWtYuueFoKn8WgJuV4WHbhVUMVAgy4b4Bg-c9W7Pp9c-KOvEMAMNWCNzQHYZSN8y5ePVOQlzO_kePL8ZB55PlKuCHViJ7KyQCvrL4xop-TOi_UmEO=w800-h500-k-no",
     distrito: "Tetuán",
     direccion: "Calle Francos Rodríguez, 67, 28039 Madrid",
     lat: 40.4575, lng: -3.7105,
@@ -745,6 +824,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal Mario Vargas Llosa",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Mercado_de_Barcelo_Madrid_Biblioteca.jpg/960px-Mercado_de_Barcelo_Madrid_Biblioteca.jpg",
     distrito: "Centro",
     direccion: "Calle Barceló, 4, 28004 Madrid",
     lat: 40.4266, lng: -3.6997,
@@ -755,6 +835,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal María Lejárraga",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Centro_Cultural_Hortaleza_Maria_Lejarraga.jpg/960px-Centro_Cultural_Hortaleza_Maria_Lejarraga.jpg",
     distrito: "Hortaleza",
     direccion: "Calle Princesa de Éboli, 29, 28050 Madrid",
     lat: 40.4904, lng: -3.6554,
@@ -765,6 +846,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal María Zambrano",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Centro_Sociocultural_Tetuan_Madrid.jpg/960px-Centro_Sociocultural_Tetuan_Madrid.jpg",
     distrito: "Tetuán",
     direccion: "Plaza Donoso, 5, 28029 Madrid",
     lat: 40.469, lng: -3.6977,
@@ -775,6 +857,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal Miguel Delibes",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Biblioteca_Miguel_Delibes_Moratalaz.jpg/960px-Biblioteca_Miguel_Delibes_Moratalaz.jpg",
     distrito: "Moratalaz",
     direccion: "Calle Arroyo Belincoso, 11, 28030 Madrid",
     lat: 40.4097, lng: -3.653,
@@ -785,6 +868,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal Pablo Neruda",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Centro_Cultural_Pablo_Neruda_Madrid.jpg/960px-Centro_Cultural_Pablo_Neruda_Madrid.jpg",
     distrito: "Ciudad Lineal",
     direccion: "Calle Ascao, 4, 28017 Madrid",
     lat: 40.4294, lng: -3.6417,
@@ -795,6 +879,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal Portazgo",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Biblioteca_Portazgo_Vallecas.jpg/960px-Biblioteca_Portazgo_Vallecas.jpg",
     distrito: "Puente de Vallecas",
     direccion: "Calle Cantalapiedra, 11, 28038 Madrid",
     lat: 40.3932, lng: -3.6554,
@@ -805,6 +890,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal Pozo del Tío Raimundo",
+    foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlvFwSt8wOLlJvlmvtOwn0V6Kf0_nWo0CvfO2I6AjO9ZGLSbJP-Em4dXNXS0Oz1sSDhV3eqCPIrFG7GwbENhMcO5LVJNwRqtQwsuSv-vuppdlCRYjkzja8JKI0x1dNHzTbbrhky=w800-h500-k-no",
     distrito: "Puente de Vallecas",
     direccion: "Avenida Glorietas, 19, 28053 Madrid",
     lat: 40.3736, lng: -3.6603,
@@ -815,6 +901,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal Pío Baroja",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Biblioteca_Pio_Baroja_Arganzuela.jpg/960px-Biblioteca_Pio_Baroja_Arganzuela.jpg",
     distrito: "Arganzuela",
     direccion: "Calle Arganda, 12, 28005 Madrid",
     lat: 40.4, lng: -3.7074,
@@ -827,6 +914,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Alfredo Kraus",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Centro_Cultural_Alfredo_Kraus_Madrid.jpg/960px-Centro_Cultural_Alfredo_Kraus_Madrid.jpg",
     distrito: "Fuencarral-El Pardo",
     direccion: "Glorieta Pradera de Vaquerizas, 9, 28035 Madrid",
     lat: 40.4908, lng: -3.7216,
@@ -837,6 +925,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Fernando Vizcaíno Casas",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Centro_Cultural_Alfredo_Kraus_Madrid.jpg/960px-Centro_Cultural_Alfredo_Kraus_Madrid.jpg",
     distrito: "Chamberí",
     direccion: "Calle Blasco de Garay, 40, 28015 Madrid",
     lat: 40.4338, lng: -3.7114,
@@ -847,6 +936,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Carril del Conde",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Centro_Cultural_Carril_del_Conde_Madrid.jpg/960px-Centro_Cultural_Carril_del_Conde_Madrid.jpg",
     distrito: "Hortaleza",
     direccion: "Calle Carril del Conde, 57, 28043 Madrid",
     lat: 40.4609, lng: -3.6544,
@@ -857,6 +947,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Sanchinarro",
+    foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmrEvvLbiL79CS74Lwtzd7kr3hci6Bet8MKf4gm7LmTXQCepSa1RFeJv3LyXxzkP0iqN9rDBFql9djXdKc6OjdXH4OfyP3LtQDUIkU20lejyy4Nt-KalitySphnFxtTL_QVFSZy=w800-h500-k-no",
     distrito: "Hortaleza",
     direccion: "Calle Princesa de Éboli, 29, 28050 Madrid",
     lat: 40.4904, lng: -3.6553,
@@ -867,6 +958,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Francisco José González Tejera",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Centro_Cultural_Carril_del_Conde_Madrid.jpg/960px-Centro_Cultural_Carril_del_Conde_Madrid.jpg",
     distrito: "Hortaleza",
     direccion: "Calle Santa Virgilia, 15, 28033 Madrid",
     lat: 40.4768, lng: -3.6421,
@@ -877,6 +969,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Motilla del Palancar",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Centro_Cultural_Hortaleza_Maria_Lejarraga.jpg/960px-Centro_Cultural_Hortaleza_Maria_Lejarraga.jpg",
     distrito: "Hortaleza",
     direccion: "Calle Motilla del Palancar, 13, 28043 Madrid",
     lat: 40.4653, lng: -3.6333,
@@ -887,6 +980,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Clara Campoamor",
+    foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnJ-akf62brXqAkN0Gy7uFMPwsEqBHnMle8fgFF7ZQsQHXiHbubkEYh5wtbCmZTHaBI_Szln3eaoWGal0UCCqBy-261nlsJqCnu6hlLY-AutbUdt_GGfUDEiwhbuZRuhfo_FlbV=w800-h500-k-no",
     distrito: "Retiro",
     direccion: "Plaza Daoiz y Velarde, 1, 28007 Madrid",
     lat: 40.4023, lng: -3.6774,
@@ -897,6 +991,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Salas de Estudio Mercado de Ibiza",
+    foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmojW2gRROuvOxKBxbQ0MHAeos3H7Z895Fnv_4QuU3cV434qXeEAF_NlwoeRh54QIQY3Rzpfmw3jGig_x6nW95xv3Leiv2YahvZP2f5B54P0BrwfV4l3Jz46PUxQ0ItjpqjO5E=w800-h500-k-no",
     distrito: "Retiro",
     direccion: "Calle Ibiza, 8, planta 1ª, 28009 Madrid",
     lat: 40.4182, lng: -3.6774,
@@ -907,6 +1002,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio del C.C. Las Californias",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Centro_Cultural_Las_Californias_Retiro.jpg/960px-Centro_Cultural_Las_Californias_Retiro.jpg",
     distrito: "Retiro",
     direccion: "Calle Luis Peidró, 2, 28007 Madrid",
     lat: 40.397, lng: -3.6735,
@@ -917,6 +1013,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Luis Gonzaga",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Centro_Cultural_Buenavista_Madrid.jpg/960px-Centro_Cultural_Buenavista_Madrid.jpg",
     distrito: "Chamartín",
     direccion: "Calle Príncipe de Vergara, 142, 28002 Madrid",
     lat: 40.4449, lng: -3.6781,
@@ -927,6 +1024,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Antonio López",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Biblioteca_Damaso_Alonso_Chamartin.jpg/960px-Biblioteca_Damaso_Alonso_Chamartin.jpg",
     distrito: "Chamartín",
     direccion: "Calle Pastora Imperio, 4, 28036 Madrid",
     lat: 40.4449, lng: -3.6781,
@@ -937,6 +1035,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Galileo",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Centro_Cultural_Galileo_%28Madrid%29_01.jpg/960px-Centro_Cultural_Galileo_%28Madrid%29_01.jpg",
     distrito: "Chamberí",
     direccion: "Calle Galileo, 39, 28015 Madrid",
     lat: 40.4337, lng: -3.7104,
@@ -947,6 +1046,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Núñez de Balboa",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Centro_Cultural_Buenavista_Madrid.jpg/960px-Centro_Cultural_Buenavista_Madrid.jpg",
     distrito: "Salamanca",
     direccion: "Calle Núñez de Balboa, 40, 28001 Madrid",
     lat: 40.4268, lng: -3.6825,
@@ -957,6 +1057,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Quinta del Berro",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Palacete_de_la_Quinta_del_Berro_%28Madrid%29_01.jpg/960px-Palacete_de_la_Quinta_del_Berro_%28Madrid%29_01.jpg",
     distrito: "Salamanca",
     direccion: "Calle Enrique d'Almonte, 1, 28028 Madrid",
     lat: 40.4221, lng: -3.663,
@@ -967,6 +1068,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Emilia Pardo Bazán",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Mercado_de_Barcelo_Madrid_Biblioteca.jpg/960px-Mercado_de_Barcelo_Madrid_Biblioteca.jpg",
     distrito: "Salamanca",
     direccion: "Calle Goya, 1 (subterráneo), 28001 Madrid",
     lat: 40.4259, lng: -3.6896,
@@ -977,6 +1079,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Montecarmelo",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Biblioteca_P%C3%BAblica_Rafael_Alberti_%28Madrid%29_01.jpg/960px-Biblioteca_P%C3%BAblica_Rafael_Alberti_%28Madrid%29_01.jpg",
     distrito: "Fuencarral-El Pardo",
     direccion: "Avenida Santuario de Valverde, 114, 28049 Madrid",
     lat: 40.5164, lng: -3.6859,
@@ -987,6 +1090,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Alfonso XII",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Centro_Cultural_La_Chata_Carabanchel.jpg/960px-Centro_Cultural_La_Chata_Carabanchel.jpg",
     distrito: "Fuencarral-El Pardo",
     direccion: "Calle Mira el Río, 4, 28048 Madrid",
     lat: 40.5197, lng: -3.7779,
@@ -997,6 +1101,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Luis García Berlanga",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Madrid_-_Latina%2C_Aluche%2C_Biblioteca_P%C3%BAblica_Municipal_%C3%81ngel_Gonz%C3%A1lez_1.jpg/960px-Madrid_-_Latina%2C_Aluche%2C_Biblioteca_P%C3%BAblica_Municipal_%C3%81ngel_Gonz%C3%A1lez_1.jpg",
     distrito: "Tetuán",
     direccion: "Calle Viña Virgen, 2, 28029 Madrid",
     lat: 40.4653, lng: -3.6941,
@@ -1007,6 +1112,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Julio Cortázar",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Madrid_-_Latina%2C_Aluche%2C_Biblioteca_P%C3%BAblica_Municipal_%C3%81ngel_Gonz%C3%A1lez_1.jpg/960px-Madrid_-_Latina%2C_Aluche%2C_Biblioteca_P%C3%BAblica_Municipal_%C3%81ngel_Gonz%C3%A1lez_1.jpg",
     distrito: "Moncloa-Aravaca",
     direccion: "Calle Antonio Machado, 20, 28035 Madrid",
     lat: 40.4668, lng: -3.7196,
@@ -1017,6 +1123,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Corín Tellado",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Mercado_de_Barcelo_Madrid_Biblioteca.jpg/960px-Mercado_de_Barcelo_Madrid_Biblioteca.jpg",
     distrito: "Moncloa-Aravaca",
     direccion: "Calle Santa Pola, 22, 28008 Madrid",
     lat: 40.4322, lng: -3.7367,
@@ -1027,6 +1134,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Fernando Lázaro Carreter",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Centro_Cultural_La_Chata_Carabanchel.jpg/960px-Centro_Cultural_La_Chata_Carabanchel.jpg",
     distrito: "Carabanchel",
     direccion: "Calle Verdad, 29, 28019 Madrid",
     lat: 40.3916, lng: -3.7171,
@@ -1037,6 +1145,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Oporto",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Centro_Cultural_La_Chata_Carabanchel.jpg/960px-Centro_Cultural_La_Chata_Carabanchel.jpg",
     distrito: "Carabanchel",
     direccion: "Avenida de Oporto, 78, 28019 Madrid",
     lat: 40.3868, lng: -3.7277,
@@ -1047,6 +1156,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Almirante Churruca",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Madrid_-_Latina%2C_Aluche%2C_Biblioteca_P%C3%BAblica_Municipal_%C3%81ngel_Gonz%C3%A1lez_1.jpg/960px-Madrid_-_Latina%2C_Aluche%2C_Biblioteca_P%C3%BAblica_Municipal_%C3%81ngel_Gonz%C3%A1lez_1.jpg",
     distrito: "Latina",
     direccion: "Calle Fuente del Tiro, 72 (planta 1ª), 28024 Madrid",
     lat: 40.383, lng: -3.7801,
@@ -1057,6 +1167,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio El Greco",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Madrid_-_Latina%2C_Aluche%2C_Biblioteca_P%C3%BAblica_Municipal_%C3%81ngel_Gonz%C3%A1lez_1.jpg/960px-Madrid_-_Latina%2C_Aluche%2C_Biblioteca_P%C3%BAblica_Municipal_%C3%81ngel_Gonz%C3%A1lez_1.jpg",
     distrito: "Latina",
     direccion: "Calle El Greco, 29, 28011 Madrid",
     lat: 40.4084, lng: -3.7444,
@@ -1067,6 +1178,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Arquitecto Juan de Herrera",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Centro_Cultural_La_Chata_Carabanchel.jpg/960px-Centro_Cultural_La_Chata_Carabanchel.jpg",
     distrito: "Latina",
     direccion: "Calle María del Carmen, 65, 28011 Madrid",
     lat: 40.4065, lng: -3.7327,
@@ -1077,6 +1189,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Paseo de Extremadura",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Madrid_-_Latina%2C_Aluche%2C_Biblioteca_P%C3%BAblica_Municipal_%C3%81ngel_Gonz%C3%A1lez_1.jpg/960px-Madrid_-_Latina%2C_Aluche%2C_Biblioteca_P%C3%BAblica_Municipal_%C3%81ngel_Gonz%C3%A1lez_1.jpg",
     distrito: "Latina",
     direccion: "Paseo de Extremadura, 128, 28011 Madrid",
     lat: 40.4111, lng: -3.7358,
@@ -1087,6 +1200,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Cayetano Pando",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Madrid_-_Latina%2C_Aluche%2C_Biblioteca_P%C3%BAblica_Municipal_%C3%81ngel_Gonz%C3%A1lez_1.jpg/960px-Madrid_-_Latina%2C_Aluche%2C_Biblioteca_P%C3%BAblica_Municipal_%C3%81ngel_Gonz%C3%A1lez_1.jpg",
     distrito: "Latina",
     direccion: "Calle Cayetano Pando, 8, 28047 Madrid",
     lat: 40.4028, lng: -3.7465,
@@ -1097,6 +1211,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Cebreros",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Madrid_-_Latina%2C_Aluche%2C_Biblioteca_P%C3%BAblica_Municipal_%C3%81ngel_Gonz%C3%A1lez_1.jpg/960px-Madrid_-_Latina%2C_Aluche%2C_Biblioteca_P%C3%BAblica_Municipal_%C3%81ngel_Gonz%C3%A1lez_1.jpg",
     distrito: "Latina",
     direccion: "Calle Cebreros, 66, 28011 Madrid",
     lat: 40.4051, lng: -3.7485,
@@ -1107,6 +1222,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Maqueda",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Madrid_-_Latina%2C_Aluche%2C_Biblioteca_P%C3%BAblica_Municipal_%C3%81ngel_Gonz%C3%A1lez_1.jpg/960px-Madrid_-_Latina%2C_Aluche%2C_Biblioteca_P%C3%BAblica_Municipal_%C3%81ngel_Gonz%C3%A1lez_1.jpg",
     distrito: "Latina",
     direccion: "Calle Maqueda, 5, 28024 Madrid",
     lat: 40.3947, lng: -3.7646,
@@ -1117,6 +1233,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Sara Montiel",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Madrid_-_Latina%2C_Aluche%2C_Biblioteca_P%C3%BAblica_Municipal_%C3%81ngel_Gonz%C3%A1lez_1.jpg/960px-Madrid_-_Latina%2C_Aluche%2C_Biblioteca_P%C3%BAblica_Municipal_%C3%81ngel_Gonz%C3%A1lez_1.jpg",
     distrito: "Latina",
     direccion: "Carretera de Boadilla del Monte, 40, 28024 Madrid",
     lat: 40.3995, lng: -3.775,
@@ -1127,6 +1244,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio José Luis Sampedro (Latina)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Madrid_-_Latina%2C_Aluche%2C_Biblioteca_P%C3%BAblica_Municipal_%C3%81ngel_Gonz%C3%A1lez_1.jpg/960px-Madrid_-_Latina%2C_Aluche%2C_Biblioteca_P%C3%BAblica_Municipal_%C3%81ngel_Gonz%C3%A1lez_1.jpg",
     distrito: "Latina",
     direccion: "Calle Castroserna, 4, 28047 Madrid",
     lat: 40.4018, lng: -3.7492,
@@ -1137,6 +1255,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Escritor Pedro de Répide",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Centro_Cultural_La_Chata_Carabanchel.jpg/960px-Centro_Cultural_La_Chata_Carabanchel.jpg",
     distrito: "Latina",
     direccion: "Calle María del Carmen, 65, 28011 Madrid",
     lat: 40.4065, lng: -3.7333,
@@ -1147,6 +1266,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Miguel Hernández (Latina)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Madrid_-_Latina%2C_Aluche%2C_Biblioteca_P%C3%BAblica_Municipal_%C3%81ngel_Gonz%C3%A1lez_1.jpg/960px-Madrid_-_Latina%2C_Aluche%2C_Biblioteca_P%C3%BAblica_Municipal_%C3%81ngel_Gonz%C3%A1lez_1.jpg",
     distrito: "Latina",
     direccion: "Calle Serradilla, 13, 28044 Madrid",
     lat: 40.3789, lng: -3.782,
@@ -1157,6 +1277,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Centro Sociocultural Latina",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Madrid_-_Latina%2C_Aluche%2C_Biblioteca_P%C3%BAblica_Municipal_%C3%81ngel_Gonz%C3%A1lez_1.jpg/960px-Madrid_-_Latina%2C_Aluche%2C_Biblioteca_P%C3%BAblica_Municipal_%C3%81ngel_Gonz%C3%A1lez_1.jpg",
     distrito: "Latina",
     direccion: "Calle Rodrigo de Arana, 50, 28044 Madrid",
     lat: 40.3796, lng: -3.7659,
@@ -1167,6 +1288,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Centro Dotacional Arganzuela",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Biblioteca_Pio_Baroja_Arganzuela.jpg/960px-Biblioteca_Pio_Baroja_Arganzuela.jpg",
     distrito: "Arganzuela",
     direccion: "Calle Canarias, 17, 28045 Madrid",
     lat: 40.4024, lng: -3.6954,
@@ -1177,6 +1299,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Villa del Prado",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Madrid_-_Latina%2C_Aluche%2C_Biblioteca_P%C3%BAblica_Municipal_%C3%81ngel_Gonz%C3%A1lez_1.jpg/960px-Madrid_-_Latina%2C_Aluche%2C_Biblioteca_P%C3%BAblica_Municipal_%C3%81ngel_Gonz%C3%A1lez_1.jpg",
     distrito: "Arganzuela",
     direccion: "Calle Villa del Prado, 27, 28045 Madrid",
     lat: 40.3995, lng: -3.6866,
@@ -1187,6 +1310,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio El Madroño",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Centro_Cultural_El_Madrono_Vicalvaro.jpg/960px-Centro_Cultural_El_Madrono_Vicalvaro.jpg",
     distrito: "Vicálvaro",
     direccion: "Calle Villardondiego, 36, 28032 Madrid",
     lat: 40.4053, lng: -3.6086,
@@ -1197,6 +1321,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Fuente de San Pedro",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Centro_Cultural_El_Madrono_Vicalvaro.jpg/960px-Centro_Cultural_El_Madrono_Vicalvaro.jpg",
     distrito: "Vicálvaro",
     direccion: "Calle Titanio, 5, 28032 Madrid",
     lat: 40.4022, lng: -3.6014,
@@ -1207,6 +1332,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Ciudad Pegaso",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Biblioteca_Canillejas_Madrid.jpg/960px-Biblioteca_Canillejas_Madrid.jpg",
     distrito: "San Blas-Canillejas",
     direccion: "Avenida Séptima, 11, 28022 Madrid",
     lat: 40.4484, lng: -3.5981,
@@ -1217,6 +1343,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Salas de Estudio Miguel de Cervantes",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Biblioteca_Canillejas_Madrid.jpg/960px-Biblioteca_Canillejas_Madrid.jpg",
     distrito: "San Blas-Canillejas",
     direccion: "Calle Aliaga, 5, 28022 Madrid",
     lat: 40.4367, lng: -3.6114,
@@ -1227,6 +1354,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio José Luis López Vázquez",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Biblioteca_Canillejas_Madrid.jpg/960px-Biblioteca_Canillejas_Madrid.jpg",
     distrito: "San Blas-Canillejas",
     direccion: "Calle Febrero, 4, 28022 Madrid",
     lat: 40.4468, lng: -3.5727,
@@ -1237,6 +1365,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Teresa de Calcuta",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Centro_Cultural_Carril_del_Conde_Madrid.jpg/960px-Centro_Cultural_Carril_del_Conde_Madrid.jpg",
     distrito: "Barajas",
     direccion: "Plaza Navío, 4, 28042 Madrid",
     lat: 40.4553, lng: -3.5876,
@@ -1247,6 +1376,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Lectura Pilares",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Biblioteca_P%C3%BAblica_Vallecas_%289_de_enero_de_2015%2C_Madrid%29.JPG/960px-Biblioteca_P%C3%BAblica_Vallecas_%289_de_enero_de_2015%2C_Madrid%29.JPG",
     distrito: "Barajas",
     direccion: "Calle Los Pilares, 3, 28042 Madrid",
     lat: 40.4751, lng: -3.5778,
@@ -1257,6 +1387,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Centro Cultural El Torito",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Centro_Cultural_El_Torito_Moratalaz.jpg/960px-Centro_Cultural_El_Torito_Moratalaz.jpg",
     distrito: "Moratalaz",
     direccion: "Avenida de Moratalaz, 130, 28030 Madrid",
     lat: 40.4061, lng: -3.6465,
@@ -1267,6 +1398,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Centro Sociocultural Moratalaz",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Centro_Cultural_El_Torito_Moratalaz.jpg/960px-Centro_Cultural_El_Torito_Moratalaz.jpg",
     distrito: "Moratalaz",
     direccion: "Calle Fuente Carrantona, 10, 28030 Madrid",
     lat: 40.3993, lng: -3.6366,
@@ -1277,6 +1409,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Lope de Vega",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Biblioteca_P%C3%BAblica_Vallecas_%289_de_enero_de_2015%2C_Madrid%29.JPG/960px-Biblioteca_P%C3%BAblica_Vallecas_%289_de_enero_de_2015%2C_Madrid%29.JPG",
     distrito: "Puente de Vallecas",
     direccion: "Calle Concejo de Teverga, 1, 28053 Madrid",
     lat: 40.3863, lng: -3.6719,
@@ -1287,6 +1420,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Talleres de Creatividad",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Biblioteca_P%C3%BAblica_Vallecas_%289_de_enero_de_2015%2C_Madrid%29.JPG/960px-Biblioteca_P%C3%BAblica_Vallecas_%289_de_enero_de_2015%2C_Madrid%29.JPG",
     distrito: "Puente de Vallecas",
     direccion: "Calle Sierra Carbonera, 74, 28053 Madrid",
     lat: 40.3901, lng: -3.6653,
@@ -1297,6 +1431,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Salas de Estudio Pozo del Tío Raimundo",
+    foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlvFwSt8wOLlJvlmvtOwn0V6Kf0_nWo0CvfO2I6AjO9ZGLSbJP-Em4dXNXS0Oz1sSDhV3eqCPIrFG7GwbENhMcO5LVJNwRqtQwsuSv-vuppdlCRYjkzja8JKI0x1dNHzTbbrhky=w800-h500-k-no",
     distrito: "Puente de Vallecas",
     direccion: "Avenida Glorietas, 19, 28053 Madrid",
     lat: 40.3738, lng: -3.6599,
@@ -1307,6 +1442,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Cánovas del Castillo",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Biblioteca_P%C3%BAblica_Vallecas_%289_de_enero_de_2015%2C_Madrid%29.JPG/960px-Biblioteca_P%C3%BAblica_Vallecas_%289_de_enero_de_2015%2C_Madrid%29.JPG",
     distrito: "Usera",
     direccion: "Calle Julio Aguirre, 10, 28026 Madrid",
     lat: 40.3863, lng: -3.7001,
@@ -1317,6 +1453,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Centro Sociocultural Siena",
+    foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmRpgMTQEBVMlex8vIhynqxmpQTVUuwyJEiUe3evmrE2yuhi9eBLmxP-DKeax4AlV3TwEtzxUrRoyKu1qkkxTt9B2vWfjOfN9YEmOc3MCugpZNMRlnGCo57kQVQCGJdm1bViwRP=w800-h500-k-no",
     distrito: "Ciudad Lineal",
     direccion: "Calle Siena, 52, 28027 Madrid",
     lat: 40.4332, lng: -3.6519,
@@ -1327,6 +1464,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Centro Sociocultural Ciudad Lineal",
+    foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmRpgMTQEBVMlex8vIhynqxmpQTVUuwyJEiUe3evmrE2yuhi9eBLmxP-DKeax4AlV3TwEtzxUrRoyKu1qkkxTt9B2vWfjOfN9YEmOc3MCugpZNMRlnGCo57kQVQCGJdm1bViwRP=w800-h500-k-no",
     distrito: "Ciudad Lineal",
     direccion: "Calle Poeta Blas de Otero, 81, 28017 Madrid",
     lat: 40.4229, lng: -3.6517,
@@ -1337,6 +1475,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio San Juan Bautista",
+    foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmRpgMTQEBVMlex8vIhynqxmpQTVUuwyJEiUe3evmrE2yuhi9eBLmxP-DKeax4AlV3TwEtzxUrRoyKu1qkkxTt9B2vWfjOfN9YEmOc3MCugpZNMRlnGCo57kQVQCGJdm1bViwRP=w800-h500-k-no",
     distrito: "Ciudad Lineal",
     direccion: "Calle San Nemesio, 4, 28043 Madrid",
     lat: 40.4522, lng: -3.658,
@@ -1347,6 +1486,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Lectura León Felipe",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Biblioteca_P%C3%BAblica_Vallecas_%289_de_enero_de_2015%2C_Madrid%29.JPG/960px-Biblioteca_P%C3%BAblica_Vallecas_%289_de_enero_de_2015%2C_Madrid%29.JPG",
     distrito: "Villaverde",
     direccion: "Calle Encarnación Oviol, 47, 28021 Madrid",
     lat: 40.3508, lng: -3.6872,
@@ -1357,6 +1497,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Río Esmeralda",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Biblioteca_San_Fermin_Usera.jpg/960px-Biblioteca_San_Fermin_Usera.jpg",
     distrito: "Puente de Vallecas",
     direccion: "Calle Lago Maracaibo, 8, 28018 Madrid",
     lat: 40.3832, lng: -3.652,
@@ -1367,6 +1508,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Dolores Catarineu",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Biblioteca_P%C3%BAblica_de_Villa_de_Vallecas_%22Luis_Mart%C3%ADn-Santos%22.jpg/960px-Biblioteca_P%C3%BAblica_de_Villa_de_Vallecas_%22Luis_Mart%C3%ADn-Santos%22.jpg",
     distrito: "Moncloa-Aravaca",
     direccion: "Calle Caroli, 1, 28023 Madrid",
     lat: 40.4587, lng: -3.7847,
@@ -1377,6 +1519,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio Manoteras",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Biblioteca_P%C3%BAblica_Hortaleza_%28Madrid%29.jpg/960px-Biblioteca_P%C3%BAblica_Hortaleza_%28Madrid%29.jpg",
     distrito: "Hortaleza",
     direccion: "Calle Cuevas del Almanzora, 187, 28033 Madrid",
     lat: 40.4778, lng: -3.6583,
@@ -1387,6 +1530,7 @@ const lugares = [
   {
     tipo: "sala",
     nombre: "Sala de Estudio El Sitio de mi Recreo",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Biblioteca_P%C3%BAblica_de_Villa_de_Vallecas_%22Luis_Mart%C3%ADn-Santos%22.jpg/960px-Biblioteca_P%C3%BAblica_de_Villa_de_Vallecas_%22Luis_Mart%C3%ADn-Santos%22.jpg",
     distrito: "Villa de Vallecas",
     direccion: "Calle Real de Arganda, 39, 28031 Madrid",
     lat: 40.3795, lng: -3.6169,
@@ -1399,6 +1543,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Central Cardenal Cisneros",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Alcala_de_Henares_Biblioteca_Cisneros.jpg/960px-Alcala_de_Henares_Biblioteca_Cisneros.jpg",
     distrito: "Alcalá de Henares",
     direccion: "Plaza San Julián, 1, 28801 Alcalá de Henares",
     lat: 40.4816, lng: -3.3688,
@@ -1409,6 +1554,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal Pío Baroja (Alcalá)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Alcala_de_Henares_Biblioteca_Cisneros.jpg/960px-Alcala_de_Henares_Biblioteca_Cisneros.jpg",
     distrito: "Alcalá de Henares",
     direccion: "Calle Torrelaguna, 33, 28807 Alcalá de Henares",
     lat: 40.4932, lng: -3.3647,
@@ -1419,6 +1565,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal Rosa Chacel (Alcalá)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Alcala_de_Henares_Biblioteca_Cisneros.jpg/960px-Alcala_de_Henares_Biblioteca_Cisneros.jpg",
     distrito: "Alcalá de Henares",
     direccion: "Parque Juan de la Cueva, s/n, 28806 Alcalá de Henares",
     lat: 40.4789, lng: -3.3854,
@@ -1429,6 +1576,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal María Moliner (Alcalá)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Alcala_de_Henares_Biblioteca_Cisneros.jpg/960px-Alcala_de_Henares_Biblioteca_Cisneros.jpg",
     distrito: "Alcalá de Henares",
     direccion: "Calle San Vidal, 33, 28803 Alcalá de Henares",
     lat: 40.4741, lng: -3.3762,
@@ -1439,6 +1587,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Mediateca Centro de Arte Alcobendas",
+    foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkCn9UbwjWiYSu8AwdLk7DEuBStKf1wFPQeXRuT1akoJkO-HbBf68m-VPrilfKpAsfZScyaafBf6LzQ3nKermTTXeK5UGkUA9ZuBNcZnSqmPZ3hx9KhXjBCCTFZNLhnFKf8TUm05A=w800-h500-k-no",
     distrito: "Alcobendas",
     direccion: "Calle Mariano Sebastián Izuel, 9, 28100 Alcobendas",
     lat: 40.5435, lng: -3.6398,
@@ -1449,6 +1598,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Mediateca Anabel Segura",
+    foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWn73rWfaGU4TkqjMJscPzubT1Q1fhE9MbcUh7IYW3ZkNBZgjadsYnpvihsNIifGSlhBWWG6fKXyqdrVsXAf8k2ieaaJx-ezOOKEaYfY3uMHQrXLOFUjqJbaLbrmg29aewKj1Yfw=w800-h500-k-no",
     distrito: "Alcobendas",
     direccion: "Avenida de Bruselas, 19, 28108 Alcobendas",
     lat: 40.5302, lng: -3.6358,
@@ -1459,6 +1609,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Mediateca Pablo Iglesias",
+    foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWn73rWfaGU4TkqjMJscPzubT1Q1fhE9MbcUh7IYW3ZkNBZgjadsYnpvihsNIifGSlhBWWG6fKXyqdrVsXAf8k2ieaaJx-ezOOKEaYfY3uMHQrXLOFUjqJbaLbrmg29aewKj1Yfw=w800-h500-k-no",
     distrito: "Alcobendas",
     direccion: "Paseo de la Chopera, 59, 28100 Alcobendas",
     lat: 40.5484, lng: -3.6481,
@@ -1469,6 +1620,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Mediateca José Hierro (Alcobendas)",
+    foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkCn9UbwjWiYSu8AwdLk7DEuBStKf1wFPQeXRuT1akoJkO-HbBf68m-VPrilfKpAsfZScyaafBf6LzQ3nKermTTXeK5UGkUA9ZuBNcZnSqmPZ3hx9KhXjBCCTFZNLhnFKf8TUm05A=w800-h500-k-no",
     distrito: "Alcobendas",
     direccion: "Avenida de Europa, 1, 28108 Alcobendas",
     lat: 40.5361, lng: -3.6482,
@@ -1479,6 +1631,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Central de San Sebastián de los Reyes",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Tres_Cantos_Biblioteca_Lope_de_Vega.jpg/960px-Tres_Cantos_Biblioteca_Lope_de_Vega.jpg",
     distrito: "San Sebastián de los Reyes",
     direccion: "Plaza de Andrés Caballero, 2, 28701 San Sebastián de los Reyes",
     lat: 40.5471, lng: -3.6264,
@@ -1489,6 +1642,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Claudio Rodríguez (San Sebastián de los Reyes)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Tres_Cantos_Biblioteca_Lope_de_Vega.jpg/960px-Tres_Cantos_Biblioteca_Lope_de_Vega.jpg",
     distrito: "San Sebastián de los Reyes",
     direccion: "Avenida Maximiliano Puerro del Tell, s/n, 28701 San Sebastián de los Reyes",
     lat: 40.5539, lng: -3.6298,
@@ -1499,6 +1653,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Plaza de la Iglesia (San Sebastián de los Reyes)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Tres_Cantos_Biblioteca_Lope_de_Vega.jpg/960px-Tres_Cantos_Biblioteca_Lope_de_Vega.jpg",
     distrito: "San Sebastián de los Reyes",
     direccion: "Plaza de la Iglesia, 4, 28701 San Sebastián de los Reyes",
     lat: 40.5463, lng: -3.6231,
@@ -1509,6 +1664,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal Ricardo de la Vega",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Campus_de_Getafe_de_la_Universidad_Carlos_III_de_Madrid_01.jpg/960px-Campus_de_Getafe_de_la_Universidad_Carlos_III_de_Madrid_01.jpg",
     distrito: "Getafe",
     direccion: "Calle Caldas de Reyes, s/n, 28901 Getafe",
     lat: 40.3061, lng: -3.7312,
@@ -1519,6 +1675,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Jorge Luis Borges (Getafe)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Campus_de_Getafe_de_la_Universidad_Carlos_III_de_Madrid_01.jpg/960px-Campus_de_Getafe_de_la_Universidad_Carlos_III_de_Madrid_01.jpg",
     distrito: "Getafe",
     direccion: "Calle Perú, 2, 28903 Getafe",
     lat: 40.3015, lng: -3.7226,
@@ -1529,6 +1686,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca José Luis Sampedro (Getafe)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Campus_de_Getafe_de_la_Universidad_Carlos_III_de_Madrid_01.jpg/960px-Campus_de_Getafe_de_la_Universidad_Carlos_III_de_Madrid_01.jpg",
     distrito: "Getafe",
     direccion: "Calle Rosa de Luxemburgo, s/n, 28903 Getafe",
     lat: 40.3152, lng: -3.7208,
@@ -1539,6 +1697,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Carmen Martín Gaite (Getafe Sector III)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Campus_de_Getafe_de_la_Universidad_Carlos_III_de_Madrid_01.jpg/960px-Campus_de_Getafe_de_la_Universidad_Carlos_III_de_Madrid_01.jpg",
     distrito: "Getafe",
     direccion: "Calle Joan Font, 5, 28905 Getafe",
     lat: 40.2926, lng: -3.7431,
@@ -1549,6 +1708,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Central Julio Caro Baroja (Leganés)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Campus_de_Legan%C3%A9s_de_la_Universidad_Carlos_III_de_Madrid_01.jpg/960px-Campus_de_Legan%C3%A9s_de_la_Universidad_Carlos_III_de_Madrid_01.jpg",
     distrito: "Leganés",
     direccion: "Avenida Reina Sofía, 4, 28919 Leganés",
     lat: 40.3421, lng: -3.7618,
@@ -1559,6 +1719,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Enrique Tierno Galván (Leganés)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Campus_de_Legan%C3%A9s_de_la_Universidad_Carlos_III_de_Madrid_01.jpg/960px-Campus_de_Legan%C3%A9s_de_la_Universidad_Carlos_III_de_Madrid_01.jpg",
     distrito: "Leganés",
     direccion: "Calle San Amado, 20, 28917 Leganés",
     lat: 40.3342, lng: -3.7541,
@@ -1569,6 +1730,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Rigoberta Menchú (Leganés)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Campus_de_Legan%C3%A9s_de_la_Universidad_Carlos_III_de_Madrid_01.jpg/960px-Campus_de_Legan%C3%A9s_de_la_Universidad_Carlos_III_de_Madrid_01.jpg",
     distrito: "Leganés",
     direccion: "Avenida Rey Juan Carlos I, 100, 28915 Leganés",
     lat: 40.3276, lng: -3.7742,
@@ -1579,6 +1741,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Julián Besteiro (Leganés)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Campus_de_Legan%C3%A9s_de_la_Universidad_Carlos_III_de_Madrid_01.jpg/960px-Campus_de_Legan%C3%A9s_de_la_Universidad_Carlos_III_de_Madrid_01.jpg",
     distrito: "Leganés",
     direccion: "Avenida Juan Carlos I, 30, 28915 Leganés",
     lat: 40.3312, lng: -3.7665,
@@ -1589,6 +1752,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Central Almudena Grandes (Móstoles)",
+    foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkvKo_zlSIerNfD2K50AIG8XY-ARpzKXjvlhWkMehvwR_pruCaPnPt7Dxh0q1adMus-nFsdS0Z0vk4cF4tBYyPEFdZXJCXSYbXL2svKK78_voJBHGxFvzxpFH9C9317tnsyk8J5fHinjWXf=w800-h500-k-no",
     distrito: "Móstoles",
     direccion: "Calle Pintor Velázquez, 68, 28935 Móstoles",
     lat: 40.3235, lng: -3.8712,
@@ -1599,6 +1763,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Norte (Móstoles)",
+    foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkvKo_zlSIerNfD2K50AIG8XY-ARpzKXjvlhWkMehvwR_pruCaPnPt7Dxh0q1adMus-nFsdS0Z0vk4cF4tBYyPEFdZXJCXSYbXL2svKK78_voJBHGxFvzxpFH9C9317tnsyk8J5fHinjWXf=w800-h500-k-no",
     distrito: "Móstoles",
     direccion: "Calle Coronel de Palma, 1, 28934 Móstoles",
     lat: 40.3289, lng: -3.8631,
@@ -1609,6 +1774,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca El Soto (Móstoles)",
+    foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkvKo_zlSIerNfD2K50AIG8XY-ARpzKXjvlhWkMehvwR_pruCaPnPt7Dxh0q1adMus-nFsdS0Z0vk4cF4tBYyPEFdZXJCXSYbXL2svKK78_voJBHGxFvzxpFH9C9317tnsyk8J5fHinjWXf=w800-h500-k-no",
     distrito: "Móstoles",
     direccion: "Avenida de los Deportes, s/n, 28935 Móstoles",
     lat: 40.3182, lng: -3.8821,
@@ -1619,6 +1785,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Parque Coimbra",
+    foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkvKo_zlSIerNfD2K50AIG8XY-ARpzKXjvlhWkMehvwR_pruCaPnPt7Dxh0q1adMus-nFsdS0Z0vk4cF4tBYyPEFdZXJCXSYbXL2svKK78_voJBHGxFvzxpFH9C9317tnsyk8J5fHinjWXf=w800-h500-k-no",
     distrito: "Móstoles",
     direccion: "Calle de los Cedros, 71, 28937 Móstoles",
     lat: 40.3012, lng: -3.9314,
@@ -1629,6 +1796,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Central José Hierro (Alcorcón)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Campus_de_Alcorc%C3%B3n_de_la_Universidad_Rey_Juan_Carlos_01.jpg/960px-Campus_de_Alcorc%C3%B3n_de_la_Universidad_Rey_Juan_Carlos_01.jpg",
     distrito: "Alcorcón",
     direccion: "Calle de los Robles, s/n, 28922 Alcorcón",
     lat: 40.3475, lng: -3.8291,
@@ -1639,6 +1807,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca El Parque (Alcorcón)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Campus_de_Alcorc%C3%B3n_de_la_Universidad_Rey_Juan_Carlos_01.jpg/960px-Campus_de_Alcorc%C3%B3n_de_la_Universidad_Rey_Juan_Carlos_01.jpg",
     distrito: "Alcorcón",
     direccion: "Avenida de Leganés, 31, 28921 Alcorcón",
     lat: 40.3491, lng: -3.8215,
@@ -1649,6 +1818,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Ciudad de Nejapa (Alcorcón)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Campus_de_Alcorc%C3%B3n_de_la_Universidad_Rey_Juan_Carlos_01.jpg/960px-Campus_de_Alcorc%C3%B3n_de_la_Universidad_Rey_Juan_Carlos_01.jpg",
     distrito: "Alcorcón",
     direccion: "Calle Pintor Picasso, 2, 28922 Alcorcón",
     lat: 40.3429, lng: -3.8342,
@@ -1659,6 +1829,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Joaquín Vilumbrales (Alcorcón)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Campus_de_Alcorc%C3%B3n_de_la_Universidad_Rey_Juan_Carlos_01.jpg/960px-Campus_de_Alcorc%C3%B3n_de_la_Universidad_Rey_Juan_Carlos_01.jpg",
     distrito: "Alcorcón",
     direccion: "Calle Alcorcón, s/n, 28925 Alcorcón",
     lat: 40.3541, lng: -3.8162,
@@ -1669,6 +1840,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Tomás y Valiente (Fuenlabrada)",
+    foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmDa8fDr7n95RbaLBLHC9VW9PCp91ADBHw5UVhEH7Z-8T-wSlDXkDmCi7meJ1ZZGBzNoBq0eygdQP6JqkjnVcUxGBjqdt6IyVj-UP1zaD5sGxao-qf-3RBJegWxtmwwSyEZ2vvx=w800-h500-k-no",
     distrito: "Fuenlabrada",
     direccion: "Calle Leganés, 51, 28945 Fuenlabrada",
     lat: 40.2872, lng: -3.7915,
@@ -1679,6 +1851,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Fernando de los Ríos (Fuenlabrada)",
+    foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmDa8fDr7n95RbaLBLHC9VW9PCp91ADBHw5UVhEH7Z-8T-wSlDXkDmCi7meJ1ZZGBzNoBq0eygdQP6JqkjnVcUxGBjqdt6IyVj-UP1zaD5sGxao-qf-3RBJegWxtmwwSyEZ2vvx=w800-h500-k-no",
     distrito: "Fuenlabrada",
     direccion: "Calle Andorra, 3, 28943 Fuenlabrada",
     lat: 40.2915, lng: -3.8052,
@@ -1689,6 +1862,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Antonio Machado (Fuenlabrada)",
+    foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmDa8fDr7n95RbaLBLHC9VW9PCp91ADBHw5UVhEH7Z-8T-wSlDXkDmCi7meJ1ZZGBzNoBq0eygdQP6JqkjnVcUxGBjqdt6IyVj-UP1zaD5sGxao-qf-3RBJegWxtmwwSyEZ2vvx=w800-h500-k-no",
     distrito: "Fuenlabrada",
     direccion: "Calle Sevilla, 9, 28941 Fuenlabrada",
     lat: 40.2829, lng: -3.7981,
@@ -1699,6 +1873,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Caballero Bonald (Fuenlabrada)",
+    foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmDa8fDr7n95RbaLBLHC9VW9PCp91ADBHw5UVhEH7Z-8T-wSlDXkDmCi7meJ1ZZGBzNoBq0eygdQP6JqkjnVcUxGBjqdt6IyVj-UP1zaD5sGxao-qf-3RBJegWxtmwwSyEZ2vvx=w800-h500-k-no",
     distrito: "Fuenlabrada",
     direccion: "Calle Creta, 32, 28944 Fuenlabrada",
     lat: 40.2762, lng: -3.8115,
@@ -1709,6 +1884,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Miguel de Cervantes (Pozuelo)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Universidad_Francisco_de_Vitoria_%28Pozuelo_de_Alarc%C3%B3n%29_01.jpg/960px-Universidad_Francisco_de_Vitoria_%28Pozuelo_de_Alarc%C3%B3n%29_01.jpg",
     distrito: "Pozuelo de Alarcón",
     direccion: "Plaza Mayor, 1, 28223 Pozuelo de Alarcón",
     lat: 40.4358, lng: -3.8152,
@@ -1719,6 +1895,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Rosalía de Castro (Pozuelo)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Universidad_Francisco_de_Vitoria_%28Pozuelo_de_Alarc%C3%B3n%29_01.jpg/960px-Universidad_Francisco_de_Vitoria_%28Pozuelo_de_Alarc%C3%B3n%29_01.jpg",
     distrito: "Pozuelo de Alarcón",
     direccion: "Calle Estación, 2, 28224 Pozuelo de Alarcón",
     lat: 40.4441, lng: -3.8049,
@@ -1729,6 +1906,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal Volturno",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Universidad_Francisco_de_Vitoria_%28Pozuelo_de_Alarc%C3%B3n%29_01.jpg/960px-Universidad_Francisco_de_Vitoria_%28Pozuelo_de_Alarc%C3%B3n%29_01.jpg",
     distrito: "Pozuelo de Alarcón",
     direccion: "Calle Volturno, 2, 28223 Pozuelo de Alarcón",
     lat: 40.4285, lng: -3.7925,
@@ -1739,6 +1917,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Leon Tolstoi (Las Rozas)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Centro_Cultural_Leon_Tolstoi_Las_Rozas.jpg/960px-Centro_Cultural_Leon_Tolstoi_Las_Rozas.jpg",
     distrito: "Las Rozas de Madrid",
     direccion: "Calle Octavio Paz, 2, 28232 Las Rozas de Madrid",
     lat: 40.4998, lng: -3.8821,
@@ -1749,6 +1928,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Las Matas (Marga Gil Roësset)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Centro_Cultural_Leon_Tolstoi_Las_Rozas.jpg/960px-Centro_Cultural_Leon_Tolstoi_Las_Rozas.jpg",
     distrito: "Las Rozas de Madrid",
     direccion: "Plaza Gabriel María Cárdenas, s/n, 28290 Las Rozas de Madrid",
     lat: 40.5542, lng: -3.8961,
@@ -1759,6 +1939,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal de Las Rozas",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Centro_Cultural_Leon_Tolstoi_Las_Rozas.jpg/960px-Centro_Cultural_Leon_Tolstoi_Las_Rozas.jpg",
     distrito: "Las Rozas de Madrid",
     direccion: "Calle Juan Barjola, s/n, 28231 Las Rozas de Madrid",
     lat: 40.4921, lng: -3.8742,
@@ -1769,6 +1950,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal Francisco Umbral (Majadahonda)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Majadahonda_-_Biblioteca_Municipal_Francisco_Umbral_1.JPG/960px-Majadahonda_-_Biblioteca_Municipal_Francisco_Umbral_1.JPG",
     distrito: "Majadahonda",
     direccion: "Calle Las Norias, 39, 28220 Majadahonda",
     lat: 40.4721, lng: -3.8722,
@@ -1779,6 +1961,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Princesa Doña Leonor (Boadilla)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Universidad_Francisco_de_Vitoria_%28Pozuelo_de_Alarc%C3%B3n%29_01.jpg/960px-Universidad_Francisco_de_Vitoria_%28Pozuelo_de_Alarc%C3%B3n%29_01.jpg",
     distrito: "Boadilla del Monte",
     direccion: "Calle Mártires, 1, 28660 Boadilla del Monte",
     lat: 40.4072, lng: -3.8751,
@@ -1789,6 +1972,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Gloria Fuertes (Rivas)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Campus_Sur_UPM_Vallecas.jpg/960px-Campus_Sur_UPM_Vallecas.jpg",
     distrito: "Rivas-Vaciamadrid",
     direccion: "Calle Jovellanos, 30, 28522 Rivas-Vaciamadrid",
     lat: 40.3541, lng: -3.5381,
@@ -1799,6 +1983,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Federico García Lorca (Rivas)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Campus_Sur_UPM_Vallecas.jpg/960px-Campus_Sur_UPM_Vallecas.jpg",
     distrito: "Rivas-Vaciamadrid",
     direccion: "Plaza de la Constitución, 1, 28522 Rivas-Vaciamadrid",
     lat: 40.3512, lng: -3.5315,
@@ -1809,6 +1994,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca José Saramago (Rivas)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Campus_Sur_UPM_Vallecas.jpg/960px-Campus_Sur_UPM_Vallecas.jpg",
     distrito: "Rivas-Vaciamadrid",
     direccion: "Avenida de Covibar, 10, 28523 Rivas-Vaciamadrid",
     lat: 40.3582, lng: -3.5491,
@@ -1819,6 +2005,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Central Federico García Lorca (Torrejón)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Alcala_de_Henares_Biblioteca_Cisneros.jpg/960px-Alcala_de_Henares_Biblioteca_Cisneros.jpg",
     distrito: "Torrejón de Ardoz",
     direccion: "Plaza del Maestro, s/n, 28850 Torrejón de Ardoz",
     lat: 40.4578, lng: -3.4795,
@@ -1829,6 +2016,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Gabriel Celaya (Torrejón)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Alcala_de_Henares_Biblioteca_Cisneros.jpg/960px-Alcala_de_Henares_Biblioteca_Cisneros.jpg",
     distrito: "Torrejón de Ardoz",
     direccion: "Calle Salvador Allende, 7, 28850 Torrejón de Ardoz",
     lat: 40.4632, lng: -3.4691,
@@ -1839,6 +2027,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca La Caja del Arte (Torrejón)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Alcala_de_Henares_Biblioteca_Cisneros.jpg/960px-Alcala_de_Henares_Biblioteca_Cisneros.jpg",
     distrito: "Torrejón de Ardoz",
     direccion: "Calle Joaquín Blume, 4, 28850 Torrejón de Ardoz",
     lat: 40.4491, lng: -3.4652,
@@ -1849,6 +2038,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Central de Coslada",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Alcala_de_Henares_Biblioteca_Cisneros.jpg/960px-Alcala_de_Henares_Biblioteca_Cisneros.jpg",
     distrito: "Coslada",
     direccion: "Calle Luisa Muñoz, 1, 28821 Coslada",
     lat: 40.4261, lng: -3.5652,
@@ -1859,6 +2049,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca La Jaramilla (Coslada)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Alcala_de_Henares_Biblioteca_Cisneros.jpg/960px-Alcala_de_Henares_Biblioteca_Cisneros.jpg",
     distrito: "Coslada",
     direccion: "Avenida de la Constitución, 47, 28821 Coslada",
     lat: 40.4285, lng: -3.5591,
@@ -1869,6 +2060,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Rafael Alberti (San Fernando de Henares)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Alcala_de_Henares_Biblioteca_Cisneros.jpg/960px-Alcala_de_Henares_Biblioteca_Cisneros.jpg",
     distrito: "San Fernando de Henares",
     direccion: "Calle Real, 40, 28830 San Fernando de Henares",
     lat: 40.4239, lng: -3.5358,
@@ -1879,6 +2071,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal Lope de Vega (Tres Cantos)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Tres_Cantos_Biblioteca_Lope_de_Vega.jpg/960px-Tres_Cantos_Biblioteca_Lope_de_Vega.jpg",
     distrito: "Tres Cantos",
     direccion: "Avenida de los Labradores, 28, 28760 Tres Cantos",
     lat: 40.6015, lng: -3.7082,
@@ -1889,6 +2082,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal Pablo Neruda (Colmenar Viejo)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Tres_Cantos_Biblioteca_Lope_de_Vega.jpg/960px-Tres_Cantos_Biblioteca_Lope_de_Vega.jpg",
     distrito: "Colmenar Viejo",
     direccion: "Calle Real, 42, 28770 Colmenar Viejo",
     lat: 40.6582, lng: -3.7661,
@@ -1899,6 +2093,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Mario Vargas Llosa (Colmenar Viejo)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Tres_Cantos_Biblioteca_Lope_de_Vega.jpg/960px-Tres_Cantos_Biblioteca_Lope_de_Vega.jpg",
     distrito: "Colmenar Viejo",
     direccion: "Calle de la Soledad, 2, 28770 Colmenar Viejo",
     lat: 40.6621, lng: -3.7712,
@@ -1909,6 +2104,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal Miguel Hernández (Collado Villalba)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Campus_de_Colmenarejo_de_la_Universidad_Carlos_III_de_Madrid_01.jpg/960px-Campus_de_Colmenarejo_de_la_Universidad_Carlos_III_de_Madrid_01.jpg",
     distrito: "Collado Villalba",
     direccion: "Calle Batalla de Bailén, 7, 28400 Collado Villalba",
     lat: 40.6315, lng: -4.0082,
@@ -1919,6 +2115,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Sancho Panza (Collado Villalba)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Campus_de_Colmenarejo_de_la_Universidad_Carlos_III_de_Madrid_01.jpg/960px-Campus_de_Colmenarejo_de_la_Universidad_Carlos_III_de_Madrid_01.jpg",
     distrito: "Collado Villalba",
     direccion: "Calle Torrelodones, 8, 28400 Collado Villalba",
     lat: 40.6271, lng: -4.0152,
@@ -1929,6 +2126,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal Álvarez de Quindós (Aranjuez)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Centro_Cultural_Casa_de_la_Cadena_Pinto.jpg/960px-Centro_Cultural_Casa_de_la_Cadena_Pinto.jpg",
     distrito: "Aranjuez",
     direccion: "Plaza de San Antonio, 9, 28300 Aranjuez",
     lat: 40.0332, lng: -3.6025,
@@ -1939,6 +2137,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal Ana María Matute (Valdemoro)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Centro_Cultural_Casa_de_la_Cadena_Pinto.jpg/960px-Centro_Cultural_Casa_de_la_Cadena_Pinto.jpg",
     distrito: "Valdemoro",
     direccion: "Avenida de Hispanoamérica, 2, 28341 Valdemoro",
     lat: 40.1872, lng: -3.6821,
@@ -1949,6 +2148,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Juan Prado (Valdemoro)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Centro_Cultural_Casa_de_la_Cadena_Pinto.jpg/960px-Centro_Cultural_Casa_de_la_Cadena_Pinto.jpg",
     distrito: "Valdemoro",
     direccion: "Calle de la Estrella de Elola, 27, 28341 Valdemoro",
     lat: 40.1915, lng: -3.6765,
@@ -1959,6 +2159,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Javier Lapeña (Pinto)",
+    foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWl95Wd766Lvo85G6_vQ9M0wsV7oSwyzo05mpYU3VBmXBv7nryDoD5wbvauhC9X7ha30U9X8_9PkfRxG83y6M-syY7zLubKS3fX9IzikzCSag0O5f7Iyw3kDb2faEg1vkKGr_Es3Kg=w800-h500-k-no",
     distrito: "Pinto",
     direccion: "Calle Emilio Zola, 2, 28320 Pinto",
     lat: 40.2441, lng: -3.6982,
@@ -1969,6 +2170,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Casa de la Cadena (Pinto)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Centro_Cultural_Casa_de_la_Cadena_Pinto.jpg/960px-Centro_Cultural_Casa_de_la_Cadena_Pinto.jpg",
     distrito: "Pinto",
     direccion: "Calle de la Cadena, s/n, 28320 Pinto",
     lat: 40.2412, lng: -3.7015,
@@ -1979,6 +2181,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Gloria Fuertes (Parla)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Bibioteca_municipal_Gloria_Fuertes_%28Parla%29.jpg/960px-Bibioteca_municipal_Gloria_Fuertes_%28Parla%29.jpg",
     distrito: "Parla",
     direccion: "Calle Alfonso X El Sabio, 3, 28982 Parla",
     lat: 40.2361, lng: -3.7725,
@@ -1989,6 +2192,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Isaac Albéniz (Parla)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Bibioteca_municipal_Gloria_Fuertes_%28Parla%29.jpg/960px-Bibioteca_municipal_Gloria_Fuertes_%28Parla%29.jpg",
     distrito: "Parla",
     direccion: "Calle Lago Blanco, 5, 28981 Parla",
     lat: 40.2415, lng: -3.7651,
@@ -1999,6 +2203,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Pablo Neruda (Arganda del Rey)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Campus_Sur_UPM_Vallecas.jpg/960px-Campus_Sur_UPM_Vallecas.jpg",
     distrito: "Arganda del Rey",
     direccion: "Calle Real, 36, 28500 Arganda del Rey",
     lat: 40.3012, lng: -3.4435,
@@ -2009,6 +2214,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Manuel Vázquez Montalbán (San Lorenzo)",
+    foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkrEdJqAZzg_Ak0EwN6xo1I6-CGdjvrWtYuueFoKn8WgJuV4WHbhVUMVAgy4b4Bg-c9W7Pp9c-KOvEMAMNWCNzQHYZSN8y5ePVOQlzO_kePL8ZB55PlKuCHViJ7KyQCvrL4xop-TOi_UmEO=w800-h500-k-no",
     distrito: "San Lorenzo de El Escorial",
     direccion: "Calle Teresa Berganza, 2, 28200 San Lorenzo de El Escorial",
     lat: 40.5912, lng: -4.1481,
@@ -2019,6 +2225,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal Luis de Góngora",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Tres_Cantos_Biblioteca_Lope_de_Vega.jpg/960px-Tres_Cantos_Biblioteca_Lope_de_Vega.jpg",
     distrito: "Villaviciosa de Odón",
     direccion: "Calle Nueva, 8, 28670 Villaviciosa de Odón",
     lat: 40.3582, lng: -3.9015,
@@ -2029,6 +2236,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca F. Lázaro Carreter (Villanueva de la Cañada)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Universidad_Francisco_de_Vitoria_%28Pozuelo_de_Alarc%C3%B3n%29_01.jpg/960px-Universidad_Francisco_de_Vitoria_%28Pozuelo_de_Alarc%C3%B3n%29_01.jpg",
     distrito: "Villanueva de la Cañada",
     direccion: "Calle Folías, 4, 28691 Villanueva de la Cañada",
     lat: 40.4491, lng: -3.9982,
@@ -2039,6 +2247,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca José Vicente Muñoz (Torrelodones)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Centro_Cultural_Leon_Tolstoi_Las_Rozas.jpg/960px-Centro_Cultural_Leon_Tolstoi_Las_Rozas.jpg",
     distrito: "Torrelodones",
     direccion: "Calle Jesusa Lara, 47, 28250 Torrelodones",
     lat: 40.5752, lng: -3.9312,
@@ -2049,6 +2258,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Ricardo León (Galapagar)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Campus_de_Colmenarejo_de_la_Universidad_Carlos_III_de_Madrid_01.jpg/960px-Campus_de_Colmenarejo_de_la_Universidad_Carlos_III_de_Madrid_01.jpg",
     distrito: "Galapagar",
     direccion: "Plaza de la Constitución, 3, 28260 Galapagar",
     lat: 40.5791, lng: -4.0042,
@@ -2059,6 +2269,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal de Guadarrama",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Campus_de_Colmenarejo_de_la_Universidad_Carlos_III_de_Madrid_01.jpg/960px-Campus_de_Colmenarejo_de_la_Universidad_Carlos_III_de_Madrid_01.jpg",
     distrito: "Guadarrama",
     direccion: "Calle de las Carretas, 1, 28440 Guadarrama",
     lat: 40.6721, lng: -4.0891,
@@ -2069,6 +2280,7 @@ const lugares = [
   {
     tipo: "biblioteca",
     nombre: "Biblioteca Municipal de Navalcarnero",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Campus_de_M%C3%B3stoles_de_la_Universidad_Rey_Juan_Carlos_01.jpg/960px-Campus_de_M%C3%B3stoles_de_la_Universidad_Rey_Juan_Carlos_01.jpg",
     distrito: "Navalcarnero",
     direccion: "Calle de la Cruz Verde, 1, 28600 Navalcarnero",
     lat: 40.2882, lng: -4.0152,
@@ -2081,6 +2293,7 @@ const lugares = [
   {
     tipo: "universidad",
     nombre: "Biblioteca UCM – Edificio Multiusos",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Biblioteca_Mar%C3%ADa_Zambrano_%28UCM%29.jpg/960px-Biblioteca_Mar%C3%ADa_Zambrano_%28UCM%29.jpg",
     distrito: "Moncloa (Ciudad Universitaria)",
     direccion: "Calle del Noviciado, 3 / Ciudad Universitaria, 28040 Madrid",
     lat: 40.4462, lng: -3.7274,
@@ -2091,16 +2304,19 @@ const lugares = [
   {
     tipo: "universidad",
     nombre: "Biblioteca UAM – Biblioteca General",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Plaza_Mayor_de_Cantoblanco_%28UAM%29_01.jpg/960px-Plaza_Mayor_de_Cantoblanco_%28UAM%29_01.jpg",
     distrito: "Cantoblanco",
     direccion: "Campus de Cantoblanco, 28049 Madrid",
     lat: 40.5449, lng: -3.6897,
     plazas: 850,
     horario: "Lun–Vie 9–21h\n(Ampliado en época de exámenes)",
-    web: "https://biblioagenda.uam.es/hours#:~:text=Horarios"
+    web: "https://biblioagenda.uam.es/hours#:~:text=Horarios",
+    libcal_lid: 5671
   },
   {
     tipo: "universidad",
     nombre: "Biblioteca UPM – ETSI Caminos",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Escuela_T%C3%A9cnica_Superior_de_Ingenieros_de_Caminos%2C_Canales_y_Puertos_%28UPM%29_02.jpg/960px-Escuela_T%C3%A9cnica_Superior_de_Ingenieros_de_Caminos%2C_Canales_y_Puertos_%28UPM%29_02.jpg",
     distrito: "Moncloa (Ciudad Universitaria)",
     direccion: "Calle Profesor Aranguren, s/n, 28040 Madrid",
     lat: 40.4467, lng: -3.7335,
@@ -2111,6 +2327,7 @@ const lugares = [
   {
     tipo: "universidad",
     nombre: "Biblioteca UNED – Sede Central",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Edificio_Central_de_la_UNED_en_Madrid.jpg/960px-Edificio_Central_de_la_UNED_en_Madrid.jpg",
     distrito: "Moncloa (Ciudad Universitaria)",
     direccion: "Calle Bravo Murillo, 38, 28015 Madrid",
     lat: 40.4441, lng: -3.7018,
@@ -2121,6 +2338,7 @@ const lugares = [
   {
     tipo: "universidad",
     nombre: "Biblioteca Nacional de España",
+    foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnX9RQirfAkRExr3SsT0XHMI0x0qNZCfGgibNOttfZwY3dMlAOivsERlwkLJses6XwBlV_T6aKGEUvmw9QMiSgIcpvcOd74-_S4bOAWm54fqBBAL4vRP8dJAbTCBsHAlCSmVIrP=w800-h500-k-no",
     distrito: "Almagro",
     direccion: "Paseo de Recoletos, 20-22, 28001 Madrid",
     lat: 40.4239, lng: -3.6907,
@@ -2131,6 +2349,7 @@ const lugares = [
   {
     tipo: "universidad",
     nombre: "Biblioteca Regional Joaquín Leguina",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/El_%C3%81guila_%28Madrid%29_06.jpg/960px-El_%C3%81guila_%28Madrid%29_06.jpg",
     distrito: "Arganzuela",
     direccion: "Calle Ramírez de Prado, 3, 28045 Madrid",
     lat: 40.4044, lng: -3.6718,
@@ -2141,6 +2360,7 @@ const lugares = [
   {
     tipo: "universidad",
     nombre: "Biblioteca UC3M – Campus de Getafe",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Campus_de_Getafe_de_la_Universidad_Carlos_III_de_Madrid_01.jpg/960px-Campus_de_Getafe_de_la_Universidad_Carlos_III_de_Madrid_01.jpg",
     distrito: "Getafe (sur de Madrid)",
     direccion: "Calle Madrid, 126, 28903 Getafe",
     lat: 40.3087, lng: -3.7347,
@@ -2151,6 +2371,7 @@ const lugares = [
   {
     tipo: "universidad",
     nombre: "Biblioteca URJC – Campus Móstoles",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Campus_de_M%C3%B3stoles_de_la_Universidad_Rey_Juan_Carlos_01.jpg/960px-Campus_de_M%C3%B3stoles_de_la_Universidad_Rey_Juan_Carlos_01.jpg",
     distrito: "Móstoles",
     direccion: "Calle Tulipán, s/n, 28933 Móstoles",
     lat: 40.3219, lng: -3.8651,
@@ -2161,6 +2382,7 @@ const lugares = [
   {
     tipo: "universidad",
     nombre: "Biblioteca UCM – Facultad de Medicina",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Facultad_de_Medicina_%28UCM%29_01.jpg/960px-Facultad_de_Medicina_%28UCM%29_01.jpg",
     distrito: "Moncloa (Ciudad Universitaria)",
     direccion: "Plaza de Ramón y Cajal, s/n, 28040 Madrid",
     lat: 40.4439145, lng: -3.7241805,
@@ -2171,6 +2393,7 @@ const lugares = [
   {
     tipo: "universidad",
     nombre: "Biblioteca UCM – Facultad de Farmacia",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Facultad_de_Farmacia_%28UCM%29_01.jpg/960px-Facultad_de_Farmacia_%28UCM%29_01.jpg",
     distrito: "Moncloa (Ciudad Universitaria)",
     direccion: "Plaza de Ramón y Cajal, s/n, 28040 Madrid",
     lat: 40.4453451, lng: -3.7262062,
@@ -2181,6 +2404,7 @@ const lugares = [
   {
     tipo: "universidad",
     nombre: "Biblioteca UCM – Facultad de Odontología",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Facultad_de_Odontolog%C3%ADa_%28UCM%29_01.jpg/960px-Facultad_de_Odontolog%C3%ADa_%28UCM%29_01.jpg",
     distrito: "Moncloa (Ciudad Universitaria)",
     direccion: "Plaza de Ramón y Cajal, s/n, 28040 Madrid",
     lat: 40.4423602, lng: -3.7260297,
@@ -2191,6 +2415,7 @@ const lugares = [
   {
     tipo: "universidad",
     nombre: "Biblioteca UCM – Facultad de Derecho",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Facultad_de_Derecho_%28UCM%29_01.jpg/960px-Facultad_de_Derecho_%28UCM%29_01.jpg",
     distrito: "Moncloa (Ciudad Universitaria)",
     direccion: "Calle Juan del Rosal / Plaza Menéndez Pelayo, 28040 Madrid",
     lat: 40.4509674, lng: -3.7300099,
@@ -2201,6 +2426,7 @@ const lugares = [
   {
     tipo: "universidad",
     nombre: "Biblioteca UCM – Filología y Filosofía",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Facultad_de_Filosof%C3%ADa_y_Letras_%28UCM%29_01.jpg/960px-Facultad_de_Filosof%C3%ADa_y_Letras_%28UCM%29_01.jpg",
     distrito: "Moncloa (Ciudad Universitaria)",
     direccion: "Plaza de Menéndez Pelayo, s/n, 28040 Madrid",
     lat: 40.4487403, lng: -3.7307538,
@@ -2211,6 +2437,7 @@ const lugares = [
   {
     tipo: "universidad",
     nombre: "Biblioteca UCM – Geografía e Historia",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Facultad_de_Geograf%C3%ADa_e_Historia_%28UCM%29_01.jpg/960px-Facultad_de_Geograf%C3%ADa_e_Historia_%28UCM%29_01.jpg",
     distrito: "Moncloa (Ciudad Universitaria)",
     direccion: "Calle del Profesor Aranguren, s/n, 28040 Madrid",
     lat: 40.4492119, lng: -3.7345516,
@@ -2221,6 +2448,7 @@ const lugares = [
   {
     tipo: "universidad",
     nombre: "Biblioteca UCM – Ciencias de la Información",
+    foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmuOhsJGDdwjeR1C5YxTIQfmFpBlofHA1mqzCbHRNwzrqYe4kjI25aTonbmym4xg53e2TYX5-9U3vOqEzO3q_AsID1wE-2yxF22cIdLEdgLLOi0qUJZEfXdlmrOuXmXAENtLZmY=w800-h500-k-no",
     distrito: "Moncloa (Ciudad Universitaria)",
     direccion: "Avenida Complutense, s/n, 28040 Madrid",
     lat: 40.4456975, lng: -3.7284329,
@@ -2231,6 +2459,7 @@ const lugares = [
   {
     tipo: "universidad",
     nombre: "Biblioteca UCM – Ciencias Químicas",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Facultad_de_Ciencias_Qu%C3%ADmicas_%28UCM%29_01.jpg/960px-Facultad_de_Ciencias_Qu%C3%ADmicas_%28UCM%29_01.jpg",
     distrito: "Moncloa (Ciudad Universitaria)",
     direccion: "Avenida Complutense, s/n, 28040 Madrid",
     lat: 40.4506669, lng: -3.7240382,
@@ -2241,6 +2470,7 @@ const lugares = [
   {
     tipo: "universidad",
     nombre: "Biblioteca UCM – Ciencias Físicas",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Facultad_de_Ciencias_F%C3%ADsicas_%28UCM%29_01.jpg/960px-Facultad_de_Ciencias_F%C3%ADsicas_%28UCM%29_01.jpg",
     distrito: "Moncloa (Ciudad Universitaria)",
     direccion: "Plaza de las Ciencias, 1, 28040 Madrid",
     lat: 40.4510814, lng: -3.7261398,
@@ -2251,6 +2481,7 @@ const lugares = [
   {
     tipo: "universidad",
     nombre: "Biblioteca UCM – Ciencias Matemáticas",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Facultad_de_Ciencias_Matem%C3%A1ticas_%28UCM%29_01.jpg/960px-Facultad_de_Ciencias_Matem%C3%A1ticas_%28UCM%29_01.jpg",
     distrito: "Moncloa (Ciudad Universitaria)",
     direccion: "Plaza de las Ciencias, 3, 28040 Madrid",
     lat: 40.4493053, lng: -3.7261006,
@@ -2261,6 +2492,7 @@ const lugares = [
   {
     tipo: "universidad",
     nombre: "Biblioteca UCM – Biológicas y Geológicas",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Facultad_de_Ciencias_Biol%C3%B3gicas_y_Geol%C3%B3gicas_%28UCM%29_01.jpg/960px-Facultad_de_Ciencias_Biol%C3%B3gicas_y_Geol%C3%B3gicas_%28UCM%29_01.jpg",
     distrito: "Moncloa (Ciudad Universitaria)",
     direccion: "Calle José Antonio Novais, 12, 28040 Madrid",
     lat: 40.4489962, lng: -3.7253647,
@@ -2271,6 +2503,7 @@ const lugares = [
   {
     tipo: "universidad",
     nombre: "Biblioteca UCM – Bellas Artes",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Facultad_de_Bellas_Artes_%28UCM%29_01.jpg/960px-Facultad_de_Bellas_Artes_%28UCM%29_01.jpg",
     distrito: "Moncloa (Ciudad Universitaria)",
     direccion: "Calle del Pintor El Greco, 2, 28040 Madrid",
     lat: 40.4400669, lng: -3.7333876,
@@ -2281,6 +2514,7 @@ const lugares = [
   {
     tipo: "universidad",
     nombre: "Biblioteca UCM – Facultad de Educación",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Facultad_de_Educaci%C3%B3n_%28UCM%29_01.jpg/960px-Facultad_de_Educaci%C3%B3n_%28UCM%29_01.jpg",
     distrito: "Moncloa (Ciudad Universitaria)",
     direccion: "Calle del Rector Royo Villanova, s/n, 28040 Madrid",
     lat: 40.4516235, lng: -3.7177004,
@@ -2291,6 +2525,7 @@ const lugares = [
   {
     tipo: "universidad",
     nombre: "Biblioteca UCM – Campus de Somosaguas",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Facultad_de_Ciencias_Pol%C3%ADticas_de_la_UCM.jpg/960px-Facultad_de_Ciencias_Pol%C3%ADticas_de_la_UCM.jpg",
     distrito: "Pozuelo de Alarcón",
     direccion: "Campus de Somosaguas, 28223 Pozuelo de Alarcón",
     lat: 40.4313, lng: -3.7958,
@@ -2301,6 +2536,7 @@ const lugares = [
   {
     tipo: "universidad",
     nombre: "Biblioteca UPM – ETSI Telecomunicación",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/ETSIT_UPM_Madrid.jpg/960px-ETSIT_UPM_Madrid.jpg",
     distrito: "Moncloa (Ciudad Universitaria)",
     direccion: "Avenida Complutense, 30, 28040 Madrid",
     lat: 40.4528669, lng: -3.7255593,
@@ -2311,6 +2547,7 @@ const lugares = [
   {
     tipo: "universidad",
     nombre: "Biblioteca UPM – ETS Arquitectura (ETSAM)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Escuela_T%C3%A9cnica_Superior_de_Arquitectura_de_Madrid_%28UPM%29_01.jpg/960px-Escuela_T%C3%A9cnica_Superior_de_Arquitectura_de_Madrid_%28UPM%29_01.jpg",
     distrito: "Moncloa (Ciudad Universitaria)",
     direccion: "Avenida Juan de Herrera, 4, 28040 Madrid",
     lat: 40.4402099, lng: -3.7310053,
@@ -2321,6 +2558,7 @@ const lugares = [
   {
     tipo: "universidad",
     nombre: "Biblioteca UPM – ETSI Aeronáutica y del Espacio",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/ETSIAE_UPM_Madrid.jpg/960px-ETSIAE_UPM_Madrid.jpg",
     distrito: "Moncloa (Ciudad Universitaria)",
     direccion: "Plaza del Cardenal Cisneros, 3, 28040 Madrid",
     lat: 40.4405963, lng: -3.7250319,
@@ -2331,6 +2569,7 @@ const lugares = [
   {
     tipo: "universidad",
     nombre: "Biblioteca UPM – ETSI Agronómica (ETSIAAB)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Escuela_T%C3%A9cnica_Superior_de_Ingenier%C3%ADa_Agron%C3%B3mica%2C_Alimentaria_y_de_Biosistemas_%28UPM%29_02.jpg/960px-Escuela_T%C3%A9cnica_Superior_de_Ingenier%C3%ADa_Agron%C3%B3mica%2C_Alimentaria_y_de_Biosistemas_%28UPM%29_02.jpg",
     distrito: "Moncloa (Ciudad Universitaria)",
     direccion: "Avenida Puerta de Hierro, 2, 28040 Madrid",
     lat: 40.4420477, lng: -3.7275759,
@@ -2341,6 +2580,7 @@ const lugares = [
   {
     tipo: "universidad",
     nombre: "Biblioteca UPM – ETSI Industriales",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Escuela_T%C3%A9cnica_Superior_de_Ingenieros_Industriales_%28UPM%29_01.jpg/960px-Escuela_T%C3%A9cnica_Superior_de_Ingenieros_Industriales_%28UPM%29_01.jpg",
     distrito: "Chamartín",
     direccion: "Calle José Gutiérrez Abascal, 2, 28006 Madrid",
     lat: 40.4400129, lng: -3.6896679,
@@ -2351,6 +2591,7 @@ const lugares = [
   {
     tipo: "universidad",
     nombre: "Biblioteca UPM – ETSI Minas y Energía",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Escuela_T%C3%A9cnica_Superior_de_Ingenieros_de_Minas_y_Energ%C3%ADa_%28UPM%29_01.jpg/960px-Escuela_T%C3%A9cnica_Superior_de_Ingenieros_de_Minas_y_Energ%C3%ADa_%28UPM%29_01.jpg",
     distrito: "Chamberí",
     direccion: "Calle de Ríos Rosas, 21, 28003 Madrid",
     lat: 40.4425764, lng: -3.7001771,
@@ -2361,6 +2602,7 @@ const lugares = [
   {
     tipo: "universidad",
     nombre: "Biblioteca UPM – Campus Sur (ETSISI / ETSIST)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Campus_Sur_UPM_Vallecas.jpg/960px-Campus_Sur_UPM_Vallecas.jpg",
     distrito: "Puente de Vallecas",
     direccion: "Carretera de Valencia, km 7, 28031 Madrid",
     lat: 40.3868, lng: -3.6285,
@@ -2377,11 +2619,13 @@ const lugares = [
     plazas: 380,
     foto: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnZ6wcSDgjfefmD-EYUC_jlwybfEKRfsFa2cUXF_WxoLtq1cLlAhb-W3hs91XXmeue5fUAJtaxlNMMluTLJRqdBI6jwazNkI2KTmOM0zHcLGTZG4YikGgm-s9nyT5B3oJK0KShG1g=w800-h500-k-no",
     horario: "Lun–Vie 9–21h\n(Ampliado en época de exámenes)",
-    web: "https://biblioagenda.uam.es/hours#:~:text=Horarios"
+    web: "https://biblioagenda.uam.es/hours#:~:text=Horarios",
+    libcal_lid: 5674
   },
   {
     tipo: "universidad",
     nombre: "Biblioteca UC3M – Campus de Leganés (Rey Pastor)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Campus_de_Legan%C3%A9s_de_la_Universidad_Carlos_III_de_Madrid_01.jpg/960px-Campus_de_Legan%C3%A9s_de_la_Universidad_Carlos_III_de_Madrid_01.jpg",
     distrito: "Leganés",
     direccion: "Avenida de la Universidad, 30, 28911 Leganés",
     lat: 40.3327974, lng: -3.7653449,
@@ -2392,6 +2636,7 @@ const lugares = [
   {
     tipo: "universidad",
     nombre: "Biblioteca URJC – Campus de Vicálvaro",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Campus_de_Vic%C3%A1lvaro_de_la_Universidad_Rey_Juan_Carlos_01.jpg/960px-Campus_de_Vic%C3%A1lvaro_de_la_Universidad_Rey_Juan_Carlos_01.jpg",
     distrito: "Vicálvaro",
     direccion: "Paseo de los Artilleros, s/n, 28032 Madrid",
     lat: 40.4084972, lng: -3.6094549,
@@ -2402,6 +2647,7 @@ const lugares = [
   {
     tipo: "universidad",
     nombre: "Biblioteca URJC – Campus de Alcorcón (Ciencias de la Salud)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Campus_de_Alcorc%C3%B3n_de_la_Universidad_Rey_Juan_Carlos_01.jpg/960px-Campus_de_Alcorc%C3%B3n_de_la_Universidad_Rey_Juan_Carlos_01.jpg",
     distrito: "Alcorcón",
     direccion: "Avenida de Atenas, s/n, 28922 Alcorcón",
     lat: 40.3495931, lng: -3.8427252,
@@ -2412,6 +2658,7 @@ const lugares = [
   {
     tipo: "universidad",
     nombre: "Biblioteca URJC – Campus de Fuenlabrada",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Campus_de_Fuenlabrada_de_la_Universidad_Rey_Juan_Carlos_01.jpg/960px-Campus_de_Fuenlabrada_de_la_Universidad_Rey_Juan_Carlos_01.jpg",
     distrito: "Fuenlabrada",
     direccion: "Camino del Molino, 5, 28942 Fuenlabrada",
     lat: 40.2826094, lng: -3.8195872,
@@ -2422,6 +2669,7 @@ const lugares = [
   {
     tipo: "universidad",
     nombre: "Biblioteca U. Pontificia Comillas (ICAI-ICADE)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/ICADE_%28Madrid%29_01.jpg/960px-ICADE_%28Madrid%29_01.jpg",
     distrito: "Chamberí",
     direccion: "Calle de Alberto Aguilera, 23, 28015 Madrid",
     lat: 40.4295621, lng: -3.7114547,
@@ -2432,6 +2680,7 @@ const lugares = [
   {
     tipo: "universidad",
     nombre: "Biblioteca U. Nebrija – Campus Princesa",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Campus_Princesa_de_la_Universidad_Nebrija_%28Madrid%29_01.jpg/960px-Campus_Princesa_de_la_Universidad_Nebrija_%28Madrid%29_01.jpg",
     distrito: "Chamberí",
     direccion: "Calle de Santa Cruz de Marcenado, 27, 28015 Madrid",
     lat: 40.4295684, lng: -3.7130672,
@@ -2442,6 +2691,7 @@ const lugares = [
   {
     tipo: "universidad",
     nombre: "Biblioteca CEU San Pablo – Campus Moncloa",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Universidad_CEU_San_Pablo_%28Madrid%29_01.jpg/960px-Universidad_CEU_San_Pablo_%28Madrid%29_01.jpg",
     distrito: "Chamberí",
     direccion: "Calle de Julián Romea, 23, 28003 Madrid",
     lat: 40.4427903, lng: -3.7171844,
@@ -2452,6 +2702,7 @@ const lugares = [
   {
     tipo: "universidad",
     nombre: "Biblioteca U. Francisco de Vitoria",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Universidad_Francisco_de_Vitoria_%28Pozuelo_de_Alarc%C3%B3n%29_01.jpg/960px-Universidad_Francisco_de_Vitoria_%28Pozuelo_de_Alarc%C3%B3n%29_01.jpg",
     distrito: "Pozuelo de Alarcón",
     direccion: "Ctra. Pozuelo-Majadahonda, km 1,8, 28223 Pozuelo de Alarcón",
     lat: 40.4402647, lng: -3.8339056,
@@ -2462,6 +2713,7 @@ const lugares = [
   {
     tipo: "universidad",
     nombre: "Biblioteca UAH – Edificio CRAI (Alcalá Centro)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Colegio_de_San_Ildefonso_%28Alcal%C3%A1_de_Henares%29_01.jpg/960px-Colegio_de_San_Ildefonso_%28Alcal%C3%A1_de_Henares%29_01.jpg",
     distrito: "Alcalá de Henares",
     direccion: "Plaza de San Diego, s/n, 28801 Alcalá de Henares",
     lat: 40.4827, lng: -3.3635,
@@ -2472,6 +2724,7 @@ const lugares = [
   {
     tipo: "universidad",
     nombre: "Biblioteca UAH – Campus Científico Tecnológico",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Universidad_de_Alcal%C3%A1_%28RPS_08-04-2017%29_Pabell%C3%B3n_Rector_Gala.png/960px-Universidad_de_Alcal%C3%A1_%28RPS_08-04-2017%29_Pabell%C3%B3n_Rector_Gala.png",
     distrito: "Alcalá de Henares",
     direccion: "Ctra. Madrid-Barcelona, km 33.6, 28805 Alcalá de Henares",
     lat: 40.5123, lng: -3.3488,
@@ -2482,66 +2735,91 @@ const lugares = [
   {
     tipo: "universidad",
     nombre: "Biblioteca UAM – Facultad de Ciencias (Cantoblanco)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Facultad_de_Ciencias_%28UAM%29_01.jpg/960px-Facultad_de_Ciencias_%28UAM%29_01.jpg",
     distrito: "Madrid (Fuencarral-El Pardo / Cantoblanco)",
     direccion: "Calle Francisco Tomás y Valiente, 7, 28049 Madrid",
     lat: 40.5482, lng: -3.6941,
     plazas: 600,
     horario: "Lun–Vie 8:30–21h\n(Ampliado en época de exámenes)",
-    web: "https://biblioagenda.uam.es/hours#:~:text=Horarios"
+    web: "https://biblioagenda.uam.es/hours#:~:text=Horarios",
+    libcal_lid: 5663
   },
   {
     tipo: "universidad",
     nombre: "Biblioteca UAM – Facultad de Derecho (Cantoblanco)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Facultad_de_Derecho_%28UAM%29_01.jpg/960px-Facultad_de_Derecho_%28UAM%29_01.jpg",
     distrito: "Madrid (Fuencarral-El Pardo / Cantoblanco)",
     direccion: "Calle Kelsen, 1, 28049 Madrid",
     lat: 40.5441, lng: -3.6932,
     plazas: 550,
     horario: "Lun–Vie 8:30–21h\n(Ampliado en época de exámenes)",
-    web: "https://biblioagenda.uam.es/hours#:~:text=Horarios"
+    web: "https://biblioagenda.uam.es/hours#:~:text=Horarios",
+    libcal_lid: 5672
+  },
+  {
+    tipo: "universidad",
+    nombre: "Biblioteca UAM – Facultad de Educación (Cantoblanco)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Facultad_de_Formaci%C3%B3n_de_Profesorado_y_Educaci%C3%B3n_%28UAM%29_01.jpg/960px-Facultad_de_Formaci%C3%B3n_de_Profesorado_y_Educaci%C3%B3n_%28UAM%29_01.jpg",
+    distrito: "Madrid (Fuencarral-El Pardo / Cantoblanco)",
+    direccion: "Calle Francisco Tomás y Valiente, 3, 28049 Madrid",
+    lat: 40.5458, lng: -3.6925,
+    plazas: 400,
+    horario: "Lun–Vie 8:30–20:30h\n(Ampliado en época de exámenes)",
+    web: "https://biblioagenda.uam.es/hours#:~:text=Horarios",
+    libcal_lid: 5589
   },
   {
     tipo: "universidad",
     nombre: "Biblioteca UAM – Humanidades (Cantoblanco)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Facultad_de_Filosof%C3%ADa_y_Letras_%28UAM%29_01.jpg/960px-Facultad_de_Filosof%C3%ADa_y_Letras_%28UAM%29_01.jpg",
     distrito: "Madrid (Fuencarral-El Pardo / Cantoblanco)",
     direccion: "Calle Francisco Tomás y Valiente, 1, 28049 Madrid",
     lat: 40.5465, lng: -3.6912,
     plazas: 500,
     horario: "Lun–Vie 8:30–21h\n(Filosofía y Letras)",
-    web: "https://biblioagenda.uam.es/hours#:~:text=Horarios"
+    web: "https://biblioagenda.uam.es/hours#:~:text=Horarios",
+    libcal_lid: 5673
   },
   {
     tipo: "universidad",
     nombre: "Biblioteca UAM – Facultad de Psicología (Cantoblanco)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Facultad_de_Psicolog%C3%ADa_%28UAM%29_01.jpg/960px-Facultad_de_Psicolog%C3%ADa_%28UAM%29_01.jpg",
     distrito: "Madrid (Fuencarral-El Pardo / Cantoblanco)",
     direccion: "Calle Iván Pavlov, 6, 28049 Madrid",
     lat: 40.5491, lng: -3.6965,
     plazas: 350,
     horario: "Lun–Vie 8:30–20:30h\n(Ampliado en época de exámenes)",
-    web: "https://biblioagenda.uam.es/hours#:~:text=Horarios"
+    web: "https://biblioagenda.uam.es/hours#:~:text=Horarios",
+    libcal_lid: 5676
   },
   {
     tipo: "universidad",
     nombre: "Biblioteca UAM – Ciencias Económicas (Cantoblanco)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Facultad_de_Ciencias_Econ%C3%B3micas_y_Empresariales_%28UAM%29_01.jpg/960px-Facultad_de_Ciencias_Econ%C3%B3micas_y_Empresariales_%28UAM%29_01.jpg",
     distrito: "Madrid (Fuencarral-El Pardo / Cantoblanco)",
     direccion: "Calle Francisco Tomás y Valiente, 5, 28049 Madrid",
     lat: 40.5452, lng: -3.6958,
     plazas: 600,
     horario: "Lun–Vie 8:30–21h\n(Ampliado en época de exámenes)",
-    web: "https://biblioagenda.uam.es/hours#:~:text=Horarios"
+    web: "https://biblioagenda.uam.es/hours#:~:text=Horarios",
+    libcal_lid: 5665
   },
   {
     tipo: "universidad",
     nombre: "Biblioteca UAM – Escuela Politécnica Superior",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Escuela_Polit%C3%A9cnica_Superior_%28UAM%29_01.jpg/960px-Escuela_Polit%C3%A9cnica_Superior_%28UAM%29_01.jpg",
     distrito: "Madrid (Fuencarral-El Pardo / Cantoblanco)",
     direccion: "Calle Francisco Tomás y Valiente, 11, 28049 Madrid",
     lat: 40.5498, lng: -3.6895,
     plazas: 400,
     horario: "Lun–Vie 8:30–20:30h\n(Ampliado en época de exámenes)",
-    web: "https://biblioagenda.uam.es/hours#:~:text=Horarios"
+    web: "https://biblioagenda.uam.es/hours#:~:text=Horarios",
+    libcal_lid: 5675
   },
   {
     tipo: "universidad",
     nombre: "Biblioteca UC3M – Campus Colmenarejo (Menéndez Pidal)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Campus_de_Colmenarejo_de_la_Universidad_Carlos_III_de_Madrid_01.jpg/960px-Campus_de_Colmenarejo_de_la_Universidad_Carlos_III_de_Madrid_01.jpg",
     distrito: "Colmenarejo",
     direccion: "Avenida de la Universidad, 1, 28270 Colmenarejo",
     lat: 40.5572, lng: -4.0125,
@@ -2552,6 +2830,7 @@ const lugares = [
   {
     tipo: "universidad",
     nombre: "Biblioteca UPM – Campus Montegancedo (Informática)",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Facultad_de_Informatica_UPM.jpg/960px-Facultad_de_Informatica_UPM.jpg",
     distrito: "Boadilla del Monte / Pozuelo",
     direccion: "Calle Cirilo Amorós, s/n, 28660 Boadilla del Monte",
     lat: 40.4061, lng: -3.8385,
@@ -2562,6 +2841,7 @@ const lugares = [
   {
     tipo: "universidad",
     nombre: "Biblioteca CSIC – Tomás Navarro Tomás",
+    foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Centro_de_Ciencias_Humanas_y_Sociales_%28CSIC%29_Madrid_01.jpg/960px-Centro_de_Ciencias_Humanas_y_Sociales_%28CSIC%29_Madrid_01.jpg",
     distrito: "Madrid (San Blas-Canillejas)",
     direccion: "Calle Albasanz, 26, 28037 Madrid",
     lat: 40.4358, lng: -3.6305,
@@ -2937,7 +3217,14 @@ const CALENDARIO = {
           "end": "06-30",
           "schedule": "24h / Horario ampliado"
         }
-      ]
+      ],
+      "august_schedule": {
+        "closure_start": "08-17",
+        "closure_end": "08-23",
+        "reduced_start": "08-24",
+        "reduced_end": "08-31",
+        "reduced_schedule": "9:00–14:00h"
+      }
     },
     "ucm-facultad-de-medicina": {
       "exam_periods": [
@@ -3231,7 +3518,14 @@ const CALENDARIO = {
           "end": "06-30",
           "schedule": "24h / Horario ampliado"
         }
-      ]
+      ],
+      "august_schedule": {
+        "closure_start": "08-17",
+        "closure_end": "08-31",
+        "reduced_start": "08-24",
+        "reduced_end": "08-31",
+        "reduced_schedule": "9:00–14:00h"
+      }
     },
     "uah-edificio-crai-alcala-centro": {
       "exam_periods": [
@@ -3259,7 +3553,14 @@ const CALENDARIO = {
           "end": "06-30",
           "schedule": "24h / Horario ampliado"
         }
-      ]
+      ],
+      "august_schedule": {
+        "closure_start": "08-17",
+        "closure_end": "08-23",
+        "reduced_start": "08-24",
+        "reduced_end": "08-31",
+        "reduced_schedule": "9:00–14:00h"
+      }
     },
     "uam-facultad-de-derecho-cantoblanco": {
       "exam_periods": [
@@ -3273,7 +3574,56 @@ const CALENDARIO = {
           "end": "06-30",
           "schedule": "24h / Horario ampliado"
         }
-      ]
+      ],
+      "august_schedule": {
+        "closure_start": "08-17",
+        "closure_end": "08-31",
+        "reduced_start": "08-24",
+        "reduced_end": "08-31",
+        "reduced_schedule": "9:00–14:00h"
+      }
+    },
+    "uam-facultad-de-educacion-cantoblanco": {
+      "exam_periods": [
+        {
+          "start": "01-08",
+          "end": "02-15",
+          "schedule": "24h / Horario ampliado"
+        },
+        {
+          "start": "05-10",
+          "end": "06-30",
+          "schedule": "24h / Horario ampliado"
+        }
+      ],
+      "august_schedule": {
+        "closure_start": "08-17",
+        "closure_end": "08-23",
+        "reduced_start": "08-24",
+        "reduced_end": "08-31",
+        "reduced_schedule": "9:00–14:00h"
+      }
+    },
+    "uam-humanidades-cantoblanco": {
+      "exam_periods": [
+        {
+          "start": "01-08",
+          "end": "02-15",
+          "schedule": "24h / Horario ampliado"
+        },
+        {
+          "start": "05-10",
+          "end": "06-30",
+          "schedule": "24h / Horario ampliado"
+        }
+      ],
+      "august_schedule": {
+        "closure_start": "08-17",
+        "closure_end": "08-23",
+        "reduced_start": "08-24",
+        "reduced_end": "08-31",
+        "reduced_schedule": "9:00–14:00h"
+      }
     },
     "uam-facultad-de-psicologia-cantoblanco": {
       "exam_periods": [
@@ -3287,7 +3637,14 @@ const CALENDARIO = {
           "end": "06-30",
           "schedule": "24h / Horario ampliado"
         }
-      ]
+      ],
+      "august_schedule": {
+        "closure_start": "08-17",
+        "closure_end": "08-23",
+        "reduced_start": "08-24",
+        "reduced_end": "08-31",
+        "reduced_schedule": "9:00–14:00h"
+      }
     },
     "uam-ciencias-economicas-cantoblanco": {
       "exam_periods": [
@@ -3301,7 +3658,14 @@ const CALENDARIO = {
           "end": "06-30",
           "schedule": "24h / Horario ampliado"
         }
-      ]
+      ],
+      "august_schedule": {
+        "closure_start": "08-17",
+        "closure_end": "08-23",
+        "reduced_start": "08-24",
+        "reduced_end": "08-31",
+        "reduced_schedule": "9:00–14:00h"
+      }
     },
     "uam-escuela-politecnica-superior": {
       "exam_periods": [
@@ -3315,10 +3679,134 @@ const CALENDARIO = {
           "end": "06-30",
           "schedule": "24h / Horario ampliado"
         }
-      ]
+      ],
+      "august_schedule": {
+        "closure_start": "08-17",
+        "closure_end": "08-31",
+        "reduced_start": "08-24",
+        "reduced_end": "08-31",
+        "reduced_schedule": "9:00–14:00h"
+      }
     }
   }
 };
+
+// ─────────────────────────────────────────────
+//  HORARIOS EN DIRECTO (UAM - LibCal API)
+// ─────────────────────────────────────────────
+const UAM_IID = 3941;
+const UAM_TODAY_API = 'https://biblioagenda.uam.es/api_hours_today.php?iid=3941&lid=0&format=json';
+const UAM_GRID_API = 'https://biblioagenda.uam.es/api_hours_grid.php?iid=3941&format=json';
+
+let uamLiveToday = null;
+let uamLiveGrid = null;
+let uamFetchTodayPromise = null;
+let uamFetchGridPromise = null;
+
+function format12to24(timeStr) {
+  if (!timeStr) return '';
+  const m = timeStr.trim().match(/^(\d{1,2})(?::(\d{2}))?\s*(am|pm)?$/i);
+  if (!m) return timeStr;
+  let h = parseInt(m[1], 10);
+  const min = m[2] ? m[2] : '00';
+  const ampm = m[3] ? m[3].toLowerCase() : null;
+  if (ampm === 'pm' && h < 12) h += 12;
+  if (ampm === 'am' && h === 12) h = 0;
+  return `${h}:${min}`;
+}
+
+function parseLibCalTimes(times, rendered) {
+  if (!times && !rendered) return null;
+  const status = times ? times.status : null;
+  const isClosed = status === 'closed' || (status === 'text' && /cerrad/i.test(rendered || times.text || '')) || /cerrad/i.test(rendered || '');
+  
+  if (isClosed) {
+    return {
+      isOpen: false,
+      statusText: 'Cerrado',
+      statusClass: 'status-closed',
+      todaySchedule: 'Cerrado hoy'
+    };
+  }
+
+  if (status === 'open' && times.hours && times.hours.length > 0) {
+    const formattedHours = times.hours.map(h => `${format12to24(h.from)}–${format12to24(h.to)}h`).join(' y ');
+    const isOpen = !!times.currently_open;
+    return {
+      isOpen,
+      statusText: isOpen ? 'Abierto' : 'Cerrado',
+      statusClass: isOpen ? 'status-open' : 'status-closed',
+      todaySchedule: formattedHours
+    };
+  }
+
+  if (rendered && /\d/.test(rendered)) {
+    return {
+      isOpen: times ? !!times.currently_open : null,
+      statusText: (times && times.currently_open) ? 'Abierto' : 'Horario especial',
+      statusClass: (times && times.currently_open) ? 'status-open' : 'status-info',
+      todaySchedule: rendered
+    };
+  }
+
+  return null;
+}
+
+function fetchUAMToday() {
+  if (uamLiveToday) return Promise.resolve(uamLiveToday);
+  if (uamFetchTodayPromise) return uamFetchTodayPromise;
+
+  uamFetchTodayPromise = fetch(UAM_TODAY_API)
+    .then(r => {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
+    .then(data => {
+      uamLiveToday = {};
+      if (data && data.locations) {
+        data.locations.forEach(loc => {
+          uamLiveToday[loc.lid] = loc;
+        });
+      }
+      return uamLiveToday;
+    })
+    .catch(err => {
+      console.warn('BiblioAgenda UAM en vivo no disponible:', err);
+      return null;
+    });
+
+  return uamFetchTodayPromise;
+}
+
+function fetchUAMGrid() {
+  if (uamLiveGrid) return Promise.resolve(uamLiveGrid);
+  if (uamFetchGridPromise) return uamFetchGridPromise;
+
+  uamFetchGridPromise = fetch(UAM_GRID_API)
+    .then(r => {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
+    .then(data => {
+      uamLiveGrid = {};
+      if (data && data.locations) {
+        data.locations.forEach(loc => {
+          uamLiveGrid[loc.lid] = loc;
+        });
+      }
+      return uamLiveGrid;
+    })
+    .catch(err => {
+      console.warn('Cuadrícula LibCal no disponible:', err);
+      return null;
+    });
+
+  return uamFetchGridPromise;
+}
+
+if (typeof window !== 'undefined') {
+  setTimeout(fetchUAMToday, 400);
+}
 
 function getTodayInfo(d, date = new Date()) {
   const day = date.getDay(); // 0: Dom, 1: Lun, ..., 6: Sab
@@ -3339,6 +3827,23 @@ function getTodayInfo(d, date = new Date()) {
   const dateFormatted = `${dayNameCap}, ${dayOfMonth} de ${monthNames[month]}`;
   
   const slug = (typeof slugOf !== 'undefined' && slugOf.get(d)) ? slugOf.get(d) : slugify(d.nombre);
+
+  // 0. Datos en vivo de UAM si están cargados
+  if (d.libcal_lid && uamLiveToday && uamLiveToday[d.libcal_lid]) {
+    const loc = uamLiveToday[d.libcal_lid];
+    const liveParsed = parseLibCalTimes(loc.times, loc.rendered);
+    if (liveParsed) {
+      return {
+        dateFormatted,
+        statusText: liveParsed.statusText,
+        statusClass: liveParsed.statusClass,
+        todaySchedule: liveParsed.todaySchedule,
+        isOpen: liveParsed.isOpen,
+        isLive: true
+      };
+    }
+  }
+
   const exceptions = (CALENDARIO.places_exceptions && CALENDARIO.places_exceptions[slug]) || {};
   const h = d.horario.toLowerCase();
   
@@ -3572,31 +4077,25 @@ const panelBody = document.getElementById('panel-body');
 
 const PHOTO_POOLS = {
   universidad: [
-    "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=900&q=80", // Sala universitaria luminosa con mesas de estudio
-    "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=900&q=80", // Sala de lectura con puestos de trabajo
-    "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=900&q=80", // Puestos individuales de estudio
-    "https://images.unsplash.com/photo-1568667256549-094345857637?auto=format&fit=crop&w=900&q=80", // Gran sala de estudio universitaria
-    "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=900&q=80", // Puestos de estudio con libros
-    "https://images.unsplash.com/photo-1463320726281-696a485928c7?auto=format&fit=crop&w=900&q=80", // Mesas de trabajo en campus
-    "https://images.unsplash.com/photo-1519791883288-dc8bd696e667?auto=format&fit=crop&w=900&q=80"  // Sala de lectura silenciosa
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Biblioteca_Mar%C3%ADa_Zambrano_%28UCM%29.jpg/960px-Biblioteca_Mar%C3%ADa_Zambrano_%28UCM%29.jpg", // Sala de lectura María Zambrano UCM
+    "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnZ6wcSDgjfefmD-EYUC_jlwybfEKRfsFa2cUXF_WxoLtq1cLlAhb-W3hs91XXmeue5fUAJtaxlNMMluTLJRqdBI6jwazNkI2KTmOM0zHcLGTZG4YikGgm-s9nyT5B3oJK0KShG1g=w800-h500-k-no", // Puestos de estudio UAM Medicina
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Facultad_de_Derecho_%28UCM%29_01.jpg/960px-Facultad_de_Derecho_%28UCM%29_01.jpg", // Biblioteca Derecho UCM
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Escuela_T%C3%A9cnica_Superior_de_Arquitectura_de_Madrid_%28UPM%29_01.jpg/960px-Escuela_T%C3%A9cnica_Superior_de_Arquitectura_de_Madrid_%28UPM%29_01.jpg", // Biblioteca ETSAM Arquitectura
+    "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmuOhsJGDdwjeR1C5YxTIQfmFpBlofHA1mqzCbHRNwzrqYe4kjI25aTonbmym4xg53e2TYX5-9U3vOqEzO3q_AsID1wE-2yxF22cIdLEdgLLOi0qUJZEfXdlmrOuXmXAENtLZmY=w800-h500-k-no"  // Puestos de concentración CC Información
   ],
   biblioteca: [
-    "https://images.unsplash.com/photo-1507842229451-2292f75a74ff?auto=format&fit=crop&w=900&q=80", // Sala de lectura pública con mesas y luz
-    "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=900&q=80", // Puestos de estudio en biblioteca
-    "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=900&q=80", // Sala de estudio con estanterías y mesas
-    "https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=900&q=80", // Interior de sala de estudio
-    "https://images.unsplash.com/photo-1505664194779-8beaceb93744?auto=format&fit=crop&w=900&q=80", // Mesas largas de estudio
-    "https://images.unsplash.com/photo-1532012164546-f432f2e37b73?auto=format&fit=crop&w=900&q=80", // Puestos de lectura y concentración
-    "https://images.unsplash.com/photo-1529148482759-b35b282fb7be?auto=format&fit=crop&w=900&q=80", // Sala con luz natural
-    "https://images.unsplash.com/photo-1576872381149-7847515ce5d8?auto=format&fit=crop&w=900&q=80"  // Zona de estudio individual
+    "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkzsZ_2qdNW6ljxSXSdD76fo-HBb9qjtBZHROzVpVnEKJn0j_5trrDQ40vMEqlqMAZ-NSorORfPhb-53BpaJsonWQi8irOtjsfLZnwnk9YW7Wq-NxfaC6ZY1MYIOa5is0Q43dVe=w800-h500-k-no", // Sala de lectura Iván de Vargas
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Biblioteca_P%C3%BAblica_Rafael_Alberti_%28Madrid%29_01.jpg/960px-Biblioteca_P%C3%BAblica_Rafael_Alberti_%28Madrid%29_01.jpg", // Puestos de estudio Rafael Alberti
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Biblioteca_P%C3%BAblica_Pedro_Salinas_%28Madrid%29_01.jpg/960px-Biblioteca_P%C3%BAblica_Pedro_Salinas_%28Madrid%29_01.jpg", // Sala de estudio Pedro Salinas
+    "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWk7h0fVd1dtOESPNQIQNvYQVfPJGJzgsdKXyOLFunNfsegySule1EiPdJutgHPWo__vv0OiuqCgugM4Dlra_qnT0S4CWypckTKMHR60V_0KnBYkHhvTpgFWYrEkNG44arRk_xP4kQ=w800-h500-k-no", // Sala de lectura Gerardo Diego
+    "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmRpgMTQEBVMlex8vIhynqxmpQTVUuwyJEiUe3evmrE2yuhi9eBLmxP-DKeax4AlV3TwEtzxUrRoyKu1qkkxTt9B2vWfjOfN9YEmOc3MCugpZNMRlnGCo57kQVQCGJdm1bViwRP=w800-h500-k-no", // Interior Biblioteca Ciudad Lineal
+    "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnX9RQirfAkRExr3SsT0XHMI0x0qNZCfGgibNOttfZwY3dMlAOivsERlwkLJses6XwBlV_T6aKGEUvmw9QMiSgIcpvcOd74-_S4bOAWm54fqBBAL4vRP8dJAbTCBsHAlCSmVIrP=w800-h500-k-no"  // Sala de investigadores Biblioteca Nacional
   ],
   sala: [
-    "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=900&q=80", // Sala de estudio moderna diáfana
-    "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=900&q=80", // Espacio de coworking y estudio
-    "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=900&q=80", // Puestos de concentración silenciosos
-    "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80", // Mesas de estudio con enchufes
-    "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=900&q=80", // Espacio de trabajo individual
-    "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=80"  // Sala de estudio con sillas ergonómicas
+    "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmrEvvLbiL79CS74Lwtzd7kr3hci6Bet8MKf4gm7LmTXQCepSa1RFeJv3LyXxzkP0iqN9rDBFql9djXdKc6OjdXH4OfyP3LtQDUIkU20lejyy4Nt-KalitySphnFxtTL_QVFSZy=w800-h500-k-no", // Puestos individuales Sala Sanchinarro
+    "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmojW2gRROuvOxKBxbQ0MHAeos3H7Z895Fnv_4QuU3cV434qXeEAF_NlwoeRh54QIQY3Rzpfmw3jGig_x6nW95xv3Leiv2YahvZP2f5B54P0BrwfV4l3Jz46PUxQ0ItjpqjO5E=w800-h500-k-no", // Sala de estudio Mercado de Ibiza
+    "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnJ-akf62brXqAkN0Gy7uFMPwsEqBHnMle8fgFF7ZQsQHXiHbubkEYh5wtbCmZTHaBI_Szln3eaoWGal0UCCqBy-261nlsJqCnu6hlLY-AutbUdt_GGfUDEiwhbuZRuhfo_FlbV=w800-h500-k-no", // Mesas de estudio Clara Campoamor
+    "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlvFwSt8wOLlJvlmvtOwn0V6Kf0_nWo0CvfO2I6AjO9ZGLSbJP-Em4dXNXS0Oz1sSDhV3eqCPIrFG7GwbENhMcO5LVJNwRqtQwsuSv-vuppdlCRYjkzja8JKI0x1dNHzTbbrhky=w800-h500-k-no"  // Sala de estudio Pozo del Tío Raimundo
   ]
 };
 
@@ -3609,12 +4108,68 @@ function getPlaceImage(d) {
   return pool[idx];
 }
 
+function renderUAMWeek(d, containerEl) {
+  if (!d.libcal_lid || !containerEl) return;
+  fetchUAMGrid().then(grid => {
+    if (!grid || !grid[d.libcal_lid] || current !== d) return;
+    const loc = grid[d.libcal_lid];
+    const weeks = loc.weeks;
+    if (!weeks || weeks.length === 0) return;
+    
+    const week = weeks[0];
+    const dayLabels = {
+      Monday: 'Lun',
+      Tuesday: 'Mar',
+      Wednesday: 'Mié',
+      Thursday: 'Jue',
+      Friday: 'Vie',
+      Saturday: 'Sáb',
+      Sunday: 'Dom'
+    };
+
+    const now = new Date();
+    const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+
+    let rowsHtml = '';
+    for (const [dayName, dayInfo] of Object.entries(week)) {
+      const isToday = dayInfo.date === todayStr;
+      const label = dayLabels[dayName] || dayName;
+      const dayNum = dayInfo.date ? dayInfo.date.slice(8) : '';
+      
+      let hoursText = 'Cerrado';
+      if (dayInfo.times && dayInfo.times.status === 'open' && dayInfo.times.hours) {
+        hoursText = dayInfo.times.hours.map(h => `${format12to24(h.from)}–${format12to24(h.to)}h`).join(' y ');
+      } else if (dayInfo.rendered && !/cerrad/i.test(dayInfo.rendered) && /\d/.test(dayInfo.rendered)) {
+        hoursText = dayInfo.rendered;
+      }
+
+      rowsHtml += `
+        <tr class="${isToday ? 'day-row-today' : ''}">
+          <td>${label} ${dayNum}${isToday ? ' (Hoy)' : ''}</td>
+          <td class="day-hours">${hoursText}</td>
+        </tr>`;
+    }
+
+    containerEl.innerHTML = `
+      <div class="panel-label" style="margin-top:8px; margin-bottom:4px; font-size:9.5px;">Semana en directo (BiblioAgenda)</div>
+      <table class="panel-week-table">
+        <tbody>${rowsHtml}</tbody>
+      </table>`;
+  });
+}
+
 function panelHtml(d) {
   const c = colores[d.tipo];
   const today = getTodayInfo(d);
   const horarioHtml = d.horario.split('\n').map(l => `<div>${l}</div>`).join('');
   const label = d.web ? 'Web oficial' : 'Buscar web y horario';
   const imgUrl = getPlaceImage(d);
+  const liveTag = (d.libcal_lid || today.isLive) ? `
+    <div class="panel-live-tag" title="Sincronizado en tiempo real con BiblioAgenda UAM">
+      <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+      En directo · BiblioAgenda UAM
+    </div>` : '';
+
   return `
     <div class="panel-cover">
       <img src="${imgUrl}" alt="${d.nombre}" class="panel-img" loading="lazy">
@@ -3628,12 +4183,14 @@ function panelHtml(d) {
       <span>${d.plazas} puestos de estudio</span>
     </div>
     
-    <div class="panel-today">
+    <div class="panel-today" id="panel-today-container">
       <div class="panel-today-head">
         <span class="panel-today-title">HOY · ${today.dateFormatted}</span>
         <span class="status-badge ${today.statusClass}">${today.statusText}</span>
       </div>
       <div class="panel-today-hours">${today.todaySchedule}</div>
+      ${liveTag}
+      ${d.libcal_lid ? `<div id="panel-uam-week" class="panel-live-week"></div>` : ''}
     </div>
 
     <div class="panel-schedule">
@@ -3658,6 +4215,32 @@ function openPlace(d, push) {
   panel.setAttribute('aria-hidden', 'false');
   if (push) history.pushState({ slug: slugOf.get(d) }, '', slugOf.get(d));
   map.panTo([d.lat, d.lng], { animate: true });
+
+  if (d.libcal_lid) {
+    if (!uamLiveToday) {
+      fetchUAMToday().then(() => {
+        if (current === d) {
+          const today = getTodayInfo(d);
+          const headEl = document.getElementById('panel-today-container');
+          if (headEl) {
+            const badge = headEl.querySelector('.status-badge');
+            if (badge) {
+              badge.className = `status-badge ${today.statusClass}`;
+              badge.textContent = today.statusText;
+            }
+            const hours = headEl.querySelector('.panel-today-hours');
+            if (hours) {
+              hours.textContent = today.todaySchedule;
+            }
+          }
+        }
+      });
+    }
+    const weekContainer = document.getElementById('panel-uam-week');
+    if (weekContainer) {
+      renderUAMWeek(d, weekContainer);
+    }
+  }
 }
 function closePanel(push) {
   current = null;
