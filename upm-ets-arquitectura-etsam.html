@@ -36,8 +36,73 @@
       padding:3px 10px; border-radius:999px; color:#fff; margin-bottom:12px; background:#7C3AED;
     }
     h1 { font-size:23px; font-weight:800; letter-spacing:-0.01em; line-height:1.25; margin-bottom:8px; }
-    .addr { font-size:13.5px; color:var(--ink-3); margin-bottom:20px; line-height:1.5; }
-    .sched h2 { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.07em; color:var(--ink-3); margin-bottom:6px; }
+    .addr { font-size:13.5px; color:var(--ink-3); margin-bottom:16px; line-height:1.5; }
+    
+    /* ── Box HOY ───────────────────────────── */
+    .today-card {
+      background: #F8FAFC;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px 15px;
+      margin-bottom: 16px;
+    }
+    .today-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 5px;
+    }
+    .today-title {
+      font-size: 10.5px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-2);
+    }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 999px;
+    }
+    .status-badge.status-open {
+      background: #DCFCE7;
+      color: #15803D;
+    }
+    .status-badge.status-open::before {
+      content: "";
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #16A34A;
+    }
+    .status-badge.status-closed {
+      background: #FEE2E2;
+      color: #B91C1C;
+    }
+    .status-badge.status-closed::before {
+      content: "";
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #DC2626;
+    }
+    .status-badge.status-info {
+      background: #E0F2FE;
+      color: #0369A1;
+    }
+    .today-hours {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .sched h2 { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-3); margin-bottom: 6px; }
     .sched { font-size:14.5px; line-height:1.7; border-top:1px solid var(--line); padding-top:16px; }
     .actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:22px; }
     .btn {
@@ -58,7 +123,16 @@
     <span class="badge">Universidad / BNE</span>
     <h1>Biblioteca UPM – ETS Arquitectura (ETSAM)</h1>
     <p class="addr">Moncloa (Ciudad Universitaria) · Avenida Juan de Herrera, 4, 28040 Madrid</p>
-    <div class="sched"><h2>Horario</h2><div>Lun–Vie 8:30–20:45h</div><div>(Ampliado en época de exámenes)</div></div>
+    
+    <div class="today-card" id="today-card">
+      <div class="today-head">
+        <span class="today-title">HOY</span>
+        <span class="status-badge status-open" id="status-badge">Abierto</span>
+      </div>
+      <div class="today-hours" id="today-hours">8:30–20:45h</div>
+    </div>
+
+    <div class="sched"><h2>Horario habitual</h2><div>Lun–Vie 8:30–20:45h</div><div>(Ampliado en época de exámenes)</div></div>
     <div class="actions">
       <a class="btn btn-primary" href="./#upm-ets-arquitectura-etsam">Ver en el mapa</a>
       <a class="btn btn-ghost" href="https://www.upm.es/UPM/Biblioteca/NuestraBiblioteca/Horarios#:~:text=Horarios" target="_blank" rel="noopener noreferrer">Web oficial ↗</a>
@@ -68,5 +142,100 @@
       Horarios orientativos; confirma siempre en la web del centro.
     </footer>
   </main>
+
+  <script>
+  (function() {
+    const horarioStr = "Lun–Vie 8:30–20:45h\n(Ampliado en época de exámenes)";
+    function updateToday() {
+      const d = new Date();
+      const day = d.getDay();
+      const month = d.getMonth();
+      const dayOfMonth = d.getDate();
+      const mins = d.getHours() * 60 + d.getMinutes();
+      const isSummer = (month === 6 || month === 7 || (month === 5 && dayOfMonth >= 15) || (month === 8 && dayOfMonth <= 15));
+      const isJulyAugust = (month === 6 || month === 7);
+      const h = horarioStr.toLowerCase();
+      
+      if (h.includes('consultar') || h.includes('teléfono') || h.includes('telefono')) return;
+
+      function parse(text) {
+        const ivs = [];
+        const re = /(\d{1,2})(?::(\d{2}))?\s*[–\-—a]\s*(\d{1,2})(?::(\d{2}))?h?/gi;
+        let m;
+        while ((m = re.exec(text)) !== null) {
+          const sh = parseInt(m[1], 10), sm = m[2] ? parseInt(m[2], 10) : 0;
+          const eh = parseInt(m[3], 10), em = m[4] ? parseInt(m[4], 10) : 0;
+          ivs.push({ s: sh * 60 + sm, e: eh * 60 + em, sStr: sh + ':' + (sm < 10 ? '0' : '') + sm, eStr: eh + ':' + (em < 10 ? '0' : '') + em });
+        }
+        return ivs;
+      }
+
+      const lines = horarioStr.split('\n');
+      let target = '';
+      if (day === 0) {
+        if (h.includes('dom') || h.includes('fines de semana') || h.includes('lun–dom') || h.includes('lun-dom')) {
+          if (h.includes('sáb–dom') || h.includes('sab-dom')) {
+            const m = horarioStr.match(/S[áa]b[–\-—]Dom\s+([^\n·]+)/i);
+            if (m) target = m[1];
+          } else if (h.includes('fines de semana')) {
+            const m = horarioStr.match(/Fines de semana[^\d]*(\d[^\n·]+)/i);
+            if (m) target = m[1];
+          } else if (h.includes('dom') && !h.includes('cerrado')) {
+            const m = horarioStr.match(/Dom\s+([^\n·]+)/i);
+            if (m) target = m[1];
+          } else if (h.includes('lun–dom') || h.includes('lun-dom')) {
+            target = lines[0];
+          }
+        }
+      } else if (day === 6) {
+        if (h.includes('sáb') || h.includes('sab') || h.includes('fines de semana') || h.includes('lun–dom') || h.includes('lun-dom') || h.includes('lun–sáb') || h.includes('lun-sab')) {
+          if (h.includes('sáb–dom') || h.includes('sab-dom')) {
+            const m = horarioStr.match(/S[áa]b[–\-—]Dom\s+([^\n·]+)/i);
+            if (m) target = m[1];
+          } else if (h.includes('sáb') || h.includes('sab')) {
+            const m = horarioStr.match(/S[áa]b\s+([^\n·\(\)]+)/i);
+            if (m) target = m[1];
+          } else if (h.includes('fines de semana')) {
+            const m = horarioStr.match(/Fines de semana[^\d]*(\d[^\n·\(\)]+)/i);
+            if (m) target = m[1];
+          } else if (h.includes('lun–sáb') || h.includes('lun-sab') || h.includes('lun–dom') || h.includes('lun-dom')) {
+            target = lines[0];
+          }
+        }
+      } else {
+        if (day === 5 && h.includes('vie 9–14:30h')) {
+          target = '9–14:30h';
+        } else {
+          target = lines[0];
+          if (isSummer) {
+            const sLine = lines.find(l => l.toLowerCase().includes('verano') || (isJulyAugust && (l.toLowerCase().includes('julio') || l.toLowerCase().includes('agosto'))));
+            if (sLine) target = sLine;
+          }
+          if (target.includes('·')) target = target.split('·')[0];
+        }
+      }
+
+      const badge = document.getElementById('status-badge');
+      const hours = document.getElementById('today-hours');
+      if (!badge || !hours) return;
+
+      if (!target) {
+        badge.className = 'status-badge status-closed';
+        badge.textContent = 'Cerrado';
+        hours.textContent = 'Cerrado hoy';
+        return;
+      }
+
+      const ivs = parse(target);
+      if (ivs.length > 0) {
+        const open = ivs.some(iv => mins >= iv.s && mins < iv.e);
+        badge.className = 'status-badge ' + (open ? 'status-open' : 'status-closed');
+        badge.textContent = open ? 'Abierto' : 'Cerrado';
+        hours.textContent = ivs.map(iv => iv.sStr + '–' + iv.eStr + 'h').join(' y ');
+      }
+    }
+    updateToday();
+  })();
+  </script>
 </body>
 </html>
