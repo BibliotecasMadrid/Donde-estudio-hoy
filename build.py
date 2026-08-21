@@ -338,12 +338,24 @@ def page_html(d, slug):
     if d.get("foto"):
         ld["image"] = d["foto"]
 
-    live_tag_html = """
-          <div class="panel-live-tag" title="Sincronizado en tiempo real con BiblioAgenda UAM">
+    libcal_lid = d.get("libcal_lid")
+    libcal_iid = d.get("libcal_iid")
+    if libcal_lid and not libcal_iid:
+        if "ucm" in d["nombre"].lower() or (d.get("web") and "biblioagenda.ucm.es" in d.get("web")):
+            libcal_iid = 4031
+        else:
+            libcal_iid = 3941
+
+    agenda_name = "BiblioAgenda UCM" if libcal_iid == 4031 else "BiblioAgenda UAM"
+    today_api_url = f"https://biblioagenda.ucm.es/api_hours_today.php?iid=4031&lid={libcal_lid}&format=json" if libcal_iid == 4031 else f"https://biblioagenda.uam.es/api_hours_today.php?iid=3941&lid={libcal_lid}&format=json"
+    grid_api_url = "https://biblioagenda.ucm.es/api_hours_grid.php?iid=4031&format=json" if libcal_iid == 4031 else "https://biblioagenda.uam.es/api_hours_grid.php?iid=3941&format=json"
+
+    live_tag_html = f"""
+          <div class="panel-live-tag" title="Sincronizado en tiempo real con {agenda_name}">
             <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-            En directo · BiblioAgenda UAM
-          </div>""" if d.get("libcal_lid") else ""
-    week_container_html = '<div id="panel-uam-week" class="panel-live-week"></div>' if d.get("libcal_lid") else ""
+            En directo · {agenda_name}
+          </div>""" if libcal_lid else ""
+    week_container_html = '<div id="panel-libcal-week" class="panel-live-week"></div>' if libcal_lid else ""
 
     d_json = json.dumps(d, ensure_ascii=False)
     cal_json_esc = json.dumps(json.dumps(CALENDARIO, ensure_ascii=False))
@@ -865,7 +877,7 @@ def page_html(d, slug):
         return h + ':' + min;
       }}
 
-      fetch('https://biblioagenda.uam.es/api_hours_today.php?iid=3941&lid=' + d.libcal_lid + '&format=json')
+      fetch('{today_api_url}')
         .then(r => r.json())
         .then(data => {{
           const loc = (data.locations && data.locations.length > 0) ? data.locations[0] : null;
@@ -889,13 +901,13 @@ def page_html(d, slug):
         }})
         .catch(() => {{}});
 
-      fetch('https://biblioagenda.uam.es/api_hours_grid.php?iid=3941&format=json')
+      fetch('{grid_api_url}')
         .then(r => r.json())
         .then(data => {{
           const loc = (data.locations || []).find(l => l.lid === d.libcal_lid);
           if (!loc || !loc.weeks || loc.weeks.length === 0) return;
           const week = loc.weeks[0];
-          const weekEl = document.getElementById('panel-uam-week');
+          const weekEl = document.getElementById('panel-libcal-week');
           if (!weekEl) return;
           const dayLabels = {{ Monday: 'Lun', Tuesday: 'Mar', Wednesday: 'Mié', Thursday: 'Jue', Friday: 'Vie', Saturday: 'Sáb', Sunday: 'Dom' }};
           const now = new Date();
@@ -913,7 +925,7 @@ def page_html(d, slug):
             }}
             rowsHtml += '<tr class="' + (isToday ? 'day-row-today' : '') + '"><td>' + label + ' ' + dayNum + (isToday ? ' (Hoy)' : '') + '</td><td class="day-hours">' + hoursText + '</td></tr>';
           }}
-          weekEl.innerHTML = '<div style="font-size:9.5px; font-weight:700; text-transform:uppercase; color:var(--ink-3); margin-top:8px; margin-bottom:4px;">Semana en directo (BiblioAgenda)</div><table class="panel-week-table"><tbody>' + rowsHtml + '</tbody></table>';
+          weekEl.innerHTML = '<div style="font-size:9.5px; font-weight:700; text-transform:uppercase; color:var(--ink-3); margin-top:8px; margin-bottom:4px;">Semana en directo ({agenda_name})</div><table class="panel-week-table"><tbody>' + rowsHtml + '</tbody></table>';
         }})
         .catch(() => {{}});
     }}

@@ -418,7 +418,7 @@
 <div class="legend">
   <div class="legend-item"><span class="dot" style="background:#2563EB"></span> Biblioteca pública</div>
   <div class="legend-item"><span class="dot" style="background:#059669"></span> Sala de estudio</div>
-  <div class="legend-item"><span class="dot" style="background:#7C3AED"></span> Universidad / BNE</div>
+  <div class="legend-item"><span class="dot" style="background:#7C3AED"></span> Universidad</div>
 </div>
 
 <aside class="panel" id="panel" aria-hidden="true" aria-label="Información del centro">
@@ -610,28 +610,28 @@ const lugares = [
   { tipo: "biblioteca", nombre: "Biblioteca Ricardo León (Galapagar)", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Galapagar_-_Centro_Cultural_La_Pocilla_1.jpg/960px-Galapagar_-_Centro_Cultural_La_Pocilla_1.jpg", distrito: "Galapagar", direccion: "Plaza de la Constitución, 3, 28260 Galapagar", lat: 40.5791, lng: -4.0042, plazas: 190, horario: "Lun–Vie 9–21h · Sáb 9–14h", web: "https://galapagar.es/servicios/cultura/biblioteca-municipal/#:~:text=Horario" },
   { tipo: "biblioteca", nombre: "Biblioteca Municipal de Guadarrama", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/An%C3%B3nimo_espa%C3%B1ol_Vista_del_monte_y_palacio_de_El_Pardo%2C_1820.jpg/960px-An%C3%B3nimo_espa%C3%B1ol_Vista_del_monte_y_palacio_de_El_Pardo%2C_1820.jpg", distrito: "Guadarrama", direccion: "Calle de las Carretas, 1, 28440 Guadarrama", lat: 40.6721, lng: -4.0891, plazas: 180, horario: "Lun–Vie 9–21h", web: "https://www.guadarrama.es/cultura/biblioteca/#:~:text=Horario" },
   { tipo: "biblioteca", nombre: "Biblioteca Municipal de Navalcarnero", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Navalcarnero_-_Plaza_de_Segovia_01.jpg/960px-Navalcarnero_-_Plaza_de_Segovia_01.jpg", distrito: "Navalcarnero", direccion: "Calle de la Cruz Verde, 1, 28600 Navalcarnero", lat: 40.2882, lng: -4.0152, plazas: 180, horario: "Lun–Vie 9–21h", web: "https://www.navalcarnero.es/servicios/cultura/biblioteca-municipal/#:~:text=Horarios" },
-  { tipo: "universidad", nombre: "Biblioteca UCM – Edificio Multiusos", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Edificio_Multiusos_%28UCM_Madrid%29.jpg/960px-Edificio_Multiusos_%28UCM_Madrid%29.jpg", distrito: "Moncloa (Ciudad Universitaria)", direccion: "Calle del Noviciado, 3 / Ciudad Universitaria, 28040 Madrid", lat: 40.4462, lng: -3.7274, plazas: 450, horario: "Lun–Vie 8:30–21h\n(Varía por sede; consulta biblioagenda.ucm.es)", web: "https://biblioagenda.ucm.es/hours#:~:text=Horarios%20de%20las%20Bibliotecas" },
-  { tipo: "universidad", nombre: "Biblioteca UAM – Biblioteca General", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Campus_Cantoblanco_UAM.jpg/960px-Campus_Cantoblanco_UAM.jpg", distrito: "Cantoblanco", direccion: "Campus de Cantoblanco, 28049 Madrid", lat: 40.5449, lng: -3.6897, plazas: 850, horario: "Lun–Vie 9–21h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.uam.es/hours#:~:text=Horarios", libcal_lid: 5671 },
+  { tipo: "universidad", nombre: "Biblioteca UCM – Edificio Multiusos", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Edificio_Multiusos_%28UCM_Madrid%29.jpg/960px-Edificio_Multiusos_%28UCM_Madrid%29.jpg", distrito: "Moncloa (Ciudad Universitaria)", direccion: "Calle del Noviciado, 3 / Ciudad Universitaria, 28040 Madrid", lat: 40.4462, lng: -3.7274, plazas: 450, horario: "Lun–Vie 8:30–21h\n(Varía por sede; consulta biblioagenda.ucm.es)", web: "https://biblioagenda.ucm.es/hours#:~:text=Horarios%20de%20las%20Bibliotecas", libcal_lid: 6023, libcal_iid: 4031 },
+  { tipo: "universidad", nombre: "Biblioteca UAM – Biblioteca General", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Campus_Cantoblanco_UAM.jpg/960px-Campus_Cantoblanco_UAM.jpg", distrito: "Cantoblanco", direccion: "Campus de Cantoblanco, 28049 Madrid", lat: 40.5449, lng: -3.6897, plazas: 850, horario: "Lun–Vie 9–21h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.uam.es/hours#:~:text=Horarios", libcal_lid: 5671, libcal_iid: 3941 },
   { tipo: "universidad", nombre: "Biblioteca UPM – ETSI Caminos", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/ETSI_de_Caminos%2C_canales_y_puertos%2C_Madrid%2C_20241107_161308.jpg/960px-ETSI_de_Caminos%2C_canales_y_puertos%2C_Madrid%2C_20241107_161308.jpg", distrito: "Moncloa (Ciudad Universitaria)", direccion: "Calle Profesor Aranguren, s/n, 28040 Madrid", lat: 40.4467, lng: -3.7335, plazas: 420, horario: "Lun–Vie 9–21:30h", web: "https://www.upm.es/UPM/Biblioteca/NuestraBiblioteca/Horarios#:~:text=Horarios" },
   { tipo: "universidad", nombre: "Biblioteca UNED – Sede Central", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Calle_de_Bravo_Murillo%2C_Madrid.JPG/960px-Calle_de_Bravo_Murillo%2C_Madrid.JPG", distrito: "Moncloa (Ciudad Universitaria)", direccion: "Calle Bravo Murillo, 38, 28015 Madrid", lat: 40.4441, lng: -3.7018, plazas: 450, horario: "Lun–Vie 9–22h", web: "https://www.uned.es/universidad/biblioteca.html#:~:text=Horarios" },
-  { tipo: "universidad", nombre: "Biblioteca Nacional de España", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Biblioteca_Nacional_de_Espa%C3%B1a_%28Madrid%29_01.jpg/960px-Biblioteca_Nacional_de_Espa%C3%B1a_%28Madrid%29_01.jpg", distrito: "Almagro", direccion: "Paseo de Recoletos, 20-22, 28001 Madrid", lat: 40.4239, lng: -3.6907, plazas: 400, horario: "Mar–Sáb 9–21h · Dom 9–14h\n(Lun cerrado · Acceso con carnet lector)", web: "https://www.bne.es/es/horarios#:~:text=Horarios%20de%20apertura" },
+  { tipo: "biblioteca", nombre: "Biblioteca Nacional de España", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Biblioteca_Nacional_de_Espa%C3%B1a_%28Madrid%29_01.jpg/960px-Biblioteca_Nacional_de_Espa%C3%B1a_%28Madrid%29_01.jpg", distrito: "Almagro", direccion: "Paseo de Recoletos, 20-22, 28001 Madrid", lat: 40.4239, lng: -3.6907, plazas: 400, horario: "Mar–Sáb 9–21h · Dom 9–14h\n(Lun cerrado · Acceso con carnet lector)", web: "https://www.bne.es/es/horarios#:~:text=Horarios%20de%20apertura" },
   { tipo: "universidad", nombre: "Biblioteca Regional Joaquín Leguina", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Biblioteca_Joaqu%C3%ADn_Leguina_%28Madrid%29_03.jpg/960px-Biblioteca_Joaqu%C3%ADn_Leguina_%28Madrid%29_03.jpg", distrito: "Arganzuela", direccion: "Calle Ramírez de Prado, 3, 28045 Madrid", lat: 40.4044, lng: -3.6718, plazas: 400, horario: "Lun–Vie 9–21h · Sáb 9–14h", web: "https://www.comunidad.madrid/centros/biblioteca-regional-madrid-joaquin-leguina#:~:text=lunes%20a%20viernes%20de%209:00%20a%2021:00%20horas" },
   { tipo: "universidad", nombre: "Biblioteca UC3M – Campus de Getafe", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Universidad_Carlos_III_Getafe_Campus.jpg/960px-Universidad_Carlos_III_Getafe_Campus.jpg", distrito: "Getafe (sur de Madrid)", direccion: "Calle Madrid, 126, 28903 Getafe", lat: 40.3087, lng: -3.7347, plazas: 1200, horario: "Lun–Vie 8:30–21:30h · Sáb 9–14h", web: "https://www.uc3m.es/biblioteca/horarios-calendario#:~:text=Horarios%20habituales" },
   { tipo: "universidad", nombre: "Biblioteca URJC – Campus Móstoles", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/URJC_Mostoles_Biblioteca.jpg/960px-URJC_Mostoles_Biblioteca.jpg", distrito: "Móstoles", direccion: "Calle Tulipán, s/n, 28933 Móstoles", lat: 40.3219, lng: -3.8651, plazas: 850, horario: "Lun–Vie 8:30–21h · Sáb 9–14h", web: "https://www.urjc.es/burjc/tu-biblioteca/bibliotecas-de-campus#:~:text=Horario%20de%20lunes%20a%20viernes" },
-  { tipo: "universidad", nombre: "Biblioteca UCM – Facultad de Medicina", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Facultad_de_Medicina_de_la_UCM_01.jpg/960px-Facultad_de_Medicina_de_la_UCM_01.jpg", distrito: "Moncloa (Ciudad Universitaria)", direccion: "Plaza de Ramón y Cajal, s/n, 28040 Madrid", lat: 40.4439145, lng: -3.7241805, plazas: 500, horario: "Lun–Vie 9–21h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.ucm.es/hours#:~:text=Horarios%20de%20las%20Bibliotecas" },
-  { tipo: "universidad", nombre: "Biblioteca UCM – Facultad de Farmacia", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Facultad_de_Farmacia_de_la_UCM_1.jpg/960px-Facultad_de_Farmacia_de_la_UCM_1.jpg", distrito: "Moncloa (Ciudad Universitaria)", direccion: "Plaza de Ramón y Cajal, s/n, 28040 Madrid", lat: 40.4453451, lng: -3.7262062, plazas: 280, horario: "Lun–Vie 9–21h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.ucm.es/hours#:~:text=Horarios%20de%20las%20Bibliotecas" },
-  { tipo: "universidad", nombre: "Biblioteca UCM – Facultad de Odontología", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Madrid_-_Ciudad_Universitaria%2C_Facultad_de_Odontolog%C3%ADa_de_la_UCM_1.jpg/960px-Madrid_-_Ciudad_Universitaria%2C_Facultad_de_Odontolog%C3%ADa_de_la_UCM_1.jpg", distrito: "Moncloa (Ciudad Universitaria)", direccion: "Plaza de Ramón y Cajal, s/n, 28040 Madrid", lat: 40.4423602, lng: -3.7260297, plazas: 180, horario: "Lun–Vie 9–20:30h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.ucm.es/hours#:~:text=Horarios%20de%20las%20Bibliotecas" },
-  { tipo: "universidad", nombre: "Biblioteca UCM – Facultad de Derecho", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Facultad_de_Derecho_de_la_UCM_1.jpg/960px-Facultad_de_Derecho_de_la_UCM_1.jpg", distrito: "Moncloa (Ciudad Universitaria)", direccion: "Calle Juan del Rosal / Plaza Menéndez Pelayo, 28040 Madrid", lat: 40.4509674, lng: -3.7300099, plazas: 650, horario: "Lun–Vie 9–21h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.ucm.es/hours#:~:text=Horarios%20de%20las%20Bibliotecas" },
-  { tipo: "universidad", nombre: "Biblioteca UCM – Filología y Filosofía", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Facultades_de_Filolog%C3%ADa_y_Filosof%C3%ADa_de_la_UCM.jpg/960px-Facultades_de_Filolog%C3%ADa_y_Filosof%C3%ADa_de_la_UCM.jpg", distrito: "Moncloa (Ciudad Universitaria)", direccion: "Plaza de Menéndez Pelayo, s/n, 28040 Madrid", lat: 40.4487403, lng: -3.7307538, plazas: 550, horario: "Lun–Vie 9–21h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.ucm.es/hours#:~:text=Horarios%20de%20las%20Bibliotecas" },
-  { tipo: "universidad", nombre: "Biblioteca UCM – Geografía e Historia", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Facultad_de_Geograf%C3%ADa_e_Historia_de_la_UCM_4.jpg/960px-Facultad_de_Geograf%C3%ADa_e_Historia_de_la_UCM_4.jpg", distrito: "Moncloa (Ciudad Universitaria)", direccion: "Calle del Profesor Aranguren, s/n, 28040 Madrid", lat: 40.4492119, lng: -3.7345516, plazas: 450, horario: "Lun–Vie 9–21h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.ucm.es/hours#:~:text=Horarios%20de%20las%20Bibliotecas" },
-  { tipo: "universidad", nombre: "Biblioteca UCM – Ciencias de la Información", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Facultad_de_Ciencias_de_la_Informaci%C3%B3n_de_la_UCM_5.jpg/960px-Facultad_de_Ciencias_de_la_Informaci%C3%B3n_de_la_UCM_5.jpg", distrito: "Moncloa (Ciudad Universitaria)", direccion: "Avenida Complutense, s/n, 28040 Madrid", lat: 40.4456975, lng: -3.7284329, plazas: 480, horario: "Lun–Vie 9–21h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.ucm.es/hours#:~:text=Horarios%20de%20las%20Bibliotecas" },
-  { tipo: "universidad", nombre: "Biblioteca UCM – Ciencias Químicas", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Facultad_de_Ciencias_Qu%C3%ADmicas_de_la_UCM.jpg/960px-Facultad_de_Ciencias_Qu%C3%ADmicas_de_la_UCM.jpg", distrito: "Moncloa (Ciudad Universitaria)", direccion: "Avenida Complutense, s/n, 28040 Madrid", lat: 40.4506669, lng: -3.7240382, plazas: 350, horario: "Lun–Vie 9–20:30h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.ucm.es/hours#:~:text=Horarios%20de%20las%20Bibliotecas" },
-  { tipo: "universidad", nombre: "Biblioteca UCM – Ciencias Físicas", foto: "https://upload.wikimedia.org/wikipedia/commons/3/3c/Facultad_de_Ciencias_F%C3%ADsicas_de_la_UCM_1.jpg", distrito: "Moncloa (Ciudad Universitaria)", direccion: "Plaza de las Ciencias, 1, 28040 Madrid", lat: 40.4510814, lng: -3.7261398, plazas: 320, horario: "Lun–Vie 9–20:30h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.ucm.es/hours#:~:text=Horarios%20de%20las%20Bibliotecas" },
-  { tipo: "universidad", nombre: "Biblioteca UCM – Ciencias Matemáticas", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Madrid_-_Ciudad_Universitaria%2C_Facultad_de_Ciencias_Matem%C3%A1ticas_de_la_UCM_%281%29.jpg/960px-Madrid_-_Ciudad_Universitaria%2C_Facultad_de_Ciencias_Matem%C3%A1ticas_de_la_UCM_%281%29.jpg", distrito: "Moncloa (Ciudad Universitaria)", direccion: "Plaza de las Ciencias, 3, 28040 Madrid", lat: 40.4493053, lng: -3.7261006, plazas: 300, horario: "Lun–Vie 9–20:30h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.ucm.es/hours#:~:text=Horarios%20de%20las%20Bibliotecas" },
-  { tipo: "universidad", nombre: "Biblioteca UCM – Biológicas y Geológicas", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Madrid_-_Ciudad_Universitaria%2C_Facultad_de_Ciencias_Biol%C3%B3gicas_de_la_UCM.jpg/960px-Madrid_-_Ciudad_Universitaria%2C_Facultad_de_Ciencias_Biol%C3%B3gicas_de_la_UCM.jpg", distrito: "Moncloa (Ciudad Universitaria)", direccion: "Calle José Antonio Novais, 12, 28040 Madrid", lat: 40.4489962, lng: -3.7253647, plazas: 380, horario: "Lun–Vie 9–20:30h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.ucm.es/hours#:~:text=Horarios%20de%20las%20Bibliotecas" },
-  { tipo: "universidad", nombre: "Biblioteca UCM – Bellas Artes", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Facultad_de_Bellas_Artes_%28Universidad_Complutense_de_Madrid%29.JPG/960px-Facultad_de_Bellas_Artes_%28Universidad_Complutense_de_Madrid%29.JPG", distrito: "Moncloa (Ciudad Universitaria)", direccion: "Calle del Pintor El Greco, 2, 28040 Madrid", lat: 40.4400669, lng: -3.7333876, plazas: 220, horario: "Lun–Vie 9–20:30h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.ucm.es/hours#:~:text=Horarios%20de%20las%20Bibliotecas" },
-  { tipo: "universidad", nombre: "Biblioteca UCM – Facultad de Educación", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Facultad_de_Educaci%C3%B3n_-_Centro_de_Formaci%C3%B3n_del_Profesorado_%28Universidad_Complutense_de_Madrid%29.JPG/960px-Facultad_de_Educaci%C3%B3n_-_Centro_de_Formaci%C3%B3n_del_Profesorado_%28Universidad_Complutense_de_Madrid%29.JPG", distrito: "Moncloa (Ciudad Universitaria)", direccion: "Calle del Rector Royo Villanova, s/n, 28040 Madrid", lat: 40.4516235, lng: -3.7177004, plazas: 400, horario: "Lun–Vie 9–21h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.ucm.es/hours#:~:text=Horarios%20de%20las%20Bibliotecas" },
-  { tipo: "universidad", nombre: "Biblioteca UCM – Campus de Somosaguas", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Facultad_de_Ciencias_Pol%C3%ADticas_de_la_UCM.jpg/960px-Facultad_de_Ciencias_Pol%C3%ADticas_de_la_UCM.jpg", distrito: "Pozuelo de Alarcón", direccion: "Campus de Somosaguas, 28223 Pozuelo de Alarcón", lat: 40.4313, lng: -3.7958, plazas: 800, horario: "Lun–Vie 9–21h\n(Económicas, Políticas, Psicología y Trabajo Social)", web: "https://biblioagenda.ucm.es/hours#:~:text=Horarios%20de%20las%20Bibliotecas" },
+  { tipo: "universidad", nombre: "Biblioteca UCM – Facultad de Medicina", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Facultad_de_Medicina_de_la_UCM_01.jpg/960px-Facultad_de_Medicina_de_la_UCM_01.jpg", distrito: "Moncloa (Ciudad Universitaria)", direccion: "Plaza de Ramón y Cajal, s/n, 28040 Madrid", lat: 40.4439145, lng: -3.7241805, plazas: 500, horario: "Lun–Vie 9–21h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.ucm.es/hours#:~:text=Horarios%20de%20las%20Bibliotecas", libcal_lid: 6021, libcal_iid: 4031 },
+  { tipo: "universidad", nombre: "Biblioteca UCM – Facultad de Farmacia", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Facultad_de_Farmacia_de_la_UCM_1.jpg/960px-Facultad_de_Farmacia_de_la_UCM_1.jpg", distrito: "Moncloa (Ciudad Universitaria)", direccion: "Plaza de Ramón y Cajal, s/n, 28040 Madrid", lat: 40.4453451, lng: -3.7262062, plazas: 280, horario: "Lun–Vie 9–21h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.ucm.es/hours#:~:text=Horarios%20de%20las%20Bibliotecas", libcal_lid: 6060, libcal_iid: 4031 },
+  { tipo: "universidad", nombre: "Biblioteca UCM – Facultad de Odontología", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Madrid_-_Ciudad_Universitaria%2C_Facultad_de_Odontolog%C3%ADa_de_la_UCM_1.jpg/960px-Madrid_-_Ciudad_Universitaria%2C_Facultad_de_Odontolog%C3%ADa_de_la_UCM_1.jpg", distrito: "Moncloa (Ciudad Universitaria)", direccion: "Plaza de Ramón y Cajal, s/n, 28040 Madrid", lat: 40.4423602, lng: -3.7260297, plazas: 180, horario: "Lun–Vie 9–20:30h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.ucm.es/hours#:~:text=Horarios%20de%20las%20Bibliotecas", libcal_lid: 6061, libcal_iid: 4031 },
+  { tipo: "universidad", nombre: "Biblioteca UCM – Facultad de Derecho", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Facultad_de_Derecho_de_la_UCM_1.jpg/960px-Facultad_de_Derecho_de_la_UCM_1.jpg", distrito: "Moncloa (Ciudad Universitaria)", direccion: "Calle Juan del Rosal / Plaza Menéndez Pelayo, 28040 Madrid", lat: 40.4509674, lng: -3.7300099, plazas: 650, horario: "Lun–Vie 9–21h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.ucm.es/hours#:~:text=Horarios%20de%20las%20Bibliotecas", libcal_lid: 6054, libcal_iid: 4031 },
+  { tipo: "universidad", nombre: "Biblioteca UCM – Filología y Filosofía", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Facultades_de_Filolog%C3%ADa_y_Filosof%C3%ADa_de_la_UCM.jpg/960px-Facultades_de_Filolog%C3%ADa_y_Filosof%C3%ADa_de_la_UCM.jpg", distrito: "Moncloa (Ciudad Universitaria)", direccion: "Plaza de Menéndez Pelayo, s/n, 28040 Madrid", lat: 40.4487403, lng: -3.7307538, plazas: 550, horario: "Lun–Vie 9–21h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.ucm.es/hours#:~:text=Horarios%20de%20las%20Bibliotecas", libcal_lid: 7136, libcal_iid: 4031 },
+  { tipo: "universidad", nombre: "Biblioteca UCM – Geografía e Historia", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Facultad_de_Geograf%C3%ADa_e_Historia_de_la_UCM_4.jpg/960px-Facultad_de_Geograf%C3%ADa_e_Historia_de_la_UCM_4.jpg", distrito: "Moncloa (Ciudad Universitaria)", direccion: "Calle del Profesor Aranguren, s/n, 28040 Madrid", lat: 40.4492119, lng: -3.7345516, plazas: 450, horario: "Lun–Vie 9–21h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.ucm.es/hours#:~:text=Horarios%20de%20las%20Bibliotecas", libcal_lid: 6047, libcal_iid: 4031 },
+  { tipo: "universidad", nombre: "Biblioteca UCM – Ciencias de la Información", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Facultad_de_Ciencias_de_la_Informaci%C3%B3n_de_la_UCM_5.jpg/960px-Facultad_de_Ciencias_de_la_Informaci%C3%B3n_de_la_UCM_5.jpg", distrito: "Moncloa (Ciudad Universitaria)", direccion: "Avenida Complutense, s/n, 28040 Madrid", lat: 40.4456975, lng: -3.7284329, plazas: 480, horario: "Lun–Vie 9–21h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.ucm.es/hours#:~:text=Horarios%20de%20las%20Bibliotecas", libcal_lid: 6050, libcal_iid: 4031 },
+  { tipo: "universidad", nombre: "Biblioteca UCM – Ciencias Químicas", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Facultad_de_Ciencias_Qu%C3%ADmicas_de_la_UCM.jpg/960px-Facultad_de_Ciencias_Qu%C3%ADmicas_de_la_UCM.jpg", distrito: "Moncloa (Ciudad Universitaria)", direccion: "Avenida Complutense, s/n, 28040 Madrid", lat: 40.4506669, lng: -3.7240382, plazas: 350, horario: "Lun–Vie 9–20:30h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.ucm.es/hours#:~:text=Horarios%20de%20las%20Bibliotecas", libcal_lid: 6067, libcal_iid: 4031 },
+  { tipo: "universidad", nombre: "Biblioteca UCM – Ciencias Físicas", foto: "https://upload.wikimedia.org/wikipedia/commons/3/3c/Facultad_de_Ciencias_F%C3%ADsicas_de_la_UCM_1.jpg", distrito: "Moncloa (Ciudad Universitaria)", direccion: "Plaza de las Ciencias, 1, 28040 Madrid", lat: 40.4510814, lng: -3.7261398, plazas: 320, horario: "Lun–Vie 9–20:30h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.ucm.es/hours#:~:text=Horarios%20de%20las%20Bibliotecas", libcal_lid: 6056, libcal_iid: 4031 },
+  { tipo: "universidad", nombre: "Biblioteca UCM – Ciencias Matemáticas", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Madrid_-_Ciudad_Universitaria%2C_Facultad_de_Ciencias_Matem%C3%A1ticas_de_la_UCM_%281%29.jpg/960px-Madrid_-_Ciudad_Universitaria%2C_Facultad_de_Ciencias_Matem%C3%A1ticas_de_la_UCM_%281%29.jpg", distrito: "Moncloa (Ciudad Universitaria)", direccion: "Plaza de las Ciencias, 3, 28040 Madrid", lat: 40.4493053, lng: -3.7261006, plazas: 300, horario: "Lun–Vie 9–20:30h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.ucm.es/hours#:~:text=Horarios%20de%20las%20Bibliotecas", libcal_lid: 6066, libcal_iid: 4031 },
+  { tipo: "universidad", nombre: "Biblioteca UCM – Biológicas y Geológicas", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Madrid_-_Ciudad_Universitaria%2C_Facultad_de_Ciencias_Biol%C3%B3gicas_de_la_UCM.jpg/960px-Madrid_-_Ciudad_Universitaria%2C_Facultad_de_Ciencias_Biol%C3%B3gicas_de_la_UCM.jpg", distrito: "Moncloa (Ciudad Universitaria)", direccion: "Calle José Antonio Novais, 12, 28040 Madrid", lat: 40.4489962, lng: -3.7253647, plazas: 380, horario: "Lun–Vie 9–20:30h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.ucm.es/hours#:~:text=Horarios%20de%20las%20Bibliotecas", libcal_lid: 6042, libcal_iid: 4031 },
+  { tipo: "universidad", nombre: "Biblioteca UCM – Bellas Artes", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Facultad_de_Bellas_Artes_%28Universidad_Complutense_de_Madrid%29.JPG/960px-Facultad_de_Bellas_Artes_%28Universidad_Complutense_de_Madrid%29.JPG", distrito: "Moncloa (Ciudad Universitaria)", direccion: "Calle del Pintor El Greco, 2, 28040 Madrid", lat: 40.4400669, lng: -3.7333876, plazas: 220, horario: "Lun–Vie 9–20:30h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.ucm.es/hours#:~:text=Horarios%20de%20las%20Bibliotecas", libcal_lid: 6040, libcal_iid: 4031 },
+  { tipo: "universidad", nombre: "Biblioteca UCM – Facultad de Educación", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Facultad_de_Educaci%C3%B3n_-_Centro_de_Formaci%C3%B3n_del_Profesorado_%28Universidad_Complutense_de_Madrid%29.JPG/960px-Facultad_de_Educaci%C3%B3n_-_Centro_de_Formaci%C3%B3n_del_Profesorado_%28Universidad_Complutense_de_Madrid%29.JPG", distrito: "Moncloa (Ciudad Universitaria)", direccion: "Calle del Rector Royo Villanova, s/n, 28040 Madrid", lat: 40.4516235, lng: -3.7177004, plazas: 400, horario: "Lun–Vie 9–21h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.ucm.es/hours#:~:text=Horarios%20de%20las%20Bibliotecas", libcal_lid: 6043, libcal_iid: 4031 },
+  { tipo: "universidad", nombre: "Biblioteca UCM – Campus de Somosaguas", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Facultad_de_Ciencias_Pol%C3%ADticas_de_la_UCM.jpg/960px-Facultad_de_Ciencias_Pol%C3%ADticas_de_la_UCM.jpg", distrito: "Pozuelo de Alarcón", direccion: "Campus de Somosaguas, 28223 Pozuelo de Alarcón", lat: 40.4313, lng: -3.7958, plazas: 800, horario: "Lun–Vie 9–21h\n(Económicas, Políticas, Psicología y Trabajo Social)", web: "https://biblioagenda.ucm.es/hours#:~:text=Horarios%20de%20las%20Bibliotecas", libcal_lid: 6051, libcal_iid: 4031 },
   { tipo: "universidad", nombre: "Biblioteca UPM – ETSI Telecomunicación", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/WIKIPEDIA_CAMINOS.ogv/500px--WIKIPEDIA_CAMINOS.ogv.jpg", distrito: "Moncloa (Ciudad Universitaria)", direccion: "Avenida Complutense, 30, 28040 Madrid", lat: 40.4528669, lng: -3.7255593, plazas: 480, horario: "Lun–Vie 9–21:30h\n(Ampliado en época de exámenes)", web: "https://www.upm.es/UPM/Biblioteca/NuestraBiblioteca/Horarios#:~:text=Horarios" },
   { tipo: "universidad", nombre: "Biblioteca UPM – ETS Arquitectura (ETSAM)", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Escuela_T%C3%A9cnica_Superior_de_Arquitectura_de_Madrid_-_01.jpg/960px-Escuela_T%C3%A9cnica_Superior_de_Arquitectura_de_Madrid_-_01.jpg", distrito: "Moncloa (Ciudad Universitaria)", direccion: "Avenida Juan de Herrera, 4, 28040 Madrid", lat: 40.4402099, lng: -3.7310053, plazas: 450, horario: "Lun–Vie 8:30–20:45h\n(Ampliado en época de exámenes)", web: "https://www.upm.es/UPM/Biblioteca/NuestraBiblioteca/Horarios#:~:text=Horarios" },
   { tipo: "universidad", nombre: "Biblioteca UPM – ETSI Aeronáutica y del Espacio", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/ETSI_Aeron%C3%A1uticos.jpg/960px-ETSI_Aeron%C3%A1uticos.jpg", distrito: "Moncloa (Ciudad Universitaria)", direccion: "Plaza del Cardenal Cisneros, 3, 28040 Madrid", lat: 40.4405963, lng: -3.7250319, plazas: 400, horario: "Lun–Vie 8:30–20:45h\n(Ampliado en época de exámenes)", web: "https://www.upm.es/UPM/Biblioteca/NuestraBiblioteca/Horarios#:~:text=Horarios" },
@@ -639,7 +639,7 @@ const lugares = [
   { tipo: "universidad", nombre: "Biblioteca UPM – ETSI Industriales", foto: "https://upload.wikimedia.org/wikipedia/commons/5/5b/Escuela_de_industriales_de_Madrid_%28ETSIIM%29_DavidDaguerro_95331.jpg", distrito: "Chamartín", direccion: "Calle José Gutiérrez Abascal, 2, 28006 Madrid", lat: 40.4400129, lng: -3.6896679, plazas: 500, horario: "Lun–Vie 9–21h\n(Ampliado en época de exámenes)", web: "https://www.upm.es/UPM/Biblioteca/NuestraBiblioteca/Horarios#:~:text=Horarios" },
   { tipo: "universidad", nombre: "Biblioteca UPM – ETSI Minas y Energía", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Edificio_de_la_ETSIM_de_Madrid_%281893%29_02.jpg/960px-Edificio_de_la_ETSIM_de_Madrid_%281893%29_02.jpg", distrito: "Chamberí", direccion: "Calle de Ríos Rosas, 21, 28003 Madrid", lat: 40.4425764, lng: -3.7001771, plazas: 260, horario: "Lun–Vie 9–20:45h\n(Ampliado en época de exámenes)", web: "https://www.upm.es/UPM/Biblioteca/NuestraBiblioteca/Horarios#:~:text=Horarios" },
   { tipo: "universidad", nombre: "Biblioteca UPM – Campus Sur (ETSISI / ETSIST)", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Instituto_de_Investigaci%C3%B3n_del_Autom%C3%B3vil_%28Universidad_Polit%C3%A9cnica_de_Madrid%29%2C_entrada_principal.JPG/960px-Instituto_de_Investigaci%C3%B3n_del_Autom%C3%B3vil_%28Universidad_Polit%C3%A9cnica_de_Madrid%29%2C_entrada_principal.JPG", distrito: "Puente de Vallecas", direccion: "Carretera de Valencia, km 7, 28031 Madrid", lat: 40.3868, lng: -3.6285, plazas: 650, horario: "Lun–Vie 9–21:30h\n(Ampliado en época de exámenes)", web: "https://www.upm.es/UPM/Biblioteca/NuestraBiblioteca/Horarios#:~:text=Horarios" },
-  { tipo: "universidad", nombre: "Biblioteca UAM – Facultad de Medicina", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Facultad_de_Medicina_%28Universidad_Aut%C3%B3noma_de_Madrid%29.JPG/960px-Facultad_de_Medicina_%28Universidad_Aut%C3%B3noma_de_Madrid%29.JPG", distrito: "Fuencarral-El Pardo", direccion: "Calle del Arzobispo Morcillo, 4, 28029 Madrid", lat: 40.4799359, lng: -3.6882841, plazas: 380, horario: "Lun–Vie 9–21h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.uam.es/hours#:~:text=Horarios", libcal_lid: 5674 },
+  { tipo: "universidad", nombre: "Biblioteca UAM – Facultad de Medicina", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Facultad_de_Medicina_%28Universidad_Aut%C3%B3noma_de_Madrid%29.JPG/960px-Facultad_de_Medicina_%28Universidad_Aut%C3%B3noma_de_Madrid%29.JPG", distrito: "Fuencarral-El Pardo", direccion: "Calle del Arzobispo Morcillo, 4, 28029 Madrid", lat: 40.4799359, lng: -3.6882841, plazas: 380, horario: "Lun–Vie 9–21h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.uam.es/hours#:~:text=Horarios", libcal_lid: 5674, libcal_iid: 3941 },
   { tipo: "universidad", nombre: "Biblioteca UC3M – Campus de Leganés (Rey Pastor)", foto: "https://upload.wikimedia.org/wikipedia/commons/a/aa/UC3M_Leganes.jpg", distrito: "Leganés", direccion: "Avenida de la Universidad, 30, 28911 Leganés", lat: 40.3327974, lng: -3.7653449, plazas: 950, horario: "Lun–Vie 8:30–21:30h · Sáb 9–14h", web: "https://www.uc3m.es/biblioteca/horarios-calendario#:~:text=Horarios%20habituales" },
   { tipo: "universidad", nombre: "Biblioteca URJC – Campus de Vicálvaro", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Campus_URJC_Vic%C3%A1lvaro.jpg/960px-Campus_URJC_Vic%C3%A1lvaro.jpg", distrito: "Vicálvaro", direccion: "Paseo de los Artilleros, s/n, 28032 Madrid", lat: 40.4084972, lng: -3.6094549, plazas: 900, horario: "Lun–Vie 8:30–21h · Sáb 9–14h", web: "https://www.urjc.es/burjc/tu-biblioteca/bibliotecas-de-campus#:~:text=Horario%20de%20lunes%20a%20viernes" },
   { tipo: "universidad", nombre: "Biblioteca URJC – Campus de Alcorcón (Ciencias de la Salud)", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/URJC_alcorcon.jpg/960px-URJC_alcorcon.jpg", distrito: "Alcorcón", direccion: "Avenida de Atenas, s/n, 28922 Alcorcón", lat: 40.3495931, lng: -3.8427252, plazas: 600, horario: "Lun–Vie 8:30–21h · Sáb 9–14h", web: "https://www.urjc.es/burjc/tu-biblioteca/bibliotecas-de-campus#:~:text=Horario%20de%20lunes%20a%20viernes" },
@@ -650,13 +650,13 @@ const lugares = [
   { tipo: "universidad", nombre: "Biblioteca U. Francisco de Vitoria", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Panoramica_oficial_UFV.jpg/960px-Panoramica_oficial_UFV.jpg", distrito: "Pozuelo de Alarcón", direccion: "Ctra. Pozuelo-Majadahonda, km 1,8, 28223 Pozuelo de Alarcón", lat: 40.4402647, lng: -3.8339056, plazas: 500, horario: "Lun–Vie 8–22h · Sáb 9–14h\n(Acceso preferente a la comunidad universitaria)", web: "https://www.ufv.es/biblioteca/#:~:text=Horarios" },
   { tipo: "universidad", nombre: "Biblioteca UAH – Edificio CRAI (Alcalá Centro)", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Alcal%C3%A1_de_Henares_-_Edificio_Cisneros_%28Biblioteca_de_la_UAH%29_2.jpg/960px-Alcal%C3%A1_de_Henares_-_Edificio_Cisneros_%28Biblioteca_de_la_UAH%29_2.jpg", distrito: "Alcalá de Henares", direccion: "Plaza de San Diego, s/n, 28801 Alcalá de Henares", lat: 40.4827, lng: -3.3635, plazas: 1100, horario: "Lun–Dom 8:30–21:30h\n(Ampliado 24h en exámenes)", web: "https://biblioteca.uah.es/es/conoce-la-biblioteca/horarios/#:~:text=Horarios" },
   { tipo: "universidad", nombre: "Biblioteca UAH – Campus Científico Tecnológico", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Universidad_de_Alcal%C3%A1_%28RPS_08-04-2017%29_Pabell%C3%B3n_Rector_Gala.png/960px-Universidad_de_Alcal%C3%A1_%28RPS_08-04-2017%29_Pabell%C3%B3n_Rector_Gala.png", distrito: "Alcalá de Henares", direccion: "Ctra. Madrid-Barcelona, km 33.6, 28805 Alcalá de Henares", lat: 40.5123, lng: -3.3488, plazas: 650, horario: "Lun–Vie 8:30–21h\n(Politécnica, Farmacia y Medicina)", web: "https://biblioteca.uah.es/es/conoce-la-biblioteca/horarios/#:~:text=Horarios" },
-  { tipo: "universidad", nombre: "Biblioteca UAM – Facultad de Ciencias (Cantoblanco)", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Madrid_-_Campus_de_la_Universidad_Aut%C3%B3noma_de_Madrid_%28UAM%29-Facultad_de_Ciencias_Econ%C3%B3micas_y_Empresariales_3.JPG/960px-Madrid_-_Campus_de_la_Universidad_Aut%C3%B3noma_de_Madrid_%28UAM%29-Facultad_de_Ciencias_Econ%C3%B3micas_y_Empresariales_3.JPG", distrito: "Madrid (Fuencarral-El Pardo / Cantoblanco)", direccion: "Calle Francisco Tomás y Valiente, 7, 28049 Madrid", lat: 40.5482, lng: -3.6941, plazas: 600, horario: "Lun–Vie 8:30–21h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.uam.es/hours#:~:text=Horarios", libcal_lid: 5663 },
-  { tipo: "universidad", nombre: "Biblioteca UAM – Facultad de Derecho (Cantoblanco)", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Facultad_de_Derecho_Universidad_Aut%C3%B3noma_de_Madrid.jpg/960px-Facultad_de_Derecho_Universidad_Aut%C3%B3noma_de_Madrid.jpg", distrito: "Madrid (Fuencarral-El Pardo / Cantoblanco)", direccion: "Calle Kelsen, 1, 28049 Madrid", lat: 40.5441, lng: -3.6932, plazas: 550, horario: "Lun–Vie 8:30–21h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.uam.es/hours#:~:text=Horarios", libcal_lid: 5672 },
-  { tipo: "universidad", nombre: "Biblioteca UAM – Facultad de Educación (Cantoblanco)", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Madrid_-_Campus_de_la_Universidad_Aut%C3%B3noma_de_Madrid_%28UAM%29-Facultades_de_Filosof%C3%ADa_y_Letras%2C_y_de_Formaci%C3%B3n_de_Profesorado_y_Educaci%C3%B3n.JPG/960px-Madrid_-_Campus_de_la_Universidad_Aut%C3%B3noma_de_Madrid_%28UAM%29-Facultades_de_Filosof%C3%ADa_y_Letras%2C_y_de_Formaci%C3%B3n_de_Profesorado_y_Educaci%C3%B3n.JPG", distrito: "Madrid (Fuencarral-El Pardo / Cantoblanco)", direccion: "Calle Francisco Tomás y Valiente, 3, 28049 Madrid", lat: 40.5458, lng: -3.6925, plazas: 400, horario: "Lun–Vie 8:30–20:30h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.uam.es/hours#:~:text=Horarios", libcal_lid: 5589 },
-  { tipo: "universidad", nombre: "Biblioteca UAM – Humanidades (Cantoblanco)", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Biblioteca_Humanidades_UAM.jpg/960px-Biblioteca_Humanidades_UAM.jpg", distrito: "Madrid (Fuencarral-El Pardo / Cantoblanco)", direccion: "Calle Francisco Tomás y Valiente, 1, 28049 Madrid", lat: 40.5465, lng: -3.6912, plazas: 500, horario: "Lun–Vie 8:30–21h\n(Filosofía y Letras)", web: "https://biblioagenda.uam.es/hours#:~:text=Horarios", libcal_lid: 5673 },
-  { tipo: "universidad", nombre: "Biblioteca UAM – Facultad de Psicología (Cantoblanco)", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/UAM_PSICOLOGIA.JPG/960px-UAM_PSICOLOGIA.JPG", distrito: "Madrid (Fuencarral-El Pardo / Cantoblanco)", direccion: "Calle Iván Pavlov, 6, 28049 Madrid", lat: 40.5491, lng: -3.6965, plazas: 350, horario: "Lun–Vie 8:30–20:30h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.uam.es/hours#:~:text=Horarios", libcal_lid: 5676 },
-  { tipo: "universidad", nombre: "Biblioteca UAM – Ciencias Económicas (Cantoblanco)", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Madrid_-_Campus_de_la_Universidad_Aut%C3%B3noma_de_Madrid_%28UAM%29-Facultad_de_Ciencias_Econ%C3%B3micas_y_Empresariales_2.JPG/960px-Madrid_-_Campus_de_la_Universidad_Aut%C3%B3noma_de_Madrid_%28UAM%29-Facultad_de_Ciencias_Econ%C3%B3micas_y_Empresariales_2.JPG", distrito: "Madrid (Fuencarral-El Pardo / Cantoblanco)", direccion: "Calle Francisco Tomás y Valiente, 5, 28049 Madrid", lat: 40.5452, lng: -3.6958, plazas: 600, horario: "Lun–Vie 8:30–21h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.uam.es/hours#:~:text=Horarios", libcal_lid: 5665 },
-  { tipo: "universidad", nombre: "Biblioteca UAM – Escuela Politécnica Superior", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Escuela_Polit%C3%A9cnica_Superior_y_Centro_Nacional_de_Biotecnolog%C3%ADa.jpg/960px-Escuela_Polit%C3%A9cnica_Superior_y_Centro_Nacional_de_Biotecnolog%C3%ADa.jpg", distrito: "Madrid (Fuencarral-El Pardo / Cantoblanco)", direccion: "Calle Francisco Tomás y Valiente, 11, 28049 Madrid", lat: 40.5498, lng: -3.6895, plazas: 400, horario: "Lun–Vie 8:30–20:30h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.uam.es/hours#:~:text=Horarios", libcal_lid: 5675 },
+  { tipo: "universidad", nombre: "Biblioteca UAM – Facultad de Ciencias (Cantoblanco)", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Madrid_-_Campus_de_la_Universidad_Aut%C3%B3noma_de_Madrid_%28UAM%29-Facultad_de_Ciencias_Econ%C3%B3micas_y_Empresariales_3.JPG/960px-Madrid_-_Campus_de_la_Universidad_Aut%C3%B3noma_de_Madrid_%28UAM%29-Facultad_de_Ciencias_Econ%C3%B3micas_y_Empresariales_3.JPG", distrito: "Madrid (Fuencarral-El Pardo / Cantoblanco)", direccion: "Calle Francisco Tomás y Valiente, 7, 28049 Madrid", lat: 40.5482, lng: -3.6941, plazas: 600, horario: "Lun–Vie 8:30–21h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.uam.es/hours#:~:text=Horarios", libcal_lid: 5663, libcal_iid: 3941 },
+  { tipo: "universidad", nombre: "Biblioteca UAM – Facultad de Derecho (Cantoblanco)", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Facultad_de_Derecho_Universidad_Aut%C3%B3noma_de_Madrid.jpg/960px-Facultad_de_Derecho_Universidad_Aut%C3%B3noma_de_Madrid.jpg", distrito: "Madrid (Fuencarral-El Pardo / Cantoblanco)", direccion: "Calle Kelsen, 1, 28049 Madrid", lat: 40.5441, lng: -3.6932, plazas: 550, horario: "Lun–Vie 8:30–21h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.uam.es/hours#:~:text=Horarios", libcal_lid: 5672, libcal_iid: 3941 },
+  { tipo: "universidad", nombre: "Biblioteca UAM – Facultad de Educación (Cantoblanco)", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Madrid_-_Campus_de_la_Universidad_Aut%C3%B3noma_de_Madrid_%28UAM%29-Facultades_de_Filosof%C3%ADa_y_Letras%2C_y_de_Formaci%C3%B3n_de_Profesorado_y_Educaci%C3%B3n.JPG/960px-Madrid_-_Campus_de_la_Universidad_Aut%C3%B3noma_de_Madrid_%28UAM%29-Facultades_de_Filosof%C3%ADa_y_Letras%2C_y_de_Formaci%C3%B3n_de_Profesorado_y_Educaci%C3%B3n.JPG", distrito: "Madrid (Fuencarral-El Pardo / Cantoblanco)", direccion: "Calle Francisco Tomás y Valiente, 3, 28049 Madrid", lat: 40.5458, lng: -3.6925, plazas: 400, horario: "Lun–Vie 8:30–20:30h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.uam.es/hours#:~:text=Horarios", libcal_lid: 5589, libcal_iid: 3941 },
+  { tipo: "universidad", nombre: "Biblioteca UAM – Humanidades (Cantoblanco)", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Biblioteca_Humanidades_UAM.jpg/960px-Biblioteca_Humanidades_UAM.jpg", distrito: "Madrid (Fuencarral-El Pardo / Cantoblanco)", direccion: "Calle Francisco Tomás y Valiente, 1, 28049 Madrid", lat: 40.5465, lng: -3.6912, plazas: 500, horario: "Lun–Vie 8:30–21h\n(Filosofía y Letras)", web: "https://biblioagenda.uam.es/hours#:~:text=Horarios", libcal_lid: 5673, libcal_iid: 3941 },
+  { tipo: "universidad", nombre: "Biblioteca UAM – Facultad de Psicología (Cantoblanco)", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/UAM_PSICOLOGIA.JPG/960px-UAM_PSICOLOGIA.JPG", distrito: "Madrid (Fuencarral-El Pardo / Cantoblanco)", direccion: "Calle Iván Pavlov, 6, 28049 Madrid", lat: 40.5491, lng: -3.6965, plazas: 350, horario: "Lun–Vie 8:30–20:30h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.uam.es/hours#:~:text=Horarios", libcal_lid: 5676, libcal_iid: 3941 },
+  { tipo: "universidad", nombre: "Biblioteca UAM – Ciencias Económicas (Cantoblanco)", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Madrid_-_Campus_de_la_Universidad_Aut%C3%B3noma_de_Madrid_%28UAM%29-Facultad_de_Ciencias_Econ%C3%B3micas_y_Empresariales_2.JPG/960px-Madrid_-_Campus_de_la_Universidad_Aut%C3%B3noma_de_Madrid_%28UAM%29-Facultad_de_Ciencias_Econ%C3%B3micas_y_Empresariales_2.JPG", distrito: "Madrid (Fuencarral-El Pardo / Cantoblanco)", direccion: "Calle Francisco Tomás y Valiente, 5, 28049 Madrid", lat: 40.5452, lng: -3.6958, plazas: 600, horario: "Lun–Vie 8:30–21h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.uam.es/hours#:~:text=Horarios", libcal_lid: 5665, libcal_iid: 3941 },
+  { tipo: "universidad", nombre: "Biblioteca UAM – Escuela Politécnica Superior", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Escuela_Polit%C3%A9cnica_Superior_y_Centro_Nacional_de_Biotecnolog%C3%ADa.jpg/960px-Escuela_Polit%C3%A9cnica_Superior_y_Centro_Nacional_de_Biotecnolog%C3%ADa.jpg", distrito: "Madrid (Fuencarral-El Pardo / Cantoblanco)", direccion: "Calle Francisco Tomás y Valiente, 11, 28049 Madrid", lat: 40.5498, lng: -3.6895, plazas: 400, horario: "Lun–Vie 8:30–20:30h\n(Ampliado en época de exámenes)", web: "https://biblioagenda.uam.es/hours#:~:text=Horarios", libcal_lid: 5675, libcal_iid: 3941 },
   { tipo: "universidad", nombre: "Biblioteca UC3M – Campus Colmenarejo (Menéndez Pidal)", foto: "https://upload.wikimedia.org/wikipedia/commons/6/62/Campuscolmenarejo.jpg", distrito: "Colmenarejo", direccion: "Avenida de la Universidad, 1, 28270 Colmenarejo", lat: 40.5572, lng: -4.0125, plazas: 400, horario: "Lun–Vie 8:30–21:30h · Sáb 9–14h", web: "https://www.uc3m.es/biblioteca/horarios-calendario#:~:text=Horarios%20habituales" },
   { tipo: "universidad", nombre: "Biblioteca UPM – Campus Montegancedo (Informática)", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/UPM-CeSViMa.jpg/960px-UPM-CeSViMa.jpg", distrito: "Boadilla del Monte / Pozuelo", direccion: "Calle Cirilo Amorós, s/n, 28660 Boadilla del Monte", lat: 40.4061, lng: -3.8385, plazas: 500, horario: "Lun–Vie 8:30–20:45h\n(Facultad de Informática)", web: "https://www.upm.es/UPM/Biblioteca/NuestraBiblioteca/Horarios#:~:text=Horarios" },
   { tipo: "universidad", nombre: "Biblioteca CSIC – Tomás Navarro Tomás", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Centro_de_Ciencias_Humanas_y_Sociales_del_CSIC_%28Madrid%29_02.jpg/960px-Centro_de_Ciencias_Humanas_y_Sociales_del_CSIC_%28Madrid%29_02.jpg", distrito: "Madrid (San Blas-Canillejas)", direccion: "Calle Albasanz, 26, 28037 Madrid", lat: 40.4358, lng: -3.6305, plazas: 220, horario: "Lun–Vie 8:30–20:30h\n(Centro de Ciencias Humanas y Sociales)", web: "https://biblioteca.cchs.csic.es/#:~:text=Horario" }
@@ -682,7 +682,7 @@ L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
 const colores = {
   biblioteca:  { fill: '#2563EB', label: 'Biblioteca pública' },
   sala:        { fill: '#059669', label: 'Sala de estudio'    },
-  universidad: { fill: '#7C3AED', label: 'Universidad / BNE'  }
+  universidad: { fill: '#7C3AED', label: 'Universidad'        }
 };
 
 function makeIcon(tipo) {
@@ -1503,16 +1503,32 @@ const CALENDARIO = {
 };
 
 // ─────────────────────────────────────────────
-//  HORARIOS EN DIRECTO (UAM - LibCal API)
+//  HORARIOS EN DIRECTO (LibCal API - UAM y UCM)
 // ─────────────────────────────────────────────
-const UAM_IID = 3941;
-const UAM_TODAY_API = 'https://biblioagenda.uam.es/api_hours_today.php?iid=3941&lid=0&format=json';
-const UAM_GRID_API = 'https://biblioagenda.uam.es/api_hours_grid.php?iid=3941&format=json';
+const LIBCAL_INSTITUTIONS = {
+  3941: {
+    name: 'BiblioAgenda UAM',
+    todayApi: 'https://biblioagenda.uam.es/api_hours_today.php?iid=3941&lid=0&format=json',
+    gridApi: 'https://biblioagenda.uam.es/api_hours_grid.php?iid=3941&format=json'
+  },
+  4031: {
+    name: 'BiblioAgenda UCM',
+    todayApi: 'https://biblioagenda.ucm.es/api_hours_today.php?iid=4031&lid=0&format=json',
+    gridApi: 'https://biblioagenda.ucm.es/api_hours_grid.php?iid=4031&format=json'
+  }
+};
 
-let uamLiveToday = null;
-let uamLiveGrid = null;
-let uamFetchTodayPromise = null;
-let uamFetchGridPromise = null;
+const libcalLiveToday = {};
+const libcalLiveGrid = {};
+const libcalFetchTodayPromises = {};
+const libcalFetchGridPromises = {};
+
+function getLibcalIid(d) {
+  if (d.libcal_iid) return d.libcal_iid;
+  if (!d.libcal_lid) return null;
+  if (/ucm/i.test(d.nombre) || (d.web && d.web.includes('biblioagenda.ucm.es'))) return 4031;
+  return 3941;
+}
 
 function format12to24(timeStr) {
   if (!timeStr) return '';
@@ -1563,60 +1579,67 @@ function parseLibCalTimes(times, rendered) {
   return null;
 }
 
-function fetchUAMToday() {
-  if (uamLiveToday) return Promise.resolve(uamLiveToday);
-  if (uamFetchTodayPromise) return uamFetchTodayPromise;
+function fetchLibCalToday(iid) {
+  if (!iid || !LIBCAL_INSTITUTIONS[iid]) return Promise.resolve(null);
+  if (libcalLiveToday[iid]) return Promise.resolve(libcalLiveToday[iid]);
+  if (libcalFetchTodayPromises[iid]) return libcalFetchTodayPromises[iid];
 
-  uamFetchTodayPromise = fetch(UAM_TODAY_API)
+  const config = LIBCAL_INSTITUTIONS[iid];
+  libcalFetchTodayPromises[iid] = fetch(config.todayApi)
     .then(r => {
       if (!r.ok) throw new Error('HTTP ' + r.status);
       return r.json();
     })
     .then(data => {
-      uamLiveToday = {};
+      libcalLiveToday[iid] = {};
       if (data && data.locations) {
         data.locations.forEach(loc => {
-          uamLiveToday[loc.lid] = loc;
+          libcalLiveToday[iid][loc.lid] = loc;
         });
       }
-      return uamLiveToday;
+      return libcalLiveToday[iid];
     })
     .catch(err => {
-      console.warn('BiblioAgenda UAM en vivo no disponible:', err);
+      console.warn(`${config.name} en vivo no disponible:`, err);
       return null;
     });
 
-  return uamFetchTodayPromise;
+  return libcalFetchTodayPromises[iid];
 }
 
-function fetchUAMGrid() {
-  if (uamLiveGrid) return Promise.resolve(uamLiveGrid);
-  if (uamFetchGridPromise) return uamFetchGridPromise;
+function fetchLibCalGrid(iid) {
+  if (!iid || !LIBCAL_INSTITUTIONS[iid]) return Promise.resolve(null);
+  if (libcalLiveGrid[iid]) return Promise.resolve(libcalLiveGrid[iid]);
+  if (libcalFetchGridPromises[iid]) return libcalFetchGridPromises[iid];
 
-  uamFetchGridPromise = fetch(UAM_GRID_API)
+  const config = LIBCAL_INSTITUTIONS[iid];
+  libcalFetchGridPromises[iid] = fetch(config.gridApi)
     .then(r => {
       if (!r.ok) throw new Error('HTTP ' + r.status);
       return r.json();
     })
     .then(data => {
-      uamLiveGrid = {};
+      libcalLiveGrid[iid] = {};
       if (data && data.locations) {
         data.locations.forEach(loc => {
-          uamLiveGrid[loc.lid] = loc;
+          libcalLiveGrid[iid][loc.lid] = loc;
         });
       }
-      return uamLiveGrid;
+      return libcalLiveGrid[iid];
     })
     .catch(err => {
-      console.warn('Cuadrícula LibCal no disponible:', err);
+      console.warn(`Cuadrícula ${config.name} no disponible:`, err);
       return null;
     });
 
-  return uamFetchGridPromise;
+  return libcalFetchGridPromises[iid];
 }
 
 if (typeof window !== 'undefined') {
-  setTimeout(fetchUAMToday, 400);
+  setTimeout(() => {
+    fetchLibCalToday(3941);
+    fetchLibCalToday(4031);
+  }, 400);
 }
 
 function getTodayInfo(d, date = new Date()) {
@@ -1639,9 +1662,10 @@ function getTodayInfo(d, date = new Date()) {
   
   const slug = (typeof slugOf !== 'undefined' && slugOf.get(d)) ? slugOf.get(d) : slugify(d.nombre);
 
-  // 0. Datos en vivo de UAM si están cargados
-  if (d.libcal_lid && uamLiveToday && uamLiveToday[d.libcal_lid]) {
-    const loc = uamLiveToday[d.libcal_lid];
+  // 0. Datos en vivo de LibCal (UAM / UCM) si están cargados
+  const iid = getLibcalIid(d);
+  if (d.libcal_lid && iid && libcalLiveToday[iid] && libcalLiveToday[iid][d.libcal_lid]) {
+    const loc = libcalLiveToday[iid][d.libcal_lid];
     const liveParsed = parseLibCalTimes(loc.times, loc.rendered);
     if (liveParsed) {
       return {
@@ -1919,9 +1943,11 @@ function getPlaceImage(d) {
   return pool[idx];
 }
 
-function renderUAMWeek(d, containerEl) {
-  if (!d.libcal_lid || !containerEl) return;
-  fetchUAMGrid().then(grid => {
+function renderLibCalWeek(d, containerEl) {
+  const iid = getLibcalIid(d);
+  if (!d.libcal_lid || !iid || !containerEl) return;
+  const config = LIBCAL_INSTITUTIONS[iid] || { name: 'BiblioAgenda' };
+  fetchLibCalGrid(iid).then(grid => {
     if (!grid || !grid[d.libcal_lid] || current !== d) return;
     const loc = grid[d.libcal_lid];
     const weeks = loc.weeks;
@@ -1962,7 +1988,7 @@ function renderUAMWeek(d, containerEl) {
     }
 
     containerEl.innerHTML = `
-      <div class="panel-label" style="margin-top:8px; margin-bottom:4px; font-size:9.5px;">Semana en directo (BiblioAgenda)</div>
+      <div class="panel-label" style="margin-top:8px; margin-bottom:4px; font-size:9.5px;">Semana en directo (${config.name})</div>
       <table class="panel-week-table">
         <tbody>${rowsHtml}</tbody>
       </table>`;
@@ -1975,10 +2001,12 @@ function panelHtml(d) {
   const horarioHtml = d.horario.split('\n').map(l => `<div>${l}</div>`).join('');
   const label = d.web ? 'Web oficial' : 'Buscar web y horario';
   const imgUrl = getPlaceImage(d);
+  const iid = getLibcalIid(d);
+  const agendaName = (iid && LIBCAL_INSTITUTIONS[iid]) ? LIBCAL_INSTITUTIONS[iid].name : 'BiblioAgenda';
   const liveTag = (d.libcal_lid || today.isLive) ? `
-    <div class="panel-live-tag" title="Sincronizado en tiempo real con BiblioAgenda UAM">
+    <div class="panel-live-tag" title="Sincronizado en tiempo real con ${agendaName}">
       <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-      En directo · BiblioAgenda UAM
+      En directo · ${agendaName}
     </div>` : '';
 
   return `
@@ -2001,7 +2029,7 @@ function panelHtml(d) {
       </div>
       <div class="panel-today-hours">${today.todaySchedule}</div>
       ${liveTag}
-      ${d.libcal_lid ? `<div id="panel-uam-week" class="panel-live-week"></div>` : ''}
+      ${d.libcal_lid ? `<div id="panel-libcal-week" class="panel-live-week"></div>` : ''}
     </div>
 
     <div class="panel-schedule">
@@ -2028,8 +2056,9 @@ function openPlace(d, push) {
   map.panTo([d.lat, d.lng], { animate: true });
 
   if (d.libcal_lid) {
-    if (!uamLiveToday) {
-      fetchUAMToday().then(() => {
+    const iid = getLibcalIid(d);
+    if (iid && (!libcalLiveToday[iid] || !libcalLiveToday[iid][d.libcal_lid])) {
+      fetchLibCalToday(iid).then(() => {
         if (current === d) {
           const today = getTodayInfo(d);
           const headEl = document.getElementById('panel-today-container');
@@ -2047,9 +2076,9 @@ function openPlace(d, push) {
         }
       });
     }
-    const weekContainer = document.getElementById('panel-uam-week');
+    const weekContainer = document.getElementById('panel-libcal-week');
     if (weekContainer) {
-      renderUAMWeek(d, weekContainer);
+      renderLibCalWeek(d, weekContainer);
     }
   }
 }

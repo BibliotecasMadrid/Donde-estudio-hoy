@@ -302,7 +302,7 @@
       <div class="card-side-col">
         <div class="today-card" id="today-card">
           <div class="today-head">
-            <span class="today-title" id="today-title">HOY · Jueves, 20 de agosto</span>
+            <span class="today-title" id="today-title">HOY · Viernes, 21 de agosto</span>
             <span class="status-badge status-open" id="status-badge">Abierto</span>
           </div>
           <div class="today-hours" id="today-hours">8:30–21:00h</div>
@@ -521,7 +521,7 @@
         return h + ':' + min;
       }
 
-      fetch('https://biblioagenda.uam.es/api_hours_today.php?iid=3941&lid=' + d.libcal_lid + '&format=json')
+      fetch('https://biblioagenda.uam.es/api_hours_today.php?iid=3941&lid=None&format=json')
         .then(r => r.json())
         .then(data => {
           const loc = (data.locations && data.locations.length > 0) ? data.locations[0] : null;
@@ -551,7 +551,7 @@
           const loc = (data.locations || []).find(l => l.lid === d.libcal_lid);
           if (!loc || !loc.weeks || loc.weeks.length === 0) return;
           const week = loc.weeks[0];
-          const weekEl = document.getElementById('panel-uam-week');
+          const weekEl = document.getElementById('panel-libcal-week');
           if (!weekEl) return;
           const dayLabels = { Monday: 'Lun', Tuesday: 'Mar', Wednesday: 'Mié', Thursday: 'Jue', Friday: 'Vie', Saturday: 'Sáb', Sunday: 'Dom' };
           const now = new Date();
@@ -569,7 +569,7 @@
             }
             rowsHtml += '<tr class="' + (isToday ? 'day-row-today' : '') + '"><td>' + label + ' ' + dayNum + (isToday ? ' (Hoy)' : '') + '</td><td class="day-hours">' + hoursText + '</td></tr>';
           }
-          weekEl.innerHTML = '<div style="font-size:9.5px; font-weight:700; text-transform:uppercase; color:var(--ink-3); margin-top:8px; margin-bottom:4px;">Semana en directo (BiblioAgenda)</div><table class="panel-week-table"><tbody>' + rowsHtml + '</tbody></table>';
+          weekEl.innerHTML = '<div style="font-size:9.5px; font-weight:700; text-transform:uppercase; color:var(--ink-3); margin-top:8px; margin-bottom:4px;">Semana en directo (BiblioAgenda UAM)</div><table class="panel-week-table"><tbody>' + rowsHtml + '</tbody></table>';
         })
         .catch(() => {});
     }
