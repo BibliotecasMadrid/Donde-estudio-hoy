@@ -16,9 +16,16 @@ Minimalista: solo mapa + marcadores + panel. Sin menús, buscador ni backend.
   - una página HTML por cada centro (`<slug>.html`, p. ej. `clara-campoamor.html`), optimizada
     para SEO (title, meta, canonical, JSON-LD propio);
   - el `sitemap.xml`.
-- **`<slug>.html`** (×216) — páginas de detalle generadas (NO editar a mano; se regeneran).
+- **`<slug>.html`** (×217) — páginas de detalle generadas (NO editar a mano). `build.sh` las
+  regenera **en cada despliegue**, así que lo que se publica siempre sale de `index.html`.
 - **`calendario.json`** — calendario interno 2026 con festivos, periodos estivales y excepciones.
 - **`sitemap.xml`** — generado por `build.py`.
+- **`build.sh`** — lo que ejecuta Cloudflare Pages: lanza `build.py` y arma `dist/` con solo
+  lo que es web. Aborta el despliegue si el material de firma de la app se cuela en `dist/`.
+- **`_headers`** — cabeceras HTTP (seguridad y caché) que aplica Cloudflare Pages.
+- **`robots.txt`, `404.html`** — página de error propia, con vuelta al mapa.
+- **`.well-known/assetlinks.json`** — lo que Google lee para validar que la app Android
+  es dueña del dominio. Si falta, la app deja de abrirse a pantalla completa.
 - **`google….html`** — verificación de Google Search Console.
 - **`manifest.json` + `sw.js` + `icons/`** — hacen la web una **PWA instalable**. El service
   worker es "siempre online" (no cachea datos: un cambio en la web se ve al instante). Es además
