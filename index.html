@@ -10,7 +10,7 @@
   <meta name="description" content="Mapa con todas las bibliotecas públicas, salas de estudio y bibliotecas universitarias de Madrid: ubicación, dirección y horarios actualizados. Descubre dónde estudiar hoy y qué bibliotecas están abiertas cerca de ti.">
   <meta name="keywords" content="bibliotecas madrid, bibliotecas madrid horarios, salas de estudio madrid, bibliotecas abiertas madrid, dónde estudiar madrid, bibliotecas universitarias madrid, salas de estudio 24h madrid">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://bibliotecasmadrid.github.io/Donde-estudio-hoy/">
+  <link rel="canonical" href="https://bibliotecasmadrid.es/">
   <meta name="geo.region" content="ES-MD">
   <meta name="geo.placename" content="Madrid">
 
@@ -19,7 +19,7 @@
   <meta property="og:locale" content="es_ES">
   <meta property="og:title" content="Bibliotecas y salas de estudio en Madrid · Mapa con horarios">
   <meta property="og:description" content="Mapa con todas las bibliotecas, salas de estudio y bibliotecas universitarias de Madrid y sus horarios. Encuentra dónde estudiar hoy.">
-  <meta property="og:url" content="https://bibliotecasmadrid.github.io/Donde-estudio-hoy/">
+  <meta property="og:url" content="https://bibliotecasmadrid.es/">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Bibliotecas y salas de estudio en Madrid · Mapa con horarios">
   <meta name="twitter:description" content="Mapa con todas las bibliotecas y salas de estudio de Madrid y sus horarios.">
@@ -30,7 +30,7 @@
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "Bibliotecas y salas de estudio en Madrid",
-    "url": "https://bibliotecasmadrid.github.io/Donde-estudio-hoy/",
+    "url": "https://bibliotecasmadrid.es/",
     "inLanguage": "es",
     "description": "Mapa con todas las bibliotecas públicas, salas de estudio y bibliotecas universitarias de Madrid, con su ubicación, dirección y horarios.",
     "about": { "@type": "Place", "name": "Madrid", "address": { "@type": "PostalAddress", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES" } }
@@ -390,7 +390,7 @@
     }
     .panel-link { color: #fff; }
     .panel-link:hover { filter: brightness(1.08); }
-    .panel-link svg { width: 14px; height: 14px; }
+    .panel-link svg, .panel-page svg { width: 14px; height: 14px; }
     .panel-page { background: #F1F3F7; color: var(--ink); }
     .panel-page:hover { background: #E7EAF0; }
 
@@ -407,18 +407,42 @@
       border-radius: 8px 0 0 0;
       font-size: 10px;
     }
+
+    @media (max-width: 768px) {
+      .panel {
+        top: auto;
+        bottom: 0;
+        width: 100%;
+        height: 80%;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        transform: translateY(102%);
+        box-shadow: 0 -12px 44px rgba(20,30,60,0.18);
+        transition: transform 0.35s cubic-bezier(.4,0,.2,1);
+      }
+      .panel.open {
+        transform: translateY(0);
+      }
+      .panel-cover {
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+      }
+      .leaflet-control-zoom {
+        display: none; /* Map zooming is usually handled by pinch on mobile */
+      }
+    }
   </style>
 </head>
 <body>
-<div id="map"></div>
+<div id="map" tabindex="0" aria-label="Mapa interactivo con marcadores"></div>
 <div class="topbar">
   <h1>Dónde estudiar en Madrid</h1>
   <p>Bibliotecas, salas de estudio y universidades · pulsa un punto</p>
 </div>
 <div class="legend">
-  <div class="legend-item"><span class="dot" style="background:#2563EB"></span> Biblioteca pública</div>
-  <div class="legend-item"><span class="dot" style="background:#059669"></span> Sala de estudio</div>
-  <div class="legend-item"><span class="dot" style="background:#7C3AED"></span> Universidad</div>
+  <div class="legend-item" data-type="biblioteca"><span class="dot" style="background:#2563EB"></span> Biblioteca pública</div>
+  <div class="legend-item" data-type="sala"><span class="dot" style="background:#059669"></span> Sala de estudio</div>
+  <div class="legend-item" data-type="universidad"><span class="dot" style="background:#7C3AED"></span> Universidad</div>
 </div>
 
 <aside class="panel" id="panel" aria-hidden="true" aria-label="Información del centro">
@@ -685,6 +709,52 @@ const colores = {
   universidad: { fill: '#7C3AED', label: 'Universidad'        }
 };
 
+// Control de geolocalización
+const LocateControl = L.Control.extend({
+  options: { position: 'topleft' },
+  onAdd: function (map) {
+    const container = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
+    container.style.backgroundColor = 'white';
+    container.style.width = '34px';
+    container.style.height = '34px';
+    container.style.cursor = 'pointer';
+    container.style.display = 'flex';
+    container.style.alignItems = 'center';
+    container.style.justifyContent = 'center';
+    container.style.marginTop = '10px';
+    container.style.borderRadius = '10px';
+    container.style.boxShadow = '0 2px 8px rgba(20,30,60,0.12)';
+    container.title = "Mi ubicación";
+    container.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>';
+    
+    container.onclick = function(e){
+      e.stopPropagation();
+      map.locate({setView: true, maxZoom: 14});
+    }
+    return container;
+  }
+});
+map.addControl(new LocateControl());
+
+let userMarker = null;
+map.on('locationfound', function(e) {
+  if (userMarker) {
+    userMarker.setLatLng(e.latlng);
+  } else {
+    userMarker = L.circleMarker(e.latlng, {
+      radius: 7,
+      fillColor: "#3B82F6",
+      color: "#ffffff",
+      weight: 2,
+      opacity: 1,
+      fillOpacity: 1
+    }).addTo(map);
+  }
+});
+map.on('locationerror', function(e) {
+  alert("No se pudo obtener tu ubicación. Por favor, revisa los permisos.");
+});
+
 function makeIcon(tipo) {
   const c = colores[tipo].fill;
   return L.divIcon({
@@ -711,7 +781,7 @@ function webUrl(d) {
 //  SLUGS — deben ser IDÉNTICOS a build.py para que
 //  las URLs del panel coincidan con las páginas generadas.
 // ─────────────────────────────────────────────
-const BASE_URL = 'https://bibliotecasmadrid.github.io/Donde-estudio-hoy/';
+const BASE_URL = 'https://bibliotecasmadrid.es/';
 const PREFIJOS = ["biblioteca pública ", "biblioteca municipal ", "salas de estudio ",
   "sala de estudio del ", "sala de estudio de la ", "sala de estudio ", "sala de lectura ", "biblioteca "];
 
@@ -1394,48 +1464,6 @@ const CALENDARIO = {
         "reduced_schedule": "9:00–14:00h"
       }
     },
-    "uam-facultad-de-educacion-cantoblanco": {
-      "exam_periods": [
-        {
-          "start": "01-08",
-          "end": "02-15",
-          "schedule": "24h / Horario ampliado"
-        },
-        {
-          "start": "05-10",
-          "end": "06-30",
-          "schedule": "24h / Horario ampliado"
-        }
-      ],
-      "august_schedule": {
-        "closure_start": "08-17",
-        "closure_end": "08-23",
-        "reduced_start": "08-24",
-        "reduced_end": "08-31",
-        "reduced_schedule": "9:00–14:00h"
-      }
-    },
-    "uam-humanidades-cantoblanco": {
-      "exam_periods": [
-        {
-          "start": "01-08",
-          "end": "02-15",
-          "schedule": "24h / Horario ampliado"
-        },
-        {
-          "start": "05-10",
-          "end": "06-30",
-          "schedule": "24h / Horario ampliado"
-        }
-      ],
-      "august_schedule": {
-        "closure_start": "08-17",
-        "closure_end": "08-23",
-        "reduced_start": "08-24",
-        "reduced_end": "08-31",
-        "reduced_schedule": "9:00–14:00h"
-      }
-    },
     "uam-facultad-de-psicologia-cantoblanco": {
       "exam_periods": [
         {
@@ -1497,6 +1525,146 @@ const CALENDARIO = {
         "reduced_start": "08-24",
         "reduced_end": "08-31",
         "reduced_schedule": "9:00–14:00h"
+      }
+    },
+    "uam-facultad-de-educacion-cantoblanco": {
+      "exam_periods": [
+        {
+          "start": "01-08",
+          "end": "02-15",
+          "schedule": "24h / Horario ampliado"
+        },
+        {
+          "start": "05-10",
+          "end": "06-30",
+          "schedule": "24h / Horario ampliado"
+        }
+      ],
+      "august_schedule": {
+        "closure_start": "08-17",
+        "closure_end": "08-23",
+        "reduced_start": "08-24",
+        "reduced_end": "08-31",
+        "reduced_schedule": "9:00–14:00h"
+      }
+    },
+    "uam-humanidades-cantoblanco": {
+      "exam_periods": [
+        {
+          "start": "01-08",
+          "end": "02-15",
+          "schedule": "24h / Horario ampliado"
+        },
+        {
+          "start": "05-10",
+          "end": "06-30",
+          "schedule": "24h / Horario ampliado"
+        }
+      ],
+      "august_schedule": {
+        "closure_start": "08-17",
+        "closure_end": "08-23",
+        "reduced_start": "08-24",
+        "reduced_end": "08-31",
+        "reduced_schedule": "9:00–14:00h"
+      }
+    },
+    "benito-perez-galdos": {
+      "summer_period": {
+        "start": "06-15",
+        "end": "09-15",
+        "weekday_schedule": "8:30–20:00h"
+      }
+    },
+    "eugenio-trias": {
+      "summer_period": {
+        "start": "06-15",
+        "end": "09-15",
+        "weekday_schedule": "8:30–20:00h"
+      }
+    },
+    "paseo-de-extremadura": {
+      "summer_closure": {
+        "start": "07-15",
+        "end": "09-15"
+      }
+    },
+    "cayetano-pando": {
+      "summer_closure": {
+        "start": "07-15",
+        "end": "09-15"
+      }
+    },
+    "cebreros": {
+      "summer_closure": {
+        "start": "07-15",
+        "end": "09-15"
+      }
+    },
+    "centro-sociocultural-latina": {
+      "summer_closure": {
+        "start": "08-01",
+        "end": "08-25"
+      }
+    },
+    "almirante-churruca": {
+      "summer_closure": {
+        "start": "08-01",
+        "end": "08-31"
+      }
+    },
+    "el-greco": {
+      "summer_closure": {
+        "start": "08-01",
+        "end": "08-31"
+      }
+    },
+    "arquitecto-juan-de-herrera": {
+      "summer_closure": {
+        "start": "08-01",
+        "end": "08-31"
+      }
+    },
+    "maqueda": {
+      "summer_closure": {
+        "start": "08-01",
+        "end": "08-31"
+      }
+    },
+    "sara-montiel": {
+      "summer_closure": {
+        "start": "08-01",
+        "end": "08-31"
+      }
+    },
+    "jose-luis-sampedro-latina": {
+      "summer_closure": {
+        "start": "08-01",
+        "end": "08-31"
+      }
+    },
+    "escritor-pedro-de-repide": {
+      "summer_closure": {
+        "start": "08-01",
+        "end": "08-31"
+      }
+    },
+    "miguel-hernandez-latina": {
+      "summer_closure": {
+        "start": "08-01",
+        "end": "08-31"
+      }
+    },
+    "centro-sociocultural-siena": {
+      "summer_closure": {
+        "start": "08-01",
+        "end": "08-31"
+      }
+    },
+    "san-juan-bautista": {
+      "summer_closure": {
+        "start": "08-01",
+        "end": "08-31"
       }
     }
   }
@@ -1711,6 +1879,19 @@ function getTodayInfo(d, date = new Date()) {
     return intervals;
   }
   
+  function formatClosureRange(startStr, endStr) {
+    const monthNames = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+    const [smStr, sdStr] = startStr.split('-');
+    const [emStr, edStr] = endStr.split('-');
+    const sm = parseInt(smStr, 10), sd = parseInt(sdStr, 10);
+    const em = parseInt(emStr, 10), ed = parseInt(edStr, 10);
+    if (sm === em) {
+      return `Cerrado del ${sd} al ${ed} de ${monthNames[sm - 1]}`;
+    } else {
+      return `Cerrado del ${sd} de ${monthNames[sm - 1]} al ${ed} de ${monthNames[em - 1]}`;
+    }
+  }
+
   // 1. Festivos oficiales de Madrid
   if (CALENDARIO.holidays && CALENDARIO.holidays[dateKey]) {
     const holidayName = CALENDARIO.holidays[dateKey];
@@ -1732,7 +1913,7 @@ function getTodayInfo(d, date = new Date()) {
         dateFormatted,
         statusText: 'Cerrado',
         statusClass: 'status-closed',
-        todaySchedule: 'Cerrado por vacaciones de verano',
+        todaySchedule: formatClosureRange(exceptions.summer_closure.start, exceptions.summer_closure.end),
         isOpen: false
       };
     }
@@ -1746,7 +1927,7 @@ function getTodayInfo(d, date = new Date()) {
         dateFormatted,
         statusText: 'Cerrado',
         statusClass: 'status-closed',
-        todaySchedule: 'Cerrado por periodo estival',
+        todaySchedule: formatClosureRange(aug.closure_start, aug.closure_end),
         isOpen: false
       };
     } else if (monthDay >= aug.reduced_start && monthDay <= aug.reduced_end) {
@@ -1784,6 +1965,14 @@ function getTodayInfo(d, date = new Date()) {
           statusClass: isOpen ? 'status-open' : 'status-closed',
           todaySchedule: exceptions.summer_period.weekday_schedule + ' (Horario de verano)',
           isOpen
+        };
+      } else {
+        return {
+          dateFormatted,
+          statusText: 'Cerrado',
+          statusClass: 'status-closed',
+          todaySchedule: 'Cerrado los fines de semana (Horario de verano)',
+          isOpen: false
         };
       }
     }
@@ -2042,6 +2231,10 @@ function panelHtml(d) {
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
         ${label}
       </a>
+      <a class="panel-page" href="https://www.google.com/maps/dir/?api=1&destination=${d.lat},${d.lng}" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+        Cómo llegar
+      </a>
       <a class="panel-page" href="${slugOf.get(d)}">Página de este centro ↗</a>
     </div>`;
 }
@@ -2052,6 +2245,7 @@ function openPlace(d, push) {
   panelBody.innerHTML = panelHtml(d);
   panel.classList.add('open');
   panel.setAttribute('aria-hidden', 'false');
+  document.getElementById('panel-close').focus();
   if (push) history.pushState({ slug: slugOf.get(d) }, '', slugOf.get(d));
   map.panTo([d.lat, d.lng], { animate: true });
 
@@ -2086,6 +2280,7 @@ function closePanel(push) {
   current = null;
   panel.classList.remove('open');
   panel.setAttribute('aria-hidden', 'true');
+  document.getElementById('map').focus();
   if (push) history.pushState({}, '', './');
 }
 
@@ -2096,10 +2291,32 @@ map.on('click', () => { if (current) closePanel(true); });
 // ─────────────────────────────────────────────
 //  MARCADORES
 // ─────────────────────────────────────────────
+const typeLayers = {
+  biblioteca: L.layerGroup().addTo(map),
+  sala: L.layerGroup().addTo(map),
+  universidad: L.layerGroup().addTo(map)
+};
+
 lugares.forEach(d => {
   L.marker([d.lat, d.lng], { icon: makeIcon(d.tipo), title: d.nombre })
-    .addTo(map)
+    .addTo(typeLayers[d.tipo])
     .on('click', () => openPlace(d, true));
+});
+
+document.querySelectorAll('.legend-item').forEach(item => {
+  item.style.cursor = 'pointer';
+  item.title = "Haz clic para mostrar/ocultar";
+  item.addEventListener('click', () => {
+    const type = item.dataset.type;
+    const layer = typeLayers[type];
+    if (map.hasLayer(layer)) {
+      map.removeLayer(layer);
+      item.style.opacity = '0.4';
+    } else {
+      map.addLayer(layer);
+      item.style.opacity = '1';
+    }
+  });
 });
 
 // Sincronizar con la URL: back/forward del navegador y enlaces #slug

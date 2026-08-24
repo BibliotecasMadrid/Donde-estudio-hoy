@@ -1,0 +1,8 @@
+# Donde estudiar en Madrid — https://bibliotecasmadrid.es
+# build.sh deja fuera del despliegue los scripts y la materia prima, asi que no hay
+# carpetas internas que esconder: todo lo que se publica es web.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://bibliotecasmadrid.es/sitemap.xml

@@ -5,7 +5,7 @@ bibliotecas universitarias). Al pulsar un marcador se abre un **panel lateral** 
 dirección, horario y enlace a su web, y la URL cambia a la página propia de ese centro.
 Minimalista: solo mapa + marcadores + panel. Sin menús, buscador ni backend.
 
-- **Web:** https://bibliotecasmadrid.github.io/Donde-estudio-hoy/
+- **Web:** https://bibliotecasmadrid.es/
 - **Repo:** https://github.com/bibliotecasmadrid/Donde-estudio-hoy
 
 ## Estructura
@@ -26,12 +26,13 @@ Minimalista: solo mapa + marcadores + panel. Sin menús, buscador ni backend.
   así que **no hay datos duplicados**: se edita solo aquí.
 
 Stack: [Leaflet](https://leafletjs.com/) 1.9.4 (CDN) sobre teselas CARTO Positron. Hosting en
-GitHub Pages (rama `main`, raíz).
+**Cloudflare Pages**: cada push a `main` despliega. `build.sh` arma la carpeta `dist` con lo
+que es web y deja fuera el keystore de firma, los scripts y los temporales.
 
 ### Slugs (URL de cada centro)
 
-Cada centro tiene su URL `…/Donde-estudio-hoy/<slug>` (sin extensión; GitHub Pages sirve
-`<slug>.html`). El slug se calcula desde `nombre` quitando prefijos genéricos
+Cada centro tiene su URL `https://bibliotecasmadrid.es/<slug>` (sin extensión; Cloudflare
+Pages sirve `<slug>.html`). El slug se calcula desde `nombre` quitando prefijos genéricos
 ("Sala de Estudio", "Biblioteca Pública/Municipal"…) y normalizando. **El algoritmo está
 duplicado** en `slugify()` de `index.html` (JS) y `slugify()` de `build.py` (Python) y **deben
 ser idénticos** para que el panel enlace a la página correcta. Si tocas uno, toca el otro.

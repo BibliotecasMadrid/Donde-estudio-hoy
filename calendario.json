@@ -759,6 +759,104 @@
         "reduced_end": "08-31",
         "reduced_schedule": "9:00–14:00h"
       }
+    },
+    "benito-perez-galdos": {
+      "summer_period": {
+        "start": "06-15",
+        "end": "09-15",
+        "weekday_schedule": "8:30–20:00h"
+      }
+    },
+    "eugenio-trias": {
+      "summer_period": {
+        "start": "06-15",
+        "end": "09-15",
+        "weekday_schedule": "8:30–20:00h"
+      }
+    },
+    "paseo-de-extremadura": {
+      "summer_closure": {
+        "start": "07-15",
+        "end": "09-15"
+      }
+    },
+    "cayetano-pando": {
+      "summer_closure": {
+        "start": "07-15",
+        "end": "09-15"
+      }
+    },
+    "cebreros": {
+      "summer_closure": {
+        "start": "07-15",
+        "end": "09-15"
+      }
+    },
+    "centro-sociocultural-latina": {
+      "summer_closure": {
+        "start": "08-01",
+        "end": "08-25"
+      }
+    },
+    "almirante-churruca": {
+      "summer_closure": {
+        "start": "08-01",
+        "end": "08-31"
+      }
+    },
+    "el-greco": {
+      "summer_closure": {
+        "start": "08-01",
+        "end": "08-31"
+      }
+    },
+    "arquitecto-juan-de-herrera": {
+      "summer_closure": {
+        "start": "08-01",
+        "end": "08-31"
+      }
+    },
+    "maqueda": {
+      "summer_closure": {
+        "start": "08-01",
+        "end": "08-31"
+      }
+    },
+    "sara-montiel": {
+      "summer_closure": {
+        "start": "08-01",
+        "end": "08-31"
+      }
+    },
+    "jose-luis-sampedro-latina": {
+      "summer_closure": {
+        "start": "08-01",
+        "end": "08-31"
+      }
+    },
+    "escritor-pedro-de-repide": {
+      "summer_closure": {
+        "start": "08-01",
+        "end": "08-31"
+      }
+    },
+    "miguel-hernandez-latina": {
+      "summer_closure": {
+        "start": "08-01",
+        "end": "08-31"
+      }
+    },
+    "centro-sociocultural-siena": {
+      "summer_closure": {
+        "start": "08-01",
+        "end": "08-31"
+      }
+    },
+    "san-juan-bautista": {
+      "summer_closure": {
+        "start": "08-01",
+        "end": "08-31"
+      }
     }
   }
 }

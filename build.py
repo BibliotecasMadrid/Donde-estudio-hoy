@@ -17,7 +17,7 @@ import html
 import unicodedata
 from urllib.parse import quote_plus
 
-BASE = "https://bibliotecasmadrid.github.io/Donde-estudio-hoy/"
+BASE = "https://bibliotecasmadrid.es/"
 LASTMOD = "2026-08-19"
 
 PREFIJOS = [
@@ -92,6 +92,16 @@ def web_url(d):
     return "https://www.google.com/search?q=" + quote_plus(d["nombre"] + " Madrid"), "Buscar web y horario"
 
 
+def format_closure_range(start_str, end_str):
+    month_names = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre']
+    sm, sd = int(start_str.split('-')[0]), int(start_str.split('-')[1])
+    em, ed = int(end_str.split('-')[0]), int(end_str.split('-')[1])
+    if sm == em:
+        return f"Cerrado del {sd} al {ed} de {month_names[sm - 1]}"
+    else:
+        return f"Cerrado del {sd} de {month_names[sm - 1]} al {ed} de {month_names[em - 1]}"
+
+
 def get_today_info(d, slug, now=None):
     if now is None:
         import datetime
@@ -158,7 +168,7 @@ def get_today_info(d, slug, now=None):
                 'date_formatted': date_formatted,
                 'status_text': 'Cerrado',
                 'status_class': 'status-closed',
-                'today_schedule': 'Cerrado por vacaciones de verano',
+                'today_schedule': format_closure_range(sc["start"], sc["end"]),
                 'is_open': False
             }
 
@@ -169,7 +179,7 @@ def get_today_info(d, slug, now=None):
                 'date_formatted': date_formatted,
                 'status_text': 'Cerrado',
                 'status_class': 'status-closed',
-                'today_schedule': 'Cerrado por periodo estival',
+                'today_schedule': format_closure_range(aug["closure_start"], aug["closure_end"]),
                 'is_open': False
             }
         elif aug["reduced_start"] <= month_day <= aug["reduced_end"]:
@@ -204,6 +214,14 @@ def get_today_info(d, slug, now=None):
                     'status_class': 'status-open' if is_open else 'status-closed',
                     'today_schedule': sp["weekday_schedule"] + ' (Horario de verano)',
                     'is_open': is_open
+                }
+            else:
+                return {
+                    'date_formatted': date_formatted,
+                    'status_text': 'Cerrado',
+                    'status_class': 'status-closed',
+                    'today_schedule': 'Cerrado los fines de semana (Horario de verano)',
+                    'is_open': False
                 }
 
     lines = d["horario"].split('\n')
@@ -359,7 +377,7 @@ def page_html(d, slug):
 
     d_json = json.dumps(d, ensure_ascii=False)
     cal_json_esc = json.dumps(json.dumps(CALENDARIO, ensure_ascii=False))
-    og_img = d.get("foto", "https://bibliotecasmadrid.github.io/Donde-estudio-hoy/icons/icon-512.png")
+    og_img = d.get("foto", "https://bibliotecasmadrid.es/icons/icon-512.png")
 
     return f"""<!DOCTYPE html>
 <html lang="es">
@@ -750,6 +768,19 @@ def page_html(d, slug):
         return intervals;
       }}
 
+      function formatClosureRange(startStr, endStr) {{
+        const monthNames = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+        const [smStr, sdStr] = startStr.split('-');
+        const [emStr, edStr] = endStr.split('-');
+        const sm = parseInt(smStr, 10), sd = parseInt(sdStr, 10);
+        const em = parseInt(emStr, 10), ed = parseInt(edStr, 10);
+        if (sm === em) {{
+          return `Cerrado del ${{sd}} al ${{ed}} de ${{monthNames[sm - 1]}}`;
+        }} else {{
+          return `Cerrado del ${{sd}} de ${{monthNames[sm - 1]}} al ${{ed}} de ${{monthNames[em - 1]}}`;
+        }}
+      }}
+
       // 1. Festivos
       if (CALENDARIO.holidays && CALENDARIO.holidays[dateKey]) {{
         const holidayName = CALENDARIO.holidays[dateKey];
@@ -766,7 +797,7 @@ def page_html(d, slug):
         if (monthDay >= exceptions.summer_closure.start && monthDay <= exceptions.summer_closure.end) {{
           badgeEl.className = 'status-badge status-closed';
           badgeEl.textContent = 'Cerrado';
-          hoursEl.textContent = 'Cerrado por vacaciones de verano';
+          hoursEl.textContent = formatClosureRange(exceptions.summer_closure.start, exceptions.summer_closure.end);
           return;
         }}
       }}
@@ -777,7 +808,7 @@ def page_html(d, slug):
         if (monthDay >= aug.closure_start && monthDay <= aug.closure_end) {{
           badgeEl.className = 'status-badge status-closed';
           badgeEl.textContent = 'Cerrado';
-          hoursEl.textContent = 'Cerrado por periodo estival';
+          hoursEl.textContent = formatClosureRange(aug.closure_start, aug.closure_end);
           return;
         }} else if (monthDay >= aug.reduced_start && monthDay <= aug.reduced_end) {{
           if (day >= 1 && day <= 5) {{
@@ -805,6 +836,11 @@ def page_html(d, slug):
             badgeEl.className = 'status-badge ' + (open ? 'status-open' : 'status-closed');
             badgeEl.textContent = open ? 'Abierto' : 'Cerrado';
             hoursEl.textContent = exceptions.summer_period.weekday_schedule + ' (Horario de verano)';
+            return;
+          }} else {{
+            badgeEl.className = 'status-badge status-closed';
+            badgeEl.textContent = 'Cerrado';
+            hoursEl.textContent = 'Cerrado los fines de semana (Horario de verano)';
             return;
           }}
         }}

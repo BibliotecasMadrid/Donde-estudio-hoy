@@ -1,0 +1,32 @@
+# Cabeceras HTTP que aplica Cloudflare Pages. El archivo en si no se sirve.
+# Formato: https://developers.cloudflare.com/pages/configuration/headers/
+#
+# Mismo criterio que en contrastado.es: NO se pone Cache-Control en la regla general,
+# porque cuando dos reglas ponen la misma cabecera no esta documentado cual gana. Cada
+# Cache-Control va en la ruta concreta a la que corresponde.
+
+/*
+  X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), payment=()
+
+# geolocation NO se bloquea: el mapa ofrece centrarse en tu posicion.
+
+# El HTML se queda con el comportamiento por defecto de Pages (max-age=0,
+# must-revalidate) y es a proposito: los horarios cambian y la app Android (TWA) carga
+# esta misma web en vivo, sin cache propia. Ver sw.js.
+
+# Los iconos de la PWA no cambian nunca sin cambiar de nombre.
+/icons/*
+  Cache-Control: public, max-age=86400, s-maxage=604800
+
+# El service worker JAMAS se cachea: es lo unico que puede dejar clavada una version
+# vieja de la PWA en el movil de alguien.
+/sw.js
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Google exige leer este archivo sin cache rara para validar la app Android.
+/.well-known/assetlinks.json
+  Cache-Control: public, max-age=300
+  Content-Type: application/json
