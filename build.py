@@ -847,18 +847,18 @@ def page_html(d, slug):
       }}
 
       // 5. Normal
-      const lines = d.horario.split('\n');
+      const lines = d.horario.split('\\n');
       let target = '';
       if (day === 0) {{
         if (h.includes('dom') || h.includes('fines de semana') || h.includes('lun–dom') || h.includes('lun-dom')) {{
           if (h.includes('sáb–dom') || h.includes('sab-dom')) {{
-            const m = d.horario.match(/S[áa]b[–\-—]Dom\s+([^\n·]+)/i);
+            const m = d.horario.match(/S[áa]b[–\-—]Dom\s+([^\\n·]+)/i);
             if (m) target = m[1];
           }} else if (h.includes('fines de semana')) {{
-            const m = d.horario.match(/Fines de semana[^\d]*(\d[^\n·]+)/i);
+            const m = d.horario.match(/Fines de semana[^\d]*(\d[^\\n·]+)/i);
             if (m) target = m[1];
           }} else if (h.includes('dom') && !h.includes('cerrado')) {{
-            const m = d.horario.match(/Dom\s+([^\n·]+)/i);
+            const m = d.horario.match(/Dom\s+([^\\n·]+)/i);
             if (m) target = m[1];
           }} else if (h.includes('lun–dom') || h.includes('lun-dom')) {{
             target = lines[0];
@@ -867,13 +867,13 @@ def page_html(d, slug):
       }} else if (day === 6) {{
         if (h.includes('sáb') || h.includes('sab') || h.includes('fines de semana') || h.includes('lun–dom') || h.includes('lun-dom') || h.includes('lun–sáb') || h.includes('lun-sab')) {{
           if (h.includes('sáb–dom') || h.includes('sab-dom')) {{
-            const m = d.horario.match(/S[áa]b[–\-—]Dom\s+([^\n·]+)/i);
+            const m = d.horario.match(/S[áa]b[–\-—]Dom\s+([^\\n·]+)/i);
             if (m) target = m[1];
           }} else if (h.includes('sáb') || h.includes('sab')) {{
-            const m = d.horario.match(/S[áa]b\s+([^\n·\(\)]+)/i);
+            const m = d.horario.match(/S[áa]b\s+([^\\n·\(\)]+)/i);
             if (m) target = m[1];
           }} else if (h.includes('fines de semana')) {{
-            const m = d.horario.match(/Fines de semana[^\d]*(\d[^\n·\(\)]+)/i);
+            const m = d.horario.match(/Fines de semana[^\d]*(\d[^\\n·\(\)]+)/i);
             if (m) target = m[1];
           }} else if (h.includes('lun–sáb') || h.includes('lun-sab') || h.includes('lun–dom') || h.includes('lun-dom')) {{
             target = lines[0];
