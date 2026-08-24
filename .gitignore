@@ -1,3 +1,7 @@
 dist/
 __pycache__/
 *.pyc
+
+# Material de firma y paquetes de la app Android: NUNCA en el repo (es publico).
+# Los archivos siguen en tu disco, solo dejan de versionarse.
+BiblioMadrid - Google Play package/

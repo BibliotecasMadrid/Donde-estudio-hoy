@@ -1,8 +1,0 @@
-[{
-      "relation": ["delegate_permission/common.handle_all_urls"],
-      "target": {
-        "namespace": "android_app",
-        "package_name": "io.github.bibliotecasmadrid.twa",
-        "sha256_cert_fingerprints": ["D0:DE:96:35:1F:0E:05:01:7A:93:CF:A0:AB:4B:58:84:BE:AA:EF:2F:C0:BE:5D:DC:51:EE:F6:94:BC:3F:7A:6D"]
-      }
-    }]
