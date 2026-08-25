@@ -2217,7 +2217,8 @@ function panelHtml(d) {
         <span class="status-badge ${today.statusClass}">${today.statusText}</span>
       </div>
       <div class="panel-today-hours">${today.todaySchedule}</div>
-
+      ${liveTag}
+      ${d.libcal_lid ? `<div id="panel-libcal-week" class="panel-live-week"></div>` : ''}
     </div>
 
     <div class="panel-schedule">
