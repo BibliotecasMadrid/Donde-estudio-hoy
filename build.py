@@ -368,12 +368,8 @@ def page_html(d, slug):
     today_api_url = f"https://biblioagenda.ucm.es/api_hours_today.php?iid=4031&lid={libcal_lid}&format=json" if libcal_iid == 4031 else f"https://biblioagenda.uam.es/api_hours_today.php?iid=3941&lid={libcal_lid}&format=json"
     grid_api_url = "https://biblioagenda.ucm.es/api_hours_grid.php?iid=4031&format=json" if libcal_iid == 4031 else "https://biblioagenda.uam.es/api_hours_grid.php?iid=3941&format=json"
 
-    live_tag_html = f"""
-          <div class="panel-live-tag" title="Sincronizado en tiempo real con {agenda_name}">
-            <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-            En directo · {agenda_name}
-          </div>""" if libcal_lid else ""
-    week_container_html = '<div id="panel-libcal-week" class="panel-live-week"></div>' if libcal_lid else ""
+    live_tag_html = ""
+    week_container_html = ""
 
     d_json = json.dumps(d, ensure_ascii=False)
     cal_json_esc = json.dumps(json.dumps(CALENDARIO, ensure_ascii=False))
@@ -937,33 +933,7 @@ def page_html(d, slug):
         }})
         .catch(() => {{}});
 
-      fetch('{grid_api_url}')
-        .then(r => r.json())
-        .then(data => {{
-          const loc = (data.locations || []).find(l => l.lid === d.libcal_lid);
-          if (!loc || !loc.weeks || loc.weeks.length === 0) return;
-          const week = loc.weeks[0];
-          const weekEl = document.getElementById('panel-libcal-week');
-          if (!weekEl) return;
-          const dayLabels = {{ Monday: 'Lun', Tuesday: 'Mar', Wednesday: 'Mié', Thursday: 'Jue', Friday: 'Vie', Saturday: 'Sáb', Sunday: 'Dom' }};
-          const now = new Date();
-          const todayStr = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
-          let rowsHtml = '';
-          for (const [dayName, dayInfo] of Object.entries(week)) {{
-            const isToday = dayInfo.date === todayStr;
-            const label = dayLabels[dayName] || dayName;
-            const dayNum = dayInfo.date ? dayInfo.date.slice(8) : '';
-            let hoursText = 'Cerrado';
-            if (dayInfo.times && dayInfo.times.status === 'open' && dayInfo.times.hours) {{
-              hoursText = dayInfo.times.hours.map(h => fTime(h.from) + '–' + fTime(h.to) + 'h').join(' y ');
-            }} else if (dayInfo.rendered && !/cerrad/i.test(dayInfo.rendered) && /\\d/.test(dayInfo.rendered)) {{
-              hoursText = dayInfo.rendered;
-            }}
-            rowsHtml += '<tr class="' + (isToday ? 'day-row-today' : '') + '"><td>' + label + ' ' + dayNum + (isToday ? ' (Hoy)' : '') + '</td><td class="day-hours">' + hoursText + '</td></tr>';
-          }}
-          weekEl.innerHTML = '<div style="font-size:9.5px; font-weight:700; text-transform:uppercase; color:var(--ink-3); margin-top:8px; margin-bottom:4px;">Semana en directo ({agenda_name})</div><table class="panel-week-table"><tbody>' + rowsHtml + '</tbody></table>';
-        }})
-        .catch(() => {{}});
+
     }}
   }})();
   </script>

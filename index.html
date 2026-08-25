@@ -2192,11 +2192,7 @@ function panelHtml(d) {
   const imgUrl = getPlaceImage(d);
   const iid = getLibcalIid(d);
   const agendaName = (iid && LIBCAL_INSTITUTIONS[iid]) ? LIBCAL_INSTITUTIONS[iid].name : 'BiblioAgenda';
-  const liveTag = (d.libcal_lid || today.isLive) ? `
-    <div class="panel-live-tag" title="Sincronizado en tiempo real con ${agendaName}">
-      <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-      En directo · ${agendaName}
-    </div>` : '';
+  const liveTag = '';
 
   return `
     <div class="panel-cover">
@@ -2217,8 +2213,7 @@ function panelHtml(d) {
         <span class="status-badge ${today.statusClass}">${today.statusText}</span>
       </div>
       <div class="panel-today-hours">${today.todaySchedule}</div>
-      ${liveTag}
-      ${d.libcal_lid ? `<div id="panel-libcal-week" class="panel-live-week"></div>` : ''}
+
     </div>
 
     <div class="panel-schedule">
@@ -2231,7 +2226,7 @@ function panelHtml(d) {
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
         ${label}
       </a>
-      <a class="panel-page" href="https://www.google.com/maps/dir/?api=1&destination=${d.lat},${d.lng}" target="_blank" rel="noopener noreferrer">
+      <a class="panel-page" href="https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(d.direccion)}" target="_blank" rel="noopener noreferrer">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
         Cómo llegar
       </a>
@@ -2270,10 +2265,7 @@ function openPlace(d, push) {
         }
       });
     }
-    const weekContainer = document.getElementById('panel-libcal-week');
-    if (weekContainer) {
-      renderLibCalWeek(d, weekContainer);
-    }
+
   }
 }
 function closePanel(push) {

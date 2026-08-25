@@ -302,8 +302,8 @@
       <div class="card-side-col">
         <div class="today-card" id="today-card">
           <div class="today-head">
-            <span class="today-title" id="today-title">HOY · Lunes, 24 de agosto</span>
-            <span class="status-badge status-closed" id="status-badge">Cerrado</span>
+            <span class="today-title" id="today-title">HOY · Martes, 25 de agosto</span>
+            <span class="status-badge status-open" id="status-badge">Abierto</span>
           </div>
           <div class="today-hours" id="today-hours">9:00–13:50h y 15:05–20:50h</div>
           
@@ -556,33 +556,7 @@
         })
         .catch(() => {});
 
-      fetch('https://biblioagenda.uam.es/api_hours_grid.php?iid=3941&format=json')
-        .then(r => r.json())
-        .then(data => {
-          const loc = (data.locations || []).find(l => l.lid === d.libcal_lid);
-          if (!loc || !loc.weeks || loc.weeks.length === 0) return;
-          const week = loc.weeks[0];
-          const weekEl = document.getElementById('panel-libcal-week');
-          if (!weekEl) return;
-          const dayLabels = { Monday: 'Lun', Tuesday: 'Mar', Wednesday: 'Mié', Thursday: 'Jue', Friday: 'Vie', Saturday: 'Sáb', Sunday: 'Dom' };
-          const now = new Date();
-          const todayStr = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
-          let rowsHtml = '';
-          for (const [dayName, dayInfo] of Object.entries(week)) {
-            const isToday = dayInfo.date === todayStr;
-            const label = dayLabels[dayName] || dayName;
-            const dayNum = dayInfo.date ? dayInfo.date.slice(8) : '';
-            let hoursText = 'Cerrado';
-            if (dayInfo.times && dayInfo.times.status === 'open' && dayInfo.times.hours) {
-              hoursText = dayInfo.times.hours.map(h => fTime(h.from) + '–' + fTime(h.to) + 'h').join(' y ');
-            } else if (dayInfo.rendered && !/cerrad/i.test(dayInfo.rendered) && /\d/.test(dayInfo.rendered)) {
-              hoursText = dayInfo.rendered;
-            }
-            rowsHtml += '<tr class="' + (isToday ? 'day-row-today' : '') + '"><td>' + label + ' ' + dayNum + (isToday ? ' (Hoy)' : '') + '</td><td class="day-hours">' + hoursText + '</td></tr>';
-          }
-          weekEl.innerHTML = '<div style="font-size:9.5px; font-weight:700; text-transform:uppercase; color:var(--ink-3); margin-top:8px; margin-bottom:4px;">Semana en directo (BiblioAgenda UAM)</div><table class="panel-week-table"><tbody>' + rowsHtml + '</tbody></table>';
-        })
-        .catch(() => {});
+
     }
   })();
   </script>
