@@ -27,8 +27,8 @@
       -webkit-font-smoothing:antialiased; color:var(--ink);
     }
     
-    /* ── Fondo Street View 1:1 a pantalla completa sin zoom ── */
-    .bg-streetview {
+    /* ── Foto del centro a pantalla completa ── */
+    .bg-photo {
       position: fixed;
       inset: 0;
       width: 100vw;
@@ -36,11 +36,18 @@
       z-index: 1;
       background: #0f172a;
     }
-    .bg-streetview iframe {
+    .bg-photo img {
       width: 100%;
       height: 100%;
-      border: 0;
+      object-fit: cover;
       display: block;
+    }
+    .bg-photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.15) 100%);
+      pointer-events: none;
     }
     
         
@@ -269,9 +276,9 @@
   </style>
 </head>
 <body>
-  <!-- Fondo Google Street View a tamaño natural 1:1 -->
-  <div class="bg-streetview">
-    <iframe src="https://maps.google.com/maps?q=&layer=c&cbll=40.2762,-3.8115&cbp=11,0,0,0,0&output=svembed" allowfullscreen loading="lazy"></iframe>
+  <!-- Foto del centro a pantalla completa -->
+  <div class="bg-photo">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Fuenlabrada_-_Biblioteca_Municipal_Jos%C3%A9_Manuel_Caballero_Bonald.JPG/960px-Fuenlabrada_-_Biblioteca_Municipal_Jos%C3%A9_Manuel_Caballero_Bonald.JPG" alt="Biblioteca Caballero Bonald (Fuenlabrada)" loading="eager">
   </div>
   
 
@@ -295,7 +302,7 @@
         <div class="actions">
           <a class="btn btn-primary" href="./#caballero-bonald-fuenlabrada">Ver en el mapa</a>
           <a class="btn btn-ghost" href="https://www.ayto-fuenlabrada.es/servicios/cultura/bibliotecas#:~:text=Horarios" target="_blank" rel="noopener noreferrer">Web oficial ↗</a>
-          <a class="btn btn-ghost" href="https://www.google.com/maps/@40.2762,-3.8115,3a,70.2y,0h,80t/data=!3m7!1e1!3m5!1e0!5m1!1e4" target="_blank" rel="noopener noreferrer">Street View 360° ↗</a>
+          <a class="btn btn-ghost" href="https://www.google.com/maps/dir/?api=1&destination=40.2762,-3.8115" target="_blank" rel="noopener noreferrer">Cómo llegar ↗</a>
         </div>
       </div>
 

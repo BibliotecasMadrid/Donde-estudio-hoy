@@ -331,10 +331,8 @@ def page_html(d, slug):
     desc = f'{d["nombre"]}: {d["direccion"]}. Horario: {horario_inline}. {c["label"]} en Madrid.'
     canonical = BASE + slug
     
-    # Street View perspective (default yaw calculation or frontal heading)
     lat, lng = d["lat"], d["lng"]
-    streetview_url = f"https://maps.google.com/maps?q=&layer=c&cbll={lat},{lng}&cbp=11,0,0,0,0&output=svembed"
-    maps_sv_link = f"https://www.google.com/maps/@{lat},{lng},3a,70.2y,0h,80t/data=!3m7!1e1!3m5!1e0!5m1!1e4"
+    photo_url = d.get("foto", "https://bibliotecasmadrid.es/icons/icon-512.png")
 
     ld = {
         "@context": "https://schema.org",
@@ -404,8 +402,8 @@ def page_html(d, slug):
       -webkit-font-smoothing:antialiased; color:var(--ink);
     }}
     
-    /* ── Fondo Street View 1:1 a pantalla completa sin zoom ── */
-    .bg-streetview {{
+    /* ── Foto del centro a pantalla completa ── */
+    .bg-photo {{
       position: fixed;
       inset: 0;
       width: 100vw;
@@ -413,11 +411,18 @@ def page_html(d, slug):
       z-index: 1;
       background: #0f172a;
     }}
-    .bg-streetview iframe {{
+    .bg-photo img {{
       width: 100%;
       height: 100%;
-      border: 0;
+      object-fit: cover;
       display: block;
+    }}
+    .bg-photo::after {{
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.15) 100%);
+      pointer-events: none;
     }}
     
         
@@ -646,9 +651,9 @@ def page_html(d, slug):
   </style>
 </head>
 <body>
-  <!-- Fondo Google Street View a tamaño natural 1:1 -->
-  <div class="bg-streetview">
-    <iframe src="{streetview_url}" allowfullscreen loading="lazy"></iframe>
+  <!-- Foto del centro a pantalla completa -->
+  <div class="bg-photo">
+    <img src="{e(photo_url)}" alt="{e(d['nombre'])}" loading="eager">
   </div>
   
 
@@ -672,7 +677,7 @@ def page_html(d, slug):
         <div class="actions">
           <a class="btn btn-primary" href="./#{slug}">Ver en el mapa</a>
           <a class="btn btn-ghost" href="{e(web)}" target="_blank" rel="noopener noreferrer">{e(web_label)} ↗</a>
-          <a class="btn btn-ghost" href="{maps_sv_link}" target="_blank" rel="noopener noreferrer">Street View 360° ↗</a>
+          <a class="btn btn-ghost" href="https://www.google.com/maps/dir/?api=1&destination={lat},{lng}" target="_blank" rel="noopener noreferrer">Cómo llegar ↗</a>
         </div>
       </div>
 
