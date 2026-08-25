@@ -5,3 +5,10 @@ __pycache__/
 # Material de firma y paquetes de la app Android: NUNCA en el repo (es publico).
 # Los archivos siguen en tu disco, solo dejan de versionarse.
 BiblioMadrid - Google Play package/
+
+# Los zips de PWABuilder llevan el keystore dentro. Fuera del repo, siempre.
+*.zip
+*.keystore
+*.jks
+*.aab
+*.apk

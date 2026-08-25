@@ -58,7 +58,6 @@ PRIVADO=(
   "calendario.json"                      # materia prima de build.py; la web no lo lee
   "AGENTS.md"
   "README.md"
-  "google352f9211894fe600.html"          # verificaba la propiedad vieja de github.io
   "__pycache__"
   ".git"
   ".gitignore"
@@ -98,8 +97,12 @@ fallo() { echo "ERROR: $1" >&2; exit 1; }
 [[ -f "$SALIDA/sw.js" ]] || fallo "falta sw.js (la PWA dejaria de instalarse)"
 [[ -f "$SALIDA/.well-known/assetlinks.json" ]] || fallo "falta .well-known/assetlinks.json (la app Android dejaria de validar el dominio)"
 
-# Red de seguridad: da igual como se llame la carpeta, el material de firma no sale de aqui.
-if find "$SALIDA" \( -iname "*.keystore" -o -iname "*.jks" -o -iname "*.aab" -o -iname "*.apk" \) -print -quit | grep -q .; then
+# Red de seguridad: da igual como se llame la carpeta, el material de firma no sale de
+# aqui. Los .zip entran en la lista porque el paquete que descarga PWABuilder ES un zip
+# con el keystore y sus contrasenas dentro, y el 25/08/2026 uno acabo en la raiz del
+# repo: por nombre no lo habria cazado ninguna de las reglas de abajo.
+if find "$SALIDA" \( -iname "*.keystore" -o -iname "*.jks" -o -iname "*.aab" \
+                  -o -iname "*.apk" -o -iname "*.zip" -o -iname "*key-info*" \) -print -quit | grep -q .; then
   fallo "material de firma de la app dentro de $SALIDA. Abortado."
 fi
 
