@@ -18,7 +18,7 @@ import unicodedata
 from urllib.parse import quote_plus
 
 BASE = "https://bibliotecasmadrid.es/"
-LASTMOD = "2026-08-19"
+LASTMOD = "2026-08-25"
 
 PREFIJOS = [
     "biblioteca pública ",

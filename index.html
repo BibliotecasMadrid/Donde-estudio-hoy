@@ -2192,7 +2192,11 @@ function panelHtml(d) {
   const imgUrl = getPlaceImage(d);
   const iid = getLibcalIid(d);
   const agendaName = (iid && LIBCAL_INSTITUTIONS[iid]) ? LIBCAL_INSTITUTIONS[iid].name : 'BiblioAgenda';
-  const liveTag = '';
+  const liveTag = (d.libcal_lid || today.isLive) ? `
+    <div class="panel-live-tag" title="Sincronizado en tiempo real con ${agendaName}">
+      <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+      En directo · ${agendaName}
+    </div>` : '';
 
   return `
     <div class="panel-cover">
@@ -2266,6 +2270,10 @@ function openPlace(d, push) {
       });
     }
 
+    const weekContainer = document.getElementById('panel-libcal-week');
+    if (weekContainer) {
+      renderLibCalWeek(d, weekContainer);
+    }
   }
 }
 function closePanel(push) {
