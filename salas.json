@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<!--[if IE 9]> <html lang="es" class="ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="es"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8" />
+      <meta name="generator" content="ckan 2.9.11" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error 404 - Portal de datos abiertos del Ayuntamiento de Madrid</title>
+
+    
+    <link rel="shortcut icon" href="/base/images/favicon.ico" />
+    
+    
+  
+    
+      
+      
+      
+    
+    
+
+  
+
+    
+    
+
+
+    
+  
+      
+      
+    
+  <script src="https://servpub.madrid.es/FWIAM_FTP/assets/js/cookie-manager-default.js"></script>
+
+
+    
+    <link href="/webassets/base/48f57fc2_main.css" rel="stylesheet"/>
+<link href="/webassets/ckanext-harvest/c95a0af2_harvest_css.css" rel="stylesheet"/>
+<link href="/webassets/ckanext-scheming/073d7cfa_scheming_css.css" rel="stylesheet"/>
+<link href="/webassets/ckanext-geoview/f197a782_geo-resource-styles.css" rel="stylesheet"/><style>
+        body { background: #000 url("/base/images/bg.png");} .account-masthead {background: #000 url("/base/images/bg.png");}.masthead {background: #000 url("/base/images/bg.png");}.site-footer {background: #000 url("/base/images/bg.png");} .homepage .module-search .module-content { background-color: #000;} .homepage .module-search .tags { background-color: #000;} .btn-primary {background-color: #000; border-color: #000;} .pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {background-color: #000;  border-color: #000;} .pagination > li > a, .pagination > li > span {color: #000;},.masthead .navigation .nav-pills li a:hover, .masthead .navigation .nav-pills li a:hover, .masthead .navigation .nav-pills li a:focus, .masthead .navigation .nav-pills li.active a {background-color: #bfbebe;} .btn-primary:hover {background-color: #979797;border-color: #979797;} .masthead .navigation .nav-pills li a:hover, .masthead .navigation .nav-pills li a:focus, .masthead .navigation .nav-pills li.active a {background-color: #979797;}
+      </style>
+    
+  </head>
+
+  
+  <body data-site-root="https://datos.madrid.es/" data-locale-root="https://datos.madrid.es/" >
+
+    
+<div class="sr-only sr-only-focusable"><a href="#content">Ir al contenido</a></div>
+
+<link rel="stylesheet" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/css/swiper-bundle.min.css" />
+<!-- <link rel="stylesheet" href="/css/dataTables.bootstrap5.css" /> -->
+<!-- <link rel="stylesheet" href="/css/responsive.bootstrap5.css" /> -->
+<link rel="stylesheet" href="/css/variables.css" />
+<link rel="stylesheet" href="/css/styles.css" />
+<link rel="stylesheet" href="/css/all.min.css" />
+<link rel="stylesheet" href="/css/captcha.css" />
+<script src="/js/bootstrap.bundle.min.js"></script>
+<script src="/js/captcha.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+
+
+<header>
+	<div class="container madrid-skyline-bg">
+		<div class="top-bar">
+			<div class="row">
+				<div class="col-12 col-md-6">
+					<a href="https://madrid.es">
+						<div class="logo">
+							<img src="/images/logo-madrid.png" alt="Logo del Ayuntamiento de Madrid" />
+						</div>
+					</a>
+					<a href="/" class="identity-row">
+						<div class="text">| Portal de Datos Abiertos del Ayuntamiento de Madrid</div>
+					</a>
+				</div>
+				<div class="col-12 col-md-6">
+					
+					<div class="account-masthead">
+						<div class="container">
+							
+							
+							
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		<nav class="navbar navbar-expand-lg header-navbar">
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main_nav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="fa-solid fa-bars"></span>
+			</button>
+			<div class="collapse navbar-collapse justify-content-end" id="main_nav">
+				
+				<nav class="section navigation">
+					<ul class="nav nav-pills">
+						
+						
+						<li>
+							<div class="dropdown h-100">
+								<button class="btn dropdown-toggle h-100" type="button" data-bs-toggle="dropdown">En portada</button>
+								<ul class="dropdown-menu" data-bs-popper="none">
+									
+									<li><a href="https://datos.madrid.es">Inicio</a></li>
+									
+								</ul>
+							</div>
+						</li>
+						
+						<li>
+							<div class="dropdown h-100">
+								<button class="btn dropdown-toggle h-100" type="button" data-bs-toggle="dropdown">Acerca de datos abiertos</button>
+								<ul class="dropdown-menu" data-bs-popper="none">
+									
+									<li><a href="https://datos.madrid.es/pages/que-son-datos-abiertos">¿Qué es?</a></li>
+									
+									<li><a href="https://datos.madrid.es/pages/contacta">Contacta</a></li>
+									
+									<li><a href="https://datos.madrid.es/pages/condiciones-de-uso">Condiciones de uso</a></li>
+									
+									<li><a href="https://datos.madrid.es/pages/enlaces-de-interes">Enlaces de interés</a></li>
+									
+									<li><a href="https://datos.madrid.es/pages/formatos-mas-habituales-en-datos-abiertos">Formatos</a></li>
+									
+									<li><a href="https://datos.madrid.es/pages/normativa">Normativa</a></li>
+									
+									<li><a href="https://datos.madrid.es/pages/datos-de-uso-del-portal">Datos de uso</a></li>
+									
+									<li><a href="https://datos.madrid.es/pages/decalogo-de-datos-abiertos">Decálogo de datos abiertos</a></li>
+									
+									<li><a href="https://datos.madrid.es/pages/preguntas-frecuentes-sobre-datos-abiertos">Preguntas frecuentes sobre datos abiertos</a></li>
+									
+								</ul>
+							</div>
+						</li>
+						
+						<li>
+							<div class="dropdown h-100">
+								<button class="btn dropdown-toggle h-100" type="button" data-bs-toggle="dropdown">Catálogo de datos</button>
+								<ul class="dropdown-menu" data-bs-popper="none">
+									
+									<li><a href="https://datos.madrid.es/dataset">Conjunto de datos</a></li>
+									
+									<li><a href="https://datos.madrid.es/swagger/openapi">API</a></li>
+									
+									<li><a href="https://datos.madrid.es/sparql">SPARQL</a></li>
+									
+								</ul>
+							</div>
+						</li>
+						
+						<li>
+							<div class="dropdown h-100">
+								<button class="btn dropdown-toggle h-100" type="button" data-bs-toggle="dropdown">Categorías</button>
+								<ul class="dropdown-menu" data-bs-popper="none">
+									
+									<li><a href="https://datos.madrid.es/groups/categorias">Categorías</a></li>
+									
+								</ul>
+							</div>
+						</li>
+						
+						<li>
+							<div class="dropdown h-100">
+								<button class="btn dropdown-toggle h-100" type="button" data-bs-toggle="dropdown">Colabora</button>
+								<ul class="dropdown-menu" data-bs-popper="none">
+									
+									<li><a href="https://datos.madrid.es/pages/solicita-datos">Solicita datos</a></li>
+									
+									<li><a href="https://datos.madrid.es/pages/informar-sobre-una-aplicacion-realizada">Cómo usas nuestros datos</a></li>
+									
+									<li><a href="https://datos.madrid.es/pages/preguntas-frecuentes-sobre-reutilizacion">Preguntas frecuentes sobre reutilización</a></li>
+									
+								</ul>
+							</div>
+						</li>
+						
+						<li>
+							<div class="dropdown h-100">
+								<button class="btn dropdown-toggle h-100" type="button" data-bs-toggle="dropdown">Difusión</button>
+								<ul class="dropdown-menu" data-bs-popper="none">
+									
+									<li><a href="https://datos.madrid.es/pages/conoce-nuestras-novedades">Conoce nuestras novedades</a></li>
+									
+									<li><a href="https://datos.madrid.es/showcase">Casos de uso</a></li>
+									
+									<li><a href="https://datos.madrid.es/pages/noticias">Noticias</a></li>
+									
+								</ul>
+							</div>
+						</li>
+						
+						<li>
+							<div class="dropdown h-100">
+								<button class="btn dropdown-toggle h-100" type="button" data-bs-toggle="dropdown">Visualiza</button>
+								<ul class="dropdown-menu" data-bs-popper="none">
+									
+									<li><a href="/pages/visualiza-madrid-con-datos-abiertos">Visualiza</a></li>
+									
+								</ul>
+							</div>
+						</li>
+						
+					</ul>
+				</nav>
+				
+			</div>
+		</nav>
+		<div class="row banner-content">
+			<div class="col-12 col-lg-8">
+				<h1>TU CIUDAD, MÁS CERCA</h1>
+				<p>En nuestra plataforma de datos abiertos, encontrarás todos los datos de Madrid que necesites para tu proyecto.</p>
+			</div>
+			<div class="col-12 col-lg-4">
+				<div class="card-statistics">
+					<div class="card-statistics-content">
+						<div class="stats-container">
+							<div class="stats-numbers">
+								<h2 class="card-statistics-content-datasets stats-number">672</h2>
+								<h2 class="card-statistics-content-datasets stats-number">11.434</h2>
+							</div>
+							<div class="stats-labels">
+								<p class="stats-label">conjuntos de datos</p>
+								<p class="stats-label">ficheros</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+</header>
+
+
+<script src="/js/header.js"></script>
+
+
+
+<div class="modal fade show d-none" aria-modal="true" role="dialog" id="rename-hierarchy">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h3 class="modal-title">Renombre la jerarquía</h3>
+      </div>
+      <div class="modal-body">
+        <p class="fw-bold">Anterior valor</p>
+        <p id="old-value">...</p>
+        <label for="new-value" class="fw-bold">Nuevo valor</label>
+        <input class="form-control" id="new-value" name="new-value" />
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-default btn-cancel" id="cancel-rename-hierarchy-button">Cancelar</button>
+        <button class="btn btn-primary" id="rename-hierarchy-button">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <div id="content" class="container" data-path="egob/catalogo/200073-0-salas-estudio.json">
+    
+    
+  
+  
+
+
+    
+    <div class="toolbar" role="navigation" aria-label="Miga de pan">
+      
+
+    </div>
+    
+
+    <div
+      class="row wrapper no-nav">
+
+      
+      
+
+      
+
+      
+  <article class="module">
+    <div class="module-content">
+      
+      <h1>404 Not Found</h1>
+      
+      Resource &#39;200073-0-salas-estudio.json&#39; not found
+    </div>
+  </article>
+
+    </div>
+    
+  </div>
+</div>
+
+<script src="/js/page.js"></script>
+
+
+<footer>
+	
+	
+	
+	
+
+	<div class="interest-links">
+		<div class="container">
+			<div class="row">
+				<div class="col-12 col-lg-4">
+					<img src="/images/logo-datos-abiertos.png" alt="Datos Abiertos del Ayuntamiento de Madrid">
+					<p>Portal dedicado a promover el acceso a los datos del gobierno municipal e impulsar el desarrollo de herramientas creativas para atraer y servir a la ciudadanía.</p>
+				</div>
+				<div class="col-12 col-lg-8">
+					<div class="row">
+						
+						<div class="interest-links-col">
+							<div>
+								
+							</div>
+							<ul>
+								
+								<li><a href="https://datos.madrid.es/dataset">Catálogo de datos</a></li>
+								
+								<li><a href="https://datos.madrid.es/groups/categorias">Categorías</a></li>
+								
+								<li><a href="https://datos.madrid.es/showcase">Difusión</a></li>
+								
+								<li><a href="https://datos.madrid.es/pages/que-son-datos-abiertos">Acerca de Datos Abiertos </a></li>
+								
+								<li><a href="https://datos.madrid.es/pages/colabora">Colabora</a></li>
+								
+								<li><a href="https://datos.madrid.es/pages/visualiza-madrid-con-datos-abiertos">Visualiza</a></li>
+								
+								<li><a href="https://datos.madrid.es">En portada</a></li>
+								
+							</ul>
+						</div>
+						
+						
+						<div class="interest-links-col">
+							<div>
+								
+							</div>
+							<ul>
+								
+								<li><a href="https://transparencia.madrid.es/">transparencia.madrid.es</a></li>
+								
+								<li><a href="https://www.madrid.es/portal/site/munimadrid">www.madrid.es</a></li>
+								
+								<li><a href="https://sede.madrid.es/">sede.madrid.es</a></li>
+								
+								<li><a href="http://decide.madrid.es/">decide.madrid.es</a></li>
+								
+								<li><a href="https://servpub.madrid.es/IDEAM_WBGEOPORTAL/index.iam">geoportal.madrid.es</a></li>
+								
+								<li><a href="https://www.madrid.es/estadistica">www.madrid.es/estadistica</a></li>
+								
+							</ul>
+						</div>
+						
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="bottom-bar">
+		<div class="container">
+			<div class="row">
+				<div class="col-12 col-lg-6">
+					<ul>
+						
+						
+						<li><a href="https://www.madrid.es/portales/munimadrid/contacto.html">Contactar</a></li>
+						
+						<li><a href="https://datos.madrid.es/sitemap">Mapa Web</a></li>
+						
+						<li><a href="https://datos.madrid.es/pages/declaracion-de-accesibilidad">Accesibilidad</a></li>
+						
+						<li><a href="https://datos.madrid.es/pages/ultimas-actualizaciones-del-catalogo-rss-y-atom">RSS</a></li>
+						
+						<li><a href="https://datos.madrid.es/pages/aviso-legal">Aviso legal</a></li>
+						
+						<li><a href="https://www.madrid.es/portales/munimadrid/proteccionDatos.html">Protección de datos</a></li>
+						
+						
+					</ul>
+				</div>
+				<div class="col-12 col-lg-6 bottom-bar-social-media">
+					<div>
+						Síguenos en
+						
+						
+						<a href="https://www.facebook.com/DecideMadrid" aria-label="Síguenos en Facebook"><span class="fa-brands fa-facebook" alt="Síguenos en Facebook" aria-hidden="true"></span></a>
+						
+						
+						<a href="https://twitter.com/decidemadrid" aria-label="Síguenos en X (Twitter)"><span class="fa-brands fa-x-twitter" alt="Síguenos en X (Twitter)" aria-hidden="true"></span></a>
+						
+						
+						<a href="https://www.youtube.com/DecideMadridAyuntamiento" aria-label="Síguenos en YouTube"><span class="fa-brands fa-youtube" alt="Síguenos en YouTube" aria-hidden="true"></span></a>
+						
+						
+						<a href="https://www.instagram.com/decide_madrid/" aria-label="Síguenos en Instagram"><span class="fa-brands fa-instagram" alt="Síguenos en Instagram" aria-hidden="true"></span></a>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+
+
+
+
+
+    
+
+      
+
+    
+    
+    <link href="/webassets/vendor/f3b8236b_select2.css" rel="stylesheet"/>
+<link href="/webassets/vendor/0b01aef1_font-awesome.css" rel="stylesheet"/>
+    <script src="/webassets/vendor/d8ae4bed_jquery.js" type="text/javascript"></script>
+<script src="/webassets/vendor/fb6095a0_vendor.js" type="text/javascript"></script>
+<script src="/webassets/vendor/580fa18d_bootstrap.js" type="text/javascript"></script>
+<script src="/webassets/base/15a18f6c_main.js" type="text/javascript"></script>
+<script src="/webassets/base/8ac6d06f_ckan.js" type="text/javascript"></script>
+  </body>
+</html>

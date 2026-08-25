@@ -55,6 +55,8 @@
   </script>
 
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
   <style>
     :root {
       --c-biblioteca: #2563EB;
@@ -207,17 +209,20 @@
       box-shadow: -12px 0 44px rgba(20,30,60,0.18);
       transform: translateX(102%);
       transition: transform 0.28s cubic-bezier(.4,0,.2,1);
-      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
     }
     .panel.open { transform: translateX(0); }
     .panel-close {
       position: absolute; top: 14px; right: 14px;
       width: 34px; height: 34px; border: none; border-radius: 50%;
-      background: #F1F3F7; color: var(--ink-2); font-size: 17px; line-height: 1;
+      background: #FEE2E2; color: #DC2626; font-size: 17px; line-height: 1;
       cursor: pointer; display: flex; align-items: center; justify-content: center;
+      z-index: 10;
     }
-    .panel-close:hover { background: #E7EAF0; color: var(--ink); }
-    .panel-inner { padding: 56px 26px 32px; }
+    .panel-close:hover { background: #FECACA; color: #B91C1C; }
+    .panel-inner { padding: 56px 26px 32px; flex: 1; overflow-y: auto; height: 100%; }
     .panel-badge {
       display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.06em;
       text-transform: uppercase; padding: 3px 10px; border-radius: 999px; color: #fff; margin-bottom: 12px;
@@ -431,6 +436,114 @@
         display: none; /* Map zooming is usually handled by pinch on mobile */
       }
     }
+
+    /* ── Botón "Abierto ahora" ──────────────── */
+    .open-now-btn {
+      position: absolute;
+      bottom: 22px;
+      right: 14px;
+      z-index: 1000;
+      background: var(--card);
+      backdrop-filter: blur(14px) saturate(160%);
+      -webkit-backdrop-filter: blur(14px) saturate(160%);
+      padding: 10px 16px;
+      border-radius: 14px;
+      box-shadow: 0 6px 28px rgba(20,30,60,0.14), 0 0 0 1px rgba(255,255,255,0.6) inset;
+      font-size: 13px;
+      font-weight: 700;
+      color: #15803D;
+      cursor: pointer;
+      border: none;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      transition: all 0.18s ease;
+      font-family: inherit;
+    }
+    .open-now-btn:hover { background: #DCFCE7; }
+    .open-now-btn.active {
+      background: #15803D;
+      color: #fff;
+    }
+    .open-now-btn .pulse-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #16A34A;
+      animation: pulse-green 2s infinite;
+    }
+    .open-now-btn.active .pulse-dot { background: #fff; }
+
+    @keyframes pulse-green {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.4); }
+    }
+
+    /* ── Cuenta atrás en panel ──────────────── */
+    .countdown-text {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink-2);
+      margin-top: 4px;
+    }
+    .countdown-text.closing-soon { color: #DC2626; font-weight: 700; }
+
+    /* ── Botón compartir ────────────────────── */
+    .panel-share {
+      background: none;
+      border: 1px solid var(--line);
+      color: var(--ink-2);
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .panel-share:hover { background: #F1F3F7; color: var(--ink); }
+
+    /* ── Toast de confirmación ──────────────── */
+    .toast {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--ink);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      z-index: 2000;
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(.4,0,.2,1);
+      pointer-events: none;
+    }
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* ── Cluster styling ────────────────────── */
+    .marker-cluster-small,
+    .marker-cluster-medium,
+    .marker-cluster-large {
+      background: rgba(37,99,235,0.15) !important;
+    }
+    .marker-cluster-small div,
+    .marker-cluster-medium div,
+    .marker-cluster-large div {
+      background: #2563EB !important;
+      color: #fff !important;
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+    @media (max-width: 768px) {
+      .open-now-btn {
+        bottom: auto;
+        top: 14px;
+        right: 14px;
+        left: auto;
+        padding: 9px 13px;
+        font-size: 12px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -445,10 +558,16 @@
   <div class="legend-item" data-type="universidad"><span class="dot" style="background:#7C3AED"></span> Universidad</div>
 </div>
 
+<button class="open-now-btn" id="open-now-btn" title="Mostrar solo los centros abiertos ahora">
+  <span class="pulse-dot"></span> Abierto ahora
+</button>
+
 <aside class="panel" id="panel" aria-hidden="true" aria-label="Información del centro">
   <button class="panel-close" id="panel-close" aria-label="Cerrar">✕</button>
   <div class="panel-inner" id="panel-body"></div>
 </aside>
+
+<div class="toast" id="toast"></div>
 
 <noscript>
   <h1>Bibliotecas y salas de estudio en Madrid con horarios</h1>
@@ -459,6 +578,7 @@
 </noscript>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 <script>
 // ─────────────────────────────────────────────
 //  DATOS
@@ -509,7 +629,7 @@ const lugares = [
   { tipo: "biblioteca", nombre: "Biblioteca Municipal Portazgo", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Madrid_-_Biblioteca_P%C3%BAblica_Municipal_Portazgo_2.jpg/960px-Madrid_-_Biblioteca_P%C3%BAblica_Municipal_Portazgo_2.jpg", distrito: "Puente de Vallecas", direccion: "Calle Cantalapiedra, 11, 28038 Madrid", lat: 40.3932, lng: -3.6554, plazas: 150, horario: "Lun–Vie 8:30–21h\n(Verano: 8:30–20h)", web: "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=89a40a47f441f010VgnVCM2000000c205a0aRCRD#:~:text=Apertura%20de%20lunes%20a%20viernes.,8%3A30%20a%2021%20horas" },
   { tipo: "biblioteca", nombre: "Biblioteca Municipal Pozo del Tío Raimundo", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Madrid_-_Puente_de_Vallecas_-_Centro_Cultural_El_Pozo_del_Tio_Raimundo_3.jpg/960px-Madrid_-_Puente_de_Vallecas_-_Centro_Cultural_El_Pozo_del_Tio_Raimundo_3.jpg", distrito: "Puente de Vallecas", direccion: "Avenida Glorietas, 19, 28053 Madrid", lat: 40.3736, lng: -3.6603, plazas: 140, horario: "Lun–Vie 8:30–21h\n(Verano: 8:30–20h)", web: "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=d7203d0b5e71c010VgnVCM1000000b205a0aRCRD#:~:text=Apertura%20de%20lunes%20a%20viernes.,8%3A30%20a%2021%20horas" },
   { tipo: "biblioteca", nombre: "Biblioteca Municipal Pío Baroja", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/1912-12-27%2C_La_Tribuna%2C_Azor%C3%ADn_y_P%C3%ADo_Baroja%2C_Vidal.jpg/960px-1912-12-27%2C_La_Tribuna%2C_Azor%C3%ADn_y_P%C3%ADo_Baroja%2C_Vidal.jpg", distrito: "Arganzuela", direccion: "Calle Arganda, 12, 28005 Madrid", lat: 40.4, lng: -3.7074, plazas: 165, horario: "Lun–Vie 8:30–21h\n(Verano: 8:30–20h)", web: "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=17f879262ef5d010VgnVCM1000000b205a0aRCRD#:~:text=Apertura%20de%20lunes%20a%20viernes.,8%3A30%20a%2021%20horas" },
-  { tipo: "sala", nombre: "Sala de Estudio Alfredo Kraus", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Madrid_-_Centro_Cultural_Alfredo_Kraus_%28Mirasierra%29_2.jpg/960px-Madrid_-_Centro_Cultural_Alfredo_Kraus_%28Mirasierra%29_2.jpg", distrito: "Fuencarral-El Pardo", direccion: "Glorieta Pradera de Vaquerizas, 9, 28035 Madrid", lat: 40.4908, lng: -3.7216, plazas: 80, horario: "Lun–Vie 9–14h y 16–21h · Sáb 9:30–13:45h", web: "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=2ec62928b1058110VgnVCM2000000c205a0aRCRD#:~:text=De%20lunes%20a%20viernes%2C%20de,16%20a%2020%3A45%20horas" },
+  { tipo: "sala", nombre: "Sala de Estudio Alfredo Kraus", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Madrid_-_Centro_Cultural_Alfredo_Kraus_%28Mirasierra%29_2.jpg/960px-Madrid_-_Centro_Cultural_Alfredo_Kraus_%28Mirasierra%29_2.jpg", distrito: "Fuencarral-El Pardo", direccion: "Glorieta Pradera de Vaquerizas, 9, 28035 Madrid", lat: 40.4908, lng: -3.7216, plazas: 80, horario: "Lun–Vie 9–14h y 16–21h · Sáb 9:30–13:45h", web: "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=2ec62928b1058110VgnVCM2000000c205a0aRCRD#:~:text=De%20lunes%20a%20viernes%2C%20de,a%2020%3A45%20horas." },
   { tipo: "sala", nombre: "Sala de Estudio Fernando Vizcaíno Casas", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Centro_Cultural_Galileo_%28Madrid%29_01.jpg/960px-Centro_Cultural_Galileo_%28Madrid%29_01.jpg", distrito: "Chamberí", direccion: "Calle Blasco de Garay, 40, 28015 Madrid", lat: 40.4338, lng: -3.7114, plazas: 70, horario: "Lun–Dom 8:30–21:30h", web: "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=08a9964bd47a9210VgnVCM1000000b205a0aRCRD#:~:text=De%20lunes%20a%20domingo%2C%20de,8%3A30%20a%2015%20horas" },
   { tipo: "sala", nombre: "Sala de Estudio Carril del Conde", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Anni_B._Sweet.jpg/960px-Anni_B._Sweet.jpg", distrito: "Hortaleza", direccion: "Calle Carril del Conde, 57, 28043 Madrid", lat: 40.4609, lng: -3.6544, plazas: 100, horario: "Lun–Dom y festivos 9–22h", web: "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=cdc10e4d44558110VgnVCM1000000b205a0aRCRD#:~:text=De%20lunes%20a%20domingo%20y,de%209%20a%2022%20horas" },
   { tipo: "sala", nombre: "Sala de Estudio Sanchinarro", foto: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Centro_Cultural_Sanchinarro_%28Madrid%29_01.jpg/960px-Centro_Cultural_Sanchinarro_%28Madrid%29_01.jpg", distrito: "Hortaleza", direccion: "Calle Princesa de Éboli, 29, 28050 Madrid", lat: 40.4904, lng: -3.6553, plazas: 110, horario: "Lun–Vie 9–22h · Fines de semana y festivos 10–22h", web: "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=459b10e528908310VgnVCM1000000b205a0aRCRD#:~:text=De%20lunes%20a%20viernes%20de%209%20a%2022%20horas" },
@@ -1918,6 +2038,36 @@ function getTodayInfo(d, date = new Date()) {
       };
     }
   }
+
+  // 4. Periodo especial / Verano (municipales o salas de estudio)
+  if (exceptions.summer_period) {
+    if (monthDay >= exceptions.summer_period.start && monthDay <= exceptions.summer_period.end) {
+      let schedToUse = null;
+      if (day >= 1 && day <= 5) schedToUse = exceptions.summer_period.weekday_schedule;
+      else if (day === 6) schedToUse = exceptions.summer_period.saturday_schedule;
+      else if (day === 0) schedToUse = exceptions.summer_period.sunday_schedule;
+      
+      if (schedToUse) {
+        const ivs = parseIntervals(schedToUse);
+        const isOpen = ivs.some(iv => currentMinutes >= iv.startMin && currentMinutes < iv.endMin);
+        return {
+          dateFormatted,
+          statusText: isOpen ? 'Abierto' : 'Cerrado',
+          statusClass: isOpen ? 'status-open' : 'status-closed',
+          todaySchedule: schedToUse + ' (Horario de verano)',
+          isOpen
+        };
+      } else {
+        return {
+          dateFormatted,
+          statusText: 'Cerrado',
+          statusClass: 'status-closed',
+          todaySchedule: 'Cerrado (Horario de verano)',
+          isOpen: false
+        };
+      }
+    }
+  }
   
   // 3. Universidades en agosto
   if (exceptions.august_schedule) {
@@ -2198,6 +2348,11 @@ function panelHtml(d) {
       En directo · ${agendaName}
     </div>` : '';
 
+  const countdown = getCountdown(d);
+  const countdownHtml = countdown
+    ? `<div class="countdown-text ${countdown.closingSoon ? 'closing-soon' : ''}">${countdown.text}</div>`
+    : '';
+
   return `
     <div class="panel-cover">
       <img src="${imgUrl}" alt="${d.nombre}" class="panel-img" loading="lazy" onerror="this.onerror=null; this.src='https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkzsZ_2qdNW6ljxSXSdD76fo-HBb9qjtBZHROzVpVnEKJn0j_5trrDQ40vMEqlqMAZ-NSorORfPhb-53BpaJsonWQi8irOtjsfLZnwnk9YW7Wq-NxfaC6ZY1MYIOa5is0Q43dVe=w800-h500-k-no';">
@@ -2217,6 +2372,7 @@ function panelHtml(d) {
         <span class="status-badge ${today.statusClass}">${today.statusText}</span>
       </div>
       <div class="panel-today-hours">${today.todaySchedule}</div>
+      ${countdownHtml}
       ${liveTag}
       ${d.libcal_lid ? `<div id="panel-libcal-week" class="panel-live-week"></div>` : ''}
     </div>
@@ -2235,6 +2391,10 @@ function panelHtml(d) {
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
         Cómo llegar
       </a>
+      <button class="panel-link panel-share" onclick="sharePlace()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        Compartir
+      </button>
       <a class="panel-page" href="${slugOf.get(d)}">Página de este centro ↗</a>
     </div>`;
 }
@@ -2243,6 +2403,7 @@ let current = null;
 function openPlace(d, push) {
   current = d;
   panelBody.innerHTML = panelHtml(d);
+  panelBody.scrollTop = 0;
   panel.classList.add('open');
   panel.setAttribute('aria-hidden', 'false');
   document.getElementById('panel-close').focus();
@@ -2290,35 +2451,128 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape' && current) c
 map.on('click', () => { if (current) closePanel(true); });
 
 // ─────────────────────────────────────────────
-//  MARCADORES
+//  MARCADORES (con clustering)
 // ─────────────────────────────────────────────
-const typeLayers = {
-  biblioteca: L.layerGroup().addTo(map),
-  sala: L.layerGroup().addTo(map),
-  universidad: L.layerGroup().addTo(map)
-};
+const clusterGroup = L.markerClusterGroup({
+  maxClusterRadius: 45,
+  spiderfyOnMaxZoom: true,
+  showCoverageOnHover: false,
+  zoomToBoundsOnClick: true,
+  disableClusteringAtZoom: 16
+});
+
+const allMarkers = [];
+const markerOfPlace = new Map();
 
 lugares.forEach(d => {
-  L.marker([d.lat, d.lng], { icon: makeIcon(d.tipo), title: d.nombre })
-    .addTo(typeLayers[d.tipo])
+  const marker = L.marker([d.lat, d.lng], { icon: makeIcon(d.tipo), title: d.nombre })
     .on('click', () => openPlace(d, true));
+  marker._placeData = d;
+  allMarkers.push(marker);
+  markerOfPlace.set(d, marker);
+  clusterGroup.addLayer(marker);
 });
+
+map.addLayer(clusterGroup);
+
+// ── Filtro por tipo y "Abierto ahora" ────────
+const hiddenTypes = new Set();
+let openNowActive = false;
+
+function refreshVisibleMarkers() {
+  clusterGroup.clearLayers();
+  allMarkers.forEach(marker => {
+    const d = marker._placeData;
+    if (hiddenTypes.has(d.tipo)) return;
+    if (openNowActive) {
+      const info = getTodayInfo(d);
+      if (!info.isOpen) return;
+    }
+    clusterGroup.addLayer(marker);
+  });
+}
 
 document.querySelectorAll('.legend-item').forEach(item => {
   item.style.cursor = 'pointer';
   item.title = "Haz clic para mostrar/ocultar";
   item.addEventListener('click', () => {
     const type = item.dataset.type;
-    const layer = typeLayers[type];
-    if (map.hasLayer(layer)) {
-      map.removeLayer(layer);
-      item.style.opacity = '0.4';
-    } else {
-      map.addLayer(layer);
+    if (hiddenTypes.has(type)) {
+      hiddenTypes.delete(type);
       item.style.opacity = '1';
+    } else {
+      hiddenTypes.add(type);
+      item.style.opacity = '0.4';
     }
+    refreshVisibleMarkers();
   });
 });
+
+// ── Botón "Abierto ahora" ────────────────────
+const openNowBtn = document.getElementById('open-now-btn');
+openNowBtn.addEventListener('click', () => {
+  openNowActive = !openNowActive;
+  openNowBtn.classList.toggle('active', openNowActive);
+  openNowBtn.innerHTML = openNowActive
+    ? '<span class="pulse-dot"></span> Mostrar todos'
+    : '<span class="pulse-dot"></span> Abierto ahora';
+  refreshVisibleMarkers();
+});
+
+// ── Toast ────────────────────────────────────
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ── Compartir ────────────────────────────────
+function sharePlace() {
+  if (!current) return;
+  const url = BASE_URL + slugOf.get(current);
+  const title = current.nombre;
+  const text = current.nombre + ' — ' + current.direccion;
+
+  if (navigator.share) {
+    navigator.share({ title, text, url }).catch(() => {});
+  } else {
+    navigator.clipboard.writeText(url).then(() => {
+      showToast('📋 Enlace copiado');
+    }).catch(() => {
+      showToast('No se pudo copiar');
+    });
+  }
+}
+
+// ── Cuenta atrás al cierre ───────────────────
+function getCountdown(d) {
+  const info = getTodayInfo(d);
+  if (!info.isOpen) return null;
+
+  const now = new Date();
+  const currentMin = now.getHours() * 60 + now.getMinutes();
+
+  // Parsear intervalos del todaySchedule
+  const re = /(\d{1,2})(?::(\d{2}))?\s*[–\-—a]\s*(\d{1,2})(?::(\d{2}))?h?/gi;
+  let closingMin = null;
+  let m;
+  const sched = info.todaySchedule || '';
+  while ((m = re.exec(sched)) !== null) {
+    const endMin = parseInt(m[3], 10) * 60 + (m[4] ? parseInt(m[4], 10) : 0);
+    if (currentMin < endMin) { closingMin = endMin; break; }
+  }
+  if (closingMin === null) return null;
+
+  const diffMin = closingMin - currentMin;
+  if (diffMin <= 0) return null;
+  const hrs = Math.floor(diffMin / 60);
+  const mins = diffMin % 60;
+  const closingSoon = diffMin <= 60;
+
+  if (hrs > 0) return { text: 'Cierra en ' + hrs + 'h ' + mins + 'min', closingSoon };
+  return { text: 'Cierra en ' + mins + ' min', closingSoon };
+}
 
 // Sincronizar con la URL: back/forward del navegador y enlaces #slug
 function placeFromUrl() {

@@ -857,6 +857,14 @@
         "start": "08-01",
         "end": "08-31"
       }
+    },
+    "alfredo-kraus": {
+      "summer_period": {
+        "start": "07-01",
+        "end": "08-31",
+        "weekday_schedule": "9:00-14:00h y 16:30-21:00h",
+        "saturday_schedule": "9:30-13:45h y 16:00-20:45h"
+      }
     }
   }
 }
