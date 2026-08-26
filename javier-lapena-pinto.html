@@ -309,12 +309,12 @@
       <div class="card-side-col">
         <div class="today-card" id="today-card">
           <div class="today-head">
-            <span class="today-title" id="today-title">HOY · Martes, 25 de agosto</span>
-            <span class="status-badge status-closed" id="status-badge">Cerrado</span>
+            <span class="today-title" id="today-title">HOY · Cargando calendario</span>
+            <span class="status-badge status-info" id="status-badge">Cargando</span>
           </div>
-          <div class="today-hours" id="today-hours">9:00–21:00h</div>
+          <div class="today-hours" id="today-hours">Cargando calendario…</div>
           
-          
+          <div id="calendar-week" class="panel-live-week"></div>
         </div>
 
         <div class="sched">
@@ -329,12 +329,11 @@
     </div>
   </main>
 
+  <script src="horarios.js"></script>
   <script>
   (function() {
     const d = {"tipo": "biblioteca", "nombre": "Biblioteca Javier Lapeña (Pinto)", "foto": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Pinto_-_Parque_Norte_3.JPG/960px-Pinto_-_Parque_Norte_3.JPG", "distrito": "Pinto", "direccion": "Calle Emilio Zola, 2, 28320 Pinto", "lat": 40.2441, "lng": -3.6982, "plazas": 210, "horario": "Lun–Vie 9–21h · Sáb 9–14h", "web": "https://ayto-pinto.es/areas-municipales/cultura/bibliotecas/#:~:text=Horarios"};
     const slug = "javier-lapena-pinto";
-    const CALENDARIO = JSON.parse("{\"year\": 2026, \"last_updated\": \"2026-08-19\", \"holidays\": {\"2026-01-01\": \"A\u00f1o Nuevo\", \"2026-01-06\": \"Epifan\u00eda del Se\u00f1or (Reyes)\", \"2026-04-02\": \"Jueves Santo\", \"2026-04-03\": \"Viernes Santo\", \"2026-05-01\": \"Fiesta del Trabajo\", \"2026-05-02\": \"Fiesta de la Comunidad de Madrid\", \"2026-05-15\": \"San Isidro (Fiesta local Madrid)\", \"2026-07-25\": \"Santiago Ap\u00f3stol\", \"2026-08-15\": \"Asunci\u00f3n de la Virgen\", \"2026-10-12\": \"Fiesta Nacional de Espa\u00f1a\", \"2026-11-01\": \"Todos los Santos\", \"2026-11-09\": \"Nuestra Se\u00f1ora de la Almudena\", \"2026-12-06\": \"D\u00eda de la Constituci\u00f3n\", \"2026-12-08\": \"Inmaculada Concepci\u00f3n\", \"2026-12-25\": \"Natividad del Se\u00f1or\"}, \"special_eves\": {\"2026-12-24\": \"Nochebuena (Horario especial 9:00\u201314:00h o cerrado)\", \"2026-12-31\": \"Nochevieja (Horario especial 9:00\u201314:00h o cerrado)\"}, \"places_exceptions\": {\"rafael-alberti\": {\"exam_periods\": [{\"start\": \"01-08\", \"end\": \"02-15\", \"schedule\": \"24h / Horario ampliado\"}, {\"start\": \"05-10\", \"end\": \"06-30\", \"schedule\": \"24h / Horario ampliado\"}]}, \"elena-fortun\": {\"exam_periods\": [{\"start\": \"01-08\", \"end\": \"02-15\", \"schedule\": \"24h / Horario ampliado\"}, {\"start\": \"05-10\", \"end\": \"06-30\", \"schedule\": \"24h / Horario ampliado\"}]}, \"aluche\": {\"summer_period\": {\"start\": \"06-15\", \"end\": \"09-15\", \"weekday_schedule\": \"8:30\u201320:00h\"}}, \"ana-maria-matute\": {\"summer_period\": {\"start\": \"06-15\", \"end\": \"09-15\", \"weekday_schedule\": \"8:30\u201320:00h\"}}, \"canillejas\": {\"summer_period\": {\"start\": \"06-15\", \"end\": \"09-15\", \"weekday_schedule\": \"8:30\u201320:00h\"}}, \"ciudad-lineal\": {\"summer_period\": {\"start\": \"06-15\", \"end\": \"09-15\", \"weekday_schedule\": \"8:30\u201320:00h\"}}, \"david-gistau\": {\"summer_period\": {\"start\": \"06-15\", \"end\": \"09-15\", \"weekday_schedule\": \"8:30\u201320:00h\"}}, \"damaso-alonso\": {\"summer_period\": {\"start\": \"06-15\", \"end\": \"09-15\", \"weekday_schedule\": \"8:30\u201320:00h\"}}, \"francisco-ayala\": {\"summer_period\": {\"start\": \"06-15\", \"end\": \"09-15\", \"weekday_schedule\": \"8:30\u201320:00h\"}}, \"francisco-ibanez\": {\"summer_period\": {\"start\": \"06-15\", \"end\": \"09-15\", \"weekday_schedule\": \"8:30\u201320:00h\"}}, \"francisco-umbral\": {\"summer_period\": {\"start\": \"06-15\", \"end\": \"09-15\", \"weekday_schedule\": \"8:30\u201320:00h\"}}, \"gabriel-garcia-marquez\": {\"summer_period\": {\"start\": \"06-15\", \"end\": \"09-15\", \"weekday_schedule\": \"8:30\u201320:00h\"}}, \"gerardo-diego\": {\"summer_period\": {\"start\": \"06-15\", \"end\": \"09-15\", \"weekday_schedule\": \"8:30\u201320:00h\"}}, \"gloria-fuertes\": {\"summer_period\": {\"start\": \"06-15\", \"end\": \"09-15\", \"weekday_schedule\": \"8:30\u201320:00h\"}}, \"huerta-de-la-salud\": {\"summer_period\": {\"start\": \"06-15\", \"end\": \"09-15\", \"weekday_schedule\": \"8:30\u201320:00h\"}}, \"ivan-de-vargas\": {\"summer_period\": {\"start\": \"06-15\", \"end\": \"09-15\", \"weekday_schedule\": \"8:30\u201320:00h\"}}, \"jose-hierro-san-blas\": {\"summer_period\": {\"start\": \"06-15\", \"end\": \"09-15\", \"weekday_schedule\": \"8:30\u201320:00h\"}}, \"jose-saramago\": {\"summer_period\": {\"start\": \"06-15\", \"end\": \"09-15\", \"weekday_schedule\": \"8:30\u201320:00h\"}}, \"la-chata\": {\"summer_period\": {\"start\": \"06-15\", \"end\": \"09-15\", \"weekday_schedule\": \"8:30\u201320:00h\"}}, \"la-elipa\": {\"summer_period\": {\"start\": \"06-15\", \"end\": \"09-15\", \"weekday_schedule\": \"8:30\u201320:00h\"}}, \"manuel-vazquez-montalban\": {\"summer_period\": {\"start\": \"06-15\", \"end\": \"09-15\", \"weekday_schedule\": \"8:30\u201320:00h\"}}, \"mario-vargas-llosa\": {\"summer_period\": {\"start\": \"06-15\", \"end\": \"09-15\", \"weekday_schedule\": \"8:30\u201320:00h\"}}, \"maria-lejarraga\": {\"summer_period\": {\"start\": \"06-15\", \"end\": \"09-15\", \"weekday_schedule\": \"8:30\u201320:00h\"}}, \"maria-zambrano\": {\"summer_period\": {\"start\": \"06-15\", \"end\": \"09-15\", \"weekday_schedule\": \"8:30\u201320:00h\"}}, \"miguel-delibes\": {\"summer_period\": {\"start\": \"06-15\", \"end\": \"09-15\", \"weekday_schedule\": \"8:30\u201320:00h\"}}, \"pablo-neruda\": {\"summer_period\": {\"start\": \"06-15\", \"end\": \"09-15\", \"weekday_schedule\": \"8:30\u201320:00h\"}}, \"portazgo\": {\"summer_period\": {\"start\": \"06-15\", \"end\": \"09-15\", \"weekday_schedule\": \"8:30\u201320:00h\"}}, \"pozo-del-tio-raimundo\": {\"summer_period\": {\"start\": \"06-15\", \"end\": \"09-15\", \"weekday_schedule\": \"8:30\u201320:00h\"}}, \"pio-baroja\": {\"summer_period\": {\"start\": \"06-15\", \"end\": \"09-15\", \"weekday_schedule\": \"8:30\u201320:00h\"}}, \"luis-gonzaga\": {\"exam_periods\": [{\"start\": \"01-08\", \"end\": \"02-15\", \"schedule\": \"24h / Horario ampliado\"}, {\"start\": \"05-10\", \"end\": \"06-30\", \"schedule\": \"24h / Horario ampliado\"}]}, \"leon-tolstoi-las-rozas\": {\"exam_periods\": [{\"start\": \"01-08\", \"end\": \"02-15\", \"schedule\": \"24h / Horario ampliado\"}, {\"start\": \"05-10\", \"end\": \"06-30\", \"schedule\": \"24h / Horario ampliado\"}]}, \"ucm-edificio-multiusos\": {\"august_schedule\": {\"closure_start\": \"08-01\", \"closure_end\": \"08-16\", \"reduced_start\": \"08-17\", \"reduced_end\": \"08-31\", \"reduced_schedule\": \"9:00\u201314:00h\"}}, \"uam-biblioteca-general\": {\"exam_periods\": [{\"start\": \"01-08\", \"end\": \"02-15\", \"schedule\": \"24h / Horario ampliado\"}, {\"start\": \"05-10\", \"end\": \"06-30\", \"schedule\": \"24h / Horario ampliado\"}], \"august_schedule\": {\"closure_start\": \"08-17\", \"closure_end\": \"08-23\", \"reduced_start\": \"08-24\", \"reduced_end\": \"08-31\", \"reduced_schedule\": \"9:00\u201314:00h\"}}, \"ucm-facultad-de-medicina\": {\"exam_periods\": [{\"start\": \"01-08\", \"end\": \"02-15\", \"schedule\": \"24h / Horario ampliado\"}, {\"start\": \"05-10\", \"end\": \"06-30\", \"schedule\": \"24h / Horario ampliado\"}]}, \"ucm-facultad-de-farmacia\": {\"exam_periods\": [{\"start\": \"01-08\", \"end\": \"02-15\", \"schedule\": \"24h / Horario ampliado\"}, {\"start\": \"05-10\", \"end\": \"06-30\", \"schedule\": \"24h / Horario ampliado\"}]}, \"ucm-facultad-de-odontologia\": {\"exam_periods\": [{\"start\": \"01-08\", \"end\": \"02-15\", \"schedule\": \"24h / Horario ampliado\"}, {\"start\": \"05-10\", \"end\": \"06-30\", \"schedule\": \"24h / Horario ampliado\"}]}, \"ucm-facultad-de-derecho\": {\"exam_periods\": [{\"start\": \"01-08\", \"end\": \"02-15\", \"schedule\": \"24h / Horario ampliado\"}, {\"start\": \"05-10\", \"end\": \"06-30\", \"schedule\": \"24h / Horario ampliado\"}]}, \"ucm-filologia-y-filosofia\": {\"exam_periods\": [{\"start\": \"01-08\", \"end\": \"02-15\", \"schedule\": \"24h / Horario ampliado\"}, {\"start\": \"05-10\", \"end\": \"06-30\", \"schedule\": \"24h / Horario ampliado\"}]}, \"ucm-geografia-e-historia\": {\"exam_periods\": [{\"start\": \"01-08\", \"end\": \"02-15\", \"schedule\": \"24h / Horario ampliado\"}, {\"start\": \"05-10\", \"end\": \"06-30\", \"schedule\": \"24h / Horario ampliado\"}]}, \"ucm-ciencias-de-la-informacion\": {\"exam_periods\": [{\"start\": \"01-08\", \"end\": \"02-15\", \"schedule\": \"24h / Horario ampliado\"}, {\"start\": \"05-10\", \"end\": \"06-30\", \"schedule\": \"24h / Horario ampliado\"}]}, \"ucm-ciencias-quimicas\": {\"exam_periods\": [{\"start\": \"01-08\", \"end\": \"02-15\", \"schedule\": \"24h / Horario ampliado\"}, {\"start\": \"05-10\", \"end\": \"06-30\", \"schedule\": \"24h / Horario ampliado\"}]}, \"ucm-ciencias-fisicas\": {\"exam_periods\": [{\"start\": \"01-08\", \"end\": \"02-15\", \"schedule\": \"24h / Horario ampliado\"}, {\"start\": \"05-10\", \"end\": \"06-30\", \"schedule\": \"24h / Horario ampliado\"}]}, \"ucm-ciencias-matematicas\": {\"exam_periods\": [{\"start\": \"01-08\", \"end\": \"02-15\", \"schedule\": \"24h / Horario ampliado\"}, {\"start\": \"05-10\", \"end\": \"06-30\", \"schedule\": \"24h / Horario ampliado\"}]}, \"ucm-biologicas-y-geologicas\": {\"exam_periods\": [{\"start\": \"01-08\", \"end\": \"02-15\", \"schedule\": \"24h / Horario ampliado\"}, {\"start\": \"05-10\", \"end\": \"06-30\", \"schedule\": \"24h / Horario ampliado\"}]}, \"ucm-bellas-artes\": {\"exam_periods\": [{\"start\": \"01-08\", \"end\": \"02-15\", \"schedule\": \"24h / Horario ampliado\"}, {\"start\": \"05-10\", \"end\": \"06-30\", \"schedule\": \"24h / Horario ampliado\"}]}, \"ucm-facultad-de-educacion\": {\"exam_periods\": [{\"start\": \"01-08\", \"end\": \"02-15\", \"schedule\": \"24h / Horario ampliado\"}, {\"start\": \"05-10\", \"end\": \"06-30\", \"schedule\": \"24h / Horario ampliado\"}]}, \"upm-etsi-telecomunicacion\": {\"exam_periods\": [{\"start\": \"01-08\", \"end\": \"02-15\", \"schedule\": \"24h / Horario ampliado\"}, {\"start\": \"05-10\", \"end\": \"06-30\", \"schedule\": \"24h / Horario ampliado\"}]}, \"upm-ets-arquitectura-etsam\": {\"exam_periods\": [{\"start\": \"01-08\", \"end\": \"02-15\", \"schedule\": \"24h / Horario ampliado\"}, {\"start\": \"05-10\", \"end\": \"06-30\", \"schedule\": \"24h / Horario ampliado\"}]}, \"upm-etsi-aeronautica-y-del-espacio\": {\"exam_periods\": [{\"start\": \"01-08\", \"end\": \"02-15\", \"schedule\": \"24h / Horario ampliado\"}, {\"start\": \"05-10\", \"end\": \"06-30\", \"schedule\": \"24h / Horario ampliado\"}]}, \"upm-etsi-agronomica-etsiaab\": {\"exam_periods\": [{\"start\": \"01-08\", \"end\": \"02-15\", \"schedule\": \"24h / Horario ampliado\"}, {\"start\": \"05-10\", \"end\": \"06-30\", \"schedule\": \"24h / Horario ampliado\"}]}, \"upm-etsi-industriales\": {\"exam_periods\": [{\"start\": \"01-08\", \"end\": \"02-15\", \"schedule\": \"24h / Horario ampliado\"}, {\"start\": \"05-10\", \"end\": \"06-30\", \"schedule\": \"24h / Horario ampliado\"}]}, \"upm-etsi-minas-y-energia\": {\"exam_periods\": [{\"start\": \"01-08\", \"end\": \"02-15\", \"schedule\": \"24h / Horario ampliado\"}, {\"start\": \"05-10\", \"end\": \"06-30\", \"schedule\": \"24h / Horario ampliado\"}]}, \"upm-campus-sur-etsisi-etsist\": {\"exam_periods\": [{\"start\": \"01-08\", \"end\": \"02-15\", \"schedule\": \"24h / Horario ampliado\"}, {\"start\": \"05-10\", \"end\": \"06-30\", \"schedule\": \"24h / Horario ampliado\"}]}, \"uam-facultad-de-medicina\": {\"exam_periods\": [{\"start\": \"01-08\", \"end\": \"02-15\", \"schedule\": \"24h / Horario ampliado\"}, {\"start\": \"05-10\", \"end\": \"06-30\", \"schedule\": \"24h / Horario ampliado\"}], \"august_schedule\": {\"closure_start\": \"08-17\", \"closure_end\": \"08-31\", \"reduced_start\": \"08-24\", \"reduced_end\": \"08-31\", \"reduced_schedule\": \"9:00\u201314:00h\"}}, \"uah-edificio-crai-alcala-centro\": {\"exam_periods\": [{\"start\": \"01-08\", \"end\": \"02-15\", \"schedule\": \"24h / Horario ampliado\"}, {\"start\": \"05-10\", \"end\": \"06-30\", \"schedule\": \"24h / Horario ampliado\"}]}, \"uam-facultad-de-ciencias-cantoblanco\": {\"exam_periods\": [{\"start\": \"01-08\", \"end\": \"02-15\", \"schedule\": \"24h / Horario ampliado\"}, {\"start\": \"05-10\", \"end\": \"06-30\", \"schedule\": \"24h / Horario ampliado\"}], \"august_schedule\": {\"closure_start\": \"08-17\", \"closure_end\": \"08-23\", \"reduced_start\": \"08-24\", \"reduced_end\": \"08-31\", \"reduced_schedule\": \"9:00\u201314:00h\"}}, \"uam-facultad-de-derecho-cantoblanco\": {\"exam_periods\": [{\"start\": \"01-08\", \"end\": \"02-15\", \"schedule\": \"24h / Horario ampliado\"}, {\"start\": \"05-10\", \"end\": \"06-30\", \"schedule\": \"24h / Horario ampliado\"}], \"august_schedule\": {\"closure_start\": \"08-17\", \"closure_end\": \"08-31\", \"reduced_start\": \"08-24\", \"reduced_end\": \"08-31\", \"reduced_schedule\": \"9:00\u201314:00h\"}}, \"uam-facultad-de-psicologia-cantoblanco\": {\"exam_periods\": [{\"start\": \"01-08\", \"end\": \"02-15\", \"schedule\": \"24h / Horario ampliado\"}, {\"start\": \"05-10\", \"end\": \"06-30\", \"schedule\": \"24h / Horario ampliado\"}], \"august_schedule\": {\"closure_start\": \"08-17\", \"closure_end\": \"08-23\", \"reduced_start\": \"08-24\", \"reduced_end\": \"08-31\", \"reduced_schedule\": \"9:00\u201314:00h\"}}, \"uam-ciencias-economicas-cantoblanco\": {\"exam_periods\": [{\"start\": \"01-08\", \"end\": \"02-15\", \"schedule\": \"24h / Horario ampliado\"}, {\"start\": \"05-10\", \"end\": \"06-30\", \"schedule\": \"24h / Horario ampliado\"}], \"august_schedule\": {\"closure_start\": \"08-17\", \"closure_end\": \"08-23\", \"reduced_start\": \"08-24\", \"reduced_end\": \"08-31\", \"reduced_schedule\": \"9:00\u201314:00h\"}}, \"uam-escuela-politecnica-superior\": {\"exam_periods\": [{\"start\": \"01-08\", \"end\": \"02-15\", \"schedule\": \"24h / Horario ampliado\"}, {\"start\": \"05-10\", \"end\": \"06-30\", \"schedule\": \"24h / Horario ampliado\"}], \"august_schedule\": {\"closure_start\": \"08-17\", \"closure_end\": \"08-31\", \"reduced_start\": \"08-24\", \"reduced_end\": \"08-31\", \"reduced_schedule\": \"9:00\u201314:00h\"}}, \"uam-facultad-de-educacion-cantoblanco\": {\"exam_periods\": [{\"start\": \"01-08\", \"end\": \"02-15\", \"schedule\": \"24h / Horario ampliado\"}, {\"start\": \"05-10\", \"end\": \"06-30\", \"schedule\": \"24h / Horario ampliado\"}], \"august_schedule\": {\"closure_start\": \"08-17\", \"closure_end\": \"08-23\", \"reduced_start\": \"08-24\", \"reduced_end\": \"08-31\", \"reduced_schedule\": \"9:00\u201314:00h\"}}, \"uam-humanidades-cantoblanco\": {\"exam_periods\": [{\"start\": \"01-08\", \"end\": \"02-15\", \"schedule\": \"24h / Horario ampliado\"}, {\"start\": \"05-10\", \"end\": \"06-30\", \"schedule\": \"24h / Horario ampliado\"}], \"august_schedule\": {\"closure_start\": \"08-17\", \"closure_end\": \"08-23\", \"reduced_start\": \"08-24\", \"reduced_end\": \"08-31\", \"reduced_schedule\": \"9:00\u201314:00h\"}}, \"benito-perez-galdos\": {\"summer_period\": {\"start\": \"06-15\", \"end\": \"09-15\", \"weekday_schedule\": \"8:30\u201320:00h\"}}, \"eugenio-trias\": {\"summer_period\": {\"start\": \"06-15\", \"end\": \"09-15\", \"weekday_schedule\": \"8:30\u201320:00h\"}}, \"paseo-de-extremadura\": {\"summer_closure\": {\"start\": \"07-15\", \"end\": \"09-15\"}}, \"cayetano-pando\": {\"summer_closure\": {\"start\": \"07-15\", \"end\": \"09-15\"}}, \"cebreros\": {\"summer_closure\": {\"start\": \"07-15\", \"end\": \"09-15\"}}, \"centro-sociocultural-latina\": {\"summer_closure\": {\"start\": \"08-01\", \"end\": \"08-25\"}}, \"almirante-churruca\": {\"summer_closure\": {\"start\": \"08-01\", \"end\": \"08-31\"}}, \"el-greco\": {\"summer_closure\": {\"start\": \"08-01\", \"end\": \"08-31\"}}, \"arquitecto-juan-de-herrera\": {\"summer_closure\": {\"start\": \"08-01\", \"end\": \"08-31\"}}, \"maqueda\": {\"summer_closure\": {\"start\": \"08-01\", \"end\": \"08-31\"}}, \"sara-montiel\": {\"summer_closure\": {\"start\": \"08-01\", \"end\": \"08-31\"}}, \"jose-luis-sampedro-latina\": {\"summer_closure\": {\"start\": \"08-01\", \"end\": \"08-31\"}}, \"escritor-pedro-de-repide\": {\"summer_closure\": {\"start\": \"08-01\", \"end\": \"08-31\"}}, \"miguel-hernandez-latina\": {\"summer_closure\": {\"start\": \"08-01\", \"end\": \"08-31\"}}, \"centro-sociocultural-siena\": {\"summer_closure\": {\"start\": \"08-01\", \"end\": \"08-31\"}}, \"san-juan-bautista\": {\"summer_closure\": {\"start\": \"08-01\", \"end\": \"08-31\"}}, \"alfredo-kraus\": {\"summer_period\": {\"start\": \"07-01\", \"end\": \"08-31\", \"weekday_schedule\": \"9:00-14:00h y 16:30-21:00h\", \"saturday_schedule\": \"9:30-13:45h y 16:00-20:45h\"}}}}");
-    
     // Interceptar botón 'Atrás' del navegador para ir a "Ver en el mapa"
     try {
       const mapTarget = './#' + encodeURIComponent(slug);
@@ -349,188 +348,26 @@
     } catch (err) {}
     
     function updateToday() {
-      const date = new Date();
-      const day = date.getDay();
-      const month = date.getMonth();
-      const dayOfMonth = date.getDate();
-      const year = date.getFullYear();
-      const currentMinutes = date.getHours() * 60 + date.getMinutes();
-      
-      const mm = String(month + 1).padStart(2, '0');
-      const dd = String(dayOfMonth).padStart(2, '0');
-      const dateKey = `${year}-${mm}-${dd}`;
-      const monthDay = `${mm}-${dd}`;
-      
-      const daysNames = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
-      const monthNames = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
-      const dayNameCap = daysNames[day].charAt(0).toUpperCase() + daysNames[day].slice(1);
-      const dateFormatted = `${dayNameCap}, ${dayOfMonth} de ${monthNames[month]}`;
-      
-      const titleEl = document.getElementById('today-title');
-      const badgeEl = document.getElementById('status-badge');
-      const hoursEl = document.getElementById('today-hours');
-      if (titleEl) titleEl.textContent = 'HOY · ' + dateFormatted;
-      if (!badgeEl || !hoursEl) return;
-      
-      const exceptions = (CALENDARIO.places_exceptions && CALENDARIO.places_exceptions[slug]) || {};
-      const h = d.horario.toLowerCase();
-      
-      if (h.includes('consultar')) return;
-      
-      function parseIntervals(text) {
-        const intervals = [];
-        const re = /(\d{1,2})(?::(\d{2}))?\s*[–\-—a]\s*(\d{1,2})(?::(\d{2}))?h?/gi;
-        let m;
-        while ((m = re.exec(text)) !== null) {
-          const sh = parseInt(m[1], 10), sm = m[2] ? parseInt(m[2], 10) : 0;
-          const eh = parseInt(m[3], 10), em = m[4] ? parseInt(m[4], 10) : 0;
-          intervals.push({
-            startMin: sh * 60 + sm,
-            endMin: eh * 60 + em,
-            startStr: `${sh}:${sm < 10 ? '0' : ''}${sm}`,
-            endStr: `${eh}:${em < 10 ? '0' : ''}${em}`
-          });
-        }
-        return intervals;
-      }
-
-      function formatClosureRange(startStr, endStr) {
-        const monthNames = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
-        const [smStr, sdStr] = startStr.split('-');
-        const [emStr, edStr] = endStr.split('-');
-        const sm = parseInt(smStr, 10), sd = parseInt(sdStr, 10);
-        const em = parseInt(emStr, 10), ed = parseInt(edStr, 10);
-        if (sm === em) {
-          return `Cerrado del ${sd} al ${ed} de ${monthNames[sm - 1]}`;
-        } else {
-          return `Cerrado del ${sd} de ${monthNames[sm - 1]} al ${ed} de ${monthNames[em - 1]}`;
-        }
-      }
-
-      // 1. Festivos
-      if (CALENDARIO.holidays && CALENDARIO.holidays[dateKey]) {
-        const holidayName = CALENDARIO.holidays[dateKey];
-        if (!h.includes('festivos') || h.includes('festivos cerrado') || h.includes('cerrado sáb, dom y festivos')) {
-          badgeEl.className = 'status-badge status-closed';
-          badgeEl.textContent = 'Cerrado';
-          hoursEl.textContent = `Cerrado por festivo (${holidayName})`;
-          return;
-        }
-      }
-
-      // 2. Cierre verano
-      if (exceptions.summer_closure) {
-        if (monthDay >= exceptions.summer_closure.start && monthDay <= exceptions.summer_closure.end) {
-          badgeEl.className = 'status-badge status-closed';
-          badgeEl.textContent = 'Cerrado';
-          hoursEl.textContent = formatClosureRange(exceptions.summer_closure.start, exceptions.summer_closure.end);
-          return;
-        }
-      }
-
-      // 3. Universidades agosto
-      if (exceptions.august_schedule) {
-        const aug = exceptions.august_schedule;
-        if (monthDay >= aug.closure_start && monthDay <= aug.closure_end) {
-          badgeEl.className = 'status-badge status-closed';
-          badgeEl.textContent = 'Cerrado';
-          hoursEl.textContent = formatClosureRange(aug.closure_start, aug.closure_end);
-          return;
-        } else if (monthDay >= aug.reduced_start && monthDay <= aug.reduced_end) {
-          if (day >= 1 && day <= 5) {
-            const ivs = parseIntervals(aug.reduced_schedule);
-            const open = ivs.some(iv => currentMinutes >= iv.startMin && currentMinutes < iv.endMin);
-            badgeEl.className = 'status-badge ' + (open ? 'status-open' : 'status-closed');
-            badgeEl.textContent = open ? 'Abierto' : 'Cerrado';
-            hoursEl.textContent = aug.reduced_schedule + ' (Horario de agosto)';
-            return;
-          } else {
-            badgeEl.className = 'status-badge status-closed';
-            badgeEl.textContent = 'Cerrado';
-            hoursEl.textContent = 'Cerrado los fines de semana de agosto';
-            return;
-          }
-        }
-      }
-
-      // 4. Verano bibliotecas municipales
-      if (exceptions.summer_period) {
-        if (monthDay >= exceptions.summer_period.start && monthDay <= exceptions.summer_period.end) {
-          if (day >= 1 && day <= 5) {
-            const ivs = parseIntervals(exceptions.summer_period.weekday_schedule);
-            const open = ivs.some(iv => currentMinutes >= iv.startMin && currentMinutes < iv.endMin);
-            badgeEl.className = 'status-badge ' + (open ? 'status-open' : 'status-closed');
-            badgeEl.textContent = open ? 'Abierto' : 'Cerrado';
-            hoursEl.textContent = exceptions.summer_period.weekday_schedule + ' (Horario de verano)';
-            return;
-          } else {
-            badgeEl.className = 'status-badge status-closed';
-            badgeEl.textContent = 'Cerrado';
-            hoursEl.textContent = 'Cerrado los fines de semana (Horario de verano)';
-            return;
-          }
-        }
-      }
-
-      // 5. Normal
-      const lines = d.horario.split('\n');
-      let target = '';
-      if (day === 0) {
-        if (h.includes('dom') || h.includes('fines de semana') || h.includes('lun–dom') || h.includes('lun-dom')) {
-          if (h.includes('sáb–dom') || h.includes('sab-dom')) {
-            const m = d.horario.match(/S[áa]b[–\-—]Dom\s+([^\n·]+)/i);
-            if (m) target = m[1];
-          } else if (h.includes('fines de semana')) {
-            const m = d.horario.match(/Fines de semana[^\d]*(\d[^\n·]+)/i);
-            if (m) target = m[1];
-          } else if (h.includes('dom') && !h.includes('cerrado')) {
-            const m = d.horario.match(/Dom\s+([^\n·]+)/i);
-            if (m) target = m[1];
-          } else if (h.includes('lun–dom') || h.includes('lun-dom')) {
-            target = lines[0];
-          }
-        }
-      } else if (day === 6) {
-        if (h.includes('sáb') || h.includes('sab') || h.includes('fines de semana') || h.includes('lun–dom') || h.includes('lun-dom') || h.includes('lun–sáb') || h.includes('lun-sab')) {
-          if (h.includes('sáb–dom') || h.includes('sab-dom')) {
-            const m = d.horario.match(/S[áa]b[–\-—]Dom\s+([^\n·]+)/i);
-            if (m) target = m[1];
-          } else if (h.includes('sáb') || h.includes('sab')) {
-            const m = d.horario.match(/S[áa]b\s+([^\n·\(\)]+)/i);
-            if (m) target = m[1];
-          } else if (h.includes('fines de semana')) {
-            const m = d.horario.match(/Fines de semana[^\d]*(\d[^\n·\(\)]+)/i);
-            if (m) target = m[1];
-          } else if (h.includes('lun–sáb') || h.includes('lun-sab') || h.includes('lun–dom') || h.includes('lun-dom')) {
-            target = lines[0];
-          }
-        }
-      } else {
-        target = lines[0].split('·')[0];
-      }
-
-      if (!target) {
-        badgeEl.className = 'status-badge status-closed';
-        badgeEl.textContent = 'Cerrado';
-        hoursEl.textContent = 'Cerrado hoy';
-        return;
-      }
-
-      const ivs = parseIntervals(target);
-      if (ivs.length > 0) {
-        const open = ivs.some(iv => currentMinutes >= iv.startMin && currentMinutes < iv.endMin);
-        badgeEl.className = 'status-badge ' + (open ? 'status-open' : 'status-closed');
-        badgeEl.textContent = open ? 'Abierto' : 'Cerrado';
-        hoursEl.textContent = ivs.map(iv => iv.startStr + '–' + iv.endStr + 'h').join(' y ');
-      }
+      if (!window.Horarios) return;
+      Horarios.renderToday(slug, {
+        title: document.getElementById('today-title'),
+        badge: document.getElementById('status-badge'),
+        hours: document.getElementById('today-hours')
+      });
     }
     updateToday();
+    const initialWeek = window.Horarios
+      ? Horarios.renderWeek(slug, document.getElementById('calendar-week'), 7)
+      : Promise.resolve([]);
     setInterval(updateToday, 60000);
+    setInterval(() => {
+      if (window.Horarios) Horarios.renderWeek(slug, document.getElementById('calendar-week'), 7);
+    }, 60000);
 
     if (d.libcal_lid) {
       function fTime(t) {
         if (!t) return '';
-        const m = t.trim().match(/^(\d(1, 2))(?::(\d{2}))?\s*(am|pm)?$/i);
+        const m = t.trim().match(/^(\d{1,2})(?::(\d{2}))?\s*(am|pm)?$/i);
         if (!m) return t;
         let h = parseInt(m[1], 10);
         const min = m[2] || '00';
@@ -539,7 +376,8 @@
         return h + ':' + min;
       }
 
-      fetch('https://biblioagenda.uam.es/api_hours_today.php?iid=3941&lid=None&format=json')
+      function updateLiveToday() {
+        return fetch('https://biblioagenda.uam.es/api_hours_today.php?iid=3941&lid=None&format=json')
         .then(r => r.json())
         .then(data => {
           const loc = (data.locations && data.locations.length > 0) ? data.locations[0] : null;
@@ -562,6 +400,40 @@
           }
         })
         .catch(() => {});
+      }
+      updateLiveToday();
+      setInterval(updateLiveToday, 60000);
+
+      function updateLiveWeek() {
+        const container = document.getElementById('calendar-week');
+        if (!container) return;
+        fetch('https://biblioagenda.uam.es/api_hours_grid.php?iid=3941&format=json')
+          .then(r => r.json())
+          .then(data => {
+            const loc = (data.locations || []).find(item => Number(item.lid) === Number(d.libcal_lid));
+            if (!loc) return;
+            const label = container.querySelector('.panel-calendar-week-label');
+            if (label) label.textContent = 'Próximos 7 días · En directo (BiblioAgenda UAM)';
+            for (const week of loc.weeks || []) {
+              for (const dayInfo of Object.values(week || {})) {
+                if (!dayInfo || !dayInfo.date) continue;
+                const row = container.querySelector(`[data-calendar-date="${dayInfo.date}"]`);
+                const cell = row && row.querySelector('.day-hours');
+                if (!cell) continue;
+                if (dayInfo.times && dayInfo.times.status === 'open' && dayInfo.times.hours) {
+                  cell.textContent = dayInfo.times.hours.map(hours => fTime(hours.from) + '–' + fTime(hours.to) + 'h').join(' y ');
+                } else if (dayInfo.rendered && !/cerrad/i.test(dayInfo.rendered) && /\d/.test(dayInfo.rendered)) {
+                  cell.textContent = dayInfo.rendered;
+                } else {
+                  cell.textContent = 'Cerrado';
+                }
+              }
+            }
+          })
+          .catch(() => {});
+      }
+      initialWeek.then(updateLiveWeek);
+      setInterval(updateLiveWeek, 60000);
 
 
     }

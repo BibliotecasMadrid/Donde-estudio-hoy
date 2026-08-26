@@ -10,12 +10,15 @@ Uso:
   python build.py
 """
 
+import argparse
+import copy
+import datetime as dt
 import json
 import re
 import os
 import html
 import unicodedata
-from urllib.parse import quote_plus
+from urllib.parse import quote_plus, urlparse
 
 BASE = "https://bibliotecasmadrid.es/"
 LASTMOD = "2026-08-25"
@@ -37,13 +40,76 @@ COLORES = {
     "universidad":{"fill": "#7C3AED", "label": "Biblioteca universitaria"},
 }
 
-CALENDARIO_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "calendario.json")
-if os.path.exists(CALENDARIO_PATH):
-    with open(CALENDARIO_PATH, "r", encoding="utf-8") as f:
-        CALENDARIO = json.load(f)
-else:
-    CALENDARIO = {"holidays": {}, "places_exceptions": {}}
+ROOT = os.path.dirname(os.path.abspath(__file__))
+CALENDARIO_PATH = os.path.join(ROOT, "calendario.json")
+HORARIOS_DIR = os.path.join(ROOT, "horarios")
+CALENDAR_SCHEMA_VERSION = 2
+PUBLIC_CALENDAR_VERSION = 1
+TIMEZONE = "Europe/Madrid"
 
+# DÃ­as con el formato de ``datetime.date.weekday()``: lunes=0, domingo=6.
+# El JSON pÃºblico usa las mismas claves; asÃ­ no hay conversiÃ³n ambigua entre
+# Python y JavaScript.
+WEEKDAYS = tuple(range(7))
+ESTADOS = {"abierto", "cerrado", "consultar"}
+
+# Fiestas autonÃ³micas y nacionales comunes a toda la Comunidad de Madrid. Las
+# fiestas locales no se mezclan aquÃ­: cada municipio las declara por separado
+# en la fuente v2. Fuente: BOE-A-2025-21667 / Decreto 75/2025 de la CAM.
+FESTIVOS_REGIONALES_2026 = {
+    "2026-01-01": "AÃ±o Nuevo",
+    "2026-01-06": "EpifanÃ­a del SeÃ±or",
+    "2026-04-02": "Jueves Santo",
+    "2026-04-03": "Viernes Santo",
+    "2026-05-01": "Fiesta del Trabajo",
+    "2026-05-02": "Fiesta de la Comunidad de Madrid",
+    "2026-08-15": "AsunciÃ³n de la Virgen",
+    "2026-10-12": "Fiesta Nacional de EspaÃ±a",
+    "2026-11-02": "Traslado de Todos los Santos",
+    "2026-12-07": "Traslado del DÃ­a de la ConstituciÃ³n EspaÃ±ola",
+    "2026-12-08": "Inmaculada ConcepciÃ³n",
+    "2026-12-25": "Natividad del SeÃ±or",
+}
+
+# ResoluciÃ³n de 2 de diciembre de 2025, D. G. de Trabajo (BOCM 12/12/2025).
+# Solo se incluyen municipios presentes en el mapa. Mantener este mapa evita
+# aplicar, por error, San Isidro a bibliotecas de otros municipios.
+FESTIVOS_LOCALES_2026 = {
+    "alcala-de-henares": {"2026-08-06": "Fiesta local de AlcalÃ¡ de Henares", "2026-10-09": "Fiesta local de AlcalÃ¡ de Henares"},
+    "alcobendas": {"2026-01-24": "Fiesta local de Alcobendas", "2026-05-15": "Fiesta local de Alcobendas"},
+    "alcorcon": {"2026-04-06": "Fiesta local de AlcorcÃ³n", "2026-09-08": "Fiesta local de AlcorcÃ³n"},
+    "aranjuez": {"2026-05-29": "Fiesta local de Aranjuez", "2026-09-04": "Fiesta local de Aranjuez"},
+    "arganda-del-rey": {"2026-09-11": "Fiesta local de Arganda del Rey", "2026-09-14": "Fiesta local de Arganda del Rey"},
+    "boadilla-del-monte": {"2026-06-01": "Fiesta local de Boadilla del Monte", "2026-10-05": "Fiesta local de Boadilla del Monte"},
+    "collado-villalba": {"2026-06-12": "Fiesta local de Collado Villalba", "2026-07-24": "Fiesta local de Collado Villalba"},
+    "colmenar-viejo": {"2026-08-31": "Fiesta local de Colmenar Viejo", "2026-09-01": "Fiesta local de Colmenar Viejo"},
+    "colmenarejo": {"2026-05-15": "Fiesta local de Colmenarejo", "2026-07-24": "Fiesta local de Colmenarejo"},
+    "coslada": {"2026-05-15": "Fiesta local de Coslada", "2026-06-15": "Fiesta local de Coslada"},
+    "fuenlabrada": {"2026-09-14": "Fiesta local de Fuenlabrada", "2026-12-26": "Fiesta local de Fuenlabrada"},
+    "galapagar": {"2026-05-15": "Fiesta local de Galapagar", "2026-09-14": "Fiesta local de Galapagar"},
+    "getafe": {"2026-05-14": "Fiesta local de Getafe", "2026-05-25": "Fiesta local de Getafe"},
+    "guadarrama": {"2026-09-29": "Fiesta local de Guadarrama", "2026-10-05": "Fiesta local de Guadarrama"},
+    "las-rozas-de-madrid": {"2026-05-04": "Fiesta local de Las Rozas de Madrid", "2026-09-29": "Fiesta local de Las Rozas de Madrid"},
+    "leganes": {"2026-08-14": "Fiesta local de LeganÃ©s", "2026-10-09": "Fiesta local de LeganÃ©s"},
+    "majadahonda": {"2026-09-14": "Fiesta local de Majadahonda", "2026-11-25": "Fiesta local de Majadahonda"},
+    "madrid": {"2026-05-15": "San Isidro", "2026-11-09": "Nuestra SeÃ±ora de la Almudena"},
+    "mostoles": {"2026-05-15": "Fiesta local de MÃ³stoles", "2026-09-12": "Fiesta local de MÃ³stoles"},
+    "navalcarnero": {"2026-05-15": "Fiesta local de Navalcarnero", "2026-09-08": "Fiesta local de Navalcarnero"},
+    "parla": {"2026-06-15": "Fiesta local de Parla", "2026-09-14": "Fiesta local de Parla"},
+    "pinto": {"2026-03-19": "Fiesta local de Pinto", "2026-05-15": "Fiesta local de Pinto"},
+    "pozuelo-de-alarcon": {"2026-07-16": "Fiesta local de Pozuelo de AlarcÃ³n", "2026-09-07": "Fiesta local de Pozuelo de AlarcÃ³n"},
+    "rivas-vaciamadrid": {"2026-05-14": "Fiesta local de Rivas-Vaciamadrid", "2026-05-15": "Fiesta local de Rivas-Vaciamadrid"},
+    "san-fernando-de-henares": {"2026-05-15": "Fiesta local de San Fernando de Henares", "2026-05-29": "Fiesta local de San Fernando de Henares"},
+    "san-lorenzo-de-el-escorial": {"2026-08-10": "Fiesta local de San Lorenzo de El Escorial", "2026-09-14": "Fiesta local de San Lorenzo de El Escorial"},
+    "san-sebastian-de-los-reyes": {"2026-01-20": "Fiesta local de San SebastiÃ¡n de los Reyes", "2026-08-28": "Fiesta local de San SebastiÃ¡n de los Reyes"},
+    "torrejon-de-ardoz": {"2026-06-22": "Fiesta local de TorrejÃ³n de Ardoz", "2026-06-23": "Fiesta local de TorrejÃ³n de Ardoz"},
+    "torrelodones": {"2026-07-16": "Fiesta local de Torrelodones", "2026-08-14": "Fiesta local de Torrelodones"},
+    "tres-cantos": {"2026-03-21": "Fiesta local de Tres Cantos", "2026-06-24": "Fiesta local de Tres Cantos"},
+    "valdemoro": {"2026-05-11": "Fiesta local de Valdemoro", "2026-09-08": "Fiesta local de Valdemoro"},
+    "villa-del-prado": {"2026-04-06": "Fiesta local de Villa del Prado", "2026-09-08": "Fiesta local de Villa del Prado"},
+    "villanueva-de-la-canada": {"2026-05-15": "Fiesta local de Villanueva de la CaÃ±ada", "2026-07-24": "Fiesta local de Villanueva de la CaÃ±ada"},
+    "villaviciosa-de-odon": {"2026-01-20": "Fiesta local de Villaviciosa de OdÃ³n", "2026-09-21": "Fiesta local de Villaviciosa de OdÃ³n"},
+}
 
 def slugify(nombre):
     base = nombre
@@ -86,245 +152,435 @@ def extract_lugares(index_html):
     return json.loads(jtext)
 
 
+# ─────────────────────────────────────────────────────────────
+#  CALENDARIOS DIARIOS COMPILADOS
+#
+#  ``calendario.json`` es la fuente editable y declara un perfil
+#  explícito por centro. Durante la migración inicial se extraen las
+#  83 pautas que ya estaban publicadas en ``lugares[].horario``. Esa
+#  lectura sólo sirve para crear la fuente v2: el sitio publicado no
+#  vuelve a interpretar dicho texto para saber si un centro abre.
+# ─────────────────────────────────────────────────────────────
+
+
+def normalizar(texto):
+    texto = unicodedata.normalize("NFKD", texto or "")
+    texto = "".join(c for c in texto if not unicodedata.combining(c))
+    return texto.lower().replace("–", "-").replace("—", "-").strip()
+
+
+def identificador(texto):
+    return re.sub(r"[^a-z0-9]+", "-", normalizar(texto)).strip("-")
+
+
+def minuto(hora):
+    if not isinstance(hora, str) or not re.fullmatch(r"(?:[01]?\d|2[0-4]):[0-5]\d", hora):
+        raise ValueError(f"Hora inválida: {hora!r}")
+    h, m = (int(p) for p in hora.split(":"))
+    if h == 24 and m:
+        raise ValueError(f"24:00 es la única hora válida con 24: {hora!r}")
+    return h * 60 + m
+
+
+def normalizar_intervalos(intervalos):
+    if not intervalos:
+        return []
+    if not isinstance(intervalos, list):
+        raise ValueError("Los intervalos deben ser una lista")
+    resultado = []
+    ultimo_fin = -1
+    for intervalo in intervalos:
+        if not isinstance(intervalo, (list, tuple)) or len(intervalo) != 2:
+            raise ValueError(f"Intervalo inválido: {intervalo!r}")
+        inicio, fin = intervalo
+        inicio_min, fin_min = minuto(inicio), minuto(fin)
+        if inicio_min >= fin_min:
+            raise ValueError(f"Intervalo sin duración: {intervalo!r}")
+        if inicio_min < ultimo_fin:
+            raise ValueError(f"Intervalos solapados: {intervalos!r}")
+        resultado.append([inicio, fin])
+        ultimo_fin = fin_min
+    return resultado
+
+
+def entrada(estado, intervalos=None, nota=None):
+    if estado not in ESTADOS:
+        raise ValueError(f"Estado de calendario inválido: {estado!r}")
+    intervalos = normalizar_intervalos(intervalos or [])
+    if estado == "abierto" and not intervalos:
+        raise ValueError("Una entrada abierta debe incluir al menos un intervalo")
+    if estado != "abierto":
+        intervalos = []
+    resultado = {"estado": estado, "intervalos": intervalos}
+    if nota:
+        resultado["nota"] = str(nota)
+    return resultado
+
+
+def intervalos_de_texto(texto):
+    """Extrae franjas de un horario heredado; sólo se usa al migrar."""
+    salida = []
+    patron = re.compile(r"(?<!\d)(\d{1,2})(?::(\d{2}))?\s*(?:-|a)\s*(\d{1,2})(?::(\d{2}))?\s*h?", re.I)
+    for match in patron.finditer(normalizar(texto)):
+        h1, m1, h2, m2 = match.groups()
+        inicio = f"{int(h1):02d}:{int(m1 or 0):02d}"
+        fin = f"{int(h2):02d}:{int(m2 or 0):02d}"
+        try:
+            salida.append([inicio, fin])
+        except ValueError:
+            continue
+    try:
+        return normalizar_intervalos(salida)
+    except ValueError:
+        # Un texto editorial mal ordenado no debe impedir crear una fuente
+        # revisable: se marca como consultar en vez de inventar una apertura.
+        return []
+
+
+def dias_de_segmento(segmento):
+    """Devuelve días Python (lunes=0 … domingo=6) mencionados en un segmento."""
+    s = normalizar(segmento)
+    patrones = [
+        (r"lun(?:es)?\s*(?:-|a)\s*dom(?:ingo)?", range(7)),
+        (r"lun(?:es)?\s*(?:-|a)\s*sab(?:ado)?", range(6)),
+        (r"lun(?:es)?\s*(?:-|a)\s*vie(?:rnes)?", range(5)),
+        (r"mar(?:tes)?\s*(?:-|a)\s*sab(?:ado)?", range(1, 6)),
+        (r"lun(?:es)?\s*(?:-|a)\s*jue(?:ves)?", range(4)),
+        (r"jue(?:ves)?\s*(?:-|a)\s*vie(?:rnes)?", range(3, 5)),
+        (r"sab(?:ado)?\s*(?:-|a)\s*dom(?:ingo)?", (5, 6)),
+    ]
+    for patron, dias in patrones:
+        if re.search(patron, s):
+            return list(dias)
+    if "fin de semana" in s or "fines de semana" in s:
+        return [5, 6]
+    dias = []
+    nombres = (("lun", 0), ("mar", 1), ("mie", 2), ("jue", 3), ("vie", 4), ("sab", 5), ("dom", 6))
+    for nombre, indice in nombres:
+        if re.search(rf"\b{nombre}", s):
+            dias.append(indice)
+    return dias
+
+
+def horario_semanal_heredado(texto):
+    """Convierte el primer horario editorial en una pauta semanal explícita."""
+    cerrado = entrada("cerrado", nota="Cerrado según horario habitual")
+    semanal = {str(dia): copy.deepcopy(cerrado) for dia in WEEKDAYS}
+    if "consultar" in normalizar(texto) or "telefono" in normalizar(texto):
+        return {str(dia): entrada("consultar", nota="Consultar horario por teléfono") for dia in WEEKDAYS}
+
+    linea = (texto or "").split("\n", 1)[0]
+    segmentos = re.split(r"\s*[·;]\s*", linea)
+    asignado = set()
+    for segmento in segmentos:
+        dias = dias_de_segmento(segmento)
+        franjas = intervalos_de_texto(segmento)
+        if not dias or not franjas:
+            continue
+        for dia in dias:
+            semanal[str(dia)] = entrada("abierto", franjas, "Horario habitual")
+            asignado.add(dia)
+
+    # Algunos textos cortos sólo contienen una franja sin prefijo de días.
+    if not asignado:
+        franjas = intervalos_de_texto(linea)
+        if franjas:
+            for dia in range(5):
+                semanal[str(dia)] = entrada("abierto", franjas, "Horario habitual")
+    return semanal
+
+
+def municipio_de_direccion(direccion):
+    """Obtiene el municipio de la dirección postal, nunca del campo distrito."""
+    match = re.search(r"\b\d{5}\s+([^,]+?)\s*$", direccion or "")
+    nombre = match.group(1).strip() if match else "Madrid"
+    return identificador(nombre) or "madrid"
+
+
+def operador_de_url(url):
+    host = urlparse(url or "").netloc.lower()
+    if "madrid.es" in host:
+        return "ayuntamiento-madrid"
+    if "biblioagenda" in host:
+        return "libcal"
+    if host:
+        return host.removeprefix("www.")
+    return "sin-fuente"
+
+
+def regla_desde_periodo(inicio, fin, estado, intervalos=None, nota=None, dias=None, prioridad=0):
+    regla = {
+        "from": f"2026-{inicio}",
+        "to": f"2026-{fin}",
+        "estado": estado,
+        "intervalos": intervalos or [],
+        "priority": prioridad,
+    }
+    if dias is not None:
+        regla["weekdays"] = list(dias)
+    if nota:
+        regla["nota"] = nota
+    return regla
+
+
+def reglas_heredadas(excepciones):
+    """Traduce las excepciones existentes a reglas fechadas de la fuente v2."""
+    reglas = []
+    if not excepciones:
+        return reglas
+    cierre = excepciones.get("summer_closure")
+    if cierre:
+        reglas.append(regla_desde_periodo(cierre["start"], cierre["end"], "cerrado", nota="Cierre de verano", prioridad=70))
+    verano = excepciones.get("summer_period")
+    if verano:
+        for dias, clave in ((range(5), "weekday_schedule"), ((5,), "saturday_schedule"), ((6,), "sunday_schedule")):
+            texto = verano.get(clave)
+            franjas = intervalos_de_texto(texto or "")
+            if franjas:
+                reglas.append(regla_desde_periodo(verano["start"], verano["end"], "abierto", franjas, "Horario de verano", dias, 60))
+            elif clave != "weekday_schedule":
+                reglas.append(regla_desde_periodo(verano["start"], verano["end"], "cerrado", nota="Cerrado en horario de verano", dias=dias, prioridad=60))
+    agosto = excepciones.get("august_schedule")
+    if agosto:
+        reglas.append(regla_desde_periodo(agosto["closure_start"], agosto["closure_end"], "cerrado", nota="Cierre de agosto", prioridad=70))
+        if agosto.get("reduced_start") and agosto.get("reduced_end"):
+            franjas = intervalos_de_texto(agosto.get("reduced_schedule", ""))
+            if franjas:
+                reglas.append(regla_desde_periodo(agosto["reduced_start"], agosto["reduced_end"], "abierto", franjas, "Horario reducido de agosto", range(5), 80))
+    for periodo in excepciones.get("exam_periods", []):
+        texto = periodo.get("schedule", "")
+        if "24" in normalizar(texto):
+            franjas = [["00:00", "24:00"]]
+        else:
+            franjas = intervalos_de_texto(texto)
+        if franjas:
+            reglas.append(regla_desde_periodo(periodo["start"], periodo["end"], "abierto", franjas, "Horario ampliado de exámenes", prioridad=90))
+        else:
+            reglas.append(regla_desde_periodo(periodo["start"], periodo["end"], "consultar", nota="Horario de exámenes por confirmar", prioridad=90))
+    return reglas
+
+
+def migrar_calendario(lugares, slugs, legacy):
+    """Crea una fuente v2 completa sin perder las excepciones ya publicadas."""
+    perfiles = {}
+    excepciones = legacy.get("places_exceptions", {})
+    fecha_revision = legacy.get("last_updated") or dt.date.today().isoformat()
+    for lugar, slug in zip(lugares, slugs):
+        horario_normalizado = normalizar(lugar.get("horario", ""))
+        politica = "open" if "festivos" in horario_normalizado and "cerrado" not in horario_normalizado else "closed"
+        perfil = {
+            "municipio": municipio_de_direccion(lugar.get("direccion", "")),
+            "operador": operador_de_url(lugar.get("web", "")),
+            "source": {
+                "url": lugar.get("web") or web_url(lugar)[0],
+                "checked_at": fecha_revision,
+                "confidence": "migrated-from-published-schedule",
+            },
+            "holiday_policy": politica,
+            "weekly": horario_semanal_heredado(lugar.get("horario", "")),
+            "rules": reglas_heredadas(excepciones.get(slug, {})),
+            "dates": {},
+        }
+        # Las vísperas generales existentes no describen una hora única. No
+        # se inventa: se expone como consultar hasta que el perfil la concrete.
+        for fecha, texto in (legacy.get("special_eves") or {}).items():
+            perfil["dates"][fecha] = entrada("consultar", nota=texto)
+        perfiles[slug] = perfil
+    return {
+        "schema_version": CALENDAR_SCHEMA_VERSION,
+        "year": 2026,
+        "last_updated": fecha_revision,
+        "time_zone": TIMEZONE,
+        "regional_holidays": FESTIVOS_REGIONALES_2026,
+        "municipal_holidays": FESTIVOS_LOCALES_2026,
+        "places": perfiles,
+    }
+
+
+def cargar_calendario():
+    with open(CALENDARIO_PATH, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def validar_perfil(slug, perfil, year):
+    errores = []
+    if not perfil.get("municipio"):
+        errores.append(f"{slug}: falta municipio")
+    source = perfil.get("source") or {}
+    if not source.get("url") or not source.get("checked_at"):
+        errores.append(f"{slug}: falta fuente o fecha de revisión")
+    else:
+        if urlparse(source["url"]).scheme != "https":
+            errores.append(f"{slug}: la fuente debe usar HTTPS")
+        try:
+            dt.date.fromisoformat(source["checked_at"])
+        except (TypeError, ValueError):
+            errores.append(f"{slug}: fecha de revisión inválida")
+    if perfil.get("holiday_policy") not in {"closed", "open", "unknown"}:
+        errores.append(f"{slug}: holiday_policy inválida")
+    weekly = perfil.get("weekly") or {}
+    for dia in WEEKDAYS:
+        if str(dia) not in weekly:
+            errores.append(f"{slug}: falta el día semanal {dia}")
+            continue
+        try:
+            entrada(weekly[str(dia)].get("estado"), weekly[str(dia)].get("intervalos"), weekly[str(dia)].get("nota"))
+        except (AttributeError, ValueError) as exc:
+            errores.append(f"{slug}: horario semanal {dia}: {exc}")
+    for regla in perfil.get("rules", []):
+        try:
+            inicio = dt.date.fromisoformat(regla["from"])
+            fin = dt.date.fromisoformat(regla["to"])
+            if inicio.year != year or fin.year != year or inicio > fin:
+                raise ValueError("rango de fechas inválido")
+            if any(dia not in WEEKDAYS for dia in regla.get("weekdays", WEEKDAYS)):
+                raise ValueError("weekdays inválido")
+            entrada(regla["estado"], regla.get("intervalos"), regla.get("nota"))
+        except (KeyError, TypeError, ValueError) as exc:
+            errores.append(f"{slug}: regla inválida: {exc}")
+    for fecha, valor in (perfil.get("dates") or {}).items():
+        try:
+            if dt.date.fromisoformat(fecha).year != year:
+                raise ValueError("fecha fuera del año")
+            entrada(valor["estado"], valor.get("intervalos"), valor.get("nota"))
+        except (KeyError, TypeError, ValueError) as exc:
+            errores.append(f"{slug}: fecha {fecha}: {exc}")
+    return errores
+
+
+def validar_calendario(calendario, slugs):
+    errores = []
+    if calendario.get("schema_version") != CALENDAR_SCHEMA_VERSION:
+        errores.append("calendario.json no usa schema_version 2")
+    year = calendario.get("year")
+    if not isinstance(year, int):
+        errores.append("year debe ser un entero")
+        return errores
+    if calendario.get("time_zone") != TIMEZONE:
+        errores.append(f"time_zone debe ser {TIMEZONE}")
+    for fecha, nombre in (calendario.get("regional_holidays") or {}).items():
+        try:
+            if dt.date.fromisoformat(fecha).year != year or not str(nombre).strip():
+                raise ValueError
+        except (TypeError, ValueError):
+            errores.append(f"festivo regional inválido: {fecha}")
+    for municipio, festivos in (calendario.get("municipal_holidays") or {}).items():
+        if not municipio or not isinstance(festivos, dict):
+            errores.append(f"festivos municipales inválidos: {municipio}")
+            continue
+        for fecha, nombre in festivos.items():
+            try:
+                if dt.date.fromisoformat(fecha).year != year or not str(nombre).strip():
+                    raise ValueError
+            except (TypeError, ValueError):
+                errores.append(f"festivo de {municipio} inválido: {fecha}")
+    perfiles = calendario.get("places") or {}
+    esperados = set(slugs)
+    if set(perfiles) != esperados:
+        faltan = sorted(esperados - set(perfiles))
+        sobran = sorted(set(perfiles) - esperados)
+        if faltan:
+            errores.append("faltan perfiles: " + ", ".join(faltan[:8]))
+        if sobran:
+            errores.append("hay perfiles sin centro: " + ", ".join(sobran[:8]))
+    for slug in slugs:
+        if slug in perfiles:
+            errores.extend(validar_perfil(slug, perfiles[slug], year))
+            if perfiles[slug].get("municipio") not in (calendario.get("municipal_holidays") or {}):
+                errores.append(f"{slug}: municipio sin calendario de festivos")
+    return errores
+
+
+def fecha_es_festivo(fecha, perfil, calendario):
+    clave = fecha.isoformat()
+    if clave in (calendario.get("regional_holidays") or {}):
+        return calendario["regional_holidays"][clave]
+    municipio = perfil.get("municipio")
+    return (calendario.get("municipal_holidays") or {}).get(municipio, {}).get(clave)
+
+
+def resolver_dia(perfil, fecha, calendario):
+    clave = fecha.isoformat()
+    fechas = perfil.get("dates") or {}
+    if clave in fechas:
+        valor = fechas[clave]
+        return entrada(valor["estado"], valor.get("intervalos"), valor.get("nota"))
+
+    # Las reglas del propio centro (verano, exámenes o cierres temporales)
+    # son excepciones oficiales y prevalecen sobre el cierre por festivo.
+    candidatas = []
+    for indice, regla in enumerate(perfil.get("rules") or []):
+        inicio = dt.date.fromisoformat(regla["from"])
+        fin = dt.date.fromisoformat(regla["to"])
+        if inicio <= fecha <= fin and fecha.weekday() in regla.get("weekdays", WEEKDAYS):
+            candidatas.append((int(regla.get("priority", 0)), indice, regla))
+    if candidatas:
+        _, _, regla = max(candidatas, key=lambda valor: (valor[0], valor[1]))
+        return entrada(regla["estado"], regla.get("intervalos"), regla.get("nota"))
+
+    # Sin una excepción del centro, el festivo regional o local cierra
+    # por defecto. Los perfiles que abren en festivo usan policy=open.
+    festivo = fecha_es_festivo(fecha, perfil, calendario)
+    if festivo and perfil.get("holiday_policy") == "closed":
+        return entrada("cerrado", nota=f"Cerrado por festivo ({festivo})")
+    if festivo and perfil.get("holiday_policy") == "unknown":
+        return entrada("consultar", nota=f"Horario por confirmar en festivo ({festivo})")
+
+    valor = (perfil.get("weekly") or {}).get(str(fecha.weekday()))
+    if not valor:
+        return entrada("consultar", nota="Horario semanal pendiente de confirmar")
+    return entrada(valor["estado"], valor.get("intervalos"), valor.get("nota"))
+
+
+def generar_calendarios_publicos(calendario, slugs):
+    """Materializa 12 JSON mensuales; la web consulta por slug + día."""
+    year = calendario["year"]
+    perfiles = calendario["places"]
+    os.makedirs(HORARIOS_DIR, exist_ok=True)
+    total = 0
+    for mes in range(1, 13):
+        primer_dia = dt.date(year, mes, 1)
+        siguiente = dt.date(year + (mes == 12), 1 if mes == 12 else mes + 1, 1)
+        dias = (siguiente - primer_dia).days
+        datos = {
+            "version": PUBLIC_CALENDAR_VERSION,
+            "year": year,
+            "month": mes,
+            "time_zone": TIMEZONE,
+            "places": {},
+        }
+        for slug in slugs:
+            valores = [resolver_dia(perfiles[slug], primer_dia + dt.timedelta(days=offset), calendario) for offset in range(dias)]
+            if len(valores) != dias:
+                raise ValueError(f"{slug}: cobertura incompleta del mes {mes}")
+            datos["places"][slug] = valores
+            total += len(valores)
+        destino = os.path.join(HORARIOS_DIR, f"{year}-{mes:02d}.json")
+        with open(destino, "w", encoding="utf-8") as f:
+            json.dump(datos, f, ensure_ascii=False, separators=(",", ":"))
+    esperado = len(slugs) * (366 if dt.date(year, 12, 31).timetuple().tm_yday == 366 else 365)
+    if total != esperado:
+        raise ValueError(f"Cobertura inválida: {total} días generados, se esperaban {esperado}")
+    return total
+
+
 def web_url(d):
     if d.get("web"):
         return d["web"], "Web oficial"
     return "https://www.google.com/search?q=" + quote_plus(d["nombre"] + " Madrid"), "Buscar web y horario"
 
 
-def format_closure_range(start_str, end_str):
-    month_names = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre']
-    sm, sd = int(start_str.split('-')[0]), int(start_str.split('-')[1])
-    em, ed = int(end_str.split('-')[0]), int(end_str.split('-')[1])
-    if sm == em:
-        return f"Cerrado del {sd} al {ed} de {month_names[sm - 1]}"
-    else:
-        return f"Cerrado del {sd} de {month_names[sm - 1]} al {ed} de {month_names[em - 1]}"
-
-
-def get_today_info(d, slug, now=None):
-    if now is None:
-        import datetime
-        now = datetime.datetime.now()
-    day = (now.weekday() + 1) % 7
-    month = now.month
-    day_of_month = now.day
-    year = now.year
-    current_minutes = now.hour * 60 + now.minute
-    
-    mm = f"{month:02d}"
-    dd = f"{day_of_month:02d}"
-    date_key = f"{year}-{mm}-{dd}"
-    month_day = f"{mm}-{dd}"
-    
-    days_names = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado']
-    month_names = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre']
-    
-    day_name_cap = days_names[day].capitalize()
-    date_formatted = f"{day_name_cap}, {day_of_month} de {month_names[month-1]}"
-    
-    exceptions = CALENDARIO.get("places_exceptions", {}).get(slug, {})
-    h = d["horario"].lower()
-    
-    if 'consultar' in h or 'teléfono' in h or 'telefono' in h:
-        return {
-            'date_formatted': date_formatted,
-            'status_text': 'Consultar',
-            'status_class': 'status-info',
-            'today_schedule': 'Consultar horario por teléfono',
-            'is_open': None
-        }
-        
-    def parse_intervals(text):
-        intervals = []
-        for m in re.finditer(r'(\d{1,2})(?::(\d{2}))?\s*[–\-—a]\s*(\d{1,2})(?::(\d{2}))?h?', text, re.IGNORECASE):
-            sh = int(m.group(1))
-            sm = int(m.group(2)) if m.group(2) else 0
-            eh = int(m.group(3))
-            em = int(m.group(4)) if m.group(4) else 0
-            intervals.append({
-                'start_min': sh * 60 + sm,
-                'end_min': eh * 60 + em,
-                'start_str': f"{sh}:{sm:02d}",
-                'end_str': f"{eh}:{em:02d}"
-            })
-        return intervals
-
-    if CALENDARIO.get("holidays", {}).get(date_key):
-        holiday_name = CALENDARIO["holidays"][date_key]
-        if not ('festivos' in h and 'festivos cerrado' not in h and 'cerrado sáb, dom y festivos' not in h and 'festivos, cerrado' not in h):
-            return {
-                'date_formatted': date_formatted,
-                'status_text': 'Cerrado',
-                'status_class': 'status-closed',
-                'today_schedule': f"Cerrado por festivo ({holiday_name})",
-                'is_open': False
-            }
-
-    if "summer_closure" in exceptions:
-        sc = exceptions["summer_closure"]
-        if sc["start"] <= month_day <= sc["end"]:
-            return {
-                'date_formatted': date_formatted,
-                'status_text': 'Cerrado',
-                'status_class': 'status-closed',
-                'today_schedule': format_closure_range(sc["start"], sc["end"]),
-                'is_open': False
-            }
-
-    if "august_schedule" in exceptions:
-        aug = exceptions["august_schedule"]
-        if aug["closure_start"] <= month_day <= aug["closure_end"]:
-            return {
-                'date_formatted': date_formatted,
-                'status_text': 'Cerrado',
-                'status_class': 'status-closed',
-                'today_schedule': format_closure_range(aug["closure_start"], aug["closure_end"]),
-                'is_open': False
-            }
-        elif aug["reduced_start"] <= month_day <= aug["reduced_end"]:
-            if 1 <= day <= 5:
-                ivs = parse_intervals(aug["reduced_schedule"])
-                is_open = any(iv['start_min'] <= current_minutes < iv['end_min'] for iv in ivs)
-                return {
-                    'date_formatted': date_formatted,
-                    'status_text': 'Abierto' if is_open else 'Cerrado',
-                    'status_class': 'status-open' if is_open else 'status-closed',
-                    'today_schedule': aug["reduced_schedule"] + ' (Horario de agosto)',
-                    'is_open': is_open
-                }
-            else:
-                return {
-                    'date_formatted': date_formatted,
-                    'status_text': 'Cerrado',
-                    'status_class': 'status-closed',
-                    'today_schedule': 'Cerrado los fines de semana de agosto',
-                    'is_open': False
-                }
-
-    if "summer_period" in exceptions:
-        sp = exceptions["summer_period"]
-        if sp["start"] <= month_day <= sp["end"]:
-            if 1 <= day <= 5:
-                ivs = parse_intervals(sp["weekday_schedule"])
-                is_open = any(iv['start_min'] <= current_minutes < iv['end_min'] for iv in ivs)
-                return {
-                    'date_formatted': date_formatted,
-                    'status_text': 'Abierto' if is_open else 'Cerrado',
-                    'status_class': 'status-open' if is_open else 'status-closed',
-                    'today_schedule': sp["weekday_schedule"] + ' (Horario de verano)',
-                    'is_open': is_open
-                }
-            else:
-                return {
-                    'date_formatted': date_formatted,
-                    'status_text': 'Cerrado',
-                    'status_class': 'status-closed',
-                    'today_schedule': 'Cerrado los fines de semana (Horario de verano)',
-                    'is_open': False
-                }
-
-    lines = d["horario"].split('\n')
-    main_line = lines[0]
-    
-    if day == 0:
-        if any(k in h for k in ['dom', 'fines de semana', 'lun–dom', 'lun-dom']):
-            sunday_text = ''
-            if 'sáb–dom' in h or 'sab-dom' in h or 'sáb y dom' in h:
-                m = re.search(r'S[áa]b[–\-—]Dom\s+([^\n·]+)', d["horario"], re.IGNORECASE)
-                if m: sunday_text = m.group(1)
-            elif 'fines de semana' in h:
-                m = re.search(r'Fines de semana[^\d]*(\d[^\n·]+)', d["horario"], re.IGNORECASE)
-                if m: sunday_text = m.group(1)
-            elif 'dom' in h and 'cerrado' not in h:
-                m = re.search(r'Dom\s+([^\n·]+)', d["horario"], re.IGNORECASE)
-                if m: sunday_text = m.group(1)
-            elif 'lun–dom' in h or 'lun-dom' in h:
-                sunday_text = main_line
-                
-            if sunday_text:
-                intervals = parse_intervals(sunday_text)
-                if intervals:
-                    is_open = any(iv['start_min'] <= current_minutes < iv['end_min'] for iv in intervals)
-                    sched_formatted = ' y '.join(f"{iv['start_str']}–{iv['end_str']}h" for iv in intervals)
-                    return {
-                        'date_formatted': date_formatted,
-                        'status_text': 'Abierto' if is_open else 'Cerrado',
-                        'status_class': 'status-open' if is_open else 'status-closed',
-                        'today_schedule': sched_formatted,
-                        'is_open': is_open
-                    }
-        return {
-            'date_formatted': date_formatted,
-            'status_text': 'Cerrado',
-            'status_class': 'status-closed',
-            'today_schedule': 'Cerrado hoy',
-            'is_open': False
-        }
-        
-    if day == 6:
-        if any(k in h for k in ['sáb', 'sab', 'fines de semana', 'lun–dom', 'lun-dom', 'lun–sáb', 'lun-sab']):
-            sab_text = ''
-            if 'sáb–dom' in h or 'sab-dom' in h or 'sáb y dom' in h:
-                m = re.search(r'S[áa]b[–\-—]Dom\s+([^\n·]+)', d["horario"], re.IGNORECASE)
-                if m: sab_text = m.group(1)
-            elif 'sáb' in h or 'sab' in h:
-                m = re.search(r'S[áa]b\s+([^\n·\(\)]+)', d["horario"], re.IGNORECASE)
-                if m: sab_text = m.group(1)
-            elif 'fines de semana' in h:
-                m = re.search(r'Fines de semana[^\d]*(\d[^\n·\(\)]+)', d["horario"], re.IGNORECASE)
-                if m: sab_text = m.group(1)
-            elif any(k in h for k in ['lun–sáb', 'lun-sab', 'lun–dom', 'lun-dom']):
-                sab_text = main_line
-                
-            if sab_text:
-                intervals = parse_intervals(sab_text)
-                if intervals:
-                    is_open = any(iv['start_min'] <= current_minutes < iv['end_min'] for iv in intervals)
-                    sched_formatted = ' y '.join(f"{iv['start_str']}–{iv['end_str']}h" for iv in intervals)
-                    return {
-                        'date_formatted': date_formatted,
-                        'status_text': 'Abierto' if is_open else 'Cerrado',
-                        'status_class': 'status-open' if is_open else 'status-closed',
-                        'today_schedule': sched_formatted,
-                        'is_open': is_open
-                    }
-        return {
-            'date_formatted': date_formatted,
-            'status_text': 'Cerrado',
-            'status_class': 'status-closed',
-            'today_schedule': 'Cerrado hoy',
-            'is_open': False
-        }
-        
-    weekday_part = main_line.split('·')[0] if '·' in main_line else main_line
-    intervals = parse_intervals(weekday_part)
-    if intervals:
-        is_open = any(iv['start_min'] <= current_minutes < iv['end_min'] for iv in intervals)
-        sched_formatted = ' y '.join(f"{iv['start_str']}–{iv['end_str']}h" for iv in intervals)
-        return {
-            'date_formatted': date_formatted,
-            'status_text': 'Abierto' if is_open else 'Cerrado',
-            'status_class': 'status-open' if is_open else 'status-closed',
-            'today_schedule': sched_formatted,
-            'is_open': is_open
-        }
-        
-    return {
-        'date_formatted': date_formatted,
-        'status_text': 'Abierto',
-        'status_class': 'status-open',
-        'today_schedule': main_line,
-        'is_open': True
-    }
-
-
-
-
 def page_html(d, slug):
     c = COLORES[d["tipo"]]
     e = html.escape
-    today = get_today_info(d, slug)
+    # La ficha se hidrata en cliente desde horarios.js; no se congela un
+    # cálculo basado en el texto editorial durante la generación estática.
+    today = {
+        "date_formatted": "Cargando calendario",
+        "status_text": "Cargando",
+        "status_class": "status-info",
+        "today_schedule": "Cargando calendario…",
+    }
     horario_inline = d["horario"].replace("\n", " ")
     horario_html = "".join(f"<div>{e(l)}</div>" for l in d["horario"].split("\n"))
     web, web_label = web_url(d)
@@ -367,10 +623,9 @@ def page_html(d, slug):
     grid_api_url = "https://biblioagenda.ucm.es/api_hours_grid.php?iid=4031&format=json" if libcal_iid == 4031 else "https://biblioagenda.uam.es/api_hours_grid.php?iid=3941&format=json"
 
     live_tag_html = ""
-    week_container_html = ""
+    week_container_html = '<div id="calendar-week" class="panel-live-week"></div>'
 
     d_json = json.dumps(d, ensure_ascii=False)
-    cal_json_esc = json.dumps(json.dumps(CALENDARIO, ensure_ascii=False))
     og_img = d.get("foto", "https://bibliotecasmadrid.es/icons/icon-512.png")
 
     return f"""<!DOCTYPE html>
@@ -704,12 +959,11 @@ def page_html(d, slug):
     </div>
   </main>
 
+  <script src="horarios.js"></script>
   <script>
   (function() {{
     const d = {d_json};
     const slug = "{slug}";
-    const CALENDARIO = JSON.parse({cal_json_esc});
-    
     // Interceptar botón 'Atrás' del navegador para ir a "Ver en el mapa"
     try {{
       const mapTarget = './#' + encodeURIComponent(slug);
@@ -724,188 +978,26 @@ def page_html(d, slug):
     }} catch (err) {{}}
     
     function updateToday() {{
-      const date = new Date();
-      const day = date.getDay();
-      const month = date.getMonth();
-      const dayOfMonth = date.getDate();
-      const year = date.getFullYear();
-      const currentMinutes = date.getHours() * 60 + date.getMinutes();
-      
-      const mm = String(month + 1).padStart(2, '0');
-      const dd = String(dayOfMonth).padStart(2, '0');
-      const dateKey = `${{year}}-${{mm}}-${{dd}}`;
-      const monthDay = `${{mm}}-${{dd}}`;
-      
-      const daysNames = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
-      const monthNames = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
-      const dayNameCap = daysNames[day].charAt(0).toUpperCase() + daysNames[day].slice(1);
-      const dateFormatted = `${{dayNameCap}}, ${{dayOfMonth}} de ${{monthNames[month]}}`;
-      
-      const titleEl = document.getElementById('today-title');
-      const badgeEl = document.getElementById('status-badge');
-      const hoursEl = document.getElementById('today-hours');
-      if (titleEl) titleEl.textContent = 'HOY · ' + dateFormatted;
-      if (!badgeEl || !hoursEl) return;
-      
-      const exceptions = (CALENDARIO.places_exceptions && CALENDARIO.places_exceptions[slug]) || {{}};
-      const h = d.horario.toLowerCase();
-      
-      if (h.includes('consultar')) return;
-      
-      function parseIntervals(text) {{
-        const intervals = [];
-        const re = /(\d{{1,2}})(?::(\d{{2}}))?\s*[–\-—a]\s*(\d{{1,2}})(?::(\d{{2}}))?h?/gi;
-        let m;
-        while ((m = re.exec(text)) !== null) {{
-          const sh = parseInt(m[1], 10), sm = m[2] ? parseInt(m[2], 10) : 0;
-          const eh = parseInt(m[3], 10), em = m[4] ? parseInt(m[4], 10) : 0;
-          intervals.push({{
-            startMin: sh * 60 + sm,
-            endMin: eh * 60 + em,
-            startStr: `${{sh}}:${{sm < 10 ? '0' : ''}}${{sm}}`,
-            endStr: `${{eh}}:${{em < 10 ? '0' : ''}}${{em}}`
-          }});
-        }}
-        return intervals;
-      }}
-
-      function formatClosureRange(startStr, endStr) {{
-        const monthNames = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
-        const [smStr, sdStr] = startStr.split('-');
-        const [emStr, edStr] = endStr.split('-');
-        const sm = parseInt(smStr, 10), sd = parseInt(sdStr, 10);
-        const em = parseInt(emStr, 10), ed = parseInt(edStr, 10);
-        if (sm === em) {{
-          return `Cerrado del ${{sd}} al ${{ed}} de ${{monthNames[sm - 1]}}`;
-        }} else {{
-          return `Cerrado del ${{sd}} de ${{monthNames[sm - 1]}} al ${{ed}} de ${{monthNames[em - 1]}}`;
-        }}
-      }}
-
-      // 1. Festivos
-      if (CALENDARIO.holidays && CALENDARIO.holidays[dateKey]) {{
-        const holidayName = CALENDARIO.holidays[dateKey];
-        if (!h.includes('festivos') || h.includes('festivos cerrado') || h.includes('cerrado sáb, dom y festivos')) {{
-          badgeEl.className = 'status-badge status-closed';
-          badgeEl.textContent = 'Cerrado';
-          hoursEl.textContent = `Cerrado por festivo (${{holidayName}})`;
-          return;
-        }}
-      }}
-
-      // 2. Cierre verano
-      if (exceptions.summer_closure) {{
-        if (monthDay >= exceptions.summer_closure.start && monthDay <= exceptions.summer_closure.end) {{
-          badgeEl.className = 'status-badge status-closed';
-          badgeEl.textContent = 'Cerrado';
-          hoursEl.textContent = formatClosureRange(exceptions.summer_closure.start, exceptions.summer_closure.end);
-          return;
-        }}
-      }}
-
-      // 3. Universidades agosto
-      if (exceptions.august_schedule) {{
-        const aug = exceptions.august_schedule;
-        if (monthDay >= aug.closure_start && monthDay <= aug.closure_end) {{
-          badgeEl.className = 'status-badge status-closed';
-          badgeEl.textContent = 'Cerrado';
-          hoursEl.textContent = formatClosureRange(aug.closure_start, aug.closure_end);
-          return;
-        }} else if (monthDay >= aug.reduced_start && monthDay <= aug.reduced_end) {{
-          if (day >= 1 && day <= 5) {{
-            const ivs = parseIntervals(aug.reduced_schedule);
-            const open = ivs.some(iv => currentMinutes >= iv.startMin && currentMinutes < iv.endMin);
-            badgeEl.className = 'status-badge ' + (open ? 'status-open' : 'status-closed');
-            badgeEl.textContent = open ? 'Abierto' : 'Cerrado';
-            hoursEl.textContent = aug.reduced_schedule + ' (Horario de agosto)';
-            return;
-          }} else {{
-            badgeEl.className = 'status-badge status-closed';
-            badgeEl.textContent = 'Cerrado';
-            hoursEl.textContent = 'Cerrado los fines de semana de agosto';
-            return;
-          }}
-        }}
-      }}
-
-      // 4. Verano bibliotecas municipales
-      if (exceptions.summer_period) {{
-        if (monthDay >= exceptions.summer_period.start && monthDay <= exceptions.summer_period.end) {{
-          if (day >= 1 && day <= 5) {{
-            const ivs = parseIntervals(exceptions.summer_period.weekday_schedule);
-            const open = ivs.some(iv => currentMinutes >= iv.startMin && currentMinutes < iv.endMin);
-            badgeEl.className = 'status-badge ' + (open ? 'status-open' : 'status-closed');
-            badgeEl.textContent = open ? 'Abierto' : 'Cerrado';
-            hoursEl.textContent = exceptions.summer_period.weekday_schedule + ' (Horario de verano)';
-            return;
-          }} else {{
-            badgeEl.className = 'status-badge status-closed';
-            badgeEl.textContent = 'Cerrado';
-            hoursEl.textContent = 'Cerrado los fines de semana (Horario de verano)';
-            return;
-          }}
-        }}
-      }}
-
-      // 5. Normal
-      const lines = d.horario.split('\\n');
-      let target = '';
-      if (day === 0) {{
-        if (h.includes('dom') || h.includes('fines de semana') || h.includes('lun–dom') || h.includes('lun-dom')) {{
-          if (h.includes('sáb–dom') || h.includes('sab-dom')) {{
-            const m = d.horario.match(/S[áa]b[–\-—]Dom\s+([^\\n·]+)/i);
-            if (m) target = m[1];
-          }} else if (h.includes('fines de semana')) {{
-            const m = d.horario.match(/Fines de semana[^\d]*(\d[^\\n·]+)/i);
-            if (m) target = m[1];
-          }} else if (h.includes('dom') && !h.includes('cerrado')) {{
-            const m = d.horario.match(/Dom\s+([^\\n·]+)/i);
-            if (m) target = m[1];
-          }} else if (h.includes('lun–dom') || h.includes('lun-dom')) {{
-            target = lines[0];
-          }}
-        }}
-      }} else if (day === 6) {{
-        if (h.includes('sáb') || h.includes('sab') || h.includes('fines de semana') || h.includes('lun–dom') || h.includes('lun-dom') || h.includes('lun–sáb') || h.includes('lun-sab')) {{
-          if (h.includes('sáb–dom') || h.includes('sab-dom')) {{
-            const m = d.horario.match(/S[áa]b[–\-—]Dom\s+([^\\n·]+)/i);
-            if (m) target = m[1];
-          }} else if (h.includes('sáb') || h.includes('sab')) {{
-            const m = d.horario.match(/S[áa]b\s+([^\\n·\(\)]+)/i);
-            if (m) target = m[1];
-          }} else if (h.includes('fines de semana')) {{
-            const m = d.horario.match(/Fines de semana[^\d]*(\d[^\\n·\(\)]+)/i);
-            if (m) target = m[1];
-          }} else if (h.includes('lun–sáb') || h.includes('lun-sab') || h.includes('lun–dom') || h.includes('lun-dom')) {{
-            target = lines[0];
-          }}
-        }}
-      }} else {{
-        target = lines[0].split('·')[0];
-      }}
-
-      if (!target) {{
-        badgeEl.className = 'status-badge status-closed';
-        badgeEl.textContent = 'Cerrado';
-        hoursEl.textContent = 'Cerrado hoy';
-        return;
-      }}
-
-      const ivs = parseIntervals(target);
-      if (ivs.length > 0) {{
-        const open = ivs.some(iv => currentMinutes >= iv.startMin && currentMinutes < iv.endMin);
-        badgeEl.className = 'status-badge ' + (open ? 'status-open' : 'status-closed');
-        badgeEl.textContent = open ? 'Abierto' : 'Cerrado';
-        hoursEl.textContent = ivs.map(iv => iv.startStr + '–' + iv.endStr + 'h').join(' y ');
-      }}
+      if (!window.Horarios) return;
+      Horarios.renderToday(slug, {{
+        title: document.getElementById('today-title'),
+        badge: document.getElementById('status-badge'),
+        hours: document.getElementById('today-hours')
+      }});
     }}
     updateToday();
+    const initialWeek = window.Horarios
+      ? Horarios.renderWeek(slug, document.getElementById('calendar-week'), 7)
+      : Promise.resolve([]);
     setInterval(updateToday, 60000);
+    setInterval(() => {{
+      if (window.Horarios) Horarios.renderWeek(slug, document.getElementById('calendar-week'), 7);
+    }}, 60000);
 
     if (d.libcal_lid) {{
       function fTime(t) {{
         if (!t) return '';
-        const m = t.trim().match(/^(\\d{1,2})(?::(\\d{{2}}))?\\s*(am|pm)?$/i);
+        const m = t.trim().match(/^(\\d{{1,2}})(?::(\\d{{2}}))?\\s*(am|pm)?$/i);
         if (!m) return t;
         let h = parseInt(m[1], 10);
         const min = m[2] || '00';
@@ -914,7 +1006,8 @@ def page_html(d, slug):
         return h + ':' + min;
       }}
 
-      fetch('{today_api_url}')
+      function updateLiveToday() {{
+        return fetch('{today_api_url}')
         .then(r => r.json())
         .then(data => {{
           const loc = (data.locations && data.locations.length > 0) ? data.locations[0] : null;
@@ -937,6 +1030,40 @@ def page_html(d, slug):
           }}
         }})
         .catch(() => {{}});
+      }}
+      updateLiveToday();
+      setInterval(updateLiveToday, 60000);
+
+      function updateLiveWeek() {{
+        const container = document.getElementById('calendar-week');
+        if (!container) return;
+        fetch('{grid_api_url}')
+          .then(r => r.json())
+          .then(data => {{
+            const loc = (data.locations || []).find(item => Number(item.lid) === Number(d.libcal_lid));
+            if (!loc) return;
+            const label = container.querySelector('.panel-calendar-week-label');
+            if (label) label.textContent = 'Próximos 7 días · En directo ({agenda_name})';
+            for (const week of loc.weeks || []) {{
+              for (const dayInfo of Object.values(week || {{}})) {{
+                if (!dayInfo || !dayInfo.date) continue;
+                const row = container.querySelector(`[data-calendar-date="${{dayInfo.date}}"]`);
+                const cell = row && row.querySelector('.day-hours');
+                if (!cell) continue;
+                if (dayInfo.times && dayInfo.times.status === 'open' && dayInfo.times.hours) {{
+                  cell.textContent = dayInfo.times.hours.map(hours => fTime(hours.from) + '–' + fTime(hours.to) + 'h').join(' y ');
+                }} else if (dayInfo.rendered && !/cerrad/i.test(dayInfo.rendered) && /\d/.test(dayInfo.rendered)) {{
+                  cell.textContent = dayInfo.rendered;
+                }} else {{
+                  cell.textContent = 'Cerrado';
+                }}
+              }}
+            }}
+          }})
+          .catch(() => {{}});
+      }}
+      initialWeek.then(updateLiveWeek);
+      setInterval(updateLiveWeek, 60000);
 
 
     }}
@@ -956,26 +1083,51 @@ def sitemap_xml(slugs):
     return '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "\n".join(urls) + "\n</urlset>\n"
 
 
-def main():
-    root = os.path.dirname(os.path.abspath(__file__))
-    index_path = os.path.join(root, "index.html")
+def main(argv=None):
+    parser = argparse.ArgumentParser(description="Genera fichas, sitemap y calendarios diarios.")
+    parser.add_argument("--migrate-calendar", action="store_true", help="convierte el calendario heredado al schema v2")
+    parser.add_argument("--check", action="store_true", help="valida la fuente sin regenerar fichas")
+    args = parser.parse_args(argv)
+
+    index_path = os.path.join(ROOT, "index.html")
 
     print(f"Leyendo {index_path}...")
     lugares = extract_lugares(index_path)
     slugs = unique_slugs(lugares)
 
+    calendario = cargar_calendario()
+    if args.migrate_calendar:
+        if calendario.get("schema_version") == CALENDAR_SCHEMA_VERSION:
+            print("calendario.json ya usa schema_version 2; no se migra de nuevo.")
+        else:
+            calendario = migrar_calendario(lugares, slugs, calendario)
+            with open(CALENDARIO_PATH, "w", encoding="utf-8") as f:
+                json.dump(calendario, f, ensure_ascii=False, indent=2)
+            print(f"Migrados {len(slugs)} perfiles de calendario a schema v2.")
+
+    errores = validar_calendario(calendario, slugs)
+    if errores:
+        raise SystemExit("Calendario inválido:\n- " + "\n- ".join(errores))
+    if args.check:
+        dias = 366 if dt.date(calendario["year"], 12, 31).timetuple().tm_yday == 366 else 365
+        print(f"Calendario válido: {len(slugs)} centros y {len(slugs) * dias} días declarados para {calendario['year']}.")
+        return
+
+    total_dias = generar_calendarios_publicos(calendario, slugs)
+
     # 1. Generar HTML por centro
     for d, s in zip(lugares, slugs):
-        out_path = os.path.join(root, f"{s}.html")
+        out_path = os.path.join(ROOT, f"{s}.html")
         with open(out_path, "w", encoding="utf-8") as f:
             f.write(page_html(d, s))
 
     # 2. Generar sitemap.xml
-    sitemap_path = os.path.join(root, "sitemap.xml")
+    sitemap_path = os.path.join(ROOT, "sitemap.xml")
     with open(sitemap_path, "w", encoding="utf-8") as f:
         f.write(sitemap_xml(slugs))
 
     print(f"Generadas {len(lugares)} páginas + sitemap.xml ({len(slugs) + 1} URLs).")
+    print(f"Calendario compilado: {total_dias} días en {HORARIOS_DIR}.")
     for s, d in list(zip(slugs, lugares))[:6]:
         print(f"  {s:42s} <- {d['nombre']}")
 

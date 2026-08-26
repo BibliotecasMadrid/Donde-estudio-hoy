@@ -46,6 +46,15 @@ export PYTHONIOENCODING=utf-8
 
 echo "==> Generando paginas con $PY build.py"
 "$PY" build.py
+ANIO_CALENDARIO="$("$PY" -c 'import json; print(json.load(open("calendario.json", encoding="utf-8"))["year"])')"
+ANIO_ACTUAL="$(date +%Y)"
+[[ "$ANIO_CALENDARIO" =~ ^[0-9]{4}$ ]] || { echo "ERROR: año de calendario inválido" >&2; exit 1; }
+
+# En enero, no se permite publicar el calendario vencido del año anterior.
+if (( 10#$ANIO_CALENDARIO < 10#$ANIO_ACTUAL )); then
+  echo "ERROR: calendario $ANIO_CALENDARIO vencido; carga el calendario de $ANIO_ACTUAL antes de desplegar." >&2
+  exit 1
+fi
 
 # --- 2. Armar dist/ ---
 
@@ -55,7 +64,7 @@ PRIVADO=(
   "build.py"                             # el generador, no su salida
   "build.sh"                             # este mismo script
   "sync_uam.py"
-  "calendario.json"                      # materia prima de build.py; la web no lo lee
+  "calendario.json"                      # fuente privada; build.py publica /horarios/
   "AGENTS.md"
   "README.md"
   "__pycache__"
@@ -93,9 +102,16 @@ fallo() { echo "ERROR: $1" >&2; exit 1; }
 
 [[ -f "$SALIDA/index.html" ]] || fallo "falta index.html"
 [[ -f "$SALIDA/sitemap.xml" ]] || fallo "falta sitemap.xml"
+[[ -f "$SALIDA/horarios.js" ]] || fallo "falta horarios.js"
 [[ -f "$SALIDA/manifest.json" ]] || fallo "falta manifest.json (la PWA dejaria de instalarse)"
 [[ -f "$SALIDA/sw.js" ]] || fallo "falta sw.js (la PWA dejaria de instalarse)"
 [[ -f "$SALIDA/.well-known/assetlinks.json" ]] || fallo "falta .well-known/assetlinks.json (la app Android dejaria de validar el dominio)"
+
+# El estado abierto/cerrado depende de estos 12 assets generados, no del texto
+# editorial de index.html. No publicar si el calendario anual quedó incompleto.
+for mes in {01..12}; do
+  [[ -f "$SALIDA/horarios/$ANIO_CALENDARIO-$mes.json" ]] || fallo "falta horarios/$ANIO_CALENDARIO-$mes.json"
+done
 
 # Red de seguridad: da igual como se llame la carpeta, el material de firma no sale de
 # aqui. Los .zip entran en la lista porque el paquete que descarga PWABuilder ES un zip
