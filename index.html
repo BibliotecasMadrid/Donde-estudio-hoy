@@ -100,6 +100,12 @@
       color: var(--ink-2);
       margin-top: 2px;
     }
+    .topbar-links { display: flex; gap: 10px; margin-top: 6px; }
+    .topbar-links a {
+      color: #31527f; font-size: 10.5px; font-weight: 750;
+      text-decoration: none; border-bottom: 1px solid rgba(49,82,127,.3);
+    }
+    .topbar-links a:hover, .topbar-links a:focus-visible { color: #1d4ed8; border-color: currentColor; }
 
     /* ── Legend ──────────────────────────────────── */
     .legend {
@@ -677,6 +683,10 @@
 <div class="topbar">
   <h1>Dónde estudiar en Madrid</h1>
   <p>Bibliotecas, salas de estudio y universidades · pulsa un punto</p>
+  <nav class="topbar-links" aria-label="Horarios especiales">
+    <a href="/bibliotecas-abiertas-fin-de-semana-madrid">Fin de semana</a>
+    <a href="/bibliotecas-24-horas-madrid">24 horas</a>
+  </nav>
 </div>
 <div class="legend">
   <div class="legend-item" data-type="biblioteca"><span class="dot" style="background:#2563EB"></span> Biblioteca pública</div>

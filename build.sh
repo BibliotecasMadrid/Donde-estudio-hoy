@@ -64,6 +64,7 @@ PRIVADO=(
   "build.py"                             # el generador, no su salida
   "build.sh"                             # este mismo script
   "sync_uam.py"
+  "test_build.py"
   "calendario.json"                      # fuente privada; build.py publica /horarios/
   "AGENTS.md"
   "README.md"

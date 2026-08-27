@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "year": 2026,
-  "last_updated": "2026-08-19",
+  "last_updated": "2026-08-27",
   "time_zone": "Europe/Madrid",
   "regional_holidays": {
     "2026-01-01": "AÃ±o Nuevo",
@@ -234,8 +234,8 @@
       },
       "rules": [
         {
-          "from": "2026-01-08",
-          "to": "2026-02-15",
+          "from": "2026-01-07",
+          "to": "2026-02-05",
           "estado": "abierto",
           "intervalos": [
             [
@@ -244,11 +244,15 @@
             ]
           ],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Apertura extraordinaria 24 horas por exámenes",
+          "source": {
+            "url": "https://www.comunidad.madrid/noticias/2026/01/02/comunidad-madrid-amplia-horarios-bibliotecas-publicas-facilitar-preparacion-examenes-febrero",
+            "checked_at": "2026-08-27"
+          }
         },
         {
-          "from": "2026-05-10",
-          "to": "2026-06-30",
+          "from": "2026-05-11",
+          "to": "2026-07-03",
           "estado": "abierto",
           "intervalos": [
             [
@@ -257,7 +261,11 @@
             ]
           ],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Apertura extraordinaria 24 horas por exámenes",
+          "source": {
+            "url": "https://www.comunidad.madrid/portal-lector/noticia/2026/05/09/comunidad-madrid-amplia-horarios-once-bibliotecas-publicas-facilitar-preparacion-examenes",
+            "checked_at": "2026-08-27"
+          }
         }
       ],
       "dates": {
@@ -351,8 +359,8 @@
       },
       "rules": [
         {
-          "from": "2026-01-08",
-          "to": "2026-02-15",
+          "from": "2026-01-07",
+          "to": "2026-02-05",
           "estado": "abierto",
           "intervalos": [
             [
@@ -361,11 +369,15 @@
             ]
           ],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Apertura extraordinaria 24 horas por exámenes",
+          "source": {
+            "url": "https://www.comunidad.madrid/noticias/2026/01/02/comunidad-madrid-amplia-horarios-bibliotecas-publicas-facilitar-preparacion-examenes-febrero",
+            "checked_at": "2026-08-27"
+          }
         },
         {
-          "from": "2026-05-10",
-          "to": "2026-06-30",
+          "from": "2026-05-11",
+          "to": "2026-07-03",
           "estado": "abierto",
           "intervalos": [
             [
@@ -374,7 +386,11 @@
             ]
           ],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Apertura extraordinaria 24 horas por exámenes",
+          "source": {
+            "url": "https://www.comunidad.madrid/portal-lector/noticia/2026/05/09/comunidad-madrid-amplia-horarios-once-bibliotecas-publicas-facilitar-preparacion-examenes",
+            "checked_at": "2026-08-27"
+          }
         }
       ],
       "dates": {
@@ -6182,28 +6198,18 @@
         {
           "from": "2026-01-08",
           "to": "2026-02-15",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         },
         {
           "from": "2026-05-10",
           "to": "2026-06-30",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         }
       ],
       "dates": {
@@ -6280,24 +6286,14 @@
           "nota": "Horario habitual"
         },
         "5": {
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "09:00",
-              "21:00"
-            ]
-          ],
-          "nota": "Horario habitual"
+          "estado": "cerrado",
+          "intervalos": [],
+          "nota": "Cerrado sábados según el horario publicado"
         },
         "6": {
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "09:00",
-              "21:00"
-            ]
-          ],
-          "nota": "Horario habitual"
+          "estado": "cerrado",
+          "intervalos": [],
+          "nota": "Cerrado domingos según el horario publicado"
         }
       },
       "rules": [],
@@ -13739,28 +13735,18 @@
         {
           "from": "2026-01-08",
           "to": "2026-02-15",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         },
         {
           "from": "2026-05-10",
           "to": "2026-06-30",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         }
       ],
       "dates": {
@@ -16893,28 +16879,18 @@
         {
           "from": "2026-01-08",
           "to": "2026-02-15",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         },
         {
           "from": "2026-05-10",
           "to": "2026-06-30",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         }
       ],
       "dates": {
@@ -17535,28 +17511,18 @@
         {
           "from": "2026-01-08",
           "to": "2026-02-15",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         },
         {
           "from": "2026-05-10",
           "to": "2026-06-30",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         }
       ],
       "dates": {
@@ -17647,28 +17613,18 @@
         {
           "from": "2026-01-08",
           "to": "2026-02-15",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         },
         {
           "from": "2026-05-10",
           "to": "2026-06-30",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         }
       ],
       "dates": {
@@ -17759,28 +17715,18 @@
         {
           "from": "2026-01-08",
           "to": "2026-02-15",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         },
         {
           "from": "2026-05-10",
           "to": "2026-06-30",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         }
       ],
       "dates": {
@@ -17871,28 +17817,18 @@
         {
           "from": "2026-01-08",
           "to": "2026-02-15",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         },
         {
           "from": "2026-05-10",
           "to": "2026-06-30",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         }
       ],
       "dates": {
@@ -17983,28 +17919,18 @@
         {
           "from": "2026-01-08",
           "to": "2026-02-15",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         },
         {
           "from": "2026-05-10",
           "to": "2026-06-30",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         }
       ],
       "dates": {
@@ -18095,28 +18021,18 @@
         {
           "from": "2026-01-08",
           "to": "2026-02-15",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         },
         {
           "from": "2026-05-10",
           "to": "2026-06-30",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         }
       ],
       "dates": {
@@ -18207,28 +18123,18 @@
         {
           "from": "2026-01-08",
           "to": "2026-02-15",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         },
         {
           "from": "2026-05-10",
           "to": "2026-06-30",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         }
       ],
       "dates": {
@@ -18319,28 +18225,18 @@
         {
           "from": "2026-01-08",
           "to": "2026-02-15",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         },
         {
           "from": "2026-05-10",
           "to": "2026-06-30",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         }
       ],
       "dates": {
@@ -18431,28 +18327,18 @@
         {
           "from": "2026-01-08",
           "to": "2026-02-15",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         },
         {
           "from": "2026-05-10",
           "to": "2026-06-30",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         }
       ],
       "dates": {
@@ -18543,28 +18429,18 @@
         {
           "from": "2026-01-08",
           "to": "2026-02-15",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         },
         {
           "from": "2026-05-10",
           "to": "2026-06-30",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         }
       ],
       "dates": {
@@ -18655,28 +18531,18 @@
         {
           "from": "2026-01-08",
           "to": "2026-02-15",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         },
         {
           "from": "2026-05-10",
           "to": "2026-06-30",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         }
       ],
       "dates": {
@@ -18767,28 +18633,18 @@
         {
           "from": "2026-01-08",
           "to": "2026-02-15",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         },
         {
           "from": "2026-05-10",
           "to": "2026-06-30",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         }
       ],
       "dates": {
@@ -18879,28 +18735,18 @@
         {
           "from": "2026-01-08",
           "to": "2026-02-15",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         },
         {
           "from": "2026-05-10",
           "to": "2026-06-30",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         }
       ],
       "dates": {
@@ -19076,28 +18922,18 @@
         {
           "from": "2026-01-08",
           "to": "2026-02-15",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         },
         {
           "from": "2026-05-10",
           "to": "2026-06-30",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         }
       ],
       "dates": {
@@ -19188,28 +19024,18 @@
         {
           "from": "2026-01-08",
           "to": "2026-02-15",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         },
         {
           "from": "2026-05-10",
           "to": "2026-06-30",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         }
       ],
       "dates": {
@@ -19300,28 +19126,18 @@
         {
           "from": "2026-01-08",
           "to": "2026-02-15",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         },
         {
           "from": "2026-05-10",
           "to": "2026-06-30",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         }
       ],
       "dates": {
@@ -19412,28 +19228,18 @@
         {
           "from": "2026-01-08",
           "to": "2026-02-15",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         },
         {
           "from": "2026-05-10",
           "to": "2026-06-30",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         }
       ],
       "dates": {
@@ -19524,28 +19330,18 @@
         {
           "from": "2026-01-08",
           "to": "2026-02-15",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         },
         {
           "from": "2026-05-10",
           "to": "2026-06-30",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         }
       ],
       "dates": {
@@ -19636,28 +19432,18 @@
         {
           "from": "2026-01-08",
           "to": "2026-02-15",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         },
         {
           "from": "2026-05-10",
           "to": "2026-06-30",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         }
       ],
       "dates": {
@@ -19748,28 +19534,18 @@
         {
           "from": "2026-01-08",
           "to": "2026-02-15",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         },
         {
           "from": "2026-05-10",
           "to": "2026-06-30",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         }
       ],
       "dates": {
@@ -19888,28 +19664,18 @@
         {
           "from": "2026-01-08",
           "to": "2026-02-15",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         },
         {
           "from": "2026-05-10",
           "to": "2026-06-30",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         }
       ],
       "dates": {
@@ -20718,20 +20484,7 @@
       },
       "rules": [
         {
-          "from": "2026-01-08",
-          "to": "2026-02-15",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
-          "priority": 90,
-          "nota": "Horario ampliado de exámenes"
-        },
-        {
-          "from": "2026-05-10",
+          "from": "2026-05-15",
           "to": "2026-06-30",
           "estado": "abierto",
           "intervalos": [
@@ -20741,7 +20494,11 @@
             ]
           ],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Sala de lectura abierta 24 horas por exámenes",
+          "source": {
+            "url": "https://biblioteca.uah.es/conoce-la-biblioteca/la-biblioteca/horarios/",
+            "checked_at": "2026-08-27"
+          }
         }
       ],
       "dates": {
@@ -20945,28 +20702,18 @@
         {
           "from": "2026-01-08",
           "to": "2026-02-15",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         },
         {
           "from": "2026-05-10",
           "to": "2026-06-30",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         }
       ],
       "dates": {
@@ -21085,28 +20832,18 @@
         {
           "from": "2026-01-08",
           "to": "2026-02-15",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         },
         {
           "from": "2026-05-10",
           "to": "2026-06-30",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         }
       ],
       "dates": {
@@ -21225,28 +20962,18 @@
         {
           "from": "2026-01-08",
           "to": "2026-02-15",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         },
         {
           "from": "2026-05-10",
           "to": "2026-06-30",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         }
       ],
       "dates": {
@@ -21365,28 +21092,18 @@
         {
           "from": "2026-01-08",
           "to": "2026-02-15",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         },
         {
           "from": "2026-05-10",
           "to": "2026-06-30",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         }
       ],
       "dates": {
@@ -21505,28 +21222,18 @@
         {
           "from": "2026-01-08",
           "to": "2026-02-15",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         },
         {
           "from": "2026-05-10",
           "to": "2026-06-30",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         }
       ],
       "dates": {
@@ -21645,28 +21352,18 @@
         {
           "from": "2026-01-08",
           "to": "2026-02-15",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         },
         {
           "from": "2026-05-10",
           "to": "2026-06-30",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         }
       ],
       "dates": {
@@ -21785,28 +21482,18 @@
         {
           "from": "2026-01-08",
           "to": "2026-02-15",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         },
         {
           "from": "2026-05-10",
           "to": "2026-06-30",
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "00:00",
-              "24:00"
-            ]
-          ],
+          "estado": "consultar",
+          "intervalos": [],
           "priority": 90,
-          "nota": "Horario ampliado de exámenes"
+          "nota": "Horario de exámenes pendiente de confirmar en la fuente oficial"
         }
       ],
       "dates": {

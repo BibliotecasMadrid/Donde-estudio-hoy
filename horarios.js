@@ -55,6 +55,15 @@
     return `${utc.getUTCFullYear()}-${String(utc.getUTCMonth() + 1).padStart(2, '0')}-${String(utc.getUTCDate()).padStart(2, '0')}`;
   }
 
+  function weekendKeys(date) {
+    const today = dateKey(date || new Date());
+    const parts = partsFromKey(today);
+    const weekday = new Date(Date.UTC(parts.year, parts.month - 1, parts.day, 12)).getUTCDay();
+    const saturdayOffset = weekday === 6 ? 0 : weekday === 0 ? -1 : 6 - weekday;
+    const saturday = addDays(today, saturdayOffset);
+    return { saturday, sunday: addDays(saturday, 1) };
+  }
+
   function monthId(year, month) {
     return `${year}-${String(month).padStart(2, '0')}`;
   }
@@ -232,6 +241,7 @@
     madridParts,
     dateKey,
     addDays,
+    weekendKeys,
     ensureMonth,
     getEntry,
     getEntryAsync,

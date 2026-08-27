@@ -21,7 +21,10 @@ import unicodedata
 from urllib.parse import quote_plus, urlparse
 
 BASE = "https://bibliotecasmadrid.es/"
-LASTMOD = "2026-08-25"
+LASTMOD = "2026-08-27"
+
+WEEKEND_ROUTE = "bibliotecas-abiertas-fin-de-semana-madrid"
+FULL_DAY_ROUTE = "bibliotecas-24-horas-madrid"
 
 PREFIJOS = [
     "biblioteca pública ",
@@ -139,7 +142,8 @@ def unique_slugs(lugares):
 
 
 def extract_lugares(index_html):
-    src = open(index_html, encoding="utf-8").read()
+    with open(index_html, encoding="utf-8") as f:
+        src = f.read()
     i = src.index("const lugares = [")
     arr_start = src.index("[", i)
     end = src.index("\n];", arr_start)
@@ -436,6 +440,13 @@ def validar_perfil(slug, perfil, year):
             if any(dia not in WEEKDAYS for dia in regla.get("weekdays", WEEKDAYS)):
                 raise ValueError("weekdays inválido")
             entrada(regla["estado"], regla.get("intervalos"), regla.get("nota"))
+            if regla.get("estado") == "abierto" and regla.get("intervalos") == [["00:00", "24:00"]]:
+                fuente_regla = regla.get("source") or {}
+                if urlparse(fuente_regla.get("url", "")).scheme != "https":
+                    raise ValueError("la regla 24 h necesita una fuente HTTPS")
+                revision = dt.date.fromisoformat(fuente_regla.get("checked_at", ""))
+                if revision > dt.date.today():
+                    raise ValueError("la fuente de la regla 24 h tiene una fecha futura")
         except (KeyError, TypeError, ValueError) as exc:
             errores.append(f"{slug}: regla inválida: {exc}")
     for fecha, valor in (perfil.get("dates") or {}).items():
@@ -1074,8 +1085,222 @@ def page_html(d, slug):
 """
 
 
-def sitemap_xml(slugs):
+def es_abierto(valor):
+    return valor.get("estado") == "abierto" and bool(valor.get("intervalos"))
+
+
+def es_24_horas(valor):
+    return valor.get("estado") == "abierto" and valor.get("intervalos") == [["00:00", "24:00"]]
+
+
+def texto_intervalos(valor):
+    if not valor or valor.get("estado") == "consultar":
+        return "Consultar"
+    if valor.get("estado") != "abierto":
+        return "Cerrado"
+    intervalos = valor.get("intervalos") or []
+    if intervalos == [["00:00", "24:00"]]:
+        return "24 h"
+    return " y ".join(f"{inicio}–{fin}h" for inicio, fin in intervalos)
+
+
+def fechas_24_horas(perfil):
+    periodos = []
+    for regla in perfil.get("rules", []):
+        if es_24_horas(regla) and regla.get("source"):
+            periodos.append({
+                "from": regla["from"],
+                "to": regla["to"],
+                "note": regla.get("nota", "Apertura 24 horas"),
+                "source": regla["source"],
+            })
+    return sorted(periodos, key=lambda periodo: (periodo["from"], periodo["to"]))
+
+
+def abre_algun_fin_de_semana(perfil, calendario):
+    year = calendario["year"]
+    fecha = dt.date(year, 1, 1)
+    ultimo = dt.date(year, 12, 31)
+    while fecha <= ultimo:
+        if fecha.weekday() in (5, 6) and es_abierto(resolver_dia(perfil, fecha, calendario)):
+            return True
+        fecha += dt.timedelta(days=1)
+    return False
+
+
+def datos_landing(lugares, slugs, calendario, modo):
+    resultado = []
+    for lugar, slug in zip(lugares, slugs):
+        perfil = calendario["places"][slug]
+        periodos = fechas_24_horas(perfil)
+        if modo == "weekend" and not abre_algun_fin_de_semana(perfil, calendario):
+            continue
+        if modo == "full-day" and not periodos:
+            continue
+        web, _ = web_url(lugar)
+        resultado.append({
+            "slug": slug,
+            "type": lugar["tipo"],
+            "typeLabel": COLORES[lugar["tipo"]]["label"],
+            "color": COLORES[lugar["tipo"]]["fill"],
+            "name": lugar["nombre"],
+            "district": lugar.get("distrito", ""),
+            "address": lugar["direccion"],
+            "lat": lugar["lat"],
+            "lng": lugar["lng"],
+            "capacity": lugar.get("plazas"),
+            "web": web,
+            "municipality": perfil["municipio"],
+            "weekend": {
+                "saturday": perfil["weekly"]["5"],
+                "sunday": perfil["weekly"]["6"],
+            },
+            "periods": periodos,
+        })
+    return resultado
+
+
+def ordenar_landing(lugar):
+    sabado = es_abierto(lugar["weekend"]["saturday"])
+    domingo = es_abierto(lugar["weekend"]["sunday"])
+    return (lugar["municipality"] != "madrid", not (sabado and domingo), not domingo, normalizar(lugar["name"]))
+
+
+def tarjeta_estatica(lugar, modo):
+    e = html.escape
+    if modo == "weekend":
+        detalle = (
+            f'<div class="schedule-row"><span>Sábado habitual</span><strong>{e(texto_intervalos(lugar["weekend"]["saturday"]))}</strong></div>'
+            f'<div class="schedule-row"><span>Domingo habitual</span><strong>{e(texto_intervalos(lugar["weekend"]["sunday"]))}</strong></div>'
+        )
+    else:
+        detalle = "".join(
+            f'<div class="period"><strong>{e(periodo["from"])} — {e(periodo["to"])}</strong>'
+            f'<a href="{e(periodo["source"]["url"])}" rel="noopener noreferrer">Fuente oficial</a></div>'
+            for periodo in lugar["periods"]
+        )
+    return f'''<article class="place-card" data-slug="{e(lugar["slug"])}" tabindex="0">
+      <div class="card-top"><span class="type-badge" style="--type-color:{e(lugar["color"])}">{e(lugar["typeLabel"])}</span></div>
+      <h3>{e(lugar["name"])}</h3>
+      <p>{e(lugar["district"])} · {e(lugar["address"])}</p>
+      <div class="card-schedule">{detalle}</div>
+      <a class="detail-link" href="/{e(lugar["slug"])}">Ver ficha y próximos horarios</a>
+    </article>'''
+
+
+def landing_page_html(lugares, slugs, calendario, modo):
+    e = html.escape
+    sitios = sorted(datos_landing(lugares, slugs, calendario, modo), key=ordenar_landing)
+    year = calendario["year"]
+    updated = calendario["last_updated"]
+    is_weekend = modo == "weekend"
+    route = WEEKEND_ROUTE if is_weekend else FULL_DAY_ROUTE
+    title = "Bibliotecas abiertas el fin de semana en Madrid" if is_weekend else "Bibliotecas 24 horas en Madrid: aperturas en época de exámenes"
+    description = (
+        "Bibliotecas y salas de estudio abiertas los sábados y domingos en Madrid. Consulta horarios actualizados, dirección y mapa para este fin de semana."
+        if is_weekend else
+        "Bibliotecas y salas de estudio 24 horas en Madrid durante exámenes. Consulta qué centros tienen apertura 24 h confirmada y sus fechas oficiales."
+    )
+    intro = (
+        "Consulta qué bibliotecas y salas de estudio abren el próximo sábado y domingo. Los resultados se actualizan con festivos, verano y excepciones de cada centro."
+        if is_weekend else
+        "Las aperturas 24 horas no son permanentes: se activan en fechas concretas de exámenes. Aquí solo aparecen periodos confirmados en una fuente oficial."
+    )
+    capital = [sitio for sitio in sitios if sitio["municipality"] == "madrid"]
+    comunidad = [sitio for sitio in sitios if sitio["municipality"] != "madrid"]
+
+    def grupo(titulo_grupo, grupo_sitios):
+        if not grupo_sitios:
+            return ""
+        cards = "\n".join(tarjeta_estatica(sitio, modo) for sitio in grupo_sitios)
+        return f'<section class="result-group" data-group="{e(titulo_grupo)}"><h2>{e(titulo_grupo)} <span>{len(grupo_sitios)}</span></h2><div class="cards">{cards}</div></section>'
+
+    if sitios:
+        grupos = grupo("Madrid capital", capital) + grupo("Otros municipios", comunidad)
+    else:
+        grupos = '<div class="empty-state">No hay aperturas 24 horas confirmadas en el calendario vigente. Consulta las opciones de fin de semana.</div>'
+
+    item_list = {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": title,
+        "numberOfItems": len(sitios),
+        "itemListElement": [
+            {"@type": "ListItem", "position": index, "name": sitio["name"], "url": BASE + sitio["slug"]}
+            for index, sitio in enumerate(sitios, 1)
+        ],
+    }
+    page_data = json.dumps({
+        "mode": modo,
+        "route": route,
+        "calendarYear": year,
+        "calendarUpdated": updated,
+        "places": sitios,
+    }, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+    other_href = f'/{FULL_DAY_ROUTE}' if is_weekend else f'/{WEEKEND_ROUTE}'
+    other_label = "Ver bibliotecas 24 horas" if is_weekend else "Ver bibliotecas abiertas el fin de semana"
+    filters = '''<div class="filters" id="filters" aria-label="Filtrar por día">
+      <button class="active" data-filter="all">Todos</button><button data-filter="saturday">Sábado</button>
+      <button data-filter="sunday">Domingo</button><button data-filter="both">Ambos días</button>
+    </div>''' if is_weekend else ""
+    summary_initial = (
+        f"Horarios de fin de semana del calendario {year}. Comprobando las próximas fechas…"
+        if is_weekend else
+        f"{len(sitios)} centros con periodos 24 h confirmados en el calendario {year}. Comprobando el estado de hoy…"
+    )
+    canonical = BASE + route
+    lastmod = max(LASTMOD, updated)
+    return f'''<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#2563EB">
+  <title>{e(title)}</title>
+  <meta name="description" content="{e(description)}">
+  <link rel="canonical" href="{e(canonical)}">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="website"><meta property="og:locale" content="es_ES">
+  <meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(description)}">
+  <meta property="og:url" content="{e(canonical)}">
+  <script type="application/ld+json">{json.dumps(item_list, ensure_ascii=False)}</script>
+  <link rel="manifest" href="manifest.json"><link rel="icon" type="image/png" sizes="64x64" href="icons/favicon-64.png">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
+  <link rel="stylesheet" href="seo-landing.css">
+</head>
+<body>
+  <header class="page-header">
+    <a class="home-link" href="/">← Volver al mapa</a>
+    <h1>{e(title)}</h1><p>{e(intro)}</p>
+    <nav class="intent-links" aria-label="Páginas relacionadas"><a href="{other_href}">{other_label}</a></nav>
+    <p class="updated">Calendario {year} · revisado el {e(updated)}</p>
+  </header>
+  <main>
+    <section class="map-column" aria-label="Mapa de resultados"><div id="map"></div></section>
+    <section class="results-column" aria-live="polite">
+      <div class="results-toolbar"><p class="summary" id="summary">{e(summary_initial)}</p>{filters}<div class="notice" id="notice" hidden></div></div>
+      <div id="results">{grupos}</div>
+    </section>
+  </main>
+  <aside class="place-panel" id="place-panel" aria-hidden="true"><button id="panel-close" aria-label="Cerrar">×</button><div id="panel-content"></div></aside>
+  <noscript><p class="noscript">El listado muestra los horarios habituales o periodos confirmados. Activa JavaScript para comprobar las próximas fechas y usar el mapa.</p></noscript>
+  <script>window.LANDING_DATA={page_data};window.LANDING_LASTMOD={json.dumps(lastmod)};</script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+  <script src="horarios.js"></script><script src="seo-landing.js"></script>
+</body>
+</html>'''
+
+
+def sitemap_xml(slugs, calendario=None):
+    lastmod_landing = max(LASTMOD, (calendario or {}).get("last_updated", LASTMOD))
     urls = [f"  <url><loc>{BASE}</loc><lastmod>{LASTMOD}</lastmod><changefreq>monthly</changefreq><priority>1.0</priority></url>"]
+    urls.extend([
+        f"  <url><loc>{BASE}{WEEKEND_ROUTE}</loc><lastmod>{lastmod_landing}</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>",
+        f"  <url><loc>{BASE}{FULL_DAY_ROUTE}</loc><lastmod>{lastmod_landing}</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>",
+    ])
     for s in slugs:
         urls.append(
             f"  <url><loc>{BASE}{s}</loc><lastmod>{LASTMOD}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>"
@@ -1121,12 +1346,17 @@ def main(argv=None):
         with open(out_path, "w", encoding="utf-8") as f:
             f.write(page_html(d, s))
 
+    for route, mode in ((WEEKEND_ROUTE, "weekend"), (FULL_DAY_ROUTE, "full-day")):
+        out_path = os.path.join(ROOT, f"{route}.html")
+        with open(out_path, "w", encoding="utf-8") as f:
+            f.write(landing_page_html(lugares, slugs, calendario, mode))
+
     # 2. Generar sitemap.xml
     sitemap_path = os.path.join(ROOT, "sitemap.xml")
     with open(sitemap_path, "w", encoding="utf-8") as f:
-        f.write(sitemap_xml(slugs))
+        f.write(sitemap_xml(slugs, calendario))
 
-    print(f"Generadas {len(lugares)} páginas + sitemap.xml ({len(slugs) + 1} URLs).")
+    print(f"Generadas {len(lugares)} fichas + 2 páginas temáticas + sitemap.xml ({len(slugs) + 3} URLs).")
     print(f"Calendario compilado: {total_dias} días en {HORARIOS_DIR}.")
     for s, d in list(zip(slugs, lugares))[:6]:
         print(f"  {s:42s} <- {d['nombre']}")
