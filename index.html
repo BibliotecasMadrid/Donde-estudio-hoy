@@ -715,6 +715,7 @@
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+<script src="basemap.js"></script>
 <script src="horarios.js"></script>
 <script>
 // ─────────────────────────────────────────────
@@ -953,12 +954,8 @@ const map = L.map('map', {
   zoomControl: true
 });
 
-// Base limpia y moderna (CARTO Positron) con respaldo retina
-L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-  attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · © <a href="https://carto.com/attributions">CARTO</a> · Datos: <a href="https://datos.madrid.es">datos.madrid.es</a> (CC BY 4.0)',
-  subdomains: 'abcd',
-  maxZoom: 20
-}).addTo(map);
+// Base limpia y moderna (Positron). El proveedor y la clave se eligen en basemap.js.
+Basemap.add(map, 'Datos: <a href="https://datos.madrid.es">datos.madrid.es</a> (CC BY 4.0)');
 
 const colores = {
   biblioteca:  { fill: '#2563EB', label: 'Biblioteca pública' },
