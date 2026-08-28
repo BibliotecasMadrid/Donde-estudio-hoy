@@ -104,6 +104,7 @@ fallo() { echo "ERROR: $1" >&2; exit 1; }
 [[ -f "$SALIDA/index.html" ]] || fallo "falta index.html"
 [[ -f "$SALIDA/sitemap.xml" ]] || fallo "falta sitemap.xml"
 [[ -f "$SALIDA/horarios.js" ]] || fallo "falta horarios.js"
+[[ -f "$SALIDA/basemap.js" ]] || fallo "falta basemap.js (los mapas se quedarian sin capa base)"
 [[ -f "$SALIDA/manifest.json" ]] || fallo "falta manifest.json (la PWA dejaria de instalarse)"
 [[ -f "$SALIDA/sw.js" ]] || fallo "falta sw.js (la PWA dejaria de instalarse)"
 [[ -f "$SALIDA/.well-known/assetlinks.json" ]] || fallo "falta .well-known/assetlinks.json (la app Android dejaria de validar el dominio)"

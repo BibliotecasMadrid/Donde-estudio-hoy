@@ -2,7 +2,7 @@
   'use strict';
 
   const data = window.LANDING_DATA;
-  if (!data || !window.L || !window.Horarios) return;
+  if (!data || !window.L || !window.Horarios || !window.Basemap) return;
 
   const results = document.getElementById('results');
   const summary = document.getElementById('summary');
@@ -19,10 +19,7 @@
     .replace(/"/g, '&quot;').replace(/'/g, '&#039;');
 
   const map = L.map('map', { center: [40.4168, -3.7038], zoom: 11 });
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · © <a href="https://carto.com/attributions">CARTO</a>',
-    subdomains: 'abcd', maxZoom: 20
-  }).addTo(map);
+  window.Basemap.add(map);
   const clusters = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 45 }).addTo(map);
   const markers = new Map();
 

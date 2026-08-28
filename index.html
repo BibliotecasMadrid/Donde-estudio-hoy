@@ -420,9 +420,11 @@
     }
 
     /* ── Ubicación y buscador ──────────────────── */
+    /* El margen deja sitio al globo del titulo. Es solo el valor de partida: al cargar,
+       separarHerramientasDelTitulo() lo recalcula midiendo el globo de verdad. */
     .study-tools-control {
       position: relative;
-      margin-top: 14px !important;
+      margin-top: 36px !important;
     }
     .study-tools-row {
       display: flex;
@@ -566,7 +568,8 @@
       .leaflet-control-zoom {
         display: none; /* Map zooming is usually handled by pinch on mobile */
       }
-      .study-tools-control { margin-top: 82px !important; }
+      /* Sin control de zoom encima, el hueco hasta el globo del titulo lo pone todo este margen. */
+      .study-tools-control { margin-top: 106px !important; }
     }
 
     /* ── Botón "Abierto ahora" ──────────────── */
@@ -1140,6 +1143,26 @@ const LocateAndSearchControl = L.Control.extend({
   }
 });
 map.addControl(new LocateAndSearchControl());
+
+// El buscador y el boton de ubicacion caen en la misma esquina que el globo del titulo.
+// El hueco estaba fijado a ojo y se solapaban 10px. Fijar otro numero a ojo aguanta hasta
+// que el titulo salte de linea en una pantalla estrecha, asi que se mide el globo y se
+// deja siempre el mismo aire por debajo.
+function separarHerramientasDelTitulo() {
+  const titulo = document.querySelector('.topbar');
+  const herramientas = document.querySelector('.study-tools-control');
+  if (!titulo || !herramientas) return;
+  const AIRE = 12;
+  const actual = herramientas.getBoundingClientRect().top;
+  const deseado = titulo.getBoundingClientRect().bottom + AIRE;
+  const margen = parseFloat(getComputedStyle(herramientas).marginTop) || 0;
+  // Con !important en la hoja de estilos (la regla movil), el inline solo gana si tambien lo lleva.
+  herramientas.style.setProperty('margin-top', Math.max(0, margen + deseado - actual) + 'px', 'important');
+}
+
+separarHerramientasDelTitulo();
+window.addEventListener('load', separarHerramientasDelTitulo);
+window.addEventListener('resize', separarHerramientasDelTitulo);
 
 let userMarker = null;
 map.on('locationfound', function(e) {

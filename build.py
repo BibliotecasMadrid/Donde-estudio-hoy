@@ -1289,6 +1289,7 @@ def landing_page_html(lugares, slugs, calendario, modo):
   <script>window.LANDING_DATA={page_data};window.LANDING_LASTMOD={json.dumps(lastmod)};</script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+  <script src="basemap.js"></script>
   <script src="horarios.js"></script><script src="seo-landing.js"></script>
 </body>
 </html>'''

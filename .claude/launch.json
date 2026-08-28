@@ -4,8 +4,24 @@
     {
       "name": "bibliotecas",
       "runtimeExecutable": "python",
-      "runtimeArgs": ["-m", "http.server", "3456"],
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "3456"
+      ],
       "port": 3456
+    },
+    {
+      "name": "bibliotecas-dist",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8788",
+        "--directory",
+        "dist"
+      ],
+      "port": 8788
     }
   ]
 }
