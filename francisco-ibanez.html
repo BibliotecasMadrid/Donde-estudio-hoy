@@ -16,8 +16,8 @@
   <meta property="og:title" content="Biblioteca Municipal Francisco Ibáñez · Horario y dirección">
   <meta property="og:description" content="Biblioteca Municipal Francisco Ibáñez: Calle Mantuano, 51, 28002 Madrid. Horario: Lun–Vie 8:30–21h (Verano: 8:30–20h). Biblioteca en Madrid.">
   <meta property="og:url" content="https://bibliotecasmadrid.es/francisco-ibanez">
-  <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Sala_infantil_Biblioteca_Municipal_Biblioteca_Francisco_Ib%C3%A1%C3%B1ez.jpg/960px-Sala_infantil_Biblioteca_Municipal_Biblioteca_Francisco_Ib%C3%A1%C3%B1ez.jpg">
-  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Library", "name": "Biblioteca Municipal Francisco Ibáñez", "description": "Horario: Lun–Vie 8:30–21h (Verano: 8:30–20h)", "address": {"@type": "PostalAddress", "streetAddress": "Calle Mantuano, 51, 28002 Madrid", "addressLocality": "Madrid", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.4481, "longitude": -3.6762}, "maximumAttendeeCapacity": 185, "url": "https://bibliotecasmadrid.es/francisco-ibanez", "areaServed": "Madrid", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Sala_infantil_Biblioteca_Municipal_Biblioteca_Francisco_Ib%C3%A1%C3%B1ez.jpg/960px-Sala_infantil_Biblioteca_Municipal_Biblioteca_Francisco_Ib%C3%A1%C3%B1ez.jpg"}</script>
+  <meta property="og:image" content="images/biblioteca-municipal-francisco-ib-ez.jpg">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Library", "name": "Biblioteca Municipal Francisco Ibáñez", "description": "Horario: Lun–Vie 8:30–21h (Verano: 8:30–20h)", "address": {"@type": "PostalAddress", "streetAddress": "Calle Mantuano, 51, 28002 Madrid", "addressLocality": "Madrid", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.4481, "longitude": -3.6762}, "maximumAttendeeCapacity": 185, "url": "https://bibliotecasmadrid.es/francisco-ibanez", "areaServed": "Madrid", "image": "images/biblioteca-municipal-francisco-ib-ez.jpg"}</script>
   <style>
     :root { --ink:#1A1F36; --ink-2:#5A6172; --ink-3:#9AA0AE; --line:#ECEEF2; }
     * { margin:0; padding:0; box-sizing:border-box; }
@@ -140,11 +140,20 @@
 
     /* ── Box HOY ───────────────────────────── */
     .today-card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
       background: #F8FAFC;
       border: 1px solid var(--line);
       border-radius: 14px;
       padding: 12px 14px;
       margin-bottom: 12px;
+      cursor: pointer;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+    .today-card:hover {
+      background: #F1F5F9;
+      border-color: #CBD5E1;
     }
     .today-head {
       display: flex;
@@ -292,7 +301,7 @@
 <body>
   <!-- Foto del centro a pantalla completa -->
   <div class="bg-photo">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Sala_infantil_Biblioteca_Municipal_Biblioteca_Francisco_Ib%C3%A1%C3%B1ez.jpg/960px-Sala_infantil_Biblioteca_Municipal_Biblioteca_Francisco_Ib%C3%A1%C3%B1ez.jpg" alt="Biblioteca Municipal Francisco Ibáñez" loading="eager">
+    <img src="images/biblioteca-municipal-francisco-ib-ez.jpg" alt="Biblioteca Municipal Francisco Ibáñez" loading="eager">
   </div>
   
 
@@ -326,7 +335,7 @@
       </div>
 
       <div class="card-side-col">
-        <div class="today-card" id="today-card">
+        <a class="today-card" id="today-card" href="https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&amp;vgnextoid=0fce3d0b5e71c010VgnVCM1000000b205a0aRCRD#:~:text=Apertura%20de%20lunes%20a%20viernes.,8%3A30%20a%2021%20horas" target="_blank" rel="noopener noreferrer">
           <div class="today-head">
             <span class="today-title" id="today-title">HOY · Cargando calendario</span>
             <span class="status-badge status-info" id="status-badge">Cargando</span>
@@ -334,7 +343,7 @@
           <div class="today-hours" id="today-hours">Cargando calendario…</div>
           
           <div id="calendar-week" class="panel-live-week"></div>
-        </div>
+        </a>
 
         <footer>
           Datos: <a href="https://datos.madrid.es" target="_blank" rel="noopener">datos.madrid.es</a> (CC BY 4.0).
@@ -346,7 +355,7 @@
   <script src="horarios.js"></script>
   <script>
   (function() {
-    const d = {"tipo": "biblioteca", "nombre": "Biblioteca Municipal Francisco Ibáñez", "foto": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Sala_infantil_Biblioteca_Municipal_Biblioteca_Francisco_Ib%C3%A1%C3%B1ez.jpg/960px-Sala_infantil_Biblioteca_Municipal_Biblioteca_Francisco_Ib%C3%A1%C3%B1ez.jpg", "distrito": "Chamartín", "direccion": "Calle Mantuano, 51, 28002 Madrid", "lat": 40.4481, "lng": -3.6762, "plazas": 185, "horario": "Lun–Vie 8:30–21h\n(Verano: 8:30–20h)", "web": "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=0fce3d0b5e71c010VgnVCM1000000b205a0aRCRD#:~:text=Apertura%20de%20lunes%20a%20viernes.,8%3A30%20a%2021%20horas"};
+    const d = {"tipo": "biblioteca", "nombre": "Biblioteca Municipal Francisco Ibáñez", "foto": "images/biblioteca-municipal-francisco-ib-ez.jpg", "distrito": "Chamartín", "direccion": "Calle Mantuano, 51, 28002 Madrid", "lat": 40.4481, "lng": -3.6762, "plazas": 185, "horario": "Lun–Vie 8:30–21h\n(Verano: 8:30–20h)", "web": "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=0fce3d0b5e71c010VgnVCM1000000b205a0aRCRD#:~:text=Apertura%20de%20lunes%20a%20viernes.,8%3A30%20a%2021%20horas"};
     const slug = "francisco-ibanez";
     // Interceptar botón 'Atrás' del navegador para ir a "Ver en el mapa"
     try {

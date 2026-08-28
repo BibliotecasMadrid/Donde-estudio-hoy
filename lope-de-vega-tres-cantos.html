@@ -140,11 +140,20 @@
 
     /* ── Box HOY ───────────────────────────── */
     .today-card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
       background: #F8FAFC;
       border: 1px solid var(--line);
       border-radius: 14px;
       padding: 12px 14px;
       margin-bottom: 12px;
+      cursor: pointer;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+    .today-card:hover {
+      background: #F1F5F9;
+      border-color: #CBD5E1;
     }
     .today-head {
       display: flex;
@@ -326,7 +335,7 @@
       </div>
 
       <div class="card-side-col">
-        <div class="today-card" id="today-card">
+        <a class="today-card" id="today-card" href="https://www.trescantos.es/cultura/bibliotecas/#:~:text=Horario" target="_blank" rel="noopener noreferrer">
           <div class="today-head">
             <span class="today-title" id="today-title">HOY · Cargando calendario</span>
             <span class="status-badge status-info" id="status-badge">Cargando</span>
@@ -334,7 +343,7 @@
           <div class="today-hours" id="today-hours">Cargando calendario…</div>
           
           <div id="calendar-week" class="panel-live-week"></div>
-        </div>
+        </a>
 
         <footer>
           Datos: <a href="https://datos.madrid.es" target="_blank" rel="noopener">datos.madrid.es</a> (CC BY 4.0).

@@ -16,8 +16,8 @@
   <meta property="og:title" content="Biblioteca Municipal José Saramago · Horario y dirección">
   <meta property="og:description" content="Biblioteca Municipal José Saramago: Avenida Monforte de Lemos, 38, 28029 Madrid. Horario: Lun–Vie 8:30–21h (Verano: 8:30–20h). Biblioteca en Madrid.">
   <meta property="og:url" content="https://bibliotecasmadrid.es/jose-saramago">
-  <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Madrid_-_Biblioteca_Municipal_Jos%C3%A9_Saramago_%28Barrio_de_El_Pilar%29_2.jpg/960px-Madrid_-_Biblioteca_Municipal_Jos%C3%A9_Saramago_%28Barrio_de_El_Pilar%29_2.jpg">
-  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Library", "name": "Biblioteca Municipal José Saramago", "description": "Horario: Lun–Vie 8:30–21h (Verano: 8:30–20h)", "address": {"@type": "PostalAddress", "streetAddress": "Avenida Monforte de Lemos, 38, 28029 Madrid", "addressLocality": "Madrid", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.4786, "longitude": -3.7094}, "maximumAttendeeCapacity": 200, "url": "https://bibliotecasmadrid.es/jose-saramago", "areaServed": "Madrid", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Madrid_-_Biblioteca_Municipal_Jos%C3%A9_Saramago_%28Barrio_de_El_Pilar%29_2.jpg/960px-Madrid_-_Biblioteca_Municipal_Jos%C3%A9_Saramago_%28Barrio_de_El_Pilar%29_2.jpg"}</script>
+  <meta property="og:image" content="images/biblioteca-municipal-jos-saramago.jpg">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Library", "name": "Biblioteca Municipal José Saramago", "description": "Horario: Lun–Vie 8:30–21h (Verano: 8:30–20h)", "address": {"@type": "PostalAddress", "streetAddress": "Avenida Monforte de Lemos, 38, 28029 Madrid", "addressLocality": "Madrid", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.4786, "longitude": -3.7094}, "maximumAttendeeCapacity": 200, "url": "https://bibliotecasmadrid.es/jose-saramago", "areaServed": "Madrid", "image": "images/biblioteca-municipal-jos-saramago.jpg"}</script>
   <style>
     :root { --ink:#1A1F36; --ink-2:#5A6172; --ink-3:#9AA0AE; --line:#ECEEF2; }
     * { margin:0; padding:0; box-sizing:border-box; }
@@ -140,11 +140,20 @@
 
     /* ── Box HOY ───────────────────────────── */
     .today-card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
       background: #F8FAFC;
       border: 1px solid var(--line);
       border-radius: 14px;
       padding: 12px 14px;
       margin-bottom: 12px;
+      cursor: pointer;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+    .today-card:hover {
+      background: #F1F5F9;
+      border-color: #CBD5E1;
     }
     .today-head {
       display: flex;
@@ -292,7 +301,7 @@
 <body>
   <!-- Foto del centro a pantalla completa -->
   <div class="bg-photo">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Madrid_-_Biblioteca_Municipal_Jos%C3%A9_Saramago_%28Barrio_de_El_Pilar%29_2.jpg/960px-Madrid_-_Biblioteca_Municipal_Jos%C3%A9_Saramago_%28Barrio_de_El_Pilar%29_2.jpg" alt="Biblioteca Municipal José Saramago" loading="eager">
+    <img src="images/biblioteca-municipal-jos-saramago.jpg" alt="Biblioteca Municipal José Saramago" loading="eager">
   </div>
   
 
@@ -326,7 +335,7 @@
       </div>
 
       <div class="card-side-col">
-        <div class="today-card" id="today-card">
+        <a class="today-card" id="today-card" href="https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&amp;vgnextoid=70d879262ef5d010VgnVCM1000000b205a0aRCRD#:~:text=Apertura%20de%20lunes%20a%20viernes.,8%3A30%20a%2021%20horas" target="_blank" rel="noopener noreferrer">
           <div class="today-head">
             <span class="today-title" id="today-title">HOY · Cargando calendario</span>
             <span class="status-badge status-info" id="status-badge">Cargando</span>
@@ -334,7 +343,7 @@
           <div class="today-hours" id="today-hours">Cargando calendario…</div>
           
           <div id="calendar-week" class="panel-live-week"></div>
-        </div>
+        </a>
 
         <footer>
           Datos: <a href="https://datos.madrid.es" target="_blank" rel="noopener">datos.madrid.es</a> (CC BY 4.0).
@@ -346,7 +355,7 @@
   <script src="horarios.js"></script>
   <script>
   (function() {
-    const d = {"tipo": "biblioteca", "nombre": "Biblioteca Municipal José Saramago", "foto": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Madrid_-_Biblioteca_Municipal_Jos%C3%A9_Saramago_%28Barrio_de_El_Pilar%29_2.jpg/960px-Madrid_-_Biblioteca_Municipal_Jos%C3%A9_Saramago_%28Barrio_de_El_Pilar%29_2.jpg", "distrito": "Fuencarral-El Pardo", "direccion": "Avenida Monforte de Lemos, 38, 28029 Madrid", "lat": 40.4786, "lng": -3.7094, "plazas": 200, "horario": "Lun–Vie 8:30–21h\n(Verano: 8:30–20h)", "web": "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=70d879262ef5d010VgnVCM1000000b205a0aRCRD#:~:text=Apertura%20de%20lunes%20a%20viernes.,8%3A30%20a%2021%20horas"};
+    const d = {"tipo": "biblioteca", "nombre": "Biblioteca Municipal José Saramago", "foto": "images/biblioteca-municipal-jos-saramago.jpg", "distrito": "Fuencarral-El Pardo", "direccion": "Avenida Monforte de Lemos, 38, 28029 Madrid", "lat": 40.4786, "lng": -3.7094, "plazas": 200, "horario": "Lun–Vie 8:30–21h\n(Verano: 8:30–20h)", "web": "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=70d879262ef5d010VgnVCM1000000b205a0aRCRD#:~:text=Apertura%20de%20lunes%20a%20viernes.,8%3A30%20a%2021%20horas"};
     const slug = "jose-saramago";
     // Interceptar botón 'Atrás' del navegador para ir a "Ver en el mapa"
     try {

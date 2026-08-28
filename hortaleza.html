@@ -16,8 +16,8 @@
   <meta property="og:title" content="Biblioteca Pública Hortaleza · Horario y dirección">
   <meta property="og:description" content="Biblioteca Pública Hortaleza: Calle Abertura, 2, 28033 Madrid. Horario: Lun–Jue 9–20:30h · Vie 9–14:30h. Biblioteca en Madrid.">
   <meta property="og:url" content="https://bibliotecasmadrid.es/hortaleza">
-  <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/%E2%80%98Mar%C3%ADa_Lej%C3%A1rraga%E2%80%99%2C_la_nueva_biblioteca_en_Hortaleza%2C_alberga_25.000_ejemplares_%2806%29.jpg/960px-%E2%80%98Mar%C3%ADa_Lej%C3%A1rraga%E2%80%99%2C_la_nueva_biblioteca_en_Hortaleza%2C_alberga_25.000_ejemplares_%2806%29.jpg">
-  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Library", "name": "Biblioteca Pública Hortaleza", "description": "Horario: Lun–Jue 9–20:30h · Vie 9–14:30h", "address": {"@type": "PostalAddress", "streetAddress": "Calle Abertura, 2, 28033 Madrid", "addressLocality": "Madrid", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.4772, "longitude": -3.6496}, "maximumAttendeeCapacity": 180, "url": "https://bibliotecasmadrid.es/hortaleza", "areaServed": "Madrid", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/%E2%80%98Mar%C3%ADa_Lej%C3%A1rraga%E2%80%99%2C_la_nueva_biblioteca_en_Hortaleza%2C_alberga_25.000_ejemplares_%2806%29.jpg/960px-%E2%80%98Mar%C3%ADa_Lej%C3%A1rraga%E2%80%99%2C_la_nueva_biblioteca_en_Hortaleza%2C_alberga_25.000_ejemplares_%2806%29.jpg"}</script>
+  <meta property="og:image" content="images/biblioteca-p-blica-hortaleza.jpg">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Library", "name": "Biblioteca Pública Hortaleza", "description": "Horario: Lun–Jue 9–20:30h · Vie 9–14:30h", "address": {"@type": "PostalAddress", "streetAddress": "Calle Abertura, 2, 28033 Madrid", "addressLocality": "Madrid", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.4772, "longitude": -3.6496}, "maximumAttendeeCapacity": 180, "url": "https://bibliotecasmadrid.es/hortaleza", "areaServed": "Madrid", "image": "images/biblioteca-p-blica-hortaleza.jpg"}</script>
   <style>
     :root { --ink:#1A1F36; --ink-2:#5A6172; --ink-3:#9AA0AE; --line:#ECEEF2; }
     * { margin:0; padding:0; box-sizing:border-box; }
@@ -140,11 +140,20 @@
 
     /* ── Box HOY ───────────────────────────── */
     .today-card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
       background: #F8FAFC;
       border: 1px solid var(--line);
       border-radius: 14px;
       padding: 12px 14px;
       margin-bottom: 12px;
+      cursor: pointer;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+    .today-card:hover {
+      background: #F1F5F9;
+      border-color: #CBD5E1;
     }
     .today-head {
       display: flex;
@@ -292,7 +301,7 @@
 <body>
   <!-- Foto del centro a pantalla completa -->
   <div class="bg-photo">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/%E2%80%98Mar%C3%ADa_Lej%C3%A1rraga%E2%80%99%2C_la_nueva_biblioteca_en_Hortaleza%2C_alberga_25.000_ejemplares_%2806%29.jpg/960px-%E2%80%98Mar%C3%ADa_Lej%C3%A1rraga%E2%80%99%2C_la_nueva_biblioteca_en_Hortaleza%2C_alberga_25.000_ejemplares_%2806%29.jpg" alt="Biblioteca Pública Hortaleza" loading="eager">
+    <img src="images/biblioteca-p-blica-hortaleza.jpg" alt="Biblioteca Pública Hortaleza" loading="eager">
   </div>
   
 
@@ -326,7 +335,7 @@
       </div>
 
       <div class="card-side-col">
-        <div class="today-card" id="today-card">
+        <a class="today-card" id="today-card" href="https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&amp;vgnextoid=e42e995a8bf5d010VgnVCM2000000c205a0aRCRD#:~:text=Apertura%20de%20lunes%20a%20viernes" target="_blank" rel="noopener noreferrer">
           <div class="today-head">
             <span class="today-title" id="today-title">HOY · Cargando calendario</span>
             <span class="status-badge status-info" id="status-badge">Cargando</span>
@@ -334,7 +343,7 @@
           <div class="today-hours" id="today-hours">Cargando calendario…</div>
           
           <div id="calendar-week" class="panel-live-week"></div>
-        </div>
+        </a>
 
         <footer>
           Datos: <a href="https://datos.madrid.es" target="_blank" rel="noopener">datos.madrid.es</a> (CC BY 4.0).
@@ -346,7 +355,7 @@
   <script src="horarios.js"></script>
   <script>
   (function() {
-    const d = {"tipo": "biblioteca", "nombre": "Biblioteca Pública Hortaleza", "foto": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/%E2%80%98Mar%C3%ADa_Lej%C3%A1rraga%E2%80%99%2C_la_nueva_biblioteca_en_Hortaleza%2C_alberga_25.000_ejemplares_%2806%29.jpg/960px-%E2%80%98Mar%C3%ADa_Lej%C3%A1rraga%E2%80%99%2C_la_nueva_biblioteca_en_Hortaleza%2C_alberga_25.000_ejemplares_%2806%29.jpg", "distrito": "Hortaleza", "direccion": "Calle Abertura, 2, 28033 Madrid", "lat": 40.4772, "lng": -3.6496, "plazas": 180, "horario": "Lun–Jue 9–20:30h · Vie 9–14:30h", "web": "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=e42e995a8bf5d010VgnVCM2000000c205a0aRCRD#:~:text=Apertura%20de%20lunes%20a%20viernes"};
+    const d = {"tipo": "biblioteca", "nombre": "Biblioteca Pública Hortaleza", "foto": "images/biblioteca-p-blica-hortaleza.jpg", "distrito": "Hortaleza", "direccion": "Calle Abertura, 2, 28033 Madrid", "lat": 40.4772, "lng": -3.6496, "plazas": 180, "horario": "Lun–Jue 9–20:30h · Vie 9–14:30h", "web": "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=e42e995a8bf5d010VgnVCM2000000c205a0aRCRD#:~:text=Apertura%20de%20lunes%20a%20viernes"};
     const slug = "hortaleza";
     // Interceptar botón 'Atrás' del navegador para ir a "Ver en el mapa"
     try {
