@@ -768,9 +768,18 @@ def main():
                 else:
                     fuentes[slug] = valor
     for slug, perfil in perfiles.items():
-        texto = (perfil.get("source") or {}).get("texto")
+        fuente_perfil = perfil.get("source") or {}
+        texto = fuente_perfil.get("texto")
         if texto and slug not in fuentes:
             fuentes[slug] = texto
+        # Las dos marcas viven tambien en el perfil, no solo en el JSON de fuentes de un
+        # dia: sin eso, la siguiente auditoria volveria a derivar del texto un semanal
+        # que se compuso a mano (UNED) o que en realidad sirve la API del centro (UC3M,
+        # UAH), y lo estropearia sin que nadie lo pidiera.
+        if fuente_perfil.get("solo_url"):
+            solo_url.add(slug)
+        if fuente_perfil.get("fragmento") is False:
+            sin_fragmento.add(slug)
 
     fuente_index = open(INDEX, encoding="utf-8").read()
     hoy = dt.date.today().isoformat()
@@ -822,8 +831,10 @@ def main():
 
         if slug in solo_url:
             # El horario que ve el usuario viene en vivo de la API del centro, asi que el
-            # semanal de respaldo se deja como esta y solo se corrige el enlace.
-            weekly, reglas, abre_festivos, avisos = perfil["weekly"], [], None, []
+            # semanal de respaldo se deja como esta y solo se corrige el enlace. Queda
+            # como reserva: el semanal no lo respalda el texto que se guarda al lado.
+            weekly, reglas, abre_festivos = perfil["weekly"], [], None
+            avisos = ["semanal no derivado del texto oficial (source.solo_url)"]
         else:
             weekly, reglas, abre_festivos, avisos = construir_weekly(lineas, calendario["year"])
         for aviso in avisos:

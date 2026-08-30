@@ -4175,91 +4175,6 @@
         }
       }
     },
-    "ceu-san-pablo-campus-moncloa": {
-      "municipio": "madrid",
-      "operador": "bibliotecaceu.es",
-      "source": {
-        "url": "https://bibliotecaceu.es/",
-        "checked_at": "2026-08-19",
-        "confidence": "migrated-from-published-schedule"
-      },
-      "holiday_policy": "closed",
-      "weekly": {
-        "0": {
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "09:00",
-              "21:00"
-            ]
-          ],
-          "nota": "Horario habitual"
-        },
-        "1": {
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "09:00",
-              "21:00"
-            ]
-          ],
-          "nota": "Horario habitual"
-        },
-        "2": {
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "09:00",
-              "21:00"
-            ]
-          ],
-          "nota": "Horario habitual"
-        },
-        "3": {
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "09:00",
-              "21:00"
-            ]
-          ],
-          "nota": "Horario habitual"
-        },
-        "4": {
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "09:00",
-              "21:00"
-            ]
-          ],
-          "nota": "Horario habitual"
-        },
-        "5": {
-          "estado": "cerrado",
-          "intervalos": [],
-          "nota": "Cerrado según horario habitual"
-        },
-        "6": {
-          "estado": "cerrado",
-          "intervalos": [],
-          "nota": "Cerrado según horario habitual"
-        }
-      },
-      "rules": [],
-      "dates": {
-        "2026-12-24": {
-          "estado": "consultar",
-          "intervalos": [],
-          "nota": "Nochebuena (Horario especial 9:00–14:00h o cerrado)"
-        },
-        "2026-12-31": {
-          "estado": "consultar",
-          "intervalos": [],
-          "nota": "Nochevieja (Horario especial 9:00–14:00h o cerrado)"
-        }
-      }
-    },
     "ciudad-de-nejapa-alcorcon": {
       "municipio": "alcorcon",
       "operador": "ayto-alcorcon.es",
@@ -18048,280 +17963,19 @@
         }
       }
     },
-    "u-francisco-de-vitoria": {
-      "municipio": "pozuelo-de-alarcon",
-      "operador": "ufv.es",
-      "source": {
-        "url": "https://www.ufv.es/biblioteca/",
-        "checked_at": "2026-08-19",
-        "confidence": "migrated-from-published-schedule"
-      },
-      "holiday_policy": "closed",
-      "weekly": {
-        "0": {
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "08:00",
-              "22:00"
-            ]
-          ],
-          "nota": "Horario habitual"
-        },
-        "1": {
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "08:00",
-              "22:00"
-            ]
-          ],
-          "nota": "Horario habitual"
-        },
-        "2": {
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "08:00",
-              "22:00"
-            ]
-          ],
-          "nota": "Horario habitual"
-        },
-        "3": {
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "08:00",
-              "22:00"
-            ]
-          ],
-          "nota": "Horario habitual"
-        },
-        "4": {
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "08:00",
-              "22:00"
-            ]
-          ],
-          "nota": "Horario habitual"
-        },
-        "5": {
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "09:00",
-              "14:00"
-            ]
-          ],
-          "nota": "Horario habitual"
-        },
-        "6": {
-          "estado": "cerrado",
-          "intervalos": [],
-          "nota": "Cerrado según horario habitual"
-        }
-      },
-      "rules": [],
-      "dates": {
-        "2026-12-24": {
-          "estado": "consultar",
-          "intervalos": [],
-          "nota": "Nochebuena (Horario especial 9:00–14:00h o cerrado)"
-        },
-        "2026-12-31": {
-          "estado": "consultar",
-          "intervalos": [],
-          "nota": "Nochevieja (Horario especial 9:00–14:00h o cerrado)"
-        }
-      }
-    },
-    "u-nebrija-campus-princesa": {
-      "municipio": "madrid",
-      "operador": "nebrija.com",
-      "source": {
-        "url": "https://www.nebrija.com/investigacion-universidad/biblioteca/",
-        "checked_at": "2026-08-19",
-        "confidence": "migrated-from-published-schedule"
-      },
-      "holiday_policy": "closed",
-      "weekly": {
-        "0": {
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "09:00",
-              "21:00"
-            ]
-          ],
-          "nota": "Horario habitual"
-        },
-        "1": {
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "09:00",
-              "21:00"
-            ]
-          ],
-          "nota": "Horario habitual"
-        },
-        "2": {
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "09:00",
-              "21:00"
-            ]
-          ],
-          "nota": "Horario habitual"
-        },
-        "3": {
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "09:00",
-              "21:00"
-            ]
-          ],
-          "nota": "Horario habitual"
-        },
-        "4": {
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "09:00",
-              "21:00"
-            ]
-          ],
-          "nota": "Horario habitual"
-        },
-        "5": {
-          "estado": "cerrado",
-          "intervalos": [],
-          "nota": "Cerrado según horario habitual"
-        },
-        "6": {
-          "estado": "cerrado",
-          "intervalos": [],
-          "nota": "Cerrado según horario habitual"
-        }
-      },
-      "rules": [],
-      "dates": {
-        "2026-12-24": {
-          "estado": "consultar",
-          "intervalos": [],
-          "nota": "Nochebuena (Horario especial 9:00–14:00h o cerrado)"
-        },
-        "2026-12-31": {
-          "estado": "consultar",
-          "intervalos": [],
-          "nota": "Nochevieja (Horario especial 9:00–14:00h o cerrado)"
-        }
-      }
-    },
-    "u-pontificia-comillas-icai-icade": {
-      "municipio": "madrid",
-      "operador": "biblioteca.comillas.edu",
-      "source": {
-        "url": "https://biblioteca.comillas.edu",
-        "checked_at": "2026-08-19",
-        "confidence": "migrated-from-published-schedule"
-      },
-      "holiday_policy": "closed",
-      "weekly": {
-        "0": {
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "08:00",
-              "21:30"
-            ]
-          ],
-          "nota": "Horario habitual"
-        },
-        "1": {
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "08:00",
-              "21:30"
-            ]
-          ],
-          "nota": "Horario habitual"
-        },
-        "2": {
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "08:00",
-              "21:30"
-            ]
-          ],
-          "nota": "Horario habitual"
-        },
-        "3": {
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "08:00",
-              "21:30"
-            ]
-          ],
-          "nota": "Horario habitual"
-        },
-        "4": {
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "08:00",
-              "21:30"
-            ]
-          ],
-          "nota": "Horario habitual"
-        },
-        "5": {
-          "estado": "abierto",
-          "intervalos": [
-            [
-              "09:00",
-              "14:00"
-            ]
-          ],
-          "nota": "Horario habitual"
-        },
-        "6": {
-          "estado": "cerrado",
-          "intervalos": [],
-          "nota": "Cerrado según horario habitual"
-        }
-      },
-      "rules": [],
-      "dates": {
-        "2026-12-24": {
-          "estado": "consultar",
-          "intervalos": [],
-          "nota": "Nochebuena (Horario especial 9:00–14:00h o cerrado)"
-        },
-        "2026-12-31": {
-          "estado": "consultar",
-          "intervalos": [],
-          "nota": "Nochevieja (Horario especial 9:00–14:00h o cerrado)"
-        }
-      }
-    },
     "uah-campus-cientifico-tecnologico": {
       "municipio": "alcala-de-henares",
       "operador": "biblioteca.uah.es",
       "source": {
         "url": "https://biblioteca.uah.es/conoce-la-biblioteca/la-biblioteca/horarios/#:~:text=CAMPUS%20CIENT%C3%8DFICO-TECNOL%C3%93GICO",
         "checked_at": "2026-08-30",
-        "confidence": "verificado-en-fuente-oficial",
+        "confidence": "verificado-con-reservas",
         "texto": [
           "CAMPUS CIENTÍFICO-TECNOLÓGICO"
+        ],
+        "solo_url": true,
+        "reservas": [
+          "semanal no derivado del texto oficial (source.solo_url)"
         ]
       },
       "holiday_policy": "closed",
@@ -18407,10 +18061,14 @@
       "source": {
         "url": "https://biblioteca.uah.es/conoce-la-biblioteca/la-biblioteca/horarios/#:~:text=CRAI-Biblioteca",
         "checked_at": "2026-08-30",
-        "confidence": "verificado-en-fuente-oficial",
+        "confidence": "verificado-con-reservas",
         "texto": [
           "CRAI-Biblioteca",
           "Horarios Salas de lectura"
+        ],
+        "solo_url": true,
+        "reservas": [
+          "semanal no derivado del texto oficial (source.solo_url)"
         ]
       },
       "holiday_policy": "closed",
@@ -18524,7 +18182,7 @@
       "source": {
         "url": "https://biblioagenda.uam.es/hours?lid=5671",
         "checked_at": "2026-08-30",
-        "confidence": "verificado-en-fuente-oficial",
+        "confidence": "verificado-con-reservas",
         "texto": [
           "Horario publicado en biblioagenda.uam.es",
           "Lunes: 9am - 2pm",
@@ -18534,6 +18192,11 @@
           "Viernes: 9am - 2pm",
           "Sábados: Cerrado",
           "Domingos: Cerrado"
+        ],
+        "solo_url": true,
+        "fragmento": false,
+        "reservas": [
+          "semanal no derivado del texto oficial (source.solo_url)"
         ]
       },
       "holiday_policy": "closed",
@@ -18664,7 +18327,7 @@
       "source": {
         "url": "https://biblioagenda.uam.es/hours?lid=5665",
         "checked_at": "2026-08-30",
-        "confidence": "verificado-en-fuente-oficial",
+        "confidence": "verificado-con-reservas",
         "texto": [
           "Horario publicado en biblioagenda.uam.es",
           "Lunes: 9am - 2pm",
@@ -18674,6 +18337,11 @@
           "Viernes: 9am - 2pm",
           "Sábados: Cerrado",
           "Domingos: Cerrado"
+        ],
+        "solo_url": true,
+        "fragmento": false,
+        "reservas": [
+          "semanal no derivado del texto oficial (source.solo_url)"
         ]
       },
       "holiday_policy": "closed",
@@ -18804,7 +18472,7 @@
       "source": {
         "url": "https://biblioagenda.uam.es/hours?lid=5675",
         "checked_at": "2026-08-30",
-        "confidence": "verificado-en-fuente-oficial",
+        "confidence": "verificado-con-reservas",
         "texto": [
           "Horario publicado en biblioagenda.uam.es",
           "Lunes: Cerrada",
@@ -18814,6 +18482,11 @@
           "Viernes: Cerrada",
           "Sábados: Cerrada",
           "Domingos: Cerrada"
+        ],
+        "solo_url": true,
+        "fragmento": false,
+        "reservas": [
+          "semanal no derivado del texto oficial (source.solo_url)"
         ]
       },
       "holiday_policy": "closed",
@@ -18944,7 +18617,7 @@
       "source": {
         "url": "https://biblioagenda.uam.es/hours?lid=5663",
         "checked_at": "2026-08-30",
-        "confidence": "verificado-en-fuente-oficial",
+        "confidence": "verificado-con-reservas",
         "texto": [
           "Horario publicado en biblioagenda.uam.es",
           "Lunes: 9am - 2pm",
@@ -18954,6 +18627,11 @@
           "Viernes: 9am - 2pm",
           "Sábados: Cerrado",
           "Domingos: Cerrado"
+        ],
+        "solo_url": true,
+        "fragmento": false,
+        "reservas": [
+          "semanal no derivado del texto oficial (source.solo_url)"
         ]
       },
       "holiday_policy": "closed",
@@ -19084,7 +18762,7 @@
       "source": {
         "url": "https://biblioagenda.uam.es/hours?lid=5672",
         "checked_at": "2026-08-30",
-        "confidence": "verificado-en-fuente-oficial",
+        "confidence": "verificado-con-reservas",
         "texto": [
           "Horario publicado en biblioagenda.uam.es",
           "Lunes: Cerrada",
@@ -19094,6 +18772,11 @@
           "Viernes: Cerrada",
           "Sábados: Cerrada",
           "Domingos: Cerrada"
+        ],
+        "solo_url": true,
+        "fragmento": false,
+        "reservas": [
+          "semanal no derivado del texto oficial (source.solo_url)"
         ]
       },
       "holiday_policy": "closed",
@@ -19224,7 +18907,7 @@
       "source": {
         "url": "https://biblioagenda.uam.es/hours?lid=5589",
         "checked_at": "2026-08-30",
-        "confidence": "verificado-en-fuente-oficial",
+        "confidence": "verificado-con-reservas",
         "texto": [
           "Horario publicado en biblioagenda.uam.es",
           "Lunes: Cerrada",
@@ -19234,6 +18917,11 @@
           "Viernes: Cerrada",
           "Sábados: Cerrada",
           "Domingos: Cerrada"
+        ],
+        "solo_url": true,
+        "fragmento": false,
+        "reservas": [
+          "semanal no derivado del texto oficial (source.solo_url)"
         ]
       },
       "holiday_policy": "closed",
@@ -19364,7 +19052,7 @@
       "source": {
         "url": "https://biblioagenda.uam.es/hours?lid=5674",
         "checked_at": "2026-08-30",
-        "confidence": "verificado-en-fuente-oficial",
+        "confidence": "verificado-con-reservas",
         "texto": [
           "Horario publicado en biblioagenda.uam.es",
           "Lunes: Cerrada",
@@ -19374,6 +19062,11 @@
           "Viernes: Cerrada",
           "Sábados: Cerrada",
           "Domingos: Cerrada"
+        ],
+        "solo_url": true,
+        "fragmento": false,
+        "reservas": [
+          "semanal no derivado del texto oficial (source.solo_url)"
         ]
       },
       "holiday_policy": "closed",
@@ -19504,7 +19197,7 @@
       "source": {
         "url": "https://biblioagenda.uam.es/hours?lid=5676",
         "checked_at": "2026-08-30",
-        "confidence": "verificado-en-fuente-oficial",
+        "confidence": "verificado-con-reservas",
         "texto": [
           "Horario publicado en biblioagenda.uam.es",
           "Lunes: 9am - 2pm",
@@ -19514,6 +19207,11 @@
           "Viernes: 9am - 2pm",
           "Sábados: Cerrado",
           "Domingos: Cerrado"
+        ],
+        "solo_url": true,
+        "fragmento": false,
+        "reservas": [
+          "semanal no derivado del texto oficial (source.solo_url)"
         ]
       },
       "holiday_policy": "closed",
@@ -19644,7 +19342,7 @@
       "source": {
         "url": "https://biblioagenda.uam.es/hours?lid=5673",
         "checked_at": "2026-08-30",
-        "confidence": "verificado-en-fuente-oficial",
+        "confidence": "verificado-con-reservas",
         "texto": [
           "Horario publicado en biblioagenda.uam.es",
           "Lunes: Cerrado",
@@ -19654,6 +19352,11 @@
           "Viernes: Cerrado",
           "Sábados: Cerrado",
           "Domingos: Cerrado"
+        ],
+        "solo_url": true,
+        "fragmento": false,
+        "reservas": [
+          "semanal no derivado del texto oficial (source.solo_url)"
         ]
       },
       "holiday_policy": "closed",
@@ -19784,9 +19487,14 @@
       "source": {
         "url": "https://www.uc3m.es/biblioteca/horarios-calendario",
         "checked_at": "2026-08-30",
-        "confidence": "verificado-en-fuente-oficial",
+        "confidence": "verificado-con-reservas",
         "texto": [
           "Horarios actuales"
+        ],
+        "solo_url": true,
+        "fragmento": false,
+        "reservas": [
+          "semanal no derivado del texto oficial (source.solo_url)"
         ]
       },
       "holiday_policy": "closed",
@@ -19877,9 +19585,14 @@
       "source": {
         "url": "https://www.uc3m.es/biblioteca/horarios-calendario",
         "checked_at": "2026-08-30",
-        "confidence": "verificado-en-fuente-oficial",
+        "confidence": "verificado-con-reservas",
         "texto": [
           "Horarios actuales"
+        ],
+        "solo_url": true,
+        "fragmento": false,
+        "reservas": [
+          "semanal no derivado del texto oficial (source.solo_url)"
         ]
       },
       "holiday_policy": "closed",
@@ -19970,9 +19683,14 @@
       "source": {
         "url": "https://www.uc3m.es/biblioteca/horarios-calendario",
         "checked_at": "2026-08-30",
-        "confidence": "verificado-en-fuente-oficial",
+        "confidence": "verificado-con-reservas",
         "texto": [
           "Horarios actuales"
+        ],
+        "solo_url": true,
+        "fragmento": false,
+        "reservas": [
+          "semanal no derivado del texto oficial (source.solo_url)"
         ]
       },
       "holiday_policy": "closed",
@@ -20063,7 +19781,7 @@
       "source": {
         "url": "https://biblioagenda.ucm.es/hours?lid=6040",
         "checked_at": "2026-08-30",
-        "confidence": "verificado-en-fuente-oficial",
+        "confidence": "verificado-con-reservas",
         "texto": [
           "Horario publicado en biblioagenda.ucm.es",
           "Lunes: Cerrado",
@@ -20073,6 +19791,11 @@
           "Viernes: 9am - 2pm",
           "Sábados: Cerrado",
           "Domingos: Cerrado"
+        ],
+        "solo_url": true,
+        "fragmento": false,
+        "reservas": [
+          "semanal no derivado del texto oficial (source.solo_url)"
         ]
       },
       "holiday_policy": "closed",
@@ -20175,7 +19898,7 @@
       "source": {
         "url": "https://biblioagenda.ucm.es/hours?lid=6042",
         "checked_at": "2026-08-30",
-        "confidence": "verificado-en-fuente-oficial",
+        "confidence": "verificado-con-reservas",
         "texto": [
           "Horario publicado en biblioagenda.ucm.es",
           "Lunes: 9am - 2pm",
@@ -20185,6 +19908,11 @@
           "Viernes: 9am - 2pm",
           "Sábados: Cerrado",
           "Domingos: Cerrado"
+        ],
+        "solo_url": true,
+        "fragmento": false,
+        "reservas": [
+          "semanal no derivado del texto oficial (source.solo_url)"
         ]
       },
       "holiday_policy": "closed",
@@ -20287,7 +20015,7 @@
       "source": {
         "url": "https://biblioagenda.ucm.es/hours?lid=6051",
         "checked_at": "2026-08-30",
-        "confidence": "verificado-en-fuente-oficial",
+        "confidence": "verificado-con-reservas",
         "texto": [
           "Horario publicado en biblioagenda.ucm.es",
           "Lunes: 9am - 2:30pm",
@@ -20297,6 +20025,11 @@
           "Viernes: 9am - 2:30pm",
           "Sábados: Cerrado",
           "Domingos: Cerrado"
+        ],
+        "solo_url": true,
+        "fragmento": false,
+        "reservas": [
+          "semanal no derivado del texto oficial (source.solo_url)"
         ]
       },
       "holiday_policy": "closed",
@@ -20382,7 +20115,7 @@
       "source": {
         "url": "https://biblioagenda.ucm.es/hours?lid=6050",
         "checked_at": "2026-08-30",
-        "confidence": "verificado-en-fuente-oficial",
+        "confidence": "verificado-con-reservas",
         "texto": [
           "Horario publicado en biblioagenda.ucm.es",
           "Lunes: 9am - 2pm",
@@ -20392,6 +20125,11 @@
           "Viernes: 9am - 2pm",
           "Sábados: Cerrado",
           "Domingos: Cerrado"
+        ],
+        "solo_url": true,
+        "fragmento": false,
+        "reservas": [
+          "semanal no derivado del texto oficial (source.solo_url)"
         ]
       },
       "holiday_policy": "closed",
@@ -20494,7 +20232,7 @@
       "source": {
         "url": "https://biblioagenda.ucm.es/hours?lid=6056",
         "checked_at": "2026-08-30",
-        "confidence": "verificado-en-fuente-oficial",
+        "confidence": "verificado-con-reservas",
         "texto": [
           "Horario publicado en biblioagenda.ucm.es",
           "Lunes: 9am - 2:30pm",
@@ -20504,6 +20242,11 @@
           "Viernes: 9am - 2:30pm",
           "Sábados: Cerrado",
           "Domingos: Cerrado"
+        ],
+        "solo_url": true,
+        "fragmento": false,
+        "reservas": [
+          "semanal no derivado del texto oficial (source.solo_url)"
         ]
       },
       "holiday_policy": "closed",
@@ -20606,7 +20349,7 @@
       "source": {
         "url": "https://biblioagenda.ucm.es/hours?lid=6066",
         "checked_at": "2026-08-30",
-        "confidence": "verificado-en-fuente-oficial",
+        "confidence": "verificado-con-reservas",
         "texto": [
           "Horario publicado en biblioagenda.ucm.es",
           "Lunes: 8:30am - 2pm",
@@ -20616,6 +20359,11 @@
           "Viernes: 8:30am - 2pm",
           "Sábados: Cerrado",
           "Domingos: Cerrado"
+        ],
+        "solo_url": true,
+        "fragmento": false,
+        "reservas": [
+          "semanal no derivado del texto oficial (source.solo_url)"
         ]
       },
       "holiday_policy": "closed",
@@ -20718,7 +20466,7 @@
       "source": {
         "url": "https://biblioagenda.ucm.es/hours?lid=6067",
         "checked_at": "2026-08-30",
-        "confidence": "verificado-en-fuente-oficial",
+        "confidence": "verificado-con-reservas",
         "texto": [
           "Horario publicado en biblioagenda.ucm.es",
           "Lunes: Cerrado",
@@ -20728,6 +20476,11 @@
           "Viernes: Cerrado",
           "Sábados: Cerrado",
           "Domingos: Cerrado"
+        ],
+        "solo_url": true,
+        "fragmento": false,
+        "reservas": [
+          "semanal no derivado del texto oficial (source.solo_url)"
         ]
       },
       "holiday_policy": "closed",
@@ -20830,7 +20583,7 @@
       "source": {
         "url": "https://biblioagenda.ucm.es/hours?lid=6023",
         "checked_at": "2026-08-30",
-        "confidence": "verificado-en-fuente-oficial",
+        "confidence": "verificado-con-reservas",
         "texto": [
           "Horario publicado en biblioagenda.ucm.es",
           "Lunes: 9am - 8pm",
@@ -20840,6 +20593,11 @@
           "Viernes: 9am - 2:30pm",
           "Sábados: Cerrado",
           "Domingos: Cerrado"
+        ],
+        "solo_url": true,
+        "fragmento": false,
+        "reservas": [
+          "semanal no derivado del texto oficial (source.solo_url)"
         ]
       },
       "holiday_policy": "closed",
@@ -20954,7 +20712,7 @@
       "source": {
         "url": "https://biblioagenda.ucm.es/hours?lid=6054",
         "checked_at": "2026-08-30",
-        "confidence": "verificado-en-fuente-oficial",
+        "confidence": "verificado-con-reservas",
         "texto": [
           "Horario publicado en biblioagenda.ucm.es",
           "Lunes: Cerrado",
@@ -20964,6 +20722,11 @@
           "Viernes: Cerrado",
           "Sábados: Cerrado",
           "Domingos: Cerrado"
+        ],
+        "solo_url": true,
+        "fragmento": false,
+        "reservas": [
+          "semanal no derivado del texto oficial (source.solo_url)"
         ]
       },
       "holiday_policy": "closed",
@@ -21066,7 +20829,7 @@
       "source": {
         "url": "https://biblioagenda.ucm.es/hours?lid=6043",
         "checked_at": "2026-08-30",
-        "confidence": "verificado-en-fuente-oficial",
+        "confidence": "verificado-con-reservas",
         "texto": [
           "Horario publicado en biblioagenda.ucm.es",
           "Lunes: 9am - 2:30pm",
@@ -21076,6 +20839,11 @@
           "Viernes: 9am - 2:30pm",
           "Sábados: Cerrado",
           "Domingos: Cerrado"
+        ],
+        "solo_url": true,
+        "fragmento": false,
+        "reservas": [
+          "semanal no derivado del texto oficial (source.solo_url)"
         ]
       },
       "holiday_policy": "closed",
@@ -21178,7 +20946,7 @@
       "source": {
         "url": "https://biblioagenda.ucm.es/hours?lid=6060",
         "checked_at": "2026-08-30",
-        "confidence": "verificado-en-fuente-oficial",
+        "confidence": "verificado-con-reservas",
         "texto": [
           "Horario publicado en biblioagenda.ucm.es",
           "Lunes: 9am - 3pm",
@@ -21188,6 +20956,11 @@
           "Viernes: 9am - 3pm",
           "Sábados: Cerrado",
           "Domingos: Cerrado"
+        ],
+        "solo_url": true,
+        "fragmento": false,
+        "reservas": [
+          "semanal no derivado del texto oficial (source.solo_url)"
         ]
       },
       "holiday_policy": "closed",
@@ -21290,7 +21063,7 @@
       "source": {
         "url": "https://biblioagenda.ucm.es/hours?lid=6021",
         "checked_at": "2026-08-30",
-        "confidence": "verificado-en-fuente-oficial",
+        "confidence": "verificado-con-reservas",
         "texto": [
           "Horario publicado en biblioagenda.ucm.es",
           "Lunes: 9am - 2pm",
@@ -21300,6 +21073,11 @@
           "Viernes: 9am - 2pm",
           "Sábados: Cerrado",
           "Domingos: Cerrado"
+        ],
+        "solo_url": true,
+        "fragmento": false,
+        "reservas": [
+          "semanal no derivado del texto oficial (source.solo_url)"
         ]
       },
       "holiday_policy": "closed",
@@ -21402,7 +21180,7 @@
       "source": {
         "url": "https://biblioagenda.ucm.es/hours?lid=6061",
         "checked_at": "2026-08-30",
-        "confidence": "verificado-en-fuente-oficial",
+        "confidence": "verificado-con-reservas",
         "texto": [
           "Horario publicado en biblioagenda.ucm.es",
           "Lunes: 9am - 2:30pm",
@@ -21412,6 +21190,11 @@
           "Viernes: 9am - 2:30pm",
           "Sábados: Cerrado",
           "Domingos: Cerrado"
+        ],
+        "solo_url": true,
+        "fragmento": false,
+        "reservas": [
+          "semanal no derivado del texto oficial (source.solo_url)"
         ]
       },
       "holiday_policy": "closed",
@@ -21514,7 +21297,7 @@
       "source": {
         "url": "https://biblioagenda.ucm.es/hours?lid=7136",
         "checked_at": "2026-08-30",
-        "confidence": "verificado-en-fuente-oficial",
+        "confidence": "verificado-con-reservas",
         "texto": [
           "Horario publicado en biblioagenda.ucm.es",
           "Lunes: Sala de lectura cerrada. Recogida de reservas en FLL Depósito de 09:00-14:00",
@@ -21524,6 +21307,11 @@
           "Viernes: Sala de lectura cerrada. Recogida de reservas en FLL Depósito de 09:00-14:00",
           "Sábados: Cerrado",
           "Domingos: Cerrado"
+        ],
+        "solo_url": true,
+        "fragmento": false,
+        "reservas": [
+          "semanal no derivado del texto oficial (source.solo_url)"
         ]
       },
       "holiday_policy": "closed",
@@ -21626,7 +21414,7 @@
       "source": {
         "url": "https://biblioagenda.ucm.es/hours?lid=6047",
         "checked_at": "2026-08-30",
-        "confidence": "verificado-en-fuente-oficial",
+        "confidence": "verificado-con-reservas",
         "texto": [
           "Horario publicado en biblioagenda.ucm.es",
           "Lunes: Cerrado",
@@ -21636,6 +21424,11 @@
           "Viernes: 9am - 2pm",
           "Sábados: Cerrado",
           "Domingos: Cerrado"
+        ],
+        "solo_url": true,
+        "fragmento": false,
+        "reservas": [
+          "semanal no derivado del texto oficial (source.solo_url)"
         ]
       },
       "holiday_policy": "closed",
@@ -21736,9 +21529,18 @@
       "municipio": "madrid",
       "operador": "uned.es",
       "source": {
-        "url": "https://www.uned.es/universidad/biblioteca.html",
-        "checked_at": "2026-08-19",
-        "confidence": "migrated-from-published-schedule"
+        "url": "https://www.uned.es/universidad/biblioteca/contacto.html#:~:text=HORARIO%20DE%20VERANO%20%28del%201%20de%20junio%20al%2015%20de%20septiembre%29,Biblioteca%20Central%3A%20de%20lunes%20a%20viernes%2C%20de%209%20a%2019%3A30%20h.",
+        "checked_at": "2026-08-30",
+        "confidence": "verificado-con-reservas",
+        "solo_url": true,
+        "nota": "La UNED publica solo el horario de la temporada en curso. El semanal (de lunes a viernes, de 9 a 20:30 h) y los sábados de apertura de 2026 salen de esa misma página el 19-02-2026: https://web.archive.org/web/20260219010334/https://www.uned.es/universidad/biblioteca/contacto.html",
+        "reservas": [
+          "semanal no derivado del texto oficial (source.solo_url)"
+        ],
+        "texto": [
+          "HORARIO DE VERANO (del 1 de junio al 15 de septiembre)",
+          "Biblioteca Central: de lunes a viernes, de 9 a 19:30 h."
+        ]
       },
       "holiday_policy": "closed",
       "weekly": {
@@ -21747,7 +21549,7 @@
           "intervalos": [
             [
               "09:00",
-              "22:00"
+              "20:30"
             ]
           ],
           "nota": "Horario habitual"
@@ -21757,7 +21559,7 @@
           "intervalos": [
             [
               "09:00",
-              "22:00"
+              "20:30"
             ]
           ],
           "nota": "Horario habitual"
@@ -21767,7 +21569,7 @@
           "intervalos": [
             [
               "09:00",
-              "22:00"
+              "20:30"
             ]
           ],
           "nota": "Horario habitual"
@@ -21777,7 +21579,7 @@
           "intervalos": [
             [
               "09:00",
-              "22:00"
+              "20:30"
             ]
           ],
           "nota": "Horario habitual"
@@ -21787,7 +21589,7 @@
           "intervalos": [
             [
               "09:00",
-              "22:00"
+              "20:30"
             ]
           ],
           "nota": "Horario habitual"
@@ -21803,8 +21605,99 @@
           "nota": "Cerrado según horario habitual"
         }
       },
-      "rules": [],
+      "rules": [
+        {
+          "from": "2026-06-01",
+          "to": "2026-09-15",
+          "estado": "abierto",
+          "intervalos": [
+            [
+              "09:00",
+              "19:30"
+            ]
+          ],
+          "priority": 60,
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "nota": "Horario de verano"
+        }
+      ],
       "dates": {
+        "2026-01-24": {
+          "estado": "abierto",
+          "intervalos": [
+            [
+              "09:00",
+              "14:30"
+            ]
+          ],
+          "nota": "Apertura de sábado"
+        },
+        "2026-01-31": {
+          "estado": "abierto",
+          "intervalos": [
+            [
+              "09:00",
+              "14:30"
+            ]
+          ],
+          "nota": "Apertura de sábado"
+        },
+        "2026-05-09": {
+          "estado": "abierto",
+          "intervalos": [
+            [
+              "09:00",
+              "14:30"
+            ]
+          ],
+          "nota": "Apertura de sábado"
+        },
+        "2026-05-16": {
+          "estado": "abierto",
+          "intervalos": [
+            [
+              "09:00",
+              "14:30"
+            ]
+          ],
+          "nota": "Apertura de sábado"
+        },
+        "2026-05-23": {
+          "estado": "abierto",
+          "intervalos": [
+            [
+              "09:00",
+              "14:30"
+            ]
+          ],
+          "nota": "Apertura de sábado"
+        },
+        "2026-05-30": {
+          "estado": "abierto",
+          "intervalos": [
+            [
+              "09:00",
+              "14:30"
+            ]
+          ],
+          "nota": "Apertura de sábado"
+        },
+        "2026-06-06": {
+          "estado": "abierto",
+          "intervalos": [
+            [
+              "09:00",
+              "14:30"
+            ]
+          ],
+          "nota": "Apertura de sábado"
+        },
         "2026-12-24": {
           "estado": "consultar",
           "intervalos": [],
