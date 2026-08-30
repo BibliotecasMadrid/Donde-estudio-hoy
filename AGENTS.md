@@ -19,6 +19,12 @@ Minimalista: solo mapa + marcadores + panel. Sin menús, buscador ni backend.
 - **`<slug>.html`** (×217) — páginas de detalle generadas (NO editar a mano). `build.sh` las
   regenera **en cada despliegue**, así que lo que se publica siempre sale de `index.html`.
 - **`calendario.json`** — calendario interno 2026 con festivos, periodos estivales y excepciones.
+  Cada centro guarda en `source` la URL oficial, la fecha de revisión, el nivel de confianza y
+  `texto`: **el horario copiado literalmente de la página oficial**. Ese texto es la prueba de
+  que el horario publicado es el que dice la fuente, y de él sale el `#:~:text=` del enlace.
+- **`auditar_horarios.py`** — contrasta cada centro con su fuente oficial: reconstruye el
+  `#:~:text=` para que el enlace resalte el horario, deriva el semanal y avisa de lo que no
+  sabe interpretar en vez de escribirlo a ciegas. Ver "Horarios y fuentes oficiales".
 - **`sitemap.xml`** — generado por `build.py`.
 - **`build.sh`** — lo que ejecuta Cloudflare Pages: lanza `build.py` y arma `dist/` con solo
   lo que es web. Aborta el despliegue si el material de firma de la app se cuela en `dist/`.
@@ -63,7 +69,9 @@ Cada lugar es un objeto:
   direccion: "...",
   lat: 40.4274, lng: -3.7106,                   // grados decimales
   plazas: 250,                                  // aforo / puestos de estudio disponibles
-  horario: "Lun–Vie 9–21h\n(...)",              // \n = nueva línea en el popup
+  horario: "Lun–Vie 9–21h\n(...)",              // \n = nueva línea en el popup.
+                                                // La 1ª línea la reescribe auditar_horarios.py
+                                                // desde el calendario; las demás se conservan.
   web: "https://...",                           // OPCIONAL: si falta, el botón enlaza a una
                                                 // búsqueda en Google del nombre
 
@@ -95,6 +103,43 @@ leyenda (CSS/HTML); si cambias uno, cambia los demás.
 Para añadir un lugar, copia un objeto del array y rellénalo. Coordenadas con Nominatim:
 `curl -A "DondeEstudioHoy/1.0" "https://nominatim.openstreetmap.org/search?street=Calle+X+1&city=Madrid&format=json&limit=1"`
 (límite 1 req/seg; la búsqueda por calle es más fiable que el texto libre).
+
+## Horarios y fuentes oficiales
+
+El horario que enseña la web tiene que salir de una página oficial, y el enlace tiene que
+**resaltar el horario**, no dejar al visitante en lo alto de la página. Eso lo sostiene el
+`#:~:text=` de cada URL, y para que funcione hacen falta dos cosas que se comprueban solas:
+
+1. Cada extremo del fragmento es **texto literal de la página**, no una paráfrasis.
+2. Cada extremo cabe dentro de **un solo bloque HTML** (un `<li>`, un `<p>`). Un fragmento
+   puede abarcar varios bloques, pero sus dos anclas no pueden partirse.
+
+Por eso `calendario.json` guarda en `source.texto` el horario tal cual aparece publicado:
+sin él no hay forma de comprobar ni el fragmento ni el calendario.
+
+```bash
+python auditar_horarios.py --informe                       # audita lo ya guardado
+python auditar_horarios.py --fuentes f.json --aplicar      # incorpora texto recién extraído
+```
+
+`f.json` es `{"<slug>": ["línea 1", "línea 2"]}`, o `{"<slug>": {"url":…, "lineas":[…]}}` si
+además cambia la URL. Dos opciones más para los centros que no se dejan: `"fragmento": false`
+cuando el horario lo pinta JavaScript y no hay texto que anclar, y `"solo_url": true` cuando
+el semanal no debe tocarse (el horario en vivo lo trae la API del propio centro).
+
+De dónde sale el texto, por orden:
+
+- **madrid.es** (99 centros) — bloquea a cualquier script (Akamai devuelve 403 a `curl` y a
+  `urllib`). Hay que extraer `#horario .content-panel-moreinfo` **desde un navegador de
+  verdad**; por eso `sync_madrid.py`, que raspaba con `requests`, ya no servía y se retiró.
+- **comunidad.madrid** — su `sitemap.xml` enumera las fichas de centro, y cada una lleva un
+  JSON-LD con `openingHours`. Es la fuente uniforme para las municipales cuyo ayuntamiento no
+  publica el horario en texto.
+- **BiblioAgenda (UCM y UAM)** — `api_hours_grid.php` da el horario real por biblioteca. La
+  web ya lo pinta en vivo, así que ahí el calendario solo es el respaldo.
+
+**Ojo:** la URL oficial vive por duplicado, en `lugares[].web` y en
+`calendario.json.places[<slug>].source.url`. `auditar_horarios.py` avisa si divergen.
 
 ## Local y despliegue
 
