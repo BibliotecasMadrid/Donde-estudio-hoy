@@ -16,7 +16,7 @@ Minimalista: solo mapa + marcadores + panel. Sin menús, buscador ni backend.
   - una página HTML por cada centro (`<slug>.html`, p. ej. `clara-campoamor.html`), optimizada
     para SEO (title, meta, canonical, JSON-LD propio);
   - el `sitemap.xml`.
-- **`<slug>.html`** (×213) — páginas de detalle generadas (NO editar a mano). `build.sh` las
+- **`<slug>.html`** (×215) — páginas de detalle generadas (NO editar a mano). `build.sh` las
   regenera **en cada despliegue**, así que lo que se publica siempre sale de `index.html`.
 - **`calendario.json`** — calendario interno 2026 con festivos, periodos estivales y excepciones.
   Cada centro guarda en `source` la URL oficial, la fecha de revisión, el nivel de confianza y
@@ -68,7 +68,10 @@ Cada lugar es un objeto:
   distrito: "...",
   direccion: "...",
   lat: 40.4274, lng: -3.7106,                   // grados decimales
-  plazas: 250,                                  // aforo / puestos de estudio disponibles
+  plazas: 250,                                  // OPCIONAL: aforo / puestos de estudio.
+                                                // Si no lo publica nadie, se omite: la
+                                                // ficha y el panel quitan el distintivo
+                                                // en vez de ensenar una cifra inventada
   horario: "Lun–Vie 9–21h\n(...)",              // \n = nueva línea en el popup.
                                                 // La 1ª línea la reescribe auditar_horarios.py
                                                 // desde el calendario; las demás se conservan.
@@ -99,8 +102,10 @@ campo al array, añádelo también ahí.
 **Solo universidades públicas.** El tipo `universidad` cubre las bibliotecas de la UCM, UAM,
 UPM, UC3M, URJC, UAH y UNED, más el CSIC y la Biblioteca Regional. Las privadas (Comillas,
 Nebrija, CEU San Pablo y Francisco de Vitoria) se retiraron el 30-08-2026 por decisión del
-propietario del sitio: no se vuelven a añadir. Sus URLs quedan en 404 —no hay 301 porque no
-hay página equivalente— y la página de error ya devuelve al mapa.
+propietario del sitio: no se vuelven a añadir. Sus URLs llevan un 301 al mapa en `_redirects`,
+que además es la única forma de apagarlas del todo: la caché de borde de Cloudflare seguía
+sirviendo dos de esas fichas con 200 y siete días de `s-maxage`, y no la vacía ni un
+despliegue nuevo ni el purgado de la zona. La redirección se resuelve antes que el asset.
 
 Colores por tipo: `biblioteca` azul `#2563EB`, `sala` verde `#059669`, `universidad` morado
 `#7C3AED`. **Ojo:** el color se define en el objeto `colores` (JS) y también en `:root` + la
@@ -149,7 +154,10 @@ De dónde sale el texto, por orden:
   publica el horario en texto.
 - **BiblioAgenda (UCM y UAM)** — `api_hours_grid.php` da el horario real por biblioteca. La
   web ya lo pinta en vivo, así que ahí el calendario solo es el respaldo.
-- **uned.es** — el horario está en `biblioteca/contacto.html` (no en `biblioteca.html`), y la
+- **uned.es** — una sola página, `biblioteca/contacto.html` (no `biblioteca.html`), da el
+  horario de las **tres** bibliotecas de la Sede Central: Central (Senda del Rey 5), Campus
+  Norte (Juan del Rosal 14, con la sala de lectura cerrada hasta septiembre de 2026) e IUGM
+  (Princesa 36). Cada ficha ancla su propia línea. La
   UNED publica **solo la temporada en curso**: en verano desaparece el horario de curso. El
   semanal (L–V 9–20:30) y los sábados sueltos de 2026 vienen de esa misma página archivada el
   19-02-2026, así que el perfil va con `solo_url` y lo cuenta en `source.nota`. El `#:~:text=`

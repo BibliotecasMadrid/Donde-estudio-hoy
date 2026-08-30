@@ -620,10 +620,21 @@ def page_html(d, slug):
             "addressCountry": "ES",
         },
         "geo": {"@type": "GeoCoordinates", "latitude": lat, "longitude": lng},
-        "maximumAttendeeCapacity": d.get("plazas", 100),
+        # El aforo solo se declara si se conoce: inventarlo seria darle a Google un dato
+        # que no publica nadie. Los centros sin `plazas` salen sin esta clave y sin el
+        # distintivo de puestos, aqui y en el panel del mapa.
+        **({"maximumAttendeeCapacity": d["plazas"]} if d.get("plazas") else {}),
         "url": canonical,
         "areaServed": "Madrid",
     }
+    capacity_html = ""
+    if d.get("plazas"):
+        capacity_html = (
+            '<div class="capacity-tag">\n'
+            '          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>\n'
+            '          <span>%d puestos de estudio</span>\n'
+            '        </div>' % d["plazas"]
+        )
     if d.get("foto"):
         ld["image"] = d["foto"]
 
@@ -979,10 +990,7 @@ def page_html(d, slug):
         <h1>{e(d["nombre"])}</h1>
         <p class="addr">{e(d["distrito"])} · {e(d["direccion"])}</p>
         
-        <div class="capacity-tag">
-          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          <span>{d.get("plazas", 100)} puestos de estudio</span>
-        </div>
+        {capacity_html}
 
         <div class="actions">
           <a class="btn btn-primary" href="./#{slug}">Ver en el mapa</a>

@@ -23105,6 +23105,204 @@
           "nota": "Nochevieja (Horario especial 9:00–14:00h o cerrado)"
         }
       }
+    },
+    "uned-campus-norte": {
+      "municipio": "madrid",
+      "operador": "uned.es",
+      "source": {
+        "url": "https://www.uned.es/universidad/biblioteca/contacto.html#:~:text=HORARIO%20DE%20VERANO%20%28del%201%20de%20junio%20al%2015%20de%20septiembre%29,a%2019%3A00%20h.%20En%20julio%20y%20agosto%20de%209%20a%2014%3A00%20h.",
+        "checked_at": "2026-08-30",
+        "confidence": "verificado-con-reservas",
+        "solo_url": true,
+        "nota": "La UNED publica solo el horario de la temporada en curso. El semanal (de lunes a viernes, de 9 a 19 h) sale de esta misma página archivada el 19-02-2026: https://web.archive.org/web/20260219010334/https://www.uned.es/universidad/biblioteca/contacto.html",
+        "reservas": [
+          "semanal no derivado del texto oficial (source.solo_url)"
+        ],
+        "texto": [
+          "HORARIO DE VERANO (del 1 de junio al 15 de septiembre)",
+          "Biblioteca Campus Norte: de lunes a viernes, de 9 a 19:00 h. En julio y agosto de 9 a 14:00 h.",
+          "Desde el 8 de septiembre de 2025 hasta septiembre de 2026, la sala de lectura de la Biblioteca Campus Norte permanecerá cerrada."
+        ]
+      },
+      "holiday_policy": "closed",
+      "weekly": {
+        "0": {
+          "estado": "abierto",
+          "intervalos": [
+            [
+              "09:00",
+              "19:00"
+            ]
+          ],
+          "nota": "Horario habitual"
+        },
+        "1": {
+          "estado": "abierto",
+          "intervalos": [
+            [
+              "09:00",
+              "19:00"
+            ]
+          ],
+          "nota": "Horario habitual"
+        },
+        "2": {
+          "estado": "abierto",
+          "intervalos": [
+            [
+              "09:00",
+              "19:00"
+            ]
+          ],
+          "nota": "Horario habitual"
+        },
+        "3": {
+          "estado": "abierto",
+          "intervalos": [
+            [
+              "09:00",
+              "19:00"
+            ]
+          ],
+          "nota": "Horario habitual"
+        },
+        "4": {
+          "estado": "abierto",
+          "intervalos": [
+            [
+              "09:00",
+              "19:00"
+            ]
+          ],
+          "nota": "Horario habitual"
+        },
+        "5": {
+          "estado": "cerrado",
+          "intervalos": [],
+          "nota": "Cerrado según horario habitual"
+        },
+        "6": {
+          "estado": "cerrado",
+          "intervalos": [],
+          "nota": "Cerrado según horario habitual"
+        }
+      },
+      "rules": [
+        {
+          "from": "2026-07-01",
+          "to": "2026-08-31",
+          "estado": "abierto",
+          "intervalos": [
+            [
+              "09:00",
+              "14:00"
+            ]
+          ],
+          "priority": 60,
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "nota": "Horario de verano"
+        },
+        {
+          "from": "2026-01-01",
+          "to": "2026-09-30",
+          "estado": "consultar",
+          "intervalos": [],
+          "priority": 95,
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "nota": "Sala de lectura cerrada; préstamo y reservas con normalidad"
+        }
+      ],
+      "dates": {}
+    },
+    "uned-iugm-gutierrez-mellado": {
+      "municipio": "madrid",
+      "operador": "uned.es",
+      "source": {
+        "url": "https://www.uned.es/universidad/biblioteca/contacto.html#:~:text=HORARIO%20DE%20VERANO%20%28del%201%20de%20junio%20al%2015%20de%20septiembre%29,Biblioteca%20del%20IUGM%3A%20lunes%2C%20martes%2C%20jueves%20y%20viernes%2C%20de%209%20a%2014%3A30%20h.",
+        "checked_at": "2026-08-30",
+        "confidence": "verificado-con-reservas",
+        "solo_url": true,
+        "nota": "El horario es el mismo en curso y en verano según la página oficial. Va con solo_url porque el lector automático no interpreta bien la lista de días sueltos ('lunes, martes, jueves y viernes').",
+        "reservas": [
+          "semanal no derivado del texto oficial (source.solo_url)"
+        ],
+        "texto": [
+          "HORARIO DE VERANO (del 1 de junio al 15 de septiembre)",
+          "Biblioteca del IUGM: lunes, martes, jueves y viernes, de 9 a 14:30 h."
+        ]
+      },
+      "holiday_policy": "closed",
+      "weekly": {
+        "0": {
+          "estado": "abierto",
+          "intervalos": [
+            [
+              "09:00",
+              "14:30"
+            ]
+          ],
+          "nota": "Horario habitual"
+        },
+        "1": {
+          "estado": "abierto",
+          "intervalos": [
+            [
+              "09:00",
+              "14:30"
+            ]
+          ],
+          "nota": "Horario habitual"
+        },
+        "2": {
+          "estado": "cerrado",
+          "intervalos": [],
+          "nota": "Cerrado según horario habitual"
+        },
+        "3": {
+          "estado": "abierto",
+          "intervalos": [
+            [
+              "09:00",
+              "14:30"
+            ]
+          ],
+          "nota": "Horario habitual"
+        },
+        "4": {
+          "estado": "abierto",
+          "intervalos": [
+            [
+              "09:00",
+              "14:30"
+            ]
+          ],
+          "nota": "Horario habitual"
+        },
+        "5": {
+          "estado": "cerrado",
+          "intervalos": [],
+          "nota": "Cerrado según horario habitual"
+        },
+        "6": {
+          "estado": "cerrado",
+          "intervalos": [],
+          "nota": "Cerrado según horario habitual"
+        }
+      },
+      "rules": [],
+      "dates": {}
     }
   },
   "places_exceptions": {
