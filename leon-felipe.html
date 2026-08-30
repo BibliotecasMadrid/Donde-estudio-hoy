@@ -49,6 +49,20 @@
       background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.15) 100%);
       pointer-events: none;
     }
+    .bg-credit {
+      position: absolute;
+      right: 12px;
+      top: 10px;
+      z-index: 2;
+      margin: 0;
+      max-width: 45vw;
+      text-align: right;
+      font-size: 11px;
+      line-height: 1.3;
+      color: rgba(255,255,255,0.85);
+      text-shadow: 0 1px 3px rgba(0,0,0,0.7);
+      pointer-events: none;
+    }
     
         
     /* ── Tarjeta flotante horizontal centrada abajo ── */
@@ -302,6 +316,7 @@
   <!-- Foto del centro a pantalla completa -->
   <div class="bg-photo">
     <img src="images/sala-de-lectura-le-n-felipe.jpg" alt="Sala de Lectura León Felipe" loading="eager">
+    
   </div>
   
 
@@ -355,7 +370,7 @@
   <script src="horarios.js"></script>
   <script>
   (function() {
-    const d = {"tipo": "sala", "nombre": "Sala de Lectura León Felipe", "foto": "images/sala-de-lectura-le-n-felipe.jpg", "distrito": "Villaverde", "direccion": "Calle Encarnación Oviol, 47, 28021 Madrid", "lat": 40.3508, "lng": -3.6872, "plazas": 80, "horario": "Lun–Sáb (incluso festivos) 9:30–21h", "web": "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=bf1c78610b88e610VgnVCM2000001f4a900aRCRD#:~:text=Horario%20de%20la%20Sala%20%3A,y%20devoluciones"};
+    const d = {"tipo": "sala", "nombre": "Sala de Lectura León Felipe", "foto": "images/sala-de-lectura-le-n-felipe.jpg", "foto_interior_credito": "Shehab Sayed", "foto_interior": "images/leon-felipe-interior.jpg", "distrito": "Villaverde", "direccion": "Calle Encarnación Oviol, 47, 28021 Madrid", "lat": 40.3508, "lng": -3.6872, "plazas": 80, "horario": "Lun–Sáb (incluso festivos) 9:30–21h", "web": "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=bf1c78610b88e610VgnVCM2000001f4a900aRCRD#:~:text=Horario%20de%20la%20Sala%20%3A,y%20devoluciones"};
     const slug = "leon-felipe";
     // Interceptar botón 'Atrás' del navegador para ir a "Ver en el mapa"
     try {

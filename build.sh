@@ -65,6 +65,10 @@ PRIVADO=(
   "build.sh"                             # este mismo script
   "sync_uam.py"
   "test_build.py"
+  "fotos.py"                             # herramienta de fotos, no su salida
+  ".fotos-cache"                         # originales descargados de Google Places
+  ".env"                                 # claves de API: NUNCA en dist/
+  "*.env"
   "calendario.json"                      # fuente privada; build.py publica /horarios/
   "AGENTS.md"
   "README.md"
@@ -79,7 +83,8 @@ PRIVADO=(
 es_privado() {
   local nombre="$1" p
   for p in "${PRIVADO[@]}"; do
-    [[ "$nombre" == "$p" ]] && return 0
+    # $p sin comillas: permite patrones como "*.env" ademas de nombres exactos.
+    [[ "$nombre" == $p ]] && return 0
   done
   return 1
 }
@@ -122,6 +127,12 @@ done
 if find "$SALIDA" \( -iname "*.keystore" -o -iname "*.jks" -o -iname "*.aab" \
                   -o -iname "*.apk" -o -iname "*.zip" -o -iname "*key-info*" \) -print -quit | grep -q .; then
   fallo "material de firma de la app dentro de $SALIDA. Abortado."
+fi
+
+# Misma logica para las claves de API: la de Google Places se usa desde fotos.py y vive
+# fuera del repo, pero si alguna vez aparece un .env aqui no se publica nada.
+if find "$SALIDA" \( -name "*.env" -o -name ".env" \) -print -quit | grep -q .; then
+  fallo "un archivo .env dentro de $SALIDA. Abortado."
 fi
 
 # Si el generador fallara a medias, mejor enterarse aqui que en Google.

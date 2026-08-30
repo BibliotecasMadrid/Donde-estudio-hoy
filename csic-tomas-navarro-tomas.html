@@ -49,6 +49,20 @@
       background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.15) 100%);
       pointer-events: none;
     }
+    .bg-credit {
+      position: absolute;
+      right: 12px;
+      top: 10px;
+      z-index: 2;
+      margin: 0;
+      max-width: 45vw;
+      text-align: right;
+      font-size: 11px;
+      line-height: 1.3;
+      color: rgba(255,255,255,0.85);
+      text-shadow: 0 1px 3px rgba(0,0,0,0.7);
+      pointer-events: none;
+    }
     
         
     /* ── Tarjeta flotante horizontal centrada abajo ── */
@@ -302,6 +316,7 @@
   <!-- Foto del centro a pantalla completa -->
   <div class="bg-photo">
     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Centro_de_Ciencias_Humanas_y_Sociales_del_CSIC_%28Madrid%29_02.jpg/960px-Centro_de_Ciencias_Humanas_y_Sociales_del_CSIC_%28Madrid%29_02.jpg" alt="Biblioteca CSIC – Tomás Navarro Tomás" loading="eager">
+    
   </div>
   
 
@@ -355,7 +370,7 @@
   <script src="horarios.js"></script>
   <script>
   (function() {
-    const d = {"tipo": "universidad", "nombre": "Biblioteca CSIC – Tomás Navarro Tomás", "foto": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Centro_de_Ciencias_Humanas_y_Sociales_del_CSIC_%28Madrid%29_02.jpg/960px-Centro_de_Ciencias_Humanas_y_Sociales_del_CSIC_%28Madrid%29_02.jpg", "distrito": "Madrid (San Blas-Canillejas)", "direccion": "Calle Albasanz, 26, 28037 Madrid", "lat": 40.4358, "lng": -3.6305, "plazas": 220, "horario": "Lun–Vie 8:30–20:30h\n(Centro de Ciencias Humanas y Sociales)", "web": "https://biblioteca.cchs.csic.es/#:~:text=Horario"};
+    const d = {"tipo": "universidad", "nombre": "Biblioteca CSIC – Tomás Navarro Tomás", "foto": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Centro_de_Ciencias_Humanas_y_Sociales_del_CSIC_%28Madrid%29_02.jpg/960px-Centro_de_Ciencias_Humanas_y_Sociales_del_CSIC_%28Madrid%29_02.jpg", "foto_interior_credito": "Esther Khara", "foto_interior": "images/csic-tomas-navarro-tomas-interior.jpg", "distrito": "Madrid (San Blas-Canillejas)", "direccion": "Calle Albasanz, 26, 28037 Madrid", "lat": 40.4358, "lng": -3.6305, "plazas": 220, "horario": "Lun–Vie 8:30–20:30h\n(Centro de Ciencias Humanas y Sociales)", "web": "https://biblioteca.cchs.csic.es/#:~:text=Horario"};
     const slug = "csic-tomas-navarro-tomas";
     // Interceptar botón 'Atrás' del navegador para ir a "Ver en el mapa"
     try {

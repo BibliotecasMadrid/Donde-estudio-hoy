@@ -16,8 +16,8 @@
   <meta property="og:title" content="Biblioteca U. Francisco de Vitoria · Horario y dirección">
   <meta property="og:description" content="Biblioteca U. Francisco de Vitoria: Ctra. Pozuelo-Majadahonda, km 1,8, 28223 Pozuelo de Alarcón. Horario: Lun–Vie 8–22h · Sáb 9–14h (Acceso preferente a la comunidad universitaria). Biblioteca universitaria en Madrid.">
   <meta property="og:url" content="https://bibliotecasmadrid.es/u-francisco-de-vitoria">
-  <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Panoramica_oficial_UFV.jpg/960px-Panoramica_oficial_UFV.jpg">
-  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Library", "name": "Biblioteca U. Francisco de Vitoria", "description": "Horario: Lun–Vie 8–22h · Sáb 9–14h (Acceso preferente a la comunidad universitaria)", "address": {"@type": "PostalAddress", "streetAddress": "Ctra. Pozuelo-Majadahonda, km 1,8, 28223 Pozuelo de Alarcón", "addressLocality": "Madrid", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.4402647, "longitude": -3.8339056}, "maximumAttendeeCapacity": 500, "url": "https://bibliotecasmadrid.es/u-francisco-de-vitoria", "areaServed": "Madrid", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Panoramica_oficial_UFV.jpg/960px-Panoramica_oficial_UFV.jpg"}</script>
+  <meta property="og:image" content="images/u-francisco-de-vitoria-exterior.jpg">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Library", "name": "Biblioteca U. Francisco de Vitoria", "description": "Horario: Lun–Vie 8–22h · Sáb 9–14h (Acceso preferente a la comunidad universitaria)", "address": {"@type": "PostalAddress", "streetAddress": "Ctra. Pozuelo-Majadahonda, km 1,8, 28223 Pozuelo de Alarcón", "addressLocality": "Madrid", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.4402647, "longitude": -3.8339056}, "maximumAttendeeCapacity": 500, "url": "https://bibliotecasmadrid.es/u-francisco-de-vitoria", "areaServed": "Madrid", "image": "images/u-francisco-de-vitoria-exterior.jpg"}</script>
   <style>
     :root { --ink:#1A1F36; --ink-2:#5A6172; --ink-3:#9AA0AE; --line:#ECEEF2; }
     * { margin:0; padding:0; box-sizing:border-box; }
@@ -47,6 +47,20 @@
       position: absolute;
       inset: 0;
       background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.15) 100%);
+      pointer-events: none;
+    }
+    .bg-credit {
+      position: absolute;
+      right: 12px;
+      top: 10px;
+      z-index: 2;
+      margin: 0;
+      max-width: 45vw;
+      text-align: right;
+      font-size: 11px;
+      line-height: 1.3;
+      color: rgba(255,255,255,0.85);
+      text-shadow: 0 1px 3px rgba(0,0,0,0.7);
       pointer-events: none;
     }
     
@@ -301,7 +315,8 @@
 <body>
   <!-- Foto del centro a pantalla completa -->
   <div class="bg-photo">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Panoramica_oficial_UFV.jpg/960px-Panoramica_oficial_UFV.jpg" alt="Biblioteca U. Francisco de Vitoria" loading="eager">
+    <img src="images/u-francisco-de-vitoria-exterior.jpg" alt="Biblioteca U. Francisco de Vitoria" loading="eager">
+    <p class="bg-credit">Foto: Ricardo H. Ontalba</p>
   </div>
   
 
@@ -355,7 +370,7 @@
   <script src="horarios.js"></script>
   <script>
   (function() {
-    const d = {"tipo": "universidad", "nombre": "Biblioteca U. Francisco de Vitoria", "foto": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Panoramica_oficial_UFV.jpg/960px-Panoramica_oficial_UFV.jpg", "distrito": "Pozuelo de Alarcón", "direccion": "Ctra. Pozuelo-Majadahonda, km 1,8, 28223 Pozuelo de Alarcón", "lat": 40.4402647, "lng": -3.8339056, "plazas": 500, "horario": "Lun–Vie 8–22h · Sáb 9–14h\n(Acceso preferente a la comunidad universitaria)", "web": "https://www.ufv.es/biblioteca/#:~:text=Horarios"};
+    const d = {"tipo": "universidad", "nombre": "Biblioteca U. Francisco de Vitoria", "foto": "images/u-francisco-de-vitoria-exterior.jpg", "foto_credito": "Ricardo H. Ontalba", "foto_interior_credito": "Biblioteca UFV", "foto_interior": "images/u-francisco-de-vitoria-interior.jpg", "distrito": "Pozuelo de Alarcón", "direccion": "Ctra. Pozuelo-Majadahonda, km 1,8, 28223 Pozuelo de Alarcón", "lat": 40.4402647, "lng": -3.8339056, "plazas": 500, "horario": "Lun–Vie 8–22h · Sáb 9–14h\n(Acceso preferente a la comunidad universitaria)", "web": "https://www.ufv.es/biblioteca/#:~:text=Horarios"};
     const slug = "u-francisco-de-vitoria";
     // Interceptar botón 'Atrás' del navegador para ir a "Ver en el mapa"
     try {

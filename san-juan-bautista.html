@@ -16,8 +16,8 @@
   <meta property="og:title" content="Sala de Estudio San Juan Bautista · Horario y dirección">
   <meta property="og:description" content="Sala de Estudio San Juan Bautista: Calle San Nemesio, 4, 28043 Madrid. Horario: Lun–Sáb 9–22h (julio: Lun–Vie 9–15h). Sala de estudio en Madrid.">
   <meta property="og:url" content="https://bibliotecasmadrid.es/san-juan-bautista">
-  <meta property="og:image" content="images/sala-de-estudio-san-juan-bautista.jpg">
-  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Library", "name": "Sala de Estudio San Juan Bautista", "description": "Horario: Lun–Sáb 9–22h (julio: Lun–Vie 9–15h)", "address": {"@type": "PostalAddress", "streetAddress": "Calle San Nemesio, 4, 28043 Madrid", "addressLocality": "Madrid", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.4522, "longitude": -3.658}, "maximumAttendeeCapacity": 70, "url": "https://bibliotecasmadrid.es/san-juan-bautista", "areaServed": "Madrid", "image": "images/sala-de-estudio-san-juan-bautista.jpg"}</script>
+  <meta property="og:image" content="images/san-juan-bautista-exterior.jpg">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Library", "name": "Sala de Estudio San Juan Bautista", "description": "Horario: Lun–Sáb 9–22h (julio: Lun–Vie 9–15h)", "address": {"@type": "PostalAddress", "streetAddress": "Calle San Nemesio, 4, 28043 Madrid", "addressLocality": "Madrid", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.4522, "longitude": -3.658}, "maximumAttendeeCapacity": 70, "url": "https://bibliotecasmadrid.es/san-juan-bautista", "areaServed": "Madrid", "image": "images/san-juan-bautista-exterior.jpg"}</script>
   <style>
     :root { --ink:#1A1F36; --ink-2:#5A6172; --ink-3:#9AA0AE; --line:#ECEEF2; }
     * { margin:0; padding:0; box-sizing:border-box; }
@@ -47,6 +47,20 @@
       position: absolute;
       inset: 0;
       background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.15) 100%);
+      pointer-events: none;
+    }
+    .bg-credit {
+      position: absolute;
+      right: 12px;
+      top: 10px;
+      z-index: 2;
+      margin: 0;
+      max-width: 45vw;
+      text-align: right;
+      font-size: 11px;
+      line-height: 1.3;
+      color: rgba(255,255,255,0.85);
+      text-shadow: 0 1px 3px rgba(0,0,0,0.7);
       pointer-events: none;
     }
     
@@ -301,7 +315,8 @@
 <body>
   <!-- Foto del centro a pantalla completa -->
   <div class="bg-photo">
-    <img src="images/sala-de-estudio-san-juan-bautista.jpg" alt="Sala de Estudio San Juan Bautista" loading="eager">
+    <img src="images/san-juan-bautista-exterior.jpg" alt="Sala de Estudio San Juan Bautista" loading="eager">
+    <p class="bg-credit">Foto: LEUMAN ARQUITECTURA</p>
   </div>
   
 
@@ -355,7 +370,7 @@
   <script src="horarios.js"></script>
   <script>
   (function() {
-    const d = {"tipo": "sala", "nombre": "Sala de Estudio San Juan Bautista", "foto": "images/sala-de-estudio-san-juan-bautista.jpg", "distrito": "Ciudad Lineal", "direccion": "Calle San Nemesio, 4, 28043 Madrid", "lat": 40.4522, "lng": -3.658, "plazas": 70, "horario": "Lun–Sáb 9–22h (julio: Lun–Vie 9–15h)", "web": "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=618b1e79ee71c010VgnVCM1000000b205a0aRCRD#:~:text=Horario%20del%20centro%3A%20De,de%209%20a%2022%20horas"};
+    const d = {"tipo": "sala", "nombre": "Sala de Estudio San Juan Bautista", "foto": "images/san-juan-bautista-exterior.jpg", "foto_credito": "LEUMAN ARQUITECTURA", "distrito": "Ciudad Lineal", "direccion": "Calle San Nemesio, 4, 28043 Madrid", "lat": 40.4522, "lng": -3.658, "plazas": 70, "horario": "Lun–Sáb 9–22h (julio: Lun–Vie 9–15h)", "web": "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=618b1e79ee71c010VgnVCM1000000b205a0aRCRD#:~:text=Horario%20del%20centro%3A%20De,de%209%20a%2022%20horas"};
     const slug = "san-juan-bautista";
     // Interceptar botón 'Atrás' del navegador para ir a "Ver en el mapa"
     try {

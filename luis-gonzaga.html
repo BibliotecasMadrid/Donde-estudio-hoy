@@ -49,6 +49,20 @@
       background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.15) 100%);
       pointer-events: none;
     }
+    .bg-credit {
+      position: absolute;
+      right: 12px;
+      top: 10px;
+      z-index: 2;
+      margin: 0;
+      max-width: 45vw;
+      text-align: right;
+      font-size: 11px;
+      line-height: 1.3;
+      color: rgba(255,255,255,0.85);
+      text-shadow: 0 1px 3px rgba(0,0,0,0.7);
+      pointer-events: none;
+    }
     
         
     /* ── Tarjeta flotante horizontal centrada abajo ── */
@@ -302,6 +316,7 @@
   <!-- Foto del centro a pantalla completa -->
   <div class="bg-photo">
     <img src="images/sala-de-estudio-luis-gonzaga.jpg" alt="Sala de Estudio Luis Gonzaga" loading="eager">
+    
   </div>
   
 
@@ -355,7 +370,7 @@
   <script src="horarios.js"></script>
   <script>
   (function() {
-    const d = {"tipo": "sala", "nombre": "Sala de Estudio Luis Gonzaga", "foto": "images/sala-de-estudio-luis-gonzaga.jpg", "distrito": "Chamartín", "direccion": "Calle Príncipe de Vergara, 142, 28002 Madrid", "lat": 40.4449, "lng": -3.6781, "plazas": 120, "horario": "Lun–Dom 9–21:30h\n(Horario 24h en época de exámenes)", "web": "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=e653d0a471148110VgnVCM1000000b205a0aRCRD#:~:text=De%20lunes%20a%20domingo%2C%209%20a%2021%3A30%20horas"};
+    const d = {"tipo": "sala", "nombre": "Sala de Estudio Luis Gonzaga", "foto": "images/sala-de-estudio-luis-gonzaga.jpg", "foto_interior_credito": "Fernando Garcia", "foto_interior": "images/luis-gonzaga-interior.jpg", "distrito": "Chamartín", "direccion": "Calle Príncipe de Vergara, 142, 28002 Madrid", "lat": 40.4449, "lng": -3.6781, "plazas": 120, "horario": "Lun–Dom 9–21:30h\n(Horario 24h en época de exámenes)", "web": "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=e653d0a471148110VgnVCM1000000b205a0aRCRD#:~:text=De%20lunes%20a%20domingo%2C%209%20a%2021%3A30%20horas"};
     const slug = "luis-gonzaga";
     // Interceptar botón 'Atrás' del navegador para ir a "Ver en el mapa"
     try {

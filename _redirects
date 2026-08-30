@@ -1,0 +1,22 @@
+# Redirecciones que aplica Cloudflare Pages. El archivo en si no se sirve.
+# Formato: https://developers.cloudflare.com/pages/configuration/redirects/
+#
+# Estas entradas existen porque al corregir el nombre oficial de un centro cambia su
+# slug, y con el la URL de su ficha. Las URLs viejas llevan tiempo indexadas y
+# enlazadas desde fuera; sin este 301 se perderia ese trafico y quedarian 404 sueltos.
+# Se cubren las dos formas: la canonica es sin extension, pero el .html tambien responde.
+# No borrar aunque parezcan viejas: una redireccion solo deja de hacer falta cuando ya
+# nadie enlaza el origen, y eso no se sabe.
+
+/central-de-san-sebastian-de-los-reyes  /marcos-ana-san-sebastian-de-los-reyes  301
+/central-de-san-sebastian-de-los-reyes.html  /marcos-ana-san-sebastian-de-los-reyes  301
+/el-parque-alcorcon  /almudena-grandes-el-parque-alcorcon  301
+/el-parque-alcorcon.html  /almudena-grandes-el-parque-alcorcon  301
+/volturno  /benito-perez-galdos-centro-cultural-volturno  301
+/volturno.html  /benito-perez-galdos-centro-cultural-volturno  301
+/jose-vicente-munoz-torrelodones  /juan-van-halen-torrelodones  301
+/jose-vicente-munoz-torrelodones.html  /juan-van-halen-torrelodones  301
+/de-guadarrama  /arcipreste-de-hita-guadarrama  301
+/de-guadarrama.html  /arcipreste-de-hita-guadarrama  301
+/de-navalcarnero  /jose-maria-bausa-navalcarnero  301
+/de-navalcarnero.html  /jose-maria-bausa-navalcarnero  301

@@ -16,8 +16,8 @@
   <meta property="og:title" content="Biblioteca Municipal Gerardo Diego · Horario y dirección">
   <meta property="og:description" content="Biblioteca Municipal Gerardo Diego: Calle Monte Aya, 12, 28031 Madrid. Horario: Lun–Vie 8:30–21h (Verano: 8:30–20h). Biblioteca en Madrid.">
   <meta property="og:url" content="https://bibliotecasmadrid.es/gerardo-diego">
-  <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/El_distrito_de_Villa_de_Vallecas_dispondr%C3%A1_de_una_nueva_sala_de_teatro_municipal_03.jpg/960px-El_distrito_de_Villa_de_Vallecas_dispondr%C3%A1_de_una_nueva_sala_de_teatro_municipal_03.jpg">
-  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Library", "name": "Biblioteca Municipal Gerardo Diego", "description": "Horario: Lun–Vie 8:30–21h (Verano: 8:30–20h)", "address": {"@type": "PostalAddress", "streetAddress": "Calle Monte Aya, 12, 28031 Madrid", "addressLocality": "Madrid", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.3779, "longitude": -3.6227}, "maximumAttendeeCapacity": 170, "url": "https://bibliotecasmadrid.es/gerardo-diego", "areaServed": "Madrid", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/El_distrito_de_Villa_de_Vallecas_dispondr%C3%A1_de_una_nueva_sala_de_teatro_municipal_03.jpg/960px-El_distrito_de_Villa_de_Vallecas_dispondr%C3%A1_de_una_nueva_sala_de_teatro_municipal_03.jpg"}</script>
+  <meta property="og:image" content="images/gerardo-diego-exterior.jpg">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Library", "name": "Biblioteca Municipal Gerardo Diego", "description": "Horario: Lun–Vie 8:30–21h (Verano: 8:30–20h)", "address": {"@type": "PostalAddress", "streetAddress": "Calle Monte Aya, 12, 28031 Madrid", "addressLocality": "Madrid", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.3779, "longitude": -3.6227}, "maximumAttendeeCapacity": 170, "url": "https://bibliotecasmadrid.es/gerardo-diego", "areaServed": "Madrid", "image": "images/gerardo-diego-exterior.jpg"}</script>
   <style>
     :root { --ink:#1A1F36; --ink-2:#5A6172; --ink-3:#9AA0AE; --line:#ECEEF2; }
     * { margin:0; padding:0; box-sizing:border-box; }
@@ -47,6 +47,20 @@
       position: absolute;
       inset: 0;
       background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.15) 100%);
+      pointer-events: none;
+    }
+    .bg-credit {
+      position: absolute;
+      right: 12px;
+      top: 10px;
+      z-index: 2;
+      margin: 0;
+      max-width: 45vw;
+      text-align: right;
+      font-size: 11px;
+      line-height: 1.3;
+      color: rgba(255,255,255,0.85);
+      text-shadow: 0 1px 3px rgba(0,0,0,0.7);
       pointer-events: none;
     }
     
@@ -301,7 +315,8 @@
 <body>
   <!-- Foto del centro a pantalla completa -->
   <div class="bg-photo">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/El_distrito_de_Villa_de_Vallecas_dispondr%C3%A1_de_una_nueva_sala_de_teatro_municipal_03.jpg/960px-El_distrito_de_Villa_de_Vallecas_dispondr%C3%A1_de_una_nueva_sala_de_teatro_municipal_03.jpg" alt="Biblioteca Municipal Gerardo Diego" loading="eager">
+    <img src="images/gerardo-diego-exterior.jpg" alt="Biblioteca Municipal Gerardo Diego" loading="eager">
+    <p class="bg-credit">Foto: Floren Horcajo</p>
   </div>
   
 
@@ -355,7 +370,7 @@
   <script src="horarios.js"></script>
   <script>
   (function() {
-    const d = {"tipo": "biblioteca", "nombre": "Biblioteca Municipal Gerardo Diego", "foto": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/El_distrito_de_Villa_de_Vallecas_dispondr%C3%A1_de_una_nueva_sala_de_teatro_municipal_03.jpg/960px-El_distrito_de_Villa_de_Vallecas_dispondr%C3%A1_de_una_nueva_sala_de_teatro_municipal_03.jpg", "distrito": "Villa de Vallecas", "direccion": "Calle Monte Aya, 12, 28031 Madrid", "lat": 40.3779, "lng": -3.6227, "plazas": 170, "horario": "Lun–Vie 8:30–21h\n(Verano: 8:30–20h)", "web": "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=ca903d0b5e71c010VgnVCM1000000b205a0aRCRD#:~:text=Apertura%20de%20lunes%20a%20viernes.,8%3A30%20a%2021%20horas"};
+    const d = {"tipo": "biblioteca", "nombre": "Biblioteca Municipal Gerardo Diego", "foto": "images/gerardo-diego-exterior.jpg", "foto_credito": "Floren Horcajo", "foto_interior_credito": "Elena Martin", "foto_interior": "images/gerardo-diego-interior.jpg", "distrito": "Villa de Vallecas", "direccion": "Calle Monte Aya, 12, 28031 Madrid", "lat": 40.3779, "lng": -3.6227, "plazas": 170, "horario": "Lun–Vie 8:30–21h\n(Verano: 8:30–20h)", "web": "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=ca903d0b5e71c010VgnVCM1000000b205a0aRCRD#:~:text=Apertura%20de%20lunes%20a%20viernes.,8%3A30%20a%2021%20horas"};
     const slug = "gerardo-diego";
     // Interceptar botón 'Atrás' del navegador para ir a "Ver en el mapa"
     try {

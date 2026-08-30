@@ -44,6 +44,13 @@ Pages sirve `<slug>.html`). El slug se calcula desde `nombre` quitando prefijos 
 duplicado** en `slugify()` de `index.html` (JS) y `slugify()` de `build.py` (Python) y **deben
 ser idénticos** para que el panel enlace a la página correcta. Si tocas uno, toca el otro.
 
+**Cambiar `nombre` cambia la URL.** El slug se deriva del nombre, así que corregir el nombre
+de un centro renombra su página y deja un 404 donde antes había una URL indexada y enlazada.
+Cuando haya que hacerlo, añadir un 301 en `_redirects` de la URL vieja a la nueva. Ojo además
+con `unique_slugs()`: desempata colisiones con sufijos `-2`, `-3` **según el orden del array**,
+así que renombrar un centro puede mover el sufijo de OTRO distinto. La forma segura de saber
+qué URLs cambian es recalcular `unique_slugs()` sobre la lista ya renombrada y comparar.
+
 ## Datos: array `lugares`
 
 Cada lugar es un objeto:
@@ -57,10 +64,29 @@ Cada lugar es un objeto:
   lat: 40.4274, lng: -3.7106,                   // grados decimales
   plazas: 250,                                  // aforo / puestos de estudio disponibles
   horario: "Lun–Vie 9–21h\n(...)",              // \n = nueva línea en el popup
-  web: "https://..."                            // OPCIONAL: si falta, el botón enlaza a una
+  web: "https://...",                           // OPCIONAL: si falta, el botón enlaza a una
                                                 // búsqueda en Google del nombre
+
+  // ── Fotos: son DOS, y cada una sale en un sitio distinto ──
+  foto: "images/x-exterior.jpg",                // EXTERIOR del edificio. Fondo a pantalla
+                                                // completa de la ficha <slug>.html.
+  foto_interior: "images/x-interior.jpg",       // INTERIOR: la sala de estudio, mesas y
+                                                // sillas. Cover del panel del mapa.
+  foto_credito: "Nombre del autor",             // OPCIONALES, pero OBLIGATORIOS si la foto
+  foto_interior_credito: "Nombre del autor"     // viene de Google Places: sus términos
+                                                // exigen acreditar al autor.
 }
 ```
+
+Las dos fotos son opcionales y degradan con cabeza: sin `foto_interior`, el panel del mapa cae en
+`foto`; sin ninguna de las dos, en el pool genérico de `PHOTO_POOLS`. Así se pueden ir rellenando
+por lotes sin romper nada. Se traen con `fotos.py` (Google Places API) y se guardan ya
+redimensionadas en `images/`: 800×500 los interiores (el cover del panel mide 160 px de alto) y
+1600 px de ancho los exteriores (van a pantalla completa).
+
+**Ojo:** `extract_lugares()` de `build.py` parsea el array con una **lista blanca de campos**. Un
+campo que no esté en ese `re.sub` no llega a JSON válido y **el build entero falla**. Si añades un
+campo al array, añádelo también ahí.
 
 Colores por tipo: `biblioteca` azul `#2563EB`, `sala` verde `#059669`, `universidad` morado
 `#7C3AED`. **Ojo:** el color se define en el objeto `colores` (JS) y también en `:root` + la

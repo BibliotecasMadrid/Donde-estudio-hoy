@@ -16,8 +16,8 @@
   <meta property="og:title" content="Biblioteca Ciudad de Nejapa (Alcorcón) · Horario y dirección">
   <meta property="og:description" content="Biblioteca Ciudad de Nejapa (Alcorcón): Calle Pintor Picasso, 2, 28922 Alcorcón. Horario: Lun–Vie 9–21h. Biblioteca en Madrid.">
   <meta property="og:url" content="https://bibliotecasmadrid.es/ciudad-de-nejapa-alcorcon">
-  <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Alcorc%C3%B3n_-_Centro_Joven_de_Alcorc%C3%B3n_3.jpg/960px-Alcorc%C3%B3n_-_Centro_Joven_de_Alcorc%C3%B3n_3.jpg">
-  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Library", "name": "Biblioteca Ciudad de Nejapa (Alcorcón)", "description": "Horario: Lun–Vie 9–21h", "address": {"@type": "PostalAddress", "streetAddress": "Calle Pintor Picasso, 2, 28922 Alcorcón", "addressLocality": "Madrid", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.3429, "longitude": -3.8342}, "maximumAttendeeCapacity": 150, "url": "https://bibliotecasmadrid.es/ciudad-de-nejapa-alcorcon", "areaServed": "Madrid", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Alcorc%C3%B3n_-_Centro_Joven_de_Alcorc%C3%B3n_3.jpg/960px-Alcorc%C3%B3n_-_Centro_Joven_de_Alcorc%C3%B3n_3.jpg"}</script>
+  <meta property="og:image" content="images/ciudad-de-nejapa-alcorcon-exterior.jpg">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Library", "name": "Biblioteca Ciudad de Nejapa (Alcorcón)", "description": "Horario: Lun–Vie 9–21h", "address": {"@type": "PostalAddress", "streetAddress": "Calle Pintor Picasso, 2, 28922 Alcorcón", "addressLocality": "Madrid", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.3429, "longitude": -3.8342}, "maximumAttendeeCapacity": 150, "url": "https://bibliotecasmadrid.es/ciudad-de-nejapa-alcorcon", "areaServed": "Madrid", "image": "images/ciudad-de-nejapa-alcorcon-exterior.jpg"}</script>
   <style>
     :root { --ink:#1A1F36; --ink-2:#5A6172; --ink-3:#9AA0AE; --line:#ECEEF2; }
     * { margin:0; padding:0; box-sizing:border-box; }
@@ -47,6 +47,20 @@
       position: absolute;
       inset: 0;
       background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.15) 100%);
+      pointer-events: none;
+    }
+    .bg-credit {
+      position: absolute;
+      right: 12px;
+      top: 10px;
+      z-index: 2;
+      margin: 0;
+      max-width: 45vw;
+      text-align: right;
+      font-size: 11px;
+      line-height: 1.3;
+      color: rgba(255,255,255,0.85);
+      text-shadow: 0 1px 3px rgba(0,0,0,0.7);
       pointer-events: none;
     }
     
@@ -301,7 +315,8 @@
 <body>
   <!-- Foto del centro a pantalla completa -->
   <div class="bg-photo">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Alcorc%C3%B3n_-_Centro_Joven_de_Alcorc%C3%B3n_3.jpg/960px-Alcorc%C3%B3n_-_Centro_Joven_de_Alcorc%C3%B3n_3.jpg" alt="Biblioteca Ciudad de Nejapa (Alcorcón)" loading="eager">
+    <img src="images/ciudad-de-nejapa-alcorcon-exterior.jpg" alt="Biblioteca Ciudad de Nejapa (Alcorcón)" loading="eager">
+    <p class="bg-credit">Foto: Moisés de Tapia García</p>
   </div>
   
 
@@ -355,7 +370,7 @@
   <script src="horarios.js"></script>
   <script>
   (function() {
-    const d = {"tipo": "biblioteca", "nombre": "Biblioteca Ciudad de Nejapa (Alcorcón)", "foto": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Alcorc%C3%B3n_-_Centro_Joven_de_Alcorc%C3%B3n_3.jpg/960px-Alcorc%C3%B3n_-_Centro_Joven_de_Alcorc%C3%B3n_3.jpg", "distrito": "Alcorcón", "direccion": "Calle Pintor Picasso, 2, 28922 Alcorcón", "lat": 40.3429, "lng": -3.8342, "plazas": 150, "horario": "Lun–Vie 9–21h", "web": "https://www.ayto-alcorcon.es/es/servicios/cultura/red-de-bibliotecas#:~:text=Horarios"};
+    const d = {"tipo": "biblioteca", "nombre": "Biblioteca Ciudad de Nejapa (Alcorcón)", "foto": "images/ciudad-de-nejapa-alcorcon-exterior.jpg", "foto_credito": "Moisés de Tapia García", "foto_interior_credito": "JL Iz", "foto_interior": "images/ciudad-de-nejapa-alcorcon-interior.jpg", "distrito": "Alcorcón", "direccion": "Calle Pintor Picasso, 2, 28922 Alcorcón", "lat": 40.3429, "lng": -3.8342, "plazas": 150, "horario": "Lun–Vie 9–21h", "web": "https://www.ayto-alcorcon.es/es/servicios/cultura/red-de-bibliotecas#:~:text=Horarios"};
     const slug = "ciudad-de-nejapa-alcorcon";
     // Interceptar botón 'Atrás' del navegador para ir a "Ver en el mapa"
     try {

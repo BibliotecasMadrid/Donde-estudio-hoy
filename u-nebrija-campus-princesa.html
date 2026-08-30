@@ -16,8 +16,8 @@
   <meta property="og:title" content="Biblioteca U. Nebrija – Campus Princesa · Horario y dirección">
   <meta property="og:description" content="Biblioteca U. Nebrija – Campus Princesa: Calle de Santa Cruz de Marcenado, 27, 28015 Madrid. Horario: Lun–Vie 9–21h (Acceso preferente a la comunidad universitaria). Biblioteca universitaria en Madrid.">
   <meta property="og:url" content="https://bibliotecasmadrid.es/u-nebrija-campus-princesa">
-  <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Campus_de_Princesa_Universidad_Nebrija.JPG/960px-Campus_de_Princesa_Universidad_Nebrija.JPG">
-  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Library", "name": "Biblioteca U. Nebrija – Campus Princesa", "description": "Horario: Lun–Vie 9–21h (Acceso preferente a la comunidad universitaria)", "address": {"@type": "PostalAddress", "streetAddress": "Calle de Santa Cruz de Marcenado, 27, 28015 Madrid", "addressLocality": "Madrid", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.4295684, "longitude": -3.7130672}, "maximumAttendeeCapacity": 250, "url": "https://bibliotecasmadrid.es/u-nebrija-campus-princesa", "areaServed": "Madrid", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Campus_de_Princesa_Universidad_Nebrija.JPG/960px-Campus_de_Princesa_Universidad_Nebrija.JPG"}</script>
+  <meta property="og:image" content="images/u-nebrija-campus-princesa-exterior.jpg">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Library", "name": "Biblioteca U. Nebrija – Campus Princesa", "description": "Horario: Lun–Vie 9–21h (Acceso preferente a la comunidad universitaria)", "address": {"@type": "PostalAddress", "streetAddress": "Calle de Santa Cruz de Marcenado, 27, 28015 Madrid", "addressLocality": "Madrid", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.4295684, "longitude": -3.7130672}, "maximumAttendeeCapacity": 250, "url": "https://bibliotecasmadrid.es/u-nebrija-campus-princesa", "areaServed": "Madrid", "image": "images/u-nebrija-campus-princesa-exterior.jpg"}</script>
   <style>
     :root { --ink:#1A1F36; --ink-2:#5A6172; --ink-3:#9AA0AE; --line:#ECEEF2; }
     * { margin:0; padding:0; box-sizing:border-box; }
@@ -47,6 +47,20 @@
       position: absolute;
       inset: 0;
       background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.15) 100%);
+      pointer-events: none;
+    }
+    .bg-credit {
+      position: absolute;
+      right: 12px;
+      top: 10px;
+      z-index: 2;
+      margin: 0;
+      max-width: 45vw;
+      text-align: right;
+      font-size: 11px;
+      line-height: 1.3;
+      color: rgba(255,255,255,0.85);
+      text-shadow: 0 1px 3px rgba(0,0,0,0.7);
       pointer-events: none;
     }
     
@@ -301,7 +315,8 @@
 <body>
   <!-- Foto del centro a pantalla completa -->
   <div class="bg-photo">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Campus_de_Princesa_Universidad_Nebrija.JPG/960px-Campus_de_Princesa_Universidad_Nebrija.JPG" alt="Biblioteca U. Nebrija – Campus Princesa" loading="eager">
+    <img src="images/u-nebrija-campus-princesa-exterior.jpg" alt="Biblioteca U. Nebrija – Campus Princesa" loading="eager">
+    <p class="bg-credit">Foto: Universidad Nebrija</p>
   </div>
   
 
@@ -355,7 +370,7 @@
   <script src="horarios.js"></script>
   <script>
   (function() {
-    const d = {"tipo": "universidad", "nombre": "Biblioteca U. Nebrija – Campus Princesa", "foto": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Campus_de_Princesa_Universidad_Nebrija.JPG/960px-Campus_de_Princesa_Universidad_Nebrija.JPG", "distrito": "Chamberí", "direccion": "Calle de Santa Cruz de Marcenado, 27, 28015 Madrid", "lat": 40.4295684, "lng": -3.7130672, "plazas": 250, "horario": "Lun–Vie 9–21h\n(Acceso preferente a la comunidad universitaria)", "web": "https://www.nebrija.com/investigacion-universidad/biblioteca/#:~:text=Horarios"};
+    const d = {"tipo": "universidad", "nombre": "Biblioteca U. Nebrija – Campus Princesa", "foto": "images/u-nebrija-campus-princesa-exterior.jpg", "foto_credito": "Universidad Nebrija", "distrito": "Chamberí", "direccion": "Calle de Santa Cruz de Marcenado, 27, 28015 Madrid", "lat": 40.4295684, "lng": -3.7130672, "plazas": 250, "horario": "Lun–Vie 9–21h\n(Acceso preferente a la comunidad universitaria)", "web": "https://www.nebrija.com/investigacion-universidad/biblioteca/#:~:text=Horarios"};
     const slug = "u-nebrija-campus-princesa";
     // Interceptar botón 'Atrás' del navegador para ir a "Ver en el mapa"
     try {

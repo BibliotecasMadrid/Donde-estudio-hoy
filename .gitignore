@@ -12,3 +12,10 @@ BiblioMadrid - Google Play package/
 *.jks
 *.aab
 *.apk
+
+# Claves de API. La de Places vive FUERA del repo, pero por si acaso.
+.env
+*.env
+
+# Cache de descargas de Google Places (fotos originales sin recortar).
+.fotos-cache/

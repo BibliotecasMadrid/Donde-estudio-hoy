@@ -149,7 +149,7 @@ def extract_lugares(index_html):
     end = src.index("\n];", arr_start)
     body = src[arr_start + 1:end]
     body = "\n".join(ln for ln in body.split("\n") if not ln.strip().startswith("//"))
-    body = re.sub(r'(?<![\w"])(tipo|nombre|distrito|direccion|lat|lng|plazas|foto|horario|web|libcal_lid|libcal_iid)\s*:',
+    body = re.sub(r'(?<![\w"])(tipo|nombre|distrito|direccion|lat|lng|plazas|foto_interior_credito|foto_interior|foto_credito|foto|horario|web|libcal_lid|libcal_iid)\s*:',
                   r'"\1":', body)
     jtext = "[" + body + "]"
     jtext = re.sub(r",(\s*[}\]])", r"\1", jtext)
@@ -600,6 +600,12 @@ def page_html(d, slug):
     
     lat, lng = d["lat"], d["lng"]
     photo_url = d.get("foto", "https://bibliotecasmadrid.es/icons/icon-512.png")
+    # La ficha ensena el EXTERIOR del edificio; el interior es cosa del panel del mapa.
+    # Si la foto viene de Google Places hay que acreditar a su autor: lo exigen sus terminos.
+    photo_credit = d.get("foto_credito", "")
+    photo_credit_html = (
+        f'<p class="bg-credit">Foto: {e(photo_credit)}</p>' if photo_credit else ""
+    )
 
     ld = {
         "@context": "https://schema.org",
@@ -688,6 +694,20 @@ def page_html(d, slug):
       position: absolute;
       inset: 0;
       background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.15) 100%);
+      pointer-events: none;
+    }}
+    .bg-credit {{
+      position: absolute;
+      right: 12px;
+      top: 10px;
+      z-index: 2;
+      margin: 0;
+      max-width: 45vw;
+      text-align: right;
+      font-size: 11px;
+      line-height: 1.3;
+      color: rgba(255,255,255,0.85);
+      text-shadow: 0 1px 3px rgba(0,0,0,0.7);
       pointer-events: none;
     }}
     
@@ -781,11 +801,20 @@ def page_html(d, slug):
 
     /* ── Box HOY ───────────────────────────── */
     .today-card {{
+      display: block;
+      text-decoration: none;
+      color: inherit;
       background: #F8FAFC;
       border: 1px solid var(--line);
       border-radius: 14px;
       padding: 12px 14px;
       margin-bottom: 12px;
+      cursor: pointer;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }}
+    .today-card:hover {{
+      background: #F1F5F9;
+      border-color: #CBD5E1;
     }}
     .today-head {{
       display: flex;
@@ -934,6 +963,7 @@ def page_html(d, slug):
   <!-- Foto del centro a pantalla completa -->
   <div class="bg-photo">
     <img src="{e(photo_url)}" alt="{e(d['nombre'])}" loading="eager">
+    {photo_credit_html}
   </div>
   
 
@@ -967,7 +997,7 @@ def page_html(d, slug):
       </div>
 
       <div class="card-side-col">
-        <div class="today-card" id="today-card">
+        <a class="today-card" id="today-card" href="{e(web)}" target="_blank" rel="noopener noreferrer">
           <div class="today-head">
             <span class="today-title" id="today-title">HOY · {today['date_formatted']}</span>
             <span class="status-badge {today['status_class']}" id="status-badge">{today['status_text']}</span>
@@ -975,7 +1005,7 @@ def page_html(d, slug):
           <div class="today-hours" id="today-hours">{today['today_schedule']}</div>
           {live_tag_html}
           {week_container_html}
-        </div>
+        </a>
 
         <footer>
           Datos: <a href="https://datos.madrid.es" target="_blank" rel="noopener">datos.madrid.es</a> (CC BY 4.0).

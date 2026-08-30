@@ -16,8 +16,8 @@
   <meta property="og:title" content="Biblioteca Municipal María Lejárraga · Horario y dirección">
   <meta property="og:description" content="Biblioteca Municipal María Lejárraga: Calle Princesa de Éboli, 29, 28050 Madrid. Horario: Lun–Vie 8:30–21h · Sáb–Dom 8:30–15h (Verano: 8:30–20h). Biblioteca en Madrid.">
   <meta property="og:url" content="https://bibliotecasmadrid.es/maria-lejarraga">
-  <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/%E2%80%98Mar%C3%ADa_Lej%C3%A1rraga%E2%80%99%2C_la_nueva_biblioteca_en_Hortaleza%2C_alberga_25.000_ejemplares_%2803%29.jpg/960px-%E2%80%98Mar%C3%ADa_Lej%C3%A1rraga%E2%80%99%2C_la_nueva_biblioteca_en_Hortaleza%2C_alberga_25.000_ejemplares_%2803%29.jpg">
-  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Library", "name": "Biblioteca Municipal María Lejárraga", "description": "Horario: Lun–Vie 8:30–21h · Sáb–Dom 8:30–15h (Verano: 8:30–20h)", "address": {"@type": "PostalAddress", "streetAddress": "Calle Princesa de Éboli, 29, 28050 Madrid", "addressLocality": "Madrid", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.4904, "longitude": -3.6554}, "maximumAttendeeCapacity": 220, "url": "https://bibliotecasmadrid.es/maria-lejarraga", "areaServed": "Madrid", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/%E2%80%98Mar%C3%ADa_Lej%C3%A1rraga%E2%80%99%2C_la_nueva_biblioteca_en_Hortaleza%2C_alberga_25.000_ejemplares_%2803%29.jpg/960px-%E2%80%98Mar%C3%ADa_Lej%C3%A1rraga%E2%80%99%2C_la_nueva_biblioteca_en_Hortaleza%2C_alberga_25.000_ejemplares_%2803%29.jpg"}</script>
+  <meta property="og:image" content="images/maria-lejarraga-exterior.jpg">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Library", "name": "Biblioteca Municipal María Lejárraga", "description": "Horario: Lun–Vie 8:30–21h · Sáb–Dom 8:30–15h (Verano: 8:30–20h)", "address": {"@type": "PostalAddress", "streetAddress": "Calle Princesa de Éboli, 29, 28050 Madrid", "addressLocality": "Madrid", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.489902, "longitude": -3.655017}, "maximumAttendeeCapacity": 220, "url": "https://bibliotecasmadrid.es/maria-lejarraga", "areaServed": "Madrid", "image": "images/maria-lejarraga-exterior.jpg"}</script>
   <style>
     :root { --ink:#1A1F36; --ink-2:#5A6172; --ink-3:#9AA0AE; --line:#ECEEF2; }
     * { margin:0; padding:0; box-sizing:border-box; }
@@ -47,6 +47,20 @@
       position: absolute;
       inset: 0;
       background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.15) 100%);
+      pointer-events: none;
+    }
+    .bg-credit {
+      position: absolute;
+      right: 12px;
+      top: 10px;
+      z-index: 2;
+      margin: 0;
+      max-width: 45vw;
+      text-align: right;
+      font-size: 11px;
+      line-height: 1.3;
+      color: rgba(255,255,255,0.85);
+      text-shadow: 0 1px 3px rgba(0,0,0,0.7);
       pointer-events: none;
     }
     
@@ -301,7 +315,8 @@
 <body>
   <!-- Foto del centro a pantalla completa -->
   <div class="bg-photo">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/%E2%80%98Mar%C3%ADa_Lej%C3%A1rraga%E2%80%99%2C_la_nueva_biblioteca_en_Hortaleza%2C_alberga_25.000_ejemplares_%2803%29.jpg/960px-%E2%80%98Mar%C3%ADa_Lej%C3%A1rraga%E2%80%99%2C_la_nueva_biblioteca_en_Hortaleza%2C_alberga_25.000_ejemplares_%2803%29.jpg" alt="Biblioteca Municipal María Lejárraga" loading="eager">
+    <img src="images/maria-lejarraga-exterior.jpg" alt="Biblioteca Municipal María Lejárraga" loading="eager">
+    <p class="bg-credit">Foto: Biblioteca Pública Municipal María Lejárraga</p>
   </div>
   
 
@@ -325,7 +340,7 @@
         <div class="actions">
           <a class="btn btn-primary" href="./#maria-lejarraga">Ver en el mapa</a>
           <a class="btn btn-ghost" href="https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&amp;vgnextoid=d862492de8c8c510VgnVCM2000001f4a900aRCRD#:~:text=Apertura%20de%20lunes%20a%20domingo.,8%3A30%20a%2015%20horas" target="_blank" rel="noopener noreferrer">Web oficial ↗</a>
-          <a class="btn btn-ghost" href="https://www.google.com/maps/dir/?api=1&destination=40.4904,-3.6554" target="_blank" rel="noopener noreferrer">Cómo llegar ↗</a>
+          <a class="btn btn-ghost" href="https://www.google.com/maps/dir/?api=1&destination=40.489902,-3.655017" target="_blank" rel="noopener noreferrer">Cómo llegar ↗</a>
         </div>
 
         <div class="sched">
@@ -355,7 +370,7 @@
   <script src="horarios.js"></script>
   <script>
   (function() {
-    const d = {"tipo": "biblioteca", "nombre": "Biblioteca Municipal María Lejárraga", "foto": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/%E2%80%98Mar%C3%ADa_Lej%C3%A1rraga%E2%80%99%2C_la_nueva_biblioteca_en_Hortaleza%2C_alberga_25.000_ejemplares_%2803%29.jpg/960px-%E2%80%98Mar%C3%ADa_Lej%C3%A1rraga%E2%80%99%2C_la_nueva_biblioteca_en_Hortaleza%2C_alberga_25.000_ejemplares_%2803%29.jpg", "distrito": "Hortaleza", "direccion": "Calle Princesa de Éboli, 29, 28050 Madrid", "lat": 40.4904, "lng": -3.6554, "plazas": 220, "horario": "Lun–Vie 8:30–21h · Sáb–Dom 8:30–15h\n(Verano: 8:30–20h)", "web": "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=d862492de8c8c510VgnVCM2000001f4a900aRCRD#:~:text=Apertura%20de%20lunes%20a%20domingo.,8%3A30%20a%2015%20horas"};
+    const d = {"tipo": "biblioteca", "nombre": "Biblioteca Municipal María Lejárraga", "foto": "images/maria-lejarraga-exterior.jpg", "foto_credito": "Biblioteca Pública Municipal María Lejárraga", "foto_interior_credito": "Macarena Alonso Quiros", "foto_interior": "images/maria-lejarraga-interior.jpg", "distrito": "Hortaleza", "direccion": "Calle Princesa de Éboli, 29, 28050 Madrid", "lat": 40.489902, "lng": -3.655017, "plazas": 220, "horario": "Lun–Vie 8:30–21h · Sáb–Dom 8:30–15h\n(Verano: 8:30–20h)", "web": "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=d862492de8c8c510VgnVCM2000001f4a900aRCRD#:~:text=Apertura%20de%20lunes%20a%20domingo.,8%3A30%20a%2015%20horas"};
     const slug = "maria-lejarraga";
     // Interceptar botón 'Atrás' del navegador para ir a "Ver en el mapa"
     try {

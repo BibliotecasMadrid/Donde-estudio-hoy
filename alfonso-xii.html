@@ -16,8 +16,8 @@
   <meta property="og:title" content="Sala de Estudio Alfonso XII · Horario y dirección">
   <meta property="og:description" content="Sala de Estudio Alfonso XII: Calle Mira el Río, 4, 28048 Madrid. Horario: Lun–Vie 8:30–21h · Sáb–Dom 9:30–20h. Sala de estudio en Madrid.">
   <meta property="og:url" content="https://bibliotecasmadrid.es/alfonso-xii">
-  <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/El_Pardo_-_Centro_Socio-Cultural_Alfonso_XII.jpg/960px-El_Pardo_-_Centro_Socio-Cultural_Alfonso_XII.jpg">
-  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Library", "name": "Sala de Estudio Alfonso XII", "description": "Horario: Lun–Vie 8:30–21h · Sáb–Dom 9:30–20h", "address": {"@type": "PostalAddress", "streetAddress": "Calle Mira el Río, 4, 28048 Madrid", "addressLocality": "Madrid", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.5197, "longitude": -3.7779}, "maximumAttendeeCapacity": 90, "url": "https://bibliotecasmadrid.es/alfonso-xii", "areaServed": "Madrid", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/El_Pardo_-_Centro_Socio-Cultural_Alfonso_XII.jpg/960px-El_Pardo_-_Centro_Socio-Cultural_Alfonso_XII.jpg"}</script>
+  <meta property="og:image" content="images/alfonso-xii-exterior.jpg">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Library", "name": "Sala de Estudio Alfonso XII", "description": "Horario: Lun–Vie 8:30–21h · Sáb–Dom 9:30–20h", "address": {"@type": "PostalAddress", "streetAddress": "Calle Mira el Río, 4, 28048 Madrid", "addressLocality": "Madrid", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.5197, "longitude": -3.7779}, "maximumAttendeeCapacity": 90, "url": "https://bibliotecasmadrid.es/alfonso-xii", "areaServed": "Madrid", "image": "images/alfonso-xii-exterior.jpg"}</script>
   <style>
     :root { --ink:#1A1F36; --ink-2:#5A6172; --ink-3:#9AA0AE; --line:#ECEEF2; }
     * { margin:0; padding:0; box-sizing:border-box; }
@@ -47,6 +47,20 @@
       position: absolute;
       inset: 0;
       background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.15) 100%);
+      pointer-events: none;
+    }
+    .bg-credit {
+      position: absolute;
+      right: 12px;
+      top: 10px;
+      z-index: 2;
+      margin: 0;
+      max-width: 45vw;
+      text-align: right;
+      font-size: 11px;
+      line-height: 1.3;
+      color: rgba(255,255,255,0.85);
+      text-shadow: 0 1px 3px rgba(0,0,0,0.7);
       pointer-events: none;
     }
     
@@ -301,7 +315,8 @@
 <body>
   <!-- Foto del centro a pantalla completa -->
   <div class="bg-photo">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/El_Pardo_-_Centro_Socio-Cultural_Alfonso_XII.jpg/960px-El_Pardo_-_Centro_Socio-Cultural_Alfonso_XII.jpg" alt="Sala de Estudio Alfonso XII" loading="eager">
+    <img src="images/alfonso-xii-exterior.jpg" alt="Sala de Estudio Alfonso XII" loading="eager">
+    <p class="bg-credit">Foto: maria do ceu molina ribeiropinto</p>
   </div>
   
 
@@ -355,7 +370,7 @@
   <script src="horarios.js"></script>
   <script>
   (function() {
-    const d = {"tipo": "sala", "nombre": "Sala de Estudio Alfonso XII", "foto": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/El_Pardo_-_Centro_Socio-Cultural_Alfonso_XII.jpg/960px-El_Pardo_-_Centro_Socio-Cultural_Alfonso_XII.jpg", "distrito": "Fuencarral-El Pardo", "direccion": "Calle Mira el Río, 4, 28048 Madrid", "lat": 40.5197, "lng": -3.7779, "plazas": 90, "horario": "Lun–Vie 8:30–21h · Sáb–Dom 9:30–20h", "web": "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=2e7a8917a2058110VgnVCM2000000c205a0aRCRD#:~:text=De%20lunes%20a%20viernes%20de,9%3A30%20a%2020%3A00%20horas"};
+    const d = {"tipo": "sala", "nombre": "Sala de Estudio Alfonso XII", "foto": "images/alfonso-xii-exterior.jpg", "foto_credito": "maria do ceu molina ribeiropinto", "distrito": "Fuencarral-El Pardo", "direccion": "Calle Mira el Río, 4, 28048 Madrid", "lat": 40.5197, "lng": -3.7779, "plazas": 90, "horario": "Lun–Vie 8:30–21h · Sáb–Dom 9:30–20h", "web": "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=2e7a8917a2058110VgnVCM2000000c205a0aRCRD#:~:text=De%20lunes%20a%20viernes%20de,9%3A30%20a%2020%3A00%20horas"};
     const slug = "alfonso-xii";
     // Interceptar botón 'Atrás' del navegador para ir a "Ver en el mapa"
     try {

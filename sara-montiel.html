@@ -16,8 +16,8 @@
   <meta property="og:title" content="Sala de Estudio Sara Montiel · Horario y dirección">
   <meta property="og:description" content="Sala de Estudio Sara Montiel: Carretera de Boadilla del Monte, 40, 28024 Madrid. Horario: Lun–Vie 9–21:30h · Sáb 9–13:30h. Sala de estudio en Madrid.">
   <meta property="og:url" content="https://bibliotecasmadrid.es/sara-montiel">
-  <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Madrid_-_Latina%2C_Campamento%2C_Centro_Cultural_Sara_Montiel_1.jpg/960px-Madrid_-_Latina%2C_Campamento%2C_Centro_Cultural_Sara_Montiel_1.jpg">
-  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Library", "name": "Sala de Estudio Sara Montiel", "description": "Horario: Lun–Vie 9–21:30h · Sáb 9–13:30h", "address": {"@type": "PostalAddress", "streetAddress": "Carretera de Boadilla del Monte, 40, 28024 Madrid", "addressLocality": "Madrid", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.3995, "longitude": -3.775}, "maximumAttendeeCapacity": 90, "url": "https://bibliotecasmadrid.es/sara-montiel", "areaServed": "Madrid", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Madrid_-_Latina%2C_Campamento%2C_Centro_Cultural_Sara_Montiel_1.jpg/960px-Madrid_-_Latina%2C_Campamento%2C_Centro_Cultural_Sara_Montiel_1.jpg"}</script>
+  <meta property="og:image" content="images/sara-montiel-exterior.jpg">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Library", "name": "Sala de Estudio Sara Montiel", "description": "Horario: Lun–Vie 9–21:30h · Sáb 9–13:30h", "address": {"@type": "PostalAddress", "streetAddress": "Carretera de Boadilla del Monte, 40, 28024 Madrid", "addressLocality": "Madrid", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.3995, "longitude": -3.775}, "maximumAttendeeCapacity": 90, "url": "https://bibliotecasmadrid.es/sara-montiel", "areaServed": "Madrid", "image": "images/sara-montiel-exterior.jpg"}</script>
   <style>
     :root { --ink:#1A1F36; --ink-2:#5A6172; --ink-3:#9AA0AE; --line:#ECEEF2; }
     * { margin:0; padding:0; box-sizing:border-box; }
@@ -47,6 +47,20 @@
       position: absolute;
       inset: 0;
       background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.15) 100%);
+      pointer-events: none;
+    }
+    .bg-credit {
+      position: absolute;
+      right: 12px;
+      top: 10px;
+      z-index: 2;
+      margin: 0;
+      max-width: 45vw;
+      text-align: right;
+      font-size: 11px;
+      line-height: 1.3;
+      color: rgba(255,255,255,0.85);
+      text-shadow: 0 1px 3px rgba(0,0,0,0.7);
       pointer-events: none;
     }
     
@@ -301,7 +315,8 @@
 <body>
   <!-- Foto del centro a pantalla completa -->
   <div class="bg-photo">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Madrid_-_Latina%2C_Campamento%2C_Centro_Cultural_Sara_Montiel_1.jpg/960px-Madrid_-_Latina%2C_Campamento%2C_Centro_Cultural_Sara_Montiel_1.jpg" alt="Sala de Estudio Sara Montiel" loading="eager">
+    <img src="images/sara-montiel-exterior.jpg" alt="Sala de Estudio Sara Montiel" loading="eager">
+    <p class="bg-credit">Foto: Cesar Boyer</p>
   </div>
   
 
@@ -355,7 +370,7 @@
   <script src="horarios.js"></script>
   <script>
   (function() {
-    const d = {"tipo": "sala", "nombre": "Sala de Estudio Sara Montiel", "foto": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Madrid_-_Latina%2C_Campamento%2C_Centro_Cultural_Sara_Montiel_1.jpg/960px-Madrid_-_Latina%2C_Campamento%2C_Centro_Cultural_Sara_Montiel_1.jpg", "distrito": "Latina", "direccion": "Carretera de Boadilla del Monte, 40, 28024 Madrid", "lat": 40.3995, "lng": -3.775, "plazas": 90, "horario": "Lun–Vie 9–21:30h · Sáb 9–13:30h", "web": "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=2cfd68daae74d410VgnVCM1000000b205a0aRCRD#:~:text=Horario%20del%20centro%3A%20Lunes,9%20a%2013%3A30%20horas"};
+    const d = {"tipo": "sala", "nombre": "Sala de Estudio Sara Montiel", "foto": "images/sara-montiel-exterior.jpg", "foto_credito": "Cesar Boyer", "foto_interior_credito": "Mónica BB", "foto_interior": "images/sara-montiel-interior.jpg", "distrito": "Latina", "direccion": "Carretera de Boadilla del Monte, 40, 28024 Madrid", "lat": 40.3995, "lng": -3.775, "plazas": 90, "horario": "Lun–Vie 9–21:30h · Sáb 9–13:30h", "web": "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=2cfd68daae74d410VgnVCM1000000b205a0aRCRD#:~:text=Horario%20del%20centro%3A%20Lunes,9%20a%2013%3A30%20horas"};
     const slug = "sara-montiel";
     // Interceptar botón 'Atrás' del navegador para ir a "Ver en el mapa"
     try {

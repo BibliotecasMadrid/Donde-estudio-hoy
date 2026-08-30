@@ -16,8 +16,8 @@
   <meta property="og:title" content="Biblioteca UCM – Biológicas y Geológicas · Horario y dirección">
   <meta property="og:description" content="Biblioteca UCM – Biológicas y Geológicas: Calle José Antonio Novais, 12, 28040 Madrid. Horario: Lun–Vie 9–20:30h (Ampliado en época de exámenes). Biblioteca universitaria en Madrid.">
   <meta property="og:url" content="https://bibliotecasmadrid.es/ucm-biologicas-y-geologicas">
-  <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Madrid_-_Ciudad_Universitaria%2C_Facultad_de_Ciencias_Biol%C3%B3gicas_de_la_UCM.jpg/960px-Madrid_-_Ciudad_Universitaria%2C_Facultad_de_Ciencias_Biol%C3%B3gicas_de_la_UCM.jpg">
-  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Library", "name": "Biblioteca UCM – Biológicas y Geológicas", "description": "Horario: Lun–Vie 9–20:30h (Ampliado en época de exámenes)", "address": {"@type": "PostalAddress", "streetAddress": "Calle José Antonio Novais, 12, 28040 Madrid", "addressLocality": "Madrid", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.4489962, "longitude": -3.7253647}, "maximumAttendeeCapacity": 380, "url": "https://bibliotecasmadrid.es/ucm-biologicas-y-geologicas", "areaServed": "Madrid", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Madrid_-_Ciudad_Universitaria%2C_Facultad_de_Ciencias_Biol%C3%B3gicas_de_la_UCM.jpg/960px-Madrid_-_Ciudad_Universitaria%2C_Facultad_de_Ciencias_Biol%C3%B3gicas_de_la_UCM.jpg"}</script>
+  <meta property="og:image" content="images/ucm-biologicas-y-geologicas-exterior.jpg">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Library", "name": "Biblioteca UCM – Biológicas y Geológicas", "description": "Horario: Lun–Vie 9–20:30h (Ampliado en época de exámenes)", "address": {"@type": "PostalAddress", "streetAddress": "Calle José Antonio Novais, 12, 28040 Madrid", "addressLocality": "Madrid", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.4489962, "longitude": -3.7253647}, "maximumAttendeeCapacity": 380, "url": "https://bibliotecasmadrid.es/ucm-biologicas-y-geologicas", "areaServed": "Madrid", "image": "images/ucm-biologicas-y-geologicas-exterior.jpg"}</script>
   <style>
     :root { --ink:#1A1F36; --ink-2:#5A6172; --ink-3:#9AA0AE; --line:#ECEEF2; }
     * { margin:0; padding:0; box-sizing:border-box; }
@@ -47,6 +47,20 @@
       position: absolute;
       inset: 0;
       background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.15) 100%);
+      pointer-events: none;
+    }
+    .bg-credit {
+      position: absolute;
+      right: 12px;
+      top: 10px;
+      z-index: 2;
+      margin: 0;
+      max-width: 45vw;
+      text-align: right;
+      font-size: 11px;
+      line-height: 1.3;
+      color: rgba(255,255,255,0.85);
+      text-shadow: 0 1px 3px rgba(0,0,0,0.7);
       pointer-events: none;
     }
     
@@ -301,7 +315,8 @@
 <body>
   <!-- Foto del centro a pantalla completa -->
   <div class="bg-photo">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Madrid_-_Ciudad_Universitaria%2C_Facultad_de_Ciencias_Biol%C3%B3gicas_de_la_UCM.jpg/960px-Madrid_-_Ciudad_Universitaria%2C_Facultad_de_Ciencias_Biol%C3%B3gicas_de_la_UCM.jpg" alt="Biblioteca UCM – Biológicas y Geológicas" loading="eager">
+    <img src="images/ucm-biologicas-y-geologicas-exterior.jpg" alt="Biblioteca UCM – Biológicas y Geológicas" loading="eager">
+    <p class="bg-credit">Foto: Guillermo</p>
   </div>
   
 
@@ -355,7 +370,7 @@
   <script src="horarios.js"></script>
   <script>
   (function() {
-    const d = {"tipo": "universidad", "nombre": "Biblioteca UCM – Biológicas y Geológicas", "foto": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Madrid_-_Ciudad_Universitaria%2C_Facultad_de_Ciencias_Biol%C3%B3gicas_de_la_UCM.jpg/960px-Madrid_-_Ciudad_Universitaria%2C_Facultad_de_Ciencias_Biol%C3%B3gicas_de_la_UCM.jpg", "distrito": "Moncloa (Ciudad Universitaria)", "direccion": "Calle José Antonio Novais, 12, 28040 Madrid", "lat": 40.4489962, "lng": -3.7253647, "plazas": 380, "horario": "Lun–Vie 9–20:30h\n(Ampliado en época de exámenes)", "web": "https://biblioagenda.ucm.es/hours#:~:text=Horarios%20de%20las%20Bibliotecas", "libcal_lid": 6042, "libcal_iid": 4031};
+    const d = {"tipo": "universidad", "nombre": "Biblioteca UCM – Biológicas y Geológicas", "foto": "images/ucm-biologicas-y-geologicas-exterior.jpg", "foto_credito": "Guillermo", "foto_interior_credito": "Facultad de Ciencias Biológicas", "foto_interior": "images/ucm-biologicas-y-geologicas-interior.jpg", "distrito": "Moncloa (Ciudad Universitaria)", "direccion": "Calle José Antonio Novais, 12, 28040 Madrid", "lat": 40.4489962, "lng": -3.7253647, "plazas": 380, "horario": "Lun–Vie 9–20:30h\n(Ampliado en época de exámenes)", "web": "https://biblioagenda.ucm.es/hours#:~:text=Horarios%20de%20las%20Bibliotecas", "libcal_lid": 6042, "libcal_iid": 4031};
     const slug = "ucm-biologicas-y-geologicas";
     // Interceptar botón 'Atrás' del navegador para ir a "Ver en el mapa"
     try {

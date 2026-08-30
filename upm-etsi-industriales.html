@@ -49,6 +49,20 @@
       background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.15) 100%);
       pointer-events: none;
     }
+    .bg-credit {
+      position: absolute;
+      right: 12px;
+      top: 10px;
+      z-index: 2;
+      margin: 0;
+      max-width: 45vw;
+      text-align: right;
+      font-size: 11px;
+      line-height: 1.3;
+      color: rgba(255,255,255,0.85);
+      text-shadow: 0 1px 3px rgba(0,0,0,0.7);
+      pointer-events: none;
+    }
     
         
     /* ── Tarjeta flotante horizontal centrada abajo ── */
@@ -302,6 +316,7 @@
   <!-- Foto del centro a pantalla completa -->
   <div class="bg-photo">
     <img src="https://upload.wikimedia.org/wikipedia/commons/5/5b/Escuela_de_industriales_de_Madrid_%28ETSIIM%29_DavidDaguerro_95331.jpg" alt="Biblioteca UPM – ETSI Industriales" loading="eager">
+    
   </div>
   
 
@@ -355,7 +370,7 @@
   <script src="horarios.js"></script>
   <script>
   (function() {
-    const d = {"tipo": "universidad", "nombre": "Biblioteca UPM – ETSI Industriales", "foto": "https://upload.wikimedia.org/wikipedia/commons/5/5b/Escuela_de_industriales_de_Madrid_%28ETSIIM%29_DavidDaguerro_95331.jpg", "distrito": "Chamartín", "direccion": "Calle José Gutiérrez Abascal, 2, 28006 Madrid", "lat": 40.4400129, "lng": -3.6896679, "plazas": 500, "horario": "Lun–Vie 9–21h\n(Ampliado en época de exámenes)", "web": "https://www.upm.es/UPM/Biblioteca/NuestraBiblioteca/Horarios#:~:text=Horarios"};
+    const d = {"tipo": "universidad", "nombre": "Biblioteca UPM – ETSI Industriales", "foto": "https://upload.wikimedia.org/wikipedia/commons/5/5b/Escuela_de_industriales_de_Madrid_%28ETSIIM%29_DavidDaguerro_95331.jpg", "foto_interior_credito": "Biblioteca de la ETSI Industriales UPM", "foto_interior": "images/upm-etsi-industriales-interior.jpg", "distrito": "Chamartín", "direccion": "Calle José Gutiérrez Abascal, 2, 28006 Madrid", "lat": 40.4400129, "lng": -3.6896679, "plazas": 500, "horario": "Lun–Vie 9–21h\n(Ampliado en época de exámenes)", "web": "https://www.upm.es/UPM/Biblioteca/NuestraBiblioteca/Horarios#:~:text=Horarios"};
     const slug = "upm-etsi-industriales";
     // Interceptar botón 'Atrás' del navegador para ir a "Ver en el mapa"
     try {

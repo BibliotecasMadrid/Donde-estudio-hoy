@@ -16,8 +16,8 @@
   <meta property="og:title" content="Sala de Estudio Julio Cortázar · Horario y dirección">
   <meta property="og:description" content="Sala de Estudio Julio Cortázar: Calle Antonio Machado, 20, 28035 Madrid. Horario: Lun–Dom 9–21h. Sala de estudio en Madrid.">
   <meta property="og:url" content="https://bibliotecasmadrid.es/julio-cortazar">
-  <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Madrid_-_Centro_Cultural_Julio_Cort%C3%A1zar_2.jpg/960px-Madrid_-_Centro_Cultural_Julio_Cort%C3%A1zar_2.jpg">
-  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Library", "name": "Sala de Estudio Julio Cortázar", "description": "Horario: Lun–Dom 9–21h", "address": {"@type": "PostalAddress", "streetAddress": "Calle Antonio Machado, 20, 28035 Madrid", "addressLocality": "Madrid", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.4668, "longitude": -3.7196}, "maximumAttendeeCapacity": 80, "url": "https://bibliotecasmadrid.es/julio-cortazar", "areaServed": "Madrid", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Madrid_-_Centro_Cultural_Julio_Cort%C3%A1zar_2.jpg/960px-Madrid_-_Centro_Cultural_Julio_Cort%C3%A1zar_2.jpg"}</script>
+  <meta property="og:image" content="images/julio-cortazar-exterior.jpg">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Library", "name": "Sala de Estudio Julio Cortázar", "description": "Horario: Lun–Dom 9–21h", "address": {"@type": "PostalAddress", "streetAddress": "Calle Antonio Machado, 20, 28035 Madrid", "addressLocality": "Madrid", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.4668, "longitude": -3.7196}, "maximumAttendeeCapacity": 80, "url": "https://bibliotecasmadrid.es/julio-cortazar", "areaServed": "Madrid", "image": "images/julio-cortazar-exterior.jpg"}</script>
   <style>
     :root { --ink:#1A1F36; --ink-2:#5A6172; --ink-3:#9AA0AE; --line:#ECEEF2; }
     * { margin:0; padding:0; box-sizing:border-box; }
@@ -47,6 +47,20 @@
       position: absolute;
       inset: 0;
       background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.15) 100%);
+      pointer-events: none;
+    }
+    .bg-credit {
+      position: absolute;
+      right: 12px;
+      top: 10px;
+      z-index: 2;
+      margin: 0;
+      max-width: 45vw;
+      text-align: right;
+      font-size: 11px;
+      line-height: 1.3;
+      color: rgba(255,255,255,0.85);
+      text-shadow: 0 1px 3px rgba(0,0,0,0.7);
       pointer-events: none;
     }
     
@@ -301,7 +315,8 @@
 <body>
   <!-- Foto del centro a pantalla completa -->
   <div class="bg-photo">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Madrid_-_Centro_Cultural_Julio_Cort%C3%A1zar_2.jpg/960px-Madrid_-_Centro_Cultural_Julio_Cort%C3%A1zar_2.jpg" alt="Sala de Estudio Julio Cortázar" loading="eager">
+    <img src="images/julio-cortazar-exterior.jpg" alt="Sala de Estudio Julio Cortázar" loading="eager">
+    <p class="bg-credit">Foto: David Poza Suárez</p>
   </div>
   
 
@@ -355,7 +370,7 @@
   <script src="horarios.js"></script>
   <script>
   (function() {
-    const d = {"tipo": "sala", "nombre": "Sala de Estudio Julio Cortázar", "foto": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Madrid_-_Centro_Cultural_Julio_Cort%C3%A1zar_2.jpg/960px-Madrid_-_Centro_Cultural_Julio_Cort%C3%A1zar_2.jpg", "distrito": "Moncloa-Aravaca", "direccion": "Calle Antonio Machado, 20, 28035 Madrid", "lat": 40.4668, "lng": -3.7196, "plazas": 80, "horario": "Lun–Dom 9–21h", "web": "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=53918917a2058110VgnVCM2000000c205a0aRCRD#:~:text=Horario%20del%20centro%3A%20De,de%209%20a%2021%20horas"};
+    const d = {"tipo": "sala", "nombre": "Sala de Estudio Julio Cortázar", "foto": "images/julio-cortazar-exterior.jpg", "foto_credito": "David Poza Suárez", "foto_interior_credito": "V.", "foto_interior": "images/julio-cortazar-interior.jpg", "distrito": "Moncloa-Aravaca", "direccion": "Calle Antonio Machado, 20, 28035 Madrid", "lat": 40.4668, "lng": -3.7196, "plazas": 80, "horario": "Lun–Dom 9–21h", "web": "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=53918917a2058110VgnVCM2000000c205a0aRCRD#:~:text=Horario%20del%20centro%3A%20De,de%209%20a%2021%20horas"};
     const slug = "julio-cortazar";
     // Interceptar botón 'Atrás' del navegador para ir a "Ver en el mapa"
     try {

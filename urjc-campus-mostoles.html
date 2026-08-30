@@ -16,8 +16,8 @@
   <meta property="og:title" content="Biblioteca URJC – Campus Móstoles · Horario y dirección">
   <meta property="og:description" content="Biblioteca URJC – Campus Móstoles: Calle Tulipán, s/n, 28933 Móstoles. Horario: Lun–Vie 8:30–21h · Sáb 9–14h. Biblioteca universitaria en Madrid.">
   <meta property="og:url" content="https://bibliotecasmadrid.es/urjc-campus-mostoles">
-  <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/URJC_Mostoles_Biblioteca.jpg/960px-URJC_Mostoles_Biblioteca.jpg">
-  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Library", "name": "Biblioteca URJC – Campus Móstoles", "description": "Horario: Lun–Vie 8:30–21h · Sáb 9–14h", "address": {"@type": "PostalAddress", "streetAddress": "Calle Tulipán, s/n, 28933 Móstoles", "addressLocality": "Madrid", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.3219, "longitude": -3.8651}, "maximumAttendeeCapacity": 850, "url": "https://bibliotecasmadrid.es/urjc-campus-mostoles", "areaServed": "Madrid", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/URJC_Mostoles_Biblioteca.jpg/960px-URJC_Mostoles_Biblioteca.jpg"}</script>
+  <meta property="og:image" content="images/urjc-campus-mostoles-exterior.jpg">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Library", "name": "Biblioteca URJC – Campus Móstoles", "description": "Horario: Lun–Vie 8:30–21h · Sáb 9–14h", "address": {"@type": "PostalAddress", "streetAddress": "Calle Tulipán, s/n, 28933 Móstoles", "addressLocality": "Madrid", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.3219, "longitude": -3.8651}, "maximumAttendeeCapacity": 850, "url": "https://bibliotecasmadrid.es/urjc-campus-mostoles", "areaServed": "Madrid", "image": "images/urjc-campus-mostoles-exterior.jpg"}</script>
   <style>
     :root { --ink:#1A1F36; --ink-2:#5A6172; --ink-3:#9AA0AE; --line:#ECEEF2; }
     * { margin:0; padding:0; box-sizing:border-box; }
@@ -47,6 +47,20 @@
       position: absolute;
       inset: 0;
       background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.15) 100%);
+      pointer-events: none;
+    }
+    .bg-credit {
+      position: absolute;
+      right: 12px;
+      top: 10px;
+      z-index: 2;
+      margin: 0;
+      max-width: 45vw;
+      text-align: right;
+      font-size: 11px;
+      line-height: 1.3;
+      color: rgba(255,255,255,0.85);
+      text-shadow: 0 1px 3px rgba(0,0,0,0.7);
       pointer-events: none;
     }
     
@@ -301,7 +315,8 @@
 <body>
   <!-- Foto del centro a pantalla completa -->
   <div class="bg-photo">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/URJC_Mostoles_Biblioteca.jpg/960px-URJC_Mostoles_Biblioteca.jpg" alt="Biblioteca URJC – Campus Móstoles" loading="eager">
+    <img src="images/urjc-campus-mostoles-exterior.jpg" alt="Biblioteca URJC – Campus Móstoles" loading="eager">
+    <p class="bg-credit">Foto: Antonio Pérez</p>
   </div>
   
 
@@ -355,7 +370,7 @@
   <script src="horarios.js"></script>
   <script>
   (function() {
-    const d = {"tipo": "universidad", "nombre": "Biblioteca URJC – Campus Móstoles", "foto": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/URJC_Mostoles_Biblioteca.jpg/960px-URJC_Mostoles_Biblioteca.jpg", "distrito": "Móstoles", "direccion": "Calle Tulipán, s/n, 28933 Móstoles", "lat": 40.3219, "lng": -3.8651, "plazas": 850, "horario": "Lun–Vie 8:30–21h · Sáb 9–14h", "web": "https://www.urjc.es/burjc/tu-biblioteca/bibliotecas-de-campus#:~:text=Horario%20de%20lunes%20a%20viernes"};
+    const d = {"tipo": "universidad", "nombre": "Biblioteca URJC – Campus Móstoles", "foto": "images/urjc-campus-mostoles-exterior.jpg", "foto_credito": "Antonio Pérez", "foto_interior_credito": "Antonio Pérez", "foto_interior": "images/urjc-campus-mostoles-interior.jpg", "distrito": "Móstoles", "direccion": "Calle Tulipán, s/n, 28933 Móstoles", "lat": 40.3219, "lng": -3.8651, "plazas": 850, "horario": "Lun–Vie 8:30–21h · Sáb 9–14h", "web": "https://www.urjc.es/burjc/tu-biblioteca/bibliotecas-de-campus#:~:text=Horario%20de%20lunes%20a%20viernes"};
     const slug = "urjc-campus-mostoles";
     // Interceptar botón 'Atrás' del navegador para ir a "Ver en el mapa"
     try {

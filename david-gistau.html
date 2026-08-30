@@ -16,8 +16,8 @@
   <meta property="og:title" content="Biblioteca Municipal David Gistau · Horario y dirección">
   <meta property="og:description" content="Biblioteca Municipal David Gistau: Avenida de los Toreros, 5, 28028 Madrid. Horario: Lun–Vie 8:30–21h (Verano: 8:30–20h). Biblioteca en Madrid.">
   <meta property="og:url" content="https://bibliotecasmadrid.es/david-gistau">
-  <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Portal_edificio_Avenida_de_los_toreros_71_en_Madrid.jpg/960px-Portal_edificio_Avenida_de_los_toreros_71_en_Madrid.jpg">
-  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Library", "name": "Biblioteca Municipal David Gistau", "description": "Horario: Lun–Vie 8:30–21h (Verano: 8:30–20h)", "address": {"@type": "PostalAddress", "streetAddress": "Avenida de los Toreros, 5, 28028 Madrid", "addressLocality": "Madrid", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.432, "longitude": -3.6709}, "maximumAttendeeCapacity": 195, "url": "https://bibliotecasmadrid.es/david-gistau", "areaServed": "Madrid", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Portal_edificio_Avenida_de_los_toreros_71_en_Madrid.jpg/960px-Portal_edificio_Avenida_de_los_toreros_71_en_Madrid.jpg"}</script>
+  <meta property="og:image" content="images/david-gistau-exterior.jpg">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Library", "name": "Biblioteca Municipal David Gistau", "description": "Horario: Lun–Vie 8:30–21h (Verano: 8:30–20h)", "address": {"@type": "PostalAddress", "streetAddress": "Avenida de los Toreros, 5, 28028 Madrid", "addressLocality": "Madrid", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.432, "longitude": -3.6709}, "maximumAttendeeCapacity": 195, "url": "https://bibliotecasmadrid.es/david-gistau", "areaServed": "Madrid", "image": "images/david-gistau-exterior.jpg"}</script>
   <style>
     :root { --ink:#1A1F36; --ink-2:#5A6172; --ink-3:#9AA0AE; --line:#ECEEF2; }
     * { margin:0; padding:0; box-sizing:border-box; }
@@ -47,6 +47,20 @@
       position: absolute;
       inset: 0;
       background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.15) 100%);
+      pointer-events: none;
+    }
+    .bg-credit {
+      position: absolute;
+      right: 12px;
+      top: 10px;
+      z-index: 2;
+      margin: 0;
+      max-width: 45vw;
+      text-align: right;
+      font-size: 11px;
+      line-height: 1.3;
+      color: rgba(255,255,255,0.85);
+      text-shadow: 0 1px 3px rgba(0,0,0,0.7);
       pointer-events: none;
     }
     
@@ -301,7 +315,8 @@
 <body>
   <!-- Foto del centro a pantalla completa -->
   <div class="bg-photo">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Portal_edificio_Avenida_de_los_toreros_71_en_Madrid.jpg/960px-Portal_edificio_Avenida_de_los_toreros_71_en_Madrid.jpg" alt="Biblioteca Municipal David Gistau" loading="eager">
+    <img src="images/david-gistau-exterior.jpg" alt="Biblioteca Municipal David Gistau" loading="eager">
+    <p class="bg-credit">Foto: andrea arribas</p>
   </div>
   
 
@@ -355,7 +370,7 @@
   <script src="horarios.js"></script>
   <script>
   (function() {
-    const d = {"tipo": "biblioteca", "nombre": "Biblioteca Municipal David Gistau", "foto": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Portal_edificio_Avenida_de_los_toreros_71_en_Madrid.jpg/960px-Portal_edificio_Avenida_de_los_toreros_71_en_Madrid.jpg", "distrito": "Salamanca", "direccion": "Avenida de los Toreros, 5, 28028 Madrid", "lat": 40.432, "lng": -3.6709, "plazas": 195, "horario": "Lun–Vie 8:30–21h\n(Verano: 8:30–20h)", "web": "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=c53e3d0b5e71c010VgnVCM1000000b205a0aRCRD#:~:text=Apertura%20de%20lunes%20a%20viernes.,8%3A30%20a%2021%20horas"};
+    const d = {"tipo": "biblioteca", "nombre": "Biblioteca Municipal David Gistau", "foto": "images/david-gistau-exterior.jpg", "foto_credito": "andrea arribas", "foto_interior_credito": "Mariana Bello", "foto_interior": "images/david-gistau-interior.jpg", "distrito": "Salamanca", "direccion": "Avenida de los Toreros, 5, 28028 Madrid", "lat": 40.432, "lng": -3.6709, "plazas": 195, "horario": "Lun–Vie 8:30–21h\n(Verano: 8:30–20h)", "web": "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=c53e3d0b5e71c010VgnVCM1000000b205a0aRCRD#:~:text=Apertura%20de%20lunes%20a%20viernes.,8%3A30%20a%2021%20horas"};
     const slug = "david-gistau";
     // Interceptar botón 'Atrás' del navegador para ir a "Ver en el mapa"
     try {

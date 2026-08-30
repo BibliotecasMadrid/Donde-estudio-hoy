@@ -16,8 +16,8 @@
   <meta property="og:title" content="Biblioteca Sancho Panza (Collado Villalba) · Horario y dirección">
   <meta property="og:description" content="Biblioteca Sancho Panza (Collado Villalba): Calle Torrelodones, 8, 28400 Collado Villalba. Horario: Lun–Vie 9–20:30h. Biblioteca en Madrid.">
   <meta property="og:url" content="https://bibliotecasmadrid.es/sancho-panza-collado-villalba">
-  <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Collado_Villalba_-_Biblioteca_Municipal_Sancho_Panza.JPG/960px-Collado_Villalba_-_Biblioteca_Municipal_Sancho_Panza.JPG">
-  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Library", "name": "Biblioteca Sancho Panza (Collado Villalba)", "description": "Horario: Lun–Vie 9–20:30h", "address": {"@type": "PostalAddress", "streetAddress": "Calle Torrelodones, 8, 28400 Collado Villalba", "addressLocality": "Madrid", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.6271, "longitude": -4.0152}, "maximumAttendeeCapacity": 150, "url": "https://bibliotecasmadrid.es/sancho-panza-collado-villalba", "areaServed": "Madrid", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Collado_Villalba_-_Biblioteca_Municipal_Sancho_Panza.JPG/960px-Collado_Villalba_-_Biblioteca_Municipal_Sancho_Panza.JPG"}</script>
+  <meta property="og:image" content="images/sancho-panza-collado-villalba-exterior.jpg">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Library", "name": "Biblioteca Sancho Panza (Collado Villalba)", "description": "Horario: Lun–Vie 9–20:30h", "address": {"@type": "PostalAddress", "streetAddress": "Calle Torrelodones, 8, 28400 Collado Villalba", "addressLocality": "Madrid", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.6271, "longitude": -4.0152}, "maximumAttendeeCapacity": 150, "url": "https://bibliotecasmadrid.es/sancho-panza-collado-villalba", "areaServed": "Madrid", "image": "images/sancho-panza-collado-villalba-exterior.jpg"}</script>
   <style>
     :root { --ink:#1A1F36; --ink-2:#5A6172; --ink-3:#9AA0AE; --line:#ECEEF2; }
     * { margin:0; padding:0; box-sizing:border-box; }
@@ -47,6 +47,20 @@
       position: absolute;
       inset: 0;
       background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.15) 100%);
+      pointer-events: none;
+    }
+    .bg-credit {
+      position: absolute;
+      right: 12px;
+      top: 10px;
+      z-index: 2;
+      margin: 0;
+      max-width: 45vw;
+      text-align: right;
+      font-size: 11px;
+      line-height: 1.3;
+      color: rgba(255,255,255,0.85);
+      text-shadow: 0 1px 3px rgba(0,0,0,0.7);
       pointer-events: none;
     }
     
@@ -301,7 +315,8 @@
 <body>
   <!-- Foto del centro a pantalla completa -->
   <div class="bg-photo">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Collado_Villalba_-_Biblioteca_Municipal_Sancho_Panza.JPG/960px-Collado_Villalba_-_Biblioteca_Municipal_Sancho_Panza.JPG" alt="Biblioteca Sancho Panza (Collado Villalba)" loading="eager">
+    <img src="images/sancho-panza-collado-villalba-exterior.jpg" alt="Biblioteca Sancho Panza (Collado Villalba)" loading="eager">
+    <p class="bg-credit">Foto: Salvador Moreno</p>
   </div>
   
 
@@ -355,7 +370,7 @@
   <script src="horarios.js"></script>
   <script>
   (function() {
-    const d = {"tipo": "biblioteca", "nombre": "Biblioteca Sancho Panza (Collado Villalba)", "foto": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Collado_Villalba_-_Biblioteca_Municipal_Sancho_Panza.JPG/960px-Collado_Villalba_-_Biblioteca_Municipal_Sancho_Panza.JPG", "distrito": "Collado Villalba", "direccion": "Calle Torrelodones, 8, 28400 Collado Villalba", "lat": 40.6271, "lng": -4.0152, "plazas": 150, "horario": "Lun–Vie 9–20:30h", "web": "https://colladovillalba.es/es/servicios-municipales/cultura/bibliotecas/#:~:text=Horario"};
+    const d = {"tipo": "biblioteca", "nombre": "Biblioteca Sancho Panza (Collado Villalba)", "foto": "images/sancho-panza-collado-villalba-exterior.jpg", "foto_credito": "Salvador Moreno", "foto_interior_credito": "David Arroyo", "foto_interior": "images/sancho-panza-collado-villalba-interior.jpg", "distrito": "Collado Villalba", "direccion": "Calle Torrelodones, 8, 28400 Collado Villalba", "lat": 40.6271, "lng": -4.0152, "plazas": 150, "horario": "Lun–Vie 9–20:30h", "web": "https://colladovillalba.es/es/servicios-municipales/cultura/bibliotecas/#:~:text=Horario"};
     const slug = "sancho-panza-collado-villalba";
     // Interceptar botón 'Atrás' del navegador para ir a "Ver en el mapa"
     try {

@@ -49,6 +49,20 @@
       background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.15) 100%);
       pointer-events: none;
     }
+    .bg-credit {
+      position: absolute;
+      right: 12px;
+      top: 10px;
+      z-index: 2;
+      margin: 0;
+      max-width: 45vw;
+      text-align: right;
+      font-size: 11px;
+      line-height: 1.3;
+      color: rgba(255,255,255,0.85);
+      text-shadow: 0 1px 3px rgba(0,0,0,0.7);
+      pointer-events: none;
+    }
     
         
     /* ── Tarjeta flotante horizontal centrada abajo ── */
@@ -302,6 +316,7 @@
   <!-- Foto del centro a pantalla completa -->
   <div class="bg-photo">
     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/ETSI_de_Caminos%2C_canales_y_puertos%2C_Madrid%2C_20241107_161308.jpg/960px-ETSI_de_Caminos%2C_canales_y_puertos%2C_Madrid%2C_20241107_161308.jpg" alt="Biblioteca UPM – ETSI Caminos" loading="eager">
+    
   </div>
   
 
@@ -355,7 +370,7 @@
   <script src="horarios.js"></script>
   <script>
   (function() {
-    const d = {"tipo": "universidad", "nombre": "Biblioteca UPM – ETSI Caminos", "foto": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/ETSI_de_Caminos%2C_canales_y_puertos%2C_Madrid%2C_20241107_161308.jpg/960px-ETSI_de_Caminos%2C_canales_y_puertos%2C_Madrid%2C_20241107_161308.jpg", "distrito": "Moncloa (Ciudad Universitaria)", "direccion": "Calle Profesor Aranguren, s/n, 28040 Madrid", "lat": 40.4467, "lng": -3.7335, "plazas": 420, "horario": "Lun–Vie 9–21:30h", "web": "https://www.upm.es/UPM/Biblioteca/NuestraBiblioteca/Horarios#:~:text=Horarios"};
+    const d = {"tipo": "universidad", "nombre": "Biblioteca UPM – ETSI Caminos", "foto": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/ETSI_de_Caminos%2C_canales_y_puertos%2C_Madrid%2C_20241107_161308.jpg/960px-ETSI_de_Caminos%2C_canales_y_puertos%2C_Madrid%2C_20241107_161308.jpg", "foto_interior_credito": "Biblioteca de la ETSI de Caminos, Canales y Puertos UPM - Edificio Moncloa", "foto_interior": "images/upm-etsi-caminos-interior.jpg", "distrito": "Moncloa (Ciudad Universitaria)", "direccion": "Calle Profesor Aranguren, s/n, 28040 Madrid", "lat": 40.4467, "lng": -3.7335, "plazas": 420, "horario": "Lun–Vie 9–21:30h", "web": "https://www.upm.es/UPM/Biblioteca/NuestraBiblioteca/Horarios#:~:text=Horarios"};
     const slug = "upm-etsi-caminos";
     // Interceptar botón 'Atrás' del navegador para ir a "Ver en el mapa"
     try {

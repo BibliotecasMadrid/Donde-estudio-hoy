@@ -16,8 +16,8 @@
   <meta property="og:title" content="Sala de Estudio Manoteras · Horario y dirección">
   <meta property="og:description" content="Sala de Estudio Manoteras: Calle Cuevas del Almanzora, 187, 28033 Madrid. Horario: Lun–Dom 9–14h y 15–21h. Sala de estudio en Madrid.">
   <meta property="og:url" content="https://bibliotecasmadrid.es/manoteras">
-  <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Un_total_de_440.000_euros_para_el_futuro_Centro_C%C3%ADvico_de_Manoteras_03.jpg/960px-Un_total_de_440.000_euros_para_el_futuro_Centro_C%C3%ADvico_de_Manoteras_03.jpg">
-  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Library", "name": "Sala de Estudio Manoteras", "description": "Horario: Lun–Dom 9–14h y 15–21h", "address": {"@type": "PostalAddress", "streetAddress": "Calle Cuevas del Almanzora, 187, 28033 Madrid", "addressLocality": "Madrid", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.4778, "longitude": -3.6583}, "maximumAttendeeCapacity": 60, "url": "https://bibliotecasmadrid.es/manoteras", "areaServed": "Madrid", "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Un_total_de_440.000_euros_para_el_futuro_Centro_C%C3%ADvico_de_Manoteras_03.jpg/960px-Un_total_de_440.000_euros_para_el_futuro_Centro_C%C3%ADvico_de_Manoteras_03.jpg"}</script>
+  <meta property="og:image" content="images/manoteras-exterior.jpg">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Library", "name": "Sala de Estudio Manoteras", "description": "Horario: Lun–Dom 9–14h y 15–21h", "address": {"@type": "PostalAddress", "streetAddress": "Calle Cuevas del Almanzora, 187, 28033 Madrid", "addressLocality": "Madrid", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.4778, "longitude": -3.6583}, "maximumAttendeeCapacity": 60, "url": "https://bibliotecasmadrid.es/manoteras", "areaServed": "Madrid", "image": "images/manoteras-exterior.jpg"}</script>
   <style>
     :root { --ink:#1A1F36; --ink-2:#5A6172; --ink-3:#9AA0AE; --line:#ECEEF2; }
     * { margin:0; padding:0; box-sizing:border-box; }
@@ -47,6 +47,20 @@
       position: absolute;
       inset: 0;
       background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.15) 100%);
+      pointer-events: none;
+    }
+    .bg-credit {
+      position: absolute;
+      right: 12px;
+      top: 10px;
+      z-index: 2;
+      margin: 0;
+      max-width: 45vw;
+      text-align: right;
+      font-size: 11px;
+      line-height: 1.3;
+      color: rgba(255,255,255,0.85);
+      text-shadow: 0 1px 3px rgba(0,0,0,0.7);
       pointer-events: none;
     }
     
@@ -301,7 +315,8 @@
 <body>
   <!-- Foto del centro a pantalla completa -->
   <div class="bg-photo">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Un_total_de_440.000_euros_para_el_futuro_Centro_C%C3%ADvico_de_Manoteras_03.jpg/960px-Un_total_de_440.000_euros_para_el_futuro_Centro_C%C3%ADvico_de_Manoteras_03.jpg" alt="Sala de Estudio Manoteras" loading="eager">
+    <img src="images/manoteras-exterior.jpg" alt="Sala de Estudio Manoteras" loading="eager">
+    <p class="bg-credit">Foto: Lucas</p>
   </div>
   
 
@@ -355,7 +370,7 @@
   <script src="horarios.js"></script>
   <script>
   (function() {
-    const d = {"tipo": "sala", "nombre": "Sala de Estudio Manoteras", "foto": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Un_total_de_440.000_euros_para_el_futuro_Centro_C%C3%ADvico_de_Manoteras_03.jpg/960px-Un_total_de_440.000_euros_para_el_futuro_Centro_C%C3%ADvico_de_Manoteras_03.jpg", "distrito": "Hortaleza", "direccion": "Calle Cuevas del Almanzora, 187, 28033 Madrid", "lat": 40.4778, "lng": -3.6583, "plazas": 60, "horario": "Lun–Dom 9–14h y 15–21h", "web": "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=27ada5bf3137e710VgnVCM1000001d4a900aRCRD#:~:text=De%20lunes%20a%20domingo%2C%20de,de%2015%20a%2021%20horas"};
+    const d = {"tipo": "sala", "nombre": "Sala de Estudio Manoteras", "foto": "images/manoteras-exterior.jpg", "foto_credito": "Lucas", "foto_interior_credito": "Aula de Estudios de Manoteras", "foto_interior": "images/manoteras-interior.jpg", "distrito": "Hortaleza", "direccion": "Calle Cuevas del Almanzora, 187, 28033 Madrid", "lat": 40.4778, "lng": -3.6583, "plazas": 60, "horario": "Lun–Dom 9–14h y 15–21h", "web": "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=27ada5bf3137e710VgnVCM1000001d4a900aRCRD#:~:text=De%20lunes%20a%20domingo%2C%20de,de%2015%20a%2021%20horas"};
     const slug = "manoteras";
     // Interceptar botón 'Atrás' del navegador para ir a "Ver en el mapa"
     try {
