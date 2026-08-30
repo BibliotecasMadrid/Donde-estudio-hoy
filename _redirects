@@ -20,3 +20,16 @@
 /de-guadarrama.html  /arcipreste-de-hita-guadarrama  301
 /de-navalcarnero  /jose-maria-bausa-navalcarnero  301
 /de-navalcarnero.html  /jose-maria-bausa-navalcarnero  301
+
+# Las cuatro universidades privadas salieron del sitio el 30-08-2026. Aqui no hay ficha
+# equivalente a la que mandar al visitante, asi que van al mapa. El 404 tambien seria
+# correcto, pero estas URLs estan indexadas y ademas alguna sigue viva en la cache de
+# borde de Cloudflare, que un despliegue no invalida: el 301 las apaga en todas partes.
+/u-pontificia-comillas-icai-icade  /  301
+/u-pontificia-comillas-icai-icade.html  /  301
+/u-nebrija-campus-princesa  /  301
+/u-nebrija-campus-princesa.html  /  301
+/ceu-san-pablo-campus-moncloa  /  301
+/ceu-san-pablo-campus-moncloa.html  /  301
+/u-francisco-de-vitoria  /  301
+/u-francisco-de-vitoria.html  /  301
