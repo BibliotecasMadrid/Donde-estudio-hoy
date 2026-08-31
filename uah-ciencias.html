@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#2563EB">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="64x64" href="icons/favicon-64.png">
+  <title>Biblioteca UAH – Ciencias · Horario y dirección · Madrid</title>
+  <meta name="description" content="Biblioteca UAH – Ciencias: Campus Científico-Tecnológico, 28805 Alcalá de Henares. Horario: Lun–Vie 8:30–20:45h (Septiembre; consulta periodos especiales). Biblioteca universitaria en Madrid.">
+  <link rel="canonical" href="https://bibliotecasmadrid.es/uah-ciencias">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:title" content="Biblioteca UAH – Ciencias · Horario y dirección">
+  <meta property="og:description" content="Biblioteca UAH – Ciencias: Campus Científico-Tecnológico, 28805 Alcalá de Henares. Horario: Lun–Vie 8:30–20:45h (Septiembre; consulta periodos especiales). Biblioteca universitaria en Madrid.">
+  <meta property="og:url" content="https://bibliotecasmadrid.es/uah-ciencias">
+  <meta property="og:image" content="https://bibliotecasmadrid.es/icons/icon-512.png">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Library", "name": "Biblioteca UAH – Ciencias", "description": "Horario: Lun–Vie 8:30–20:45h (Septiembre; consulta periodos especiales)", "address": {"@type": "PostalAddress", "streetAddress": "Campus Científico-Tecnológico, 28805 Alcalá de Henares", "addressLocality": "Madrid", "addressRegion": "Comunidad de Madrid", "addressCountry": "ES"}, "geo": {"@type": "GeoCoordinates", "latitude": 40.5056615, "longitude": -3.3372504}, "maximumAttendeeCapacity": 284, "url": "https://bibliotecasmadrid.es/uah-ciencias", "areaServed": "Madrid"}</script>
+  <style>
+    :root { --ink:#1A1F36; --ink-2:#5A6172; --ink-3:#9AA0AE; --line:#ECEEF2; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html, body {
+      width:100%; height:100%; overflow:hidden;
+      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+      -webkit-font-smoothing:antialiased; color:var(--ink);
+    }
+
+    /* ── Foto del centro a pantalla completa ── */
+    .bg-photo {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+      background: #0f172a;
+    }
+    .bg-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .bg-photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.15) 100%);
+      pointer-events: none;
+    }
+    .bg-credit {
+      position: absolute;
+      right: 12px;
+      top: 10px;
+      z-index: 2;
+      margin: 0;
+      max-width: 45vw;
+      text-align: right;
+      font-size: 11px;
+      line-height: 1.3;
+      color: rgba(255,255,255,0.85);
+      text-shadow: 0 1px 3px rgba(0,0,0,0.7);
+      pointer-events: none;
+    }
+
+
+    /* ── Tarjeta flotante horizontal centrada abajo ── */
+    .card {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 860px;
+      width: calc(100% - 48px);
+      max-height: calc(100vh - 48px);
+      overflow-y: auto;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: 24px;
+      padding: 22px 28px 20px;
+      box-shadow: 0 24px 50px rgba(0,0,0,0.28), 0 4px 12px rgba(0,0,0,0.08);
+      z-index: 10;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .back {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-2);
+      text-decoration: none;
+      transition: color .12s;
+    }
+    .back:hover { color: var(--ink); }
+    .badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 999px;
+      color: #fff;
+      background: #7C3AED;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    h1 {
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      line-height: 1.25;
+      margin-bottom: 6px;
+    }
+    .addr {
+      font-size: 13.5px;
+      color: var(--ink-2);
+      line-height: 1.45;
+      margin-bottom: 12px;
+    }
+
+    .capacity-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--ink-2);
+      background: #F1F3F7;
+      padding: 6px 12px;
+      border-radius: 10px;
+      margin-bottom: 16px;
+    }
+    .capacity-tag svg {
+      color: var(--ink-3);
+      flex-shrink: 0;
+    }
+
+    /* ── Box HOY ───────────────────────────── */
+    .today-card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      background: #F8FAFC;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+    .today-card:hover {
+      background: #F1F5F9;
+      border-color: #CBD5E1;
+    }
+    .today-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+    .today-title {
+      font-size: 10.5px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-2);
+    }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 999px;
+    }
+    .status-badge.status-open {
+      background: #DCFCE7;
+      color: #15803D;
+    }
+    .status-badge.status-open::before {
+      content: "";
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #16A34A;
+    }
+    .status-badge.status-closed {
+      background: #FEE2E2;
+      color: #B91C1C;
+    }
+    .status-badge.status-closed::before {
+      content: "";
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #DC2626;
+    }
+    .status-badge.status-info {
+      background: #E0F2FE;
+      color: #0369A1;
+    }
+    .today-hours {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .panel-live-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 10px;
+      font-weight: 700;
+      color: #0369A1;
+      background: #E0F2FE;
+      padding: 3px 8px;
+      border-radius: 6px;
+      margin-top: 6px;
+    }
+    .panel-live-tag svg {
+      width: 10px;
+      height: 10px;
+      fill: #0284C7;
+      flex-shrink: 0;
+    }
+    .panel-live-week {
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px dashed var(--line);
+    }
+    .panel-week-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11.5px;
+      margin-top: 4px;
+    }
+    .panel-week-table td {
+      padding: 2.5px 2px;
+      color: var(--ink-2);
+    }
+    .panel-week-table tr.day-row-today td {
+      font-weight: 700;
+      color: #1D4ED8;
+    }
+    .panel-week-table td.day-hours {
+      text-align: right;
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .panel-week-table tr.day-row-today td.day-hours {
+      color: #1D4ED8;
+    }
+
+    .sched h2 { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-3); margin-bottom: 4px; }
+    .sched { font-size:13px; line-height:1.55; border-top:1px solid var(--line); margin-top:16px; padding-top:10px; }
+    .actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+    .btn {
+      display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:600;
+      text-decoration:none; padding:8px 14px; border-radius:999px; transition:filter .12s ease;
+    }
+    .btn-primary { background:#7C3AED; color:#fff; }
+    .btn-primary:hover { filter:brightness(1.08); }
+    .btn-ghost { background:#F1F3F7; color:var(--ink); }
+    .btn-ghost:hover { background:#E7EAF0; }
+    footer { margin-top:14px; font-size:10px; color:var(--ink-3); line-height:1.4; }
+    footer a { color:var(--ink-3); }
+
+    @media (max-width: 768px) {
+      .card {
+        bottom: 16px;
+        padding: 20px 18px 16px;
+        width: calc(100% - 32px);
+        max-height: 80vh;
+      }
+      /* A una columna, el orden del DOM dejaria el horario habitual por delante de HOY,
+         que es lo primero que se viene a mirar. Se disuelven las dos columnas y se
+         recolocan las piezas una a una para conservar el orden de siempre. El gap pasa
+         a 0 porque ahora separaria cada pieza, no las dos columnas; el aire lo pone el
+         margen de hoy. */
+      .card-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+      .card-main-col, .card-side-col { display: contents; }
+      .card-main-col > h1 { order: 1; }
+      .card-main-col > .addr { order: 2; }
+      .card-main-col > .capacity-tag { order: 3; }
+      .card-main-col > .actions { order: 4; }
+      .card-side-col > .today-card { order: 5; margin-top: 16px; }
+      .card-main-col > .sched { order: 6; }
+      .card-side-col > footer { order: 7; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Foto del centro a pantalla completa -->
+  <div class="bg-photo">
+    <img src="https://bibliotecasmadrid.es/icons/icon-512.png" alt="Biblioteca UAH – Ciencias" loading="eager">
+
+  </div>
+
+
+  <!-- Tarjeta horizontal centrada abajo -->
+  <main class="card">
+    <div class="card-header">
+      <a class="back" href="./">← Volver al mapa</a>
+      <span class="badge">Biblioteca universitaria</span>
+    </div>
+
+    <div class="card-grid">
+      <div class="card-main-col">
+        <h1>Biblioteca UAH – Ciencias</h1>
+        <p class="addr">Alcalá de Henares · Campus Científico-Tecnológico, 28805 Alcalá de Henares</p>
+
+        <div class="capacity-tag">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span>284 puestos de estudio</span>
+        </div>
+
+        <div class="actions">
+          <a class="btn btn-primary" href="./#uah-ciencias">Ver en el mapa</a>
+          <a class="btn btn-ghost" href="https://biblioteca.uah.es/conoce-la-biblioteca/la-biblioteca/bibliotecas/Biblioteca-de-Ciencias/" target="_blank" rel="noopener noreferrer">Web oficial ↗</a>
+          <a class="btn btn-ghost" href="https://www.google.com/maps/dir/?api=1&destination=40.5056615,-3.3372504" target="_blank" rel="noopener noreferrer">Cómo llegar ↗</a>
+        </div>
+
+        <div class="sched">
+          <h2>Horario habitual</h2>
+          <div>Lun–Vie 8:30–20:45h</div><div>(Septiembre; consulta periodos especiales)</div>
+        </div>
+      </div>
+
+      <div class="card-side-col">
+        <a class="today-card" id="today-card" href="https://biblioteca.uah.es/conoce-la-biblioteca/la-biblioteca/bibliotecas/Biblioteca-de-Ciencias/" target="_blank" rel="noopener noreferrer">
+          <div class="today-head">
+            <span class="today-title" id="today-title">HOY · Cargando calendario</span>
+            <span class="status-badge status-info" id="status-badge">Cargando</span>
+          </div>
+          <div class="today-hours" id="today-hours">Cargando calendario…</div>
+
+          <div id="calendar-week" class="panel-live-week"></div>
+        </a>
+
+        <footer>
+          Datos: <a href="https://datos.madrid.es" target="_blank" rel="noopener">datos.madrid.es</a> (CC BY 4.0).
+        </footer>
+      </div>
+    </div>
+  </main>
+
+  <script src="horarios.js"></script>
+  <script>
+  (function() {
+    const d = {"tipo": "universidad", "nombre": "Biblioteca UAH – Ciencias", "distrito": "Alcalá de Henares", "direccion": "Campus Científico-Tecnológico, 28805 Alcalá de Henares", "lat": 40.5056615, "lng": -3.3372504, "plazas": 284, "horario": "Lun–Vie 8:30–20:45h\n(Septiembre; consulta periodos especiales)", "web": "https://biblioteca.uah.es/conoce-la-biblioteca/la-biblioteca/bibliotecas/Biblioteca-de-Ciencias/"};
+    const slug = "uah-ciencias";
+    // Interceptar botón 'Atrás' del navegador para ir a "Ver en el mapa"
+    try {
+      const mapTarget = './#' + encodeURIComponent(slug);
+      if (!history.state || history.state.view !== 'detail') {
+        history.replaceState({ view: 'map' }, '', mapTarget);
+        history.pushState({ view: 'detail' }, '', window.location.href);
+      }
+      window.addEventListener('popstate', function(e) {
+        window.location.href = mapTarget;
+        window.location.reload();
+      });
+    } catch (err) {}
+
+    function updateToday() {
+      if (!window.Horarios) return;
+      Horarios.renderToday(slug, {
+        title: document.getElementById('today-title'),
+        badge: document.getElementById('status-badge'),
+        hours: document.getElementById('today-hours')
+      });
+    }
+    updateToday();
+    const initialWeek = window.Horarios
+      ? Horarios.renderWeek(slug, document.getElementById('calendar-week'), 7)
+      : Promise.resolve([]);
+    setInterval(updateToday, 60000);
+    setInterval(() => {
+      if (window.Horarios) Horarios.renderWeek(slug, document.getElementById('calendar-week'), 7);
+    }, 60000);
+
+    if (d.libcal_lid) {
+      function fTime(t) {
+        if (!t) return '';
+        const m = t.trim().match(/^(\d{1,2})(?::(\d{2}))?\s*(am|pm)?$/i);
+        if (!m) return t;
+        let h = parseInt(m[1], 10);
+        const min = m[2] || '00';
+        if (m[3] && m[3].toLowerCase() === 'pm' && h < 12) h += 12;
+        if (m[3] && m[3].toLowerCase() === 'am' && h === 12) h = 0;
+        return h + ':' + min;
+      }
+
+      function updateLiveToday() {
+        return fetch('https://biblioagenda.uam.es/api_hours_today.php?iid=3941&lid=None&format=json')
+        .then(r => r.json())
+        .then(data => {
+          const loc = (data.locations && data.locations.length > 0) ? data.locations[0] : null;
+          if (!loc) return;
+          const status = loc.times ? loc.times.status : null;
+          const isClosed = status === 'closed' || (status === 'text' && /cerrad/i.test(loc.rendered || loc.times.text || '')) || /cerrad/i.test(loc.rendered || '');
+          const badgeEl = document.getElementById('status-badge');
+          const hoursEl = document.getElementById('today-hours');
+          if (!badgeEl || !hoursEl) return;
+          if (isClosed) {
+            badgeEl.className = 'status-badge status-closed';
+            badgeEl.textContent = 'Cerrado';
+            hoursEl.textContent = 'Cerrado hoy';
+          } else if (status === 'open' && loc.times.hours) {
+            const str = loc.times.hours.map(h => fTime(h.from) + '–' + fTime(h.to) + 'h').join(' y ');
+            const isOpen = !!loc.times.currently_open;
+            badgeEl.className = 'status-badge ' + (isOpen ? 'status-open' : 'status-closed');
+            badgeEl.textContent = isOpen ? 'Abierto' : 'Cerrado';
+            hoursEl.textContent = str;
+          }
+        })
+        .catch(() => {});
+      }
+      updateLiveToday();
+      setInterval(updateLiveToday, 60000);
+
+      function updateLiveWeek() {
+        const container = document.getElementById('calendar-week');
+        if (!container) return;
+        fetch('https://biblioagenda.uam.es/api_hours_grid.php?iid=3941&format=json')
+          .then(r => r.json())
+          .then(data => {
+            const loc = (data.locations || []).find(item => Number(item.lid) === Number(d.libcal_lid));
+            if (!loc) return;
+            const label = container.querySelector('.panel-calendar-week-label');
+            if (label) label.textContent = 'Próximos 7 días · En directo (BiblioAgenda UAM)';
+            for (const week of loc.weeks || []) {
+              for (const dayInfo of Object.values(week || {})) {
+                if (!dayInfo || !dayInfo.date) continue;
+                const row = container.querySelector(`[data-calendar-date="${dayInfo.date}"]`);
+                const cell = row && row.querySelector('.day-hours');
+                if (!cell) continue;
+                if (dayInfo.times && dayInfo.times.status === 'open' && dayInfo.times.hours) {
+                  cell.textContent = dayInfo.times.hours.map(hours => fTime(hours.from) + '–' + fTime(hours.to) + 'h').join(' y ');
+                } else if (dayInfo.rendered && !/cerrad/i.test(dayInfo.rendered) && /\d/.test(dayInfo.rendered)) {
+                  cell.textContent = dayInfo.rendered;
+                } else {
+                  cell.textContent = 'Cerrado';
+                }
+              }
+            }
+          })
+          .catch(() => {});
+      }
+      initialWeek.then(updateLiveWeek);
+      setInterval(updateLiveWeek, 60000);
+
+
+    }
+  })();
+  </script>
+</body>
+</html>

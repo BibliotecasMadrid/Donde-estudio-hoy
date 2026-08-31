@@ -72,6 +72,7 @@ PRIVADO=(
   "calendario.json"                      # fuente privada; build.py publica /horarios/
   "AGENTS.md"
   "README.md"
+  "AUDITORIA_*.md"                       # documentación de trabajo, no contenido web
   "__pycache__"
   ".git"
   ".gitignore"

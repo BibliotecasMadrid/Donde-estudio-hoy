@@ -21,7 +21,7 @@ import unicodedata
 from urllib.parse import quote_plus, urlparse
 
 BASE = "https://bibliotecasmadrid.es/"
-LASTMOD = "2026-08-27"
+LASTMOD = "2026-08-31"
 
 WEEKEND_ROUTE = "bibliotecas-abiertas-fin-de-semana-madrid"
 FULL_DAY_ROUTE = "bibliotecas-24-horas-madrid"
@@ -627,7 +627,9 @@ def page_html(d, slug):
         "url": canonical,
         "areaServed": "Madrid",
     }
-    capacity_html = ""
+    # Evita dejar una línea con espacios en las fichas sin aforo y hace explícito
+    # en el HTML por qué no se muestra el distintivo.
+    capacity_html = "<!-- Aforo no publicado por la fuente oficial -->"
     if d.get("plazas"):
         capacity_html = (
             '<div class="capacity-tag">\n'
@@ -1397,12 +1399,14 @@ def main(argv=None):
     for d, s in zip(lugares, slugs):
         out_path = os.path.join(ROOT, f"{s}.html")
         with open(out_path, "w", encoding="utf-8") as f:
-            f.write(page_html(d, s))
+            html = page_html(d, s)
+            f.write("\n".join(line.rstrip() for line in html.splitlines()) + "\n")
 
     for route, mode in ((WEEKEND_ROUTE, "weekend"), (FULL_DAY_ROUTE, "full-day")):
         out_path = os.path.join(ROOT, f"{route}.html")
         with open(out_path, "w", encoding="utf-8") as f:
-            f.write(landing_page_html(lugares, slugs, calendario, mode))
+            html = landing_page_html(lugares, slugs, calendario, mode)
+            f.write("\n".join(line.rstrip() for line in html.splitlines()) + "\n")
 
     # 2. Generar sitemap.xml
     sitemap_path = os.path.join(ROOT, "sitemap.xml")

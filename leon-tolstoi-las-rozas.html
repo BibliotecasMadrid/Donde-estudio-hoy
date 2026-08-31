@@ -26,7 +26,7 @@
       font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
       -webkit-font-smoothing:antialiased; color:var(--ink);
     }
-    
+
     /* ── Foto del centro a pantalla completa ── */
     .bg-photo {
       position: fixed;
@@ -63,8 +63,8 @@
       text-shadow: 0 1px 3px rgba(0,0,0,0.7);
       pointer-events: none;
     }
-    
-        
+
+
     /* ── Tarjeta flotante horizontal centrada abajo ── */
     .card {
       position: fixed;
@@ -84,7 +84,7 @@
       box-shadow: 0 24px 50px rgba(0,0,0,0.28), 0 4px 12px rgba(0,0,0,0.08);
       z-index: 10;
     }
-    
+
     .card-header {
       display: flex;
       align-items: center;
@@ -113,14 +113,14 @@
       color: #fff;
       background: #2563EB;
     }
-    
+
     .card-grid {
       display: grid;
       grid-template-columns: 1.2fr 1fr;
       gap: 28px;
       align-items: start;
     }
-    
+
     h1 {
       font-size: 21px;
       font-weight: 800;
@@ -134,7 +134,7 @@
       line-height: 1.45;
       margin-bottom: 12px;
     }
-    
+
     .capacity-tag {
       display: inline-flex;
       align-items: center;
@@ -283,7 +283,7 @@
     .btn-ghost:hover { background:#E7EAF0; }
     footer { margin-top:14px; font-size:10px; color:var(--ink-3); line-height:1.4; }
     footer a { color:var(--ink-3); }
-    
+
     @media (max-width: 768px) {
       .card {
         bottom: 16px;
@@ -318,7 +318,7 @@
     <img src="images/leon-tolstoi-las-rozas-exterior.jpg" alt="Biblioteca Leon Tolstoi (Las Rozas)" loading="eager">
     <p class="bg-credit">Foto: Social Media DPA</p>
   </div>
-  
+
 
   <!-- Tarjeta horizontal centrada abajo -->
   <main class="card">
@@ -326,12 +326,12 @@
       <a class="back" href="./">← Volver al mapa</a>
       <span class="badge">Biblioteca</span>
     </div>
-    
+
     <div class="card-grid">
       <div class="card-main-col">
         <h1>Biblioteca Leon Tolstoi (Las Rozas)</h1>
         <p class="addr">Las Rozas de Madrid · Calle Octavio Paz, 2, 28232 Las Rozas de Madrid</p>
-        
+
         <div class="capacity-tag">
           <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           <span>350 puestos de estudio</span>
@@ -356,7 +356,7 @@
             <span class="status-badge status-info" id="status-badge">Cargando</span>
           </div>
           <div class="today-hours" id="today-hours">Cargando calendario…</div>
-          
+
           <div id="calendar-week" class="panel-live-week"></div>
         </a>
 
@@ -384,7 +384,7 @@
         window.location.reload();
       });
     } catch (err) {}
-    
+
     function updateToday() {
       if (!window.Horarios) return;
       Horarios.renderToday(slug, {

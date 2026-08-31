@@ -14,12 +14,49 @@
 /el-parque-alcorcon.html  /almudena-grandes-el-parque-alcorcon  301
 /volturno  /benito-perez-galdos-centro-cultural-volturno  301
 /volturno.html  /benito-perez-galdos-centro-cultural-volturno  301
-/jose-vicente-munoz-torrelodones  /juan-van-halen-torrelodones  301
-/jose-vicente-munoz-torrelodones.html  /juan-van-halen-torrelodones  301
+/jose-vicente-munoz-torrelodones  /jose-de-vicente-munoz-torrelodones  301
+/jose-vicente-munoz-torrelodones.html  /jose-de-vicente-munoz-torrelodones  301
 /de-guadarrama  /arcipreste-de-hita-guadarrama  301
 /de-guadarrama.html  /arcipreste-de-hita-guadarrama  301
 /de-navalcarnero  /jose-maria-bausa-navalcarnero  301
 /de-navalcarnero.html  /jose-maria-bausa-navalcarnero  301
+
+# Auditoría integral de centros del 31-08-2026. Se redirigen tanto las URL
+# canónicas como las variantes .html que pudieron quedar enlazadas.
+/mediateca-jose-hierro-alcobendas  /mediateca-miguel-delibes  301
+/mediateca-jose-hierro-alcobendas.html  /mediateca-miguel-delibes  301
+/pablo-neruda-colmenar-viejo  /  301
+/pablo-neruda-colmenar-viejo.html  /  301
+/manuel-vazquez-montalban-san-lorenzo  /pedro-antonio-de-alarcon-san-lorenzo-de-el-escorial  301
+/manuel-vazquez-montalban-san-lorenzo.html  /pedro-antonio-de-alarcon-san-lorenzo-de-el-escorial  301
+/central-julio-caro-baroja-leganes  /central-de-leganes  301
+/central-julio-caro-baroja-leganes.html  /central-de-leganes  301
+/central-de-coslada  /luisa-carnes-coslada  301
+/central-de-coslada.html  /luisa-carnes-coslada  301
+/norte-mostoles  /norte-universidad-mostoles  301
+/norte-mostoles.html  /norte-universidad-mostoles  301
+/caballero-bonald-fuenlabrada  /jose-manuel-caballero-bonald-fuenlabrada  301
+/caballero-bonald-fuenlabrada.html  /jose-manuel-caballero-bonald-fuenlabrada  301
+/carmen-martin-gaite-getafe-sector-iii  /carmen-martin-gaite-getafe  301
+/carmen-martin-gaite-getafe-sector-iii.html  /carmen-martin-gaite-getafe  301
+/ucm-edificio-multiusos  /ucm-maria-zambrano  301
+/ucm-edificio-multiusos.html  /ucm-maria-zambrano  301
+/uam-biblioteca-general  /uam-sala-buho  301
+/uam-biblioteca-general.html  /uam-sala-buho  301
+/uam-facultad-de-ciencias-cantoblanco  /uam-ciencias-fernando-gonzalez-bernaldez  301
+/uam-facultad-de-ciencias-cantoblanco.html  /uam-ciencias-fernando-gonzalez-bernaldez  301
+/uned-sede-central  /uned-central  301
+/uned-sede-central.html  /uned-central  301
+/uc3m-campus-de-getafe  /uc3m-ciencias-sociales-y-juridicas-getafe  301
+/uc3m-campus-de-getafe.html  /uc3m-ciencias-sociales-y-juridicas-getafe  301
+/ucm-filologia-y-filosofia  /ucm-filologia-general  301
+/ucm-filologia-y-filosofia.html  /ucm-filologia-general  301
+/ucm-biologicas-y-geologicas  /ucm-ciencias-biologicas  301
+/ucm-biologicas-y-geologicas.html  /ucm-ciencias-biologicas  301
+/ucm-campus-de-somosaguas  /ucm-ciencias-economicas-y-empresariales  301
+/ucm-campus-de-somosaguas.html  /ucm-ciencias-economicas-y-empresariales  301
+/uah-campus-cientifico-tecnologico  /uah-politecnica  301
+/uah-campus-cientifico-tecnologico.html  /uah-politecnica  301
 
 # Las cuatro universidades privadas salieron del sitio el 30-08-2026. Aqui no hay ficha
 # equivalente a la que mandar al visitante, asi que van al mapa. El 404 tambien seria

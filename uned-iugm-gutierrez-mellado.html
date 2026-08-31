@@ -26,7 +26,7 @@
       font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
       -webkit-font-smoothing:antialiased; color:var(--ink);
     }
-    
+
     /* ── Foto del centro a pantalla completa ── */
     .bg-photo {
       position: fixed;
@@ -63,8 +63,8 @@
       text-shadow: 0 1px 3px rgba(0,0,0,0.7);
       pointer-events: none;
     }
-    
-        
+
+
     /* ── Tarjeta flotante horizontal centrada abajo ── */
     .card {
       position: fixed;
@@ -84,7 +84,7 @@
       box-shadow: 0 24px 50px rgba(0,0,0,0.28), 0 4px 12px rgba(0,0,0,0.08);
       z-index: 10;
     }
-    
+
     .card-header {
       display: flex;
       align-items: center;
@@ -113,14 +113,14 @@
       color: #fff;
       background: #7C3AED;
     }
-    
+
     .card-grid {
       display: grid;
       grid-template-columns: 1.2fr 1fr;
       gap: 28px;
       align-items: start;
     }
-    
+
     h1 {
       font-size: 21px;
       font-weight: 800;
@@ -134,7 +134,7 @@
       line-height: 1.45;
       margin-bottom: 12px;
     }
-    
+
     .capacity-tag {
       display: inline-flex;
       align-items: center;
@@ -283,7 +283,7 @@
     .btn-ghost:hover { background:#E7EAF0; }
     footer { margin-top:14px; font-size:10px; color:var(--ink-3); line-height:1.4; }
     footer a { color:var(--ink-3); }
-    
+
     @media (max-width: 768px) {
       .card {
         bottom: 16px;
@@ -316,9 +316,9 @@
   <!-- Foto del centro a pantalla completa -->
   <div class="bg-photo">
     <img src="https://bibliotecasmadrid.es/icons/icon-512.png" alt="Biblioteca UNED – IUGM (Gutiérrez Mellado)" loading="eager">
-    
+
   </div>
-  
+
 
   <!-- Tarjeta horizontal centrada abajo -->
   <main class="card">
@@ -326,13 +326,13 @@
       <a class="back" href="./">← Volver al mapa</a>
       <span class="badge">Biblioteca universitaria</span>
     </div>
-    
+
     <div class="card-grid">
       <div class="card-main-col">
         <h1>Biblioteca UNED – IUGM (Gutiérrez Mellado)</h1>
         <p class="addr">Moncloa-Aravaca · Calle de la Princesa, 36, 28008 Madrid</p>
-        
-        
+
+        <!-- Aforo no publicado por la fuente oficial -->
 
         <div class="actions">
           <a class="btn btn-primary" href="./#uned-iugm-gutierrez-mellado">Ver en el mapa</a>
@@ -353,7 +353,7 @@
             <span class="status-badge status-info" id="status-badge">Cargando</span>
           </div>
           <div class="today-hours" id="today-hours">Cargando calendario…</div>
-          
+
           <div id="calendar-week" class="panel-live-week"></div>
         </a>
 
@@ -381,7 +381,7 @@
         window.location.reload();
       });
     } catch (err) {}
-    
+
     function updateToday() {
       if (!window.Horarios) return;
       Horarios.renderToday(slug, {

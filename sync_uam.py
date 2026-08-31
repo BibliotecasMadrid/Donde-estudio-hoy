@@ -15,7 +15,7 @@ API_GRID = f"https://biblioagenda.uam.es/api_hours_grid.php?iid={IID}&format=jso
 
 # Mapeo de lid de LibCal a slugs de nuestro proyecto
 LIBCAL_TO_SLUG = {
-    5663: "uam-facultad-de-ciencias-cantoblanco",
+    5663: "uam-ciencias-fernando-gonzalez-bernaldez",
     5672: "uam-facultad-de-derecho-cantoblanco",
     5665: "uam-ciencias-economicas-cantoblanco",
     5589: "uam-facultad-de-educacion-cantoblanco",
@@ -23,7 +23,7 @@ LIBCAL_TO_SLUG = {
     5674: "uam-facultad-de-medicina",
     5676: "uam-facultad-de-psicologia-cantoblanco",
     5675: "uam-escuela-politecnica-superior",
-    5671: "uam-biblioteca-general"
+    5671: "uam-sala-buho"
 }
 
 def fetch_json(url):
