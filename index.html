@@ -62,6 +62,7 @@
       --c-biblioteca: #2563EB;
       --c-sala:       #059669;
       --c-universidad:#7C3AED;
+      --c-ubicacion:  #EA4335;
       --ink:    #1A1F36;
       --ink-2:  #5A6172;
       --ink-3:  #9AA0AE;
@@ -106,6 +107,7 @@
       text-decoration: none; border-bottom: 1px solid rgba(49,82,127,.3);
     }
     .topbar-links a:hover, .topbar-links a:focus-visible { color: #1d4ed8; border-color: currentColor; }
+    .topbar-search-slot { display: none; }
 
     /* ── Legend ──────────────────────────────────── */
     .legend {
@@ -134,10 +136,10 @@
     /* ── Markers ─────────────────────────────────── */
     .study-marker {
       filter: drop-shadow(0 2px 3px rgba(20,30,60,0.35));
-      transition: transform 0.12s ease;
       cursor: pointer;
     }
-    .study-marker:hover { transform: scale(1.22); z-index: 999 !important; }
+    .study-marker svg { transition: transform 0.12s ease; transform-origin: 50% 50%; }
+    .study-marker:hover svg { transform: scale(1.22); }
     .study-marker-selected {
       filter: drop-shadow(0 5px 6px rgba(20,30,60,0.4));
     }
@@ -148,7 +150,36 @@
     }
     .user-location-marker {
       filter: drop-shadow(0 4px 5px rgba(20,30,60,0.32));
-      pointer-events: none;
+      cursor: pointer;
+    }
+    .marker-tap-feedback svg {
+      animation: marker-tap-bounce 0.4s cubic-bezier(.22,.8,.35,1);
+      transform-origin: 50% 100%;
+    }
+    @keyframes marker-tap-bounce {
+      0%   { transform: translateY(0) scale(1); }
+      38%  { transform: translateY(-5px) scale(1.13); }
+      68%  { transform: translateY(1px) scale(0.98); }
+      100% { transform: translateY(0) scale(1); }
+    }
+    @keyframes marker-tap-flash {
+      0%, 100% { opacity: 1; filter: brightness(1); }
+      50% { opacity: 0.68; filter: brightness(1.25); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .marker-tap-feedback svg {
+        animation: marker-tap-flash 0.32s ease;
+        transform: none;
+      }
+    }
+    .user-location-tooltip {
+      padding: 6px 9px;
+      border: 0;
+      border-radius: 9px;
+      box-shadow: 0 5px 18px rgba(20,30,60,0.18);
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 700;
     }
 
     /* ── Popup ───────────────────────────────────── */
@@ -489,6 +520,12 @@
       cursor: pointer;
     }
     .study-locate-button:hover { background: #F1F5F9; }
+    .study-locate-button.is-locating { color: #2563EB; }
+    .study-locate-button.is-locating svg { animation: locate-button-pulse 0.8s ease-in-out infinite alternate; }
+    @keyframes locate-button-pulse {
+      from { opacity: 0.45; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1.05); }
+    }
     .study-locate-button:focus-visible,
     .study-search-input:focus-visible,
     .study-search-result:focus-visible {
@@ -594,6 +631,52 @@
     }
 
     @media (max-width: 768px) {
+      .topbar {
+        top: 8px;
+        left: 8px;
+        right: 8px;
+        padding: 8px 10px 9px;
+        border-radius: 12px;
+        box-shadow: 0 4px 18px rgba(20,30,60,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset;
+      }
+      .topbar h1 { font-size: 14px; }
+      .topbar p { display: none; }
+      .topbar-links {
+        gap: 7px;
+        margin-top: 4px;
+        white-space: nowrap;
+      }
+      .topbar-links a { font-size: 9.5px; }
+      .topbar-search-slot {
+        display: block;
+        margin-top: 7px;
+      }
+      .topbar-search-slot .study-search { width: 100%; }
+      .topbar-search-slot .study-search-input {
+        height: 36px;
+        border-radius: 9px;
+        box-shadow: 0 1px 5px rgba(20,30,60,0.1);
+        font-size: 16px;
+      }
+      .topbar-search-slot .study-search-results {
+        max-height: min(42vh, 320px);
+        border-radius: 10px;
+      }
+      .legend {
+        bottom: 50px;
+        left: 8px;
+        gap: 4px;
+        padding: 6px 8px;
+        border-radius: 10px;
+        box-shadow: 0 4px 18px rgba(20,30,60,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset;
+        font-size: 10px;
+      }
+      .legend-item { gap: 6px; }
+      .dot {
+        width: 8px;
+        height: 8px;
+        box-shadow: 0 0 0 1px #fff, 0 1px 2px rgba(0,0,0,0.28);
+      }
       .panel {
         top: auto;
         bottom: 0;
@@ -630,8 +713,21 @@
       .leaflet-control-zoom {
         display: none; /* Map zooming is usually handled by pinch on mobile */
       }
-      /* Sin control de zoom encima, el hueco hasta el globo del titulo lo pone todo este margen. */
-      .study-tools-control { margin-top: 106px !important; }
+      .study-tools-control {
+        position: fixed;
+        right: 8px;
+        bottom: 50px;
+        left: auto;
+        margin: 0 !important;
+      }
+      .study-tools-row { display: block; }
+      .study-tools-row > .study-search { display: none; }
+      .study-locate-button {
+        width: 44px;
+        height: 44px;
+        border-radius: 11px;
+        box-shadow: 0 4px 18px rgba(20,30,60,0.14);
+      }
       body.place-panel-open .topbar,
       body.place-panel-open .study-tools-control,
       body.place-panel-open .open-now-btn {
@@ -713,12 +809,15 @@
 
     @media (max-width: 768px) {
       .open-now-btn {
-        bottom: auto;
-        top: 14px;
-        right: 14px;
+        bottom: 102px;
+        top: auto;
+        right: 8px;
         left: auto;
-        padding: 9px 13px;
-        font-size: 12px;
+        min-height: 40px;
+        padding: 8px 10px;
+        border-radius: 11px;
+        box-shadow: 0 4px 18px rgba(20,30,60,0.14), 0 0 0 1px rgba(255,255,255,0.6) inset;
+        font-size: 11.5px;
       }
     }
   </style>
@@ -729,9 +828,10 @@
   <h1>Dónde estudiar en Madrid</h1>
   <p>Bibliotecas, salas de estudio y universidades · pulsa un punto</p>
   <nav class="topbar-links" aria-label="Horarios especiales">
-    <a href="/bibliotecas-abiertas-fin-de-semana-madrid">Fin de semana</a>
-    <a href="/bibliotecas-24-horas-madrid">24 horas</a>
+    <a href="/bibliotecas-abiertas-fin-de-semana-madrid">Abiertas durante el fin de semana</a>
+    <a href="/bibliotecas-24-horas-madrid">Abiertas 24 h</a>
   </nav>
+  <div class="topbar-search-slot" id="topbar-search-slot"></div>
 </div>
 <div class="legend">
   <div class="legend-item" data-type="biblioteca"><span class="dot" style="background:#2563EB"></span> Biblioteca pública</div>
@@ -1040,6 +1140,8 @@ const colores = {
 };
 
 let suppressMapCloseUntil = 0;
+const MOBILE_UI_MEDIA = window.matchMedia('(max-width: 768px)');
+let locateButtonElement = null;
 
 // Control de geolocalización y buscador local de centros.
 const LocateAndSearchControl = L.Control.extend({
@@ -1059,6 +1161,7 @@ const LocateAndSearchControl = L.Control.extend({
       </div>`;
 
     const locateButton = container.querySelector('.study-locate-button');
+    locateButtonElement = locateButton;
     const searchInput = container.querySelector('#library-search-input');
     const resultsList = container.querySelector('#library-search-results');
     let matchedPlaces = [];
@@ -1185,7 +1288,7 @@ const LocateAndSearchControl = L.Control.extend({
     }
 
     locateButton.addEventListener('click', () => {
-      map.locate({ setView: true, maxZoom: 14 });
+      requestUserLocation();
     });
     searchInput.addEventListener('input', updateSearchResults);
     searchInput.addEventListener('focus', () => {
@@ -1247,6 +1350,29 @@ const LocateAndSearchControl = L.Control.extend({
 });
 map.addControl(new LocateAndSearchControl());
 
+// En móvil el mismo buscador pasa a formar parte de la tarjeta del título. No se duplica
+// el input: se mueve el nodo existente para conservar resultados, foco y accesibilidad.
+function syncSearchPlacement() {
+  const search = document.querySelector('.study-search');
+  const desktopRow = document.querySelector('.study-tools-row');
+  const mobileSlot = document.getElementById('topbar-search-slot');
+  if (!search || !desktopRow || !mobileSlot) return;
+  const destination = MOBILE_UI_MEDIA.matches ? mobileSlot : desktopRow;
+  if (search.parentElement !== destination) destination.append(search);
+}
+
+function onResponsiveLayoutChange() {
+  syncSearchPlacement();
+  window.requestAnimationFrame(separarHerramientasDelTitulo);
+}
+
+syncSearchPlacement();
+if (typeof MOBILE_UI_MEDIA.addEventListener === 'function') {
+  MOBILE_UI_MEDIA.addEventListener('change', onResponsiveLayoutChange);
+} else {
+  MOBILE_UI_MEDIA.addListener(onResponsiveLayoutChange);
+}
+
 // El buscador y el boton de ubicacion caen en la misma esquina que el globo del titulo.
 // El hueco estaba fijado a ojo y se solapaban 10px. Fijar otro numero a ojo aguanta hasta
 // que el titulo salte de linea en una pantalla estrecha, asi que se mide el globo y se
@@ -1255,6 +1381,10 @@ function separarHerramientasDelTitulo() {
   const titulo = document.querySelector('.topbar');
   const herramientas = document.querySelector('.study-tools-control');
   if (!titulo || !herramientas) return;
+  if (MOBILE_UI_MEDIA.matches) {
+    herramientas.style.removeProperty('margin-top');
+    return;
+  }
   const AIRE = 12;
   const actual = herramientas.getBoundingClientRect().top;
   const deseado = titulo.getBoundingClientRect().bottom + AIRE;
@@ -1268,22 +1398,119 @@ window.addEventListener('load', separarHerramientasDelTitulo);
 window.addEventListener('resize', separarHerramientasDelTitulo);
 
 let userMarker = null;
-map.on('locationfound', function(e) {
+let lastKnownUserLocation = null;
+let locationRequestSequence = 0;
+const FAST_LOCATION_OPTIONS = { enableHighAccuracy: false, maximumAge: 5 * 60 * 1000, timeout: 5000 };
+const PRECISE_LOCATION_OPTIONS = { enableHighAccuracy: true, maximumAge: 0, timeout: 8000 };
+
+function triggerMarkerFeedback(marker) {
+  const element = marker && marker.getElement ? marker.getElement() : null;
+  if (!element) return;
+  element.classList.remove('marker-tap-feedback');
+  void element.offsetWidth;
+  element.classList.add('marker-tap-feedback');
+  window.clearTimeout(marker._tapFeedbackTimer);
+  marker._tapFeedbackTimer = window.setTimeout(() => {
+    const currentElement = marker.getElement();
+    if (currentElement) currentElement.classList.remove('marker-tap-feedback');
+  }, 450);
+}
+
+function rememberUserLocation(position) {
+  lastKnownUserLocation = {
+    latlng: L.latLng(position.coords.latitude, position.coords.longitude),
+    accuracy: Number(position.coords.accuracy) || null,
+    timestamp: position.timestamp || Date.now()
+  };
+  return lastKnownUserLocation;
+}
+
+function ensureUserMarker(latlng) {
   if (userMarker) {
-    userMarker.setLatLng(e.latlng);
-  } else {
-    userMarker = L.marker(e.latlng, {
-      icon: makeUserLocationIcon(),
-      interactive: false,
-      keyboard: false,
-      alt: 'Tu ubicación',
-      zIndexOffset: 900
-    }).addTo(map);
+    userMarker.setLatLng(latlng);
+    return userMarker;
   }
-});
-map.on('locationerror', function(e) {
-  alert("No se pudo obtener tu ubicación. Por favor, revisa los permisos.");
-});
+
+  userMarker = L.marker(latlng, {
+    icon: makeUserLocationIcon(),
+    interactive: true,
+    keyboard: true,
+    title: 'Tu ubicación',
+    alt: 'Tu ubicación',
+    zIndexOffset: 900
+  }).addTo(map);
+  userMarker.bindTooltip('Aquí estás tú', {
+    className: 'user-location-tooltip',
+    direction: 'top',
+    offset: [0, 0],
+    opacity: 1
+  });
+  userMarker.on('click', function() {
+    this.openTooltip();
+    triggerMarkerFeedback(this);
+  });
+  return userMarker;
+}
+
+function showUserLocation(location, options = {}) {
+  const { center = false, feedback = false } = options;
+  const marker = ensureUserMarker(location.latlng);
+  if (center) {
+    map.setView(location.latlng, Math.max(map.getZoom(), 14), { animate: true });
+  }
+  if (feedback) triggerMarkerFeedback(marker);
+}
+
+function setLocateLoading(loading) {
+  if (!locateButtonElement) return;
+  locateButtonElement.classList.toggle('is-locating', loading);
+  locateButtonElement.setAttribute('aria-busy', String(loading));
+}
+
+function refineUserLocation(requestId) {
+  navigator.geolocation.getCurrentPosition(position => {
+    if (requestId !== locationRequestSequence) return;
+    const location = rememberUserLocation(position);
+    showUserLocation(location, { center: true });
+  }, () => {}, PRECISE_LOCATION_OPTIONS);
+}
+
+function requestUserLocation() {
+  const requestId = ++locationRequestSequence;
+  const hadRememberedLocation = Boolean(lastKnownUserLocation);
+
+  if (hadRememberedLocation) {
+    showUserLocation(lastKnownUserLocation, { center: true, feedback: true });
+  }
+
+  if (!navigator.geolocation) {
+    if (!hadRememberedLocation) alert("No se pudo obtener tu ubicación. Por favor, revisa los permisos.");
+    return;
+  }
+
+  setLocateLoading(true);
+  navigator.geolocation.getCurrentPosition(position => {
+    if (requestId !== locationRequestSequence) return;
+    const location = rememberUserLocation(position);
+    showUserLocation(location, { center: true, feedback: !hadRememberedLocation });
+    setLocateLoading(false);
+    if (location.accuracy !== null && location.accuracy > 200) refineUserLocation(requestId);
+  }, () => {
+    if (requestId !== locationRequestSequence) return;
+    setLocateLoading(false);
+    if (!hadRememberedLocation) alert("No se pudo obtener tu ubicación. Por favor, revisa los permisos.");
+  }, FAST_LOCATION_OPTIONS);
+}
+
+// Si el usuario ya concedió permiso, se prepara una coordenada rápida sin mover el mapa
+// ni provocar un diálogo de permisos durante la carga.
+(function preloadPermittedLocation() {
+  if (!navigator.geolocation || !navigator.permissions || !navigator.permissions.query) return;
+  navigator.permissions.query({ name: 'geolocation' }).then(permission => {
+    if (permission.state !== 'granted') return;
+    navigator.geolocation.getCurrentPosition(rememberUserLocation, () => {}, FAST_LOCATION_OPTIONS);
+  }).catch(() => {});
+})();
 
 function makeIcon(tipo) {
   const c = colores[tipo].fill;
@@ -1318,12 +1545,13 @@ function makeUserLocationIcon() {
   return L.divIcon({
     className: 'user-location-marker',
     html: `<svg width="30" height="38" viewBox="0 0 30 38" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <path d="M15 1.8C7.5 1.8 2 7.7 2 15c0 9.4 13 21.3 13 21.3S28 24.4 28 15C28 7.7 22.5 1.8 15 1.8Z" fill="#3B82F6" stroke="#fff" stroke-width="2.6" stroke-linejoin="round"/>
+      <path d="M15 1.8C7.5 1.8 2 7.7 2 15c0 9.4 13 21.3 13 21.3S28 24.4 28 15C28 7.7 22.5 1.8 15 1.8Z" fill="var(--c-ubicacion)" stroke="#fff" stroke-width="2.6" stroke-linejoin="round"/>
       <circle cx="15" cy="12" r="3.2" fill="#fff"/>
       <path d="M9.7 23.7c.5-4 2.5-6.1 5.3-6.1s4.8 2.1 5.3 6.1c-1.7 1-3.5 1.5-5.3 1.5s-3.6-.5-5.3-1.5Z" fill="#fff"/>
     </svg>`,
     iconSize: [30, 38],
-    iconAnchor: [15, 36]
+    iconAnchor: [15, 36],
+    tooltipAnchor: [0, -32]
   });
 }
 
@@ -1747,7 +1975,7 @@ function panelHtml(d) {
 
 let current = null;
 let selectedMarker = null;
-const MOBILE_PANEL_MEDIA = window.matchMedia('(max-width: 768px)');
+const MOBILE_PANEL_MEDIA = MOBILE_UI_MEDIA;
 const URL_PLACE_MIN_ZOOM = 16;
 
 function setSelectedMarker(d) {
@@ -1975,7 +2203,10 @@ const markerOfPlace = new Map();
 
 lugares.forEach(d => {
   const marker = L.marker([d.lat, d.lng], { icon: makeIcon(d.tipo), title: d.nombre })
-    .on('click', () => openPlace(d, true));
+    .on('click', function() {
+      openPlace(d, true);
+      triggerMarkerFeedback(this);
+    });
   marker._placeData = d;
   allMarkers.push(marker);
   markerOfPlace.set(d, marker);
