@@ -138,6 +138,18 @@
       cursor: pointer;
     }
     .study-marker:hover { transform: scale(1.22); z-index: 999 !important; }
+    .study-marker-selected {
+      filter: drop-shadow(0 5px 6px rgba(20,30,60,0.4));
+    }
+    .study-marker svg,
+    .user-location-marker svg {
+      display: block;
+      overflow: visible;
+    }
+    .user-location-marker {
+      filter: drop-shadow(0 4px 5px rgba(20,30,60,0.32));
+      pointer-events: none;
+    }
 
     /* ── Popup ───────────────────────────────────── */
     .leaflet-popup-content-wrapper {
@@ -228,7 +240,14 @@
       z-index: 10;
     }
     .panel-close:hover { background: #FECACA; color: #B91C1C; }
-    .panel-inner { padding: 56px 26px 32px; flex: 1; overflow-y: auto; height: 100%; }
+    .panel-drag-handle { display: none; }
+    .panel-inner {
+      padding: 56px 26px 32px;
+      flex: 1;
+      overflow-y: auto;
+      overscroll-behavior-y: contain;
+      height: 100%;
+    }
     .panel-badge {
       display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.06em;
       text-transform: uppercase; padding: 3px 10px; border-radius: 999px; color: #fff; margin-bottom: 12px;
@@ -589,6 +608,21 @@
       .panel.open {
         transform: translateY(0);
       }
+      .panel.dragging {
+        transition: none;
+      }
+      .panel-drag-handle {
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        z-index: 11;
+        display: block;
+        width: 44px;
+        height: 5px;
+        border-radius: 999px;
+        background: #CBD5E1;
+        transform: translateX(-50%);
+      }
       .panel-cover {
         border-top-left-radius: 20px;
         border-top-right-radius: 20px;
@@ -598,6 +632,18 @@
       }
       /* Sin control de zoom encima, el hueco hasta el globo del titulo lo pone todo este margen. */
       .study-tools-control { margin-top: 106px !important; }
+      body.place-panel-open .topbar,
+      body.place-panel-open .study-tools-control,
+      body.place-panel-open .open-now-btn {
+        visibility: hidden;
+        opacity: 0;
+        pointer-events: none;
+      }
+      .topbar,
+      .study-tools-control,
+      .open-now-btn {
+        transition: opacity 0.18s ease, visibility 0.18s ease;
+      }
     }
 
     /* ── Botón "Abierto ahora" ──────────────── */
@@ -650,38 +696,6 @@
     }
     .countdown-text.closing-soon { color: #DC2626; font-weight: 700; }
 
-    /* ── Botón compartir ────────────────────── */
-    .panel-share {
-      background: none;
-      border: 1px solid var(--line);
-      color: var(--ink-2);
-      cursor: pointer;
-      font-family: inherit;
-    }
-    .panel-share:hover { background: #F1F3F7; color: var(--ink); }
-
-    /* ── Toast de confirmación ──────────────── */
-    .toast {
-      position: fixed;
-      bottom: 28px;
-      left: 50%;
-      transform: translateX(-50%) translateY(80px);
-      background: var(--ink);
-      color: #fff;
-      padding: 10px 20px;
-      border-radius: 12px;
-      font-size: 13px;
-      font-weight: 600;
-      z-index: 2000;
-      opacity: 0;
-      transition: all 0.3s cubic-bezier(.4,0,.2,1);
-      pointer-events: none;
-    }
-    .toast.show {
-      transform: translateX(-50%) translateY(0);
-      opacity: 1;
-    }
-
     /* ── Cluster styling ────────────────────── */
     .marker-cluster-small,
     .marker-cluster-medium,
@@ -730,11 +744,10 @@
 </button>
 
 <aside class="panel" id="panel" aria-hidden="true" aria-label="Información del centro">
+  <div class="panel-drag-handle" aria-hidden="true"></div>
   <button class="panel-close" id="panel-close" aria-label="Cerrar">✕</button>
   <div class="panel-inner" id="panel-body"></div>
 </aside>
-
-<div class="toast" id="toast"></div>
 
 <noscript>
   <h1>Bibliotecas y salas de estudio en Madrid con horarios</h1>
@@ -1026,6 +1039,8 @@ const colores = {
   universidad: { fill: '#7C3AED', label: 'Universidad'        }
 };
 
+let suppressMapCloseUntil = 0;
+
 // Control de geolocalización y buscador local de centros.
 const LocateAndSearchControl = L.Control.extend({
   options: { position: 'topleft' },
@@ -1142,23 +1157,30 @@ const LocateAndSearchControl = L.Control.extend({
       if (active) active.scrollIntoView({ block: 'nearest' });
     }
 
-    function selectSearchResult(place) {
+    function selectSearchResult(place, suppressPointerupMapClick = false) {
       if (!place) return;
       searchInput.value = place.nombre;
       closeSearchResults();
+      // Al retirar el desplegable en pointerdown, el pointerup puede caer sobre el mapa y
+      // sintetizar un click alli. Se ignora solo esa ventana minima para no cerrar la ficha.
+      if (suppressPointerupMapClick) suppressMapCloseUntil = performance.now() + 300;
 
       // El panel se abre SIEMPRE y primero. Antes colgaba del callback de zoomToShowLayer,
       // que markercluster no llega a invocar cuando el marcador emerge del cluster sin
       // spiderfy: se elegia el centro del desplegable y no ocurria nada.
-      openPlace(place, true);
+      openPlace(place, true, { focus: false });
 
       const marker = markerOfPlace.get(place);
       if (marker && clusterGroup.hasLayer(marker) && typeof clusterGroup.zoomToShowLayer === 'function') {
         try {
-          clusterGroup.zoomToShowLayer(marker, () => {});
+          focusAfterMarkerReveal(place, marker);
         } catch (_) {
-          // Si el marcador no puede revelarse (por ejemplo, por un filtro), el panel ya esta abierto.
+          // Si el marcador no puede revelarse, el panel ya esta abierto y aun se centra el lugar.
+          focusPlace(place);
         }
+      } else {
+        // Un filtro puede haber retirado el marcador del cluster, pero la ficha sigue siendo util.
+        focusPlace(place);
       }
     }
 
@@ -1203,7 +1225,7 @@ const LocateAndSearchControl = L.Control.extend({
       if (!result) return;
       event.preventDefault();
       selectedByPointer = true;
-      selectSearchResult(matchedPlaces[Number(result.dataset.searchIndex)]);
+      selectSearchResult(matchedPlaces[Number(result.dataset.searchIndex)], true);
     });
     // Se conserva el click para clics sinteticos (tecnologia asistiva) que no pasan por
     // pointerdown; el flag evita elegir dos veces cuando llegan los dos eventos.
@@ -1250,13 +1272,12 @@ map.on('locationfound', function(e) {
   if (userMarker) {
     userMarker.setLatLng(e.latlng);
   } else {
-    userMarker = L.circleMarker(e.latlng, {
-      radius: 7,
-      fillColor: "#3B82F6",
-      color: "#ffffff",
-      weight: 2,
-      opacity: 1,
-      fillOpacity: 1
+    userMarker = L.marker(e.latlng, {
+      icon: makeUserLocationIcon(),
+      interactive: false,
+      keyboard: false,
+      alt: 'Tu ubicación',
+      zIndexOffset: 900
     }).addTo(map);
   }
 });
@@ -1276,6 +1297,33 @@ function makeIcon(tipo) {
     iconSize: [24, 24],
     iconAnchor: [12, 12],
     popupAnchor: [0, -13]
+  });
+}
+
+function makeSelectedIcon(tipo) {
+  const c = colores[tipo].fill;
+  return L.divIcon({
+    className: 'study-marker study-marker-selected',
+    html: `<svg width="40" height="48" viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M20 2.5C10.4 2.5 3 10.1 3 19.5C3 31.4 20 45.5 20 45.5S37 31.4 37 19.5C37 10.1 29.6 2.5 20 2.5Z" fill="${c}" stroke="#fff" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M10.8 14.8c3.5-.9 6.5-.3 9.2 1.8v11.8c-2.7-2.1-5.7-2.7-9.2-1.8V14.8Zm18.4 0c-3.5-.9-6.5-.3-9.2 1.8v11.8c2.7-2.1 5.7-2.7 9.2-1.8V14.8Z" fill="none" stroke="#fff" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>`,
+    iconSize: [40, 48],
+    iconAnchor: [20, 46],
+    popupAnchor: [0, -43]
+  });
+}
+
+function makeUserLocationIcon() {
+  return L.divIcon({
+    className: 'user-location-marker',
+    html: `<svg width="30" height="38" viewBox="0 0 30 38" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M15 1.8C7.5 1.8 2 7.7 2 15c0 9.4 13 21.3 13 21.3S28 24.4 28 15C28 7.7 22.5 1.8 15 1.8Z" fill="#3B82F6" stroke="#fff" stroke-width="2.6" stroke-linejoin="round"/>
+      <circle cx="15" cy="12" r="3.2" fill="#fff"/>
+      <path d="M9.7 23.7c.5-4 2.5-6.1 5.3-6.1s4.8 2.1 5.3 6.1c-1.7 1-3.5 1.5-5.3 1.5s-3.6-.5-5.3-1.5Z" fill="#fff"/>
+    </svg>`,
+    iconSize: [30, 38],
+    iconAnchor: [15, 36]
   });
 }
 
@@ -1693,24 +1741,76 @@ function panelHtml(d) {
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
         Cómo llegar
       </a>
-      <button class="panel-link panel-share" onclick="sharePlace()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-        Compartir
-      </button>
       <a class="panel-page" href="${slugOf.get(d)}">Página de este centro ↗</a>
     </div>`;
 }
 
 let current = null;
-function openPlace(d, push) {
+let selectedMarker = null;
+const MOBILE_PANEL_MEDIA = window.matchMedia('(max-width: 768px)');
+const URL_PLACE_MIN_ZOOM = 16;
+
+function setSelectedMarker(d) {
+  if (selectedMarker) {
+    selectedMarker.setIcon(makeIcon(selectedMarker._placeData.tipo));
+    selectedMarker.setZIndexOffset(0);
+  }
+
+  selectedMarker = d ? markerOfPlace.get(d) : null;
+  if (selectedMarker) {
+    selectedMarker.setIcon(makeSelectedIcon(d.tipo));
+    selectedMarker.setZIndexOffset(1000);
+  }
+}
+
+// Situa el centro en el punto medio de la parte del mapa que el panel no tapa.
+// Se proyecta la coordenada al zoom final para que un zoom animado no deshaga el offset.
+function focusPlace(d, minZoom = null) {
+  if (!d) return;
+  const size = map.getSize();
+  if (!size.x || !size.y) return;
+
+  const zoom = minZoom === null ? map.getZoom() : Math.max(map.getZoom(), minZoom);
+  const targetPoint = MOBILE_PANEL_MEDIA.matches
+    ? L.point(size.x / 2, (size.y - panel.offsetHeight) / 2)
+    : L.point((size.x - panel.offsetWidth) / 2, size.y / 2);
+  const centerOffset = L.point(size.x / 2 - targetPoint.x, size.y / 2 - targetPoint.y);
+  const projectedPlace = map.project([d.lat, d.lng], zoom);
+  const center = map.unproject(projectedPlace.add(centerOffset), zoom);
+  map.setView(center, zoom, { animate: true });
+}
+
+// El buscador puede partir de un cluster. Se espera a que Leaflet revele el marcador y
+// solo entonces se aplica el offset; el temporizador cubre callbacks que markercluster
+// omite cuando el marcador emerge sin llegar a spiderfy.
+function focusAfterMarkerReveal(d, marker) {
+  let focused = false;
+  const finish = () => {
+    if (focused || current !== d) return;
+    focused = true;
+    focusPlace(d);
+  };
+
+  clusterGroup.zoomToShowLayer(marker, finish);
+  window.setTimeout(finish, 700);
+}
+
+function openPlace(d, push, options = {}) {
+  const { focus = true, minZoom = null } = options;
   current = d;
+  setSelectedMarker(d);
   panelBody.innerHTML = panelHtml(d);
   panelBody.scrollTop = 0;
   panel.classList.add('open');
   panel.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('place-panel-open');
   document.getElementById('panel-close').focus();
   if (push) history.pushState({ slug: slugOf.get(d) }, '', slugOf.get(d));
-  map.panTo([d.lat, d.lng], { animate: true });
+  if (focus) {
+    window.requestAnimationFrame(() => {
+      if (current === d) focusPlace(d, minZoom);
+    });
+  }
 
   ensureCalendarWindow(new Date(), 7).then(loaded => {
     if (!loaded || current !== d) return;
@@ -1748,16 +1848,116 @@ function openPlace(d, push) {
   if (calendarContainer) renderCalendarWeek(d, calendarContainer);
 }
 function closePanel(push) {
+  panelDragState = null;
+  panel.classList.remove('dragging');
+  panel.style.removeProperty('transform');
+  setSelectedMarker(null);
   current = null;
   panel.classList.remove('open');
   panel.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('place-panel-open');
   document.getElementById('map').focus();
   if (push) history.pushState({}, '', './');
 }
 
 document.getElementById('panel-close').addEventListener('click', () => closePanel(true));
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && current) closePanel(true); });
-map.on('click', () => { if (current) closePanel(true); });
+map.on('click', () => {
+  if (performance.now() < suppressMapCloseUntil) return;
+  if (current) closePanel(true);
+});
+
+let panelDragState = null;
+const PANEL_DISMISS_DISTANCE = 96;
+const PANEL_DISMISS_FAST_DISTANCE = 32;
+const PANEL_DISMISS_VELOCITY = 0.6;
+const PANEL_DRAG_INTERACTIVE = 'a, button, input, select, textarea, [role="button"]';
+
+function finishPanelDrag(shouldClose) {
+  if (!panelDragState || !panelDragState.dragging) {
+    panelDragState = null;
+    return;
+  }
+
+  panelDragState = null;
+  panel.classList.remove('dragging');
+  window.requestAnimationFrame(() => {
+    if (shouldClose && current) {
+      closePanel(true);
+    } else {
+      panel.style.removeProperty('transform');
+    }
+  });
+}
+
+panel.addEventListener('touchstart', event => {
+  if (!MOBILE_PANEL_MEDIA.matches || !current || event.touches.length !== 1) return;
+  const target = event.target;
+  const fromHandle = target.closest('.panel-drag-handle');
+  if (!fromHandle && target.closest(PANEL_DRAG_INTERACTIVE)) return;
+  if (!fromHandle && panelBody.scrollTop > 0) return;
+
+  const touch = event.touches[0];
+  panelDragState = {
+    startX: touch.clientX,
+    startY: touch.clientY,
+    lastY: touch.clientY,
+    lastTime: performance.now(),
+    velocity: 0,
+    distance: 0,
+    dragging: false,
+    fromHandle: Boolean(fromHandle)
+  };
+}, { passive: true });
+
+panel.addEventListener('touchmove', event => {
+  if (!panelDragState || event.touches.length !== 1) return;
+  const touch = event.touches[0];
+  const deltaX = touch.clientX - panelDragState.startX;
+  const deltaY = touch.clientY - panelDragState.startY;
+
+  if (!panelDragState.dragging) {
+    if (Math.max(Math.abs(deltaX), Math.abs(deltaY)) < 6) return;
+    if (deltaY <= 0 || Math.abs(deltaX) > Math.abs(deltaY)) {
+      panelDragState = null;
+      return;
+    }
+    if (!panelDragState.fromHandle && panelBody.scrollTop > 0) {
+      panelDragState = null;
+      return;
+    }
+    panelDragState.dragging = true;
+    panel.classList.add('dragging');
+  }
+
+  event.preventDefault();
+  const now = performance.now();
+  const elapsed = Math.max(1, now - panelDragState.lastTime);
+  panelDragState.velocity = (touch.clientY - panelDragState.lastY) / elapsed;
+  panelDragState.lastY = touch.clientY;
+  panelDragState.lastTime = now;
+  panelDragState.distance = Math.max(0, deltaY);
+  panel.style.transform = `translateY(${panelDragState.distance}px)`;
+}, { passive: false });
+
+panel.addEventListener('touchend', () => {
+  if (!panelDragState) return;
+  const velocityIsRecent = performance.now() - panelDragState.lastTime < 100;
+  const fastEnough = velocityIsRecent
+    && panelDragState.velocity >= PANEL_DISMISS_VELOCITY
+    && panelDragState.distance >= PANEL_DISMISS_FAST_DISTANCE;
+  finishPanelDrag(panelDragState.distance >= PANEL_DISMISS_DISTANCE || fastEnough);
+});
+
+panel.addEventListener('touchcancel', () => finishPanelDrag(false));
+
+let focusResizeTimer = null;
+window.addEventListener('resize', () => {
+  window.clearTimeout(focusResizeTimer);
+  focusResizeTimer = window.setTimeout(() => {
+    if (current && panel.classList.contains('open')) focusPlace(current);
+  }, 120);
+});
 
 // ─────────────────────────────────────────────
 //  MARCADORES (con clustering)
@@ -1833,32 +2033,6 @@ openNowBtn.addEventListener('click', () => {
   refreshVisibleMarkers();
 });
 
-// ── Toast ────────────────────────────────────
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
-}
-
-// ── Compartir ────────────────────────────────
-function sharePlace() {
-  if (!current) return;
-  const url = BASE_URL + slugOf.get(current);
-  const title = current.nombre;
-  const text = current.nombre + ' — ' + current.direccion;
-
-  if (navigator.share) {
-    navigator.share({ title, text, url }).catch(() => {});
-  } else {
-    navigator.clipboard.writeText(url).then(() => {
-      showToast('📋 Enlace copiado');
-    }).catch(() => {
-      showToast('No se pudo copiar');
-    });
-  }
-}
-
 // ── Cuenta atrás al cierre ───────────────────
 // Cuenta atras basada directamente en los intervalos del calendario compilado.
 function getCountdown(d) {
@@ -1895,11 +2069,14 @@ function placeFromUrl() {
 }
 window.addEventListener('popstate', () => {
   const d = placeFromUrl();
-  if (d) openPlace(d, false); else closePanel(false);
+  if (d) openPlace(d, false, { minZoom: URL_PLACE_MIN_ZOOM }); else closePanel(false);
 });
 (function initFromUrl() {
   const d = placeFromUrl();
-  if (d) { openPlace(d, false); history.replaceState({ slug: slugOf.get(d) }, '', slugOf.get(d)); }
+  if (d) {
+    openPlace(d, false, { minZoom: URL_PLACE_MIN_ZOOM });
+    history.replaceState({ slug: slugOf.get(d) }, '', slugOf.get(d));
+  }
 })();
 
 // ─────────────────────────────────────────────
