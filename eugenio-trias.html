@@ -306,6 +306,7 @@
       .card-main-col > .addr { order: 2; }
       .card-main-col > .capacity-tag { order: 3; }
       .card-main-col > .actions { order: 4; }
+      .btn-map { display: none; }
       .card-side-col > .today-card { order: 5; margin-top: 16px; }
       .card-main-col > .sched { order: 6; }
       .card-side-col > footer { order: 7; }
@@ -323,7 +324,7 @@
   <!-- Tarjeta horizontal centrada abajo -->
   <main class="card">
     <div class="card-header">
-      <a class="back" href="./">← Volver al mapa</a>
+      <a class="back" href="./" data-mobile-href="/?centro=eugenio-trias">← Volver al mapa</a>
       <span class="badge">Biblioteca</span>
     </div>
 
@@ -338,7 +339,7 @@
         </div>
 
         <div class="actions">
-          <a class="btn btn-primary" href="./#eugenio-trias">Ver en el mapa</a>
+          <a class="btn btn-primary btn-map" href="./#eugenio-trias">Ver en el mapa</a>
           <a class="btn btn-ghost" href="https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&amp;vgnextoid=e791bed05ceed310VgnVCM1000000b205a0aRCRD#:~:text=Apertura%20de%20lunes%20a%20domingo.,8%3A30%20a%2020%20horas%3B%20s%C3%A1bados%20y%20domingos%20de%208%3A30%20a%2014%20horas." target="_blank" rel="noopener noreferrer">Web oficial ↗</a>
           <a class="btn btn-ghost" href="https://www.google.com/maps/dir/?api=1&destination=40.4166,-3.6796" target="_blank" rel="noopener noreferrer">Cómo llegar ↗</a>
         </div>
@@ -372,15 +373,30 @@
   (function() {
     const d = {"tipo": "biblioteca", "nombre": "Biblioteca Municipal Eugenio Trías", "foto": "images/eugenio-trias-exterior.jpg", "foto_credito": "Jose Gomez", "foto_interior_credito": "Luis Burbano Sanchez", "foto_interior": "images/eugenio-trias-interior.jpg", "distrito": "Retiro", "direccion": "Paseo Fernán Núñez, 24, 28009 Madrid", "lat": 40.4166, "lng": -3.6796, "plazas": 258, "horario": "Lun–Vie 8:30–21h · Sáb–Dom 8:30–15h\n(Verano: Lun–Vie 8:30–20h)", "web": "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=e791bed05ceed310VgnVCM1000000b205a0aRCRD#:~:text=Apertura%20de%20lunes%20a%20domingo.,8%3A30%20a%2020%20horas%3B%20s%C3%A1bados%20y%20domingos%20de%208%3A30%20a%2014%20horas."};
     const slug = "eugenio-trias";
-    // Interceptar botón 'Atrás' del navegador para ir a "Ver en el mapa"
+    // En móvil, "Volver al mapa" centra este lugar sin abrir el panel. En escritorio se
+    // conserva la navegación existente y el botón independiente "Ver en el mapa".
     try {
-      const mapTarget = './#' + encodeURIComponent(slug);
+      const mobileDetailMedia = window.matchMedia('(max-width: 768px)');
+      const backLink = document.querySelector('.back');
+      const detailUrl = window.location.href;
+      const mobileMapTarget = '/?centro=' + encodeURIComponent(slug);
+      const desktopMapTarget = './#' + encodeURIComponent(slug);
+      const currentMapTarget = () => mobileDetailMedia.matches ? mobileMapTarget : desktopMapTarget;
+      const syncBackLink = () => {
+        if (backLink) backLink.href = mobileDetailMedia.matches ? mobileMapTarget : './';
+      };
+      syncBackLink();
+      if (typeof mobileDetailMedia.addEventListener === 'function') {
+        mobileDetailMedia.addEventListener('change', syncBackLink);
+      } else {
+        mobileDetailMedia.addListener(syncBackLink);
+      }
       if (!history.state || history.state.view !== 'detail') {
-        history.replaceState({ view: 'map' }, '', mapTarget);
-        history.pushState({ view: 'detail' }, '', window.location.href);
+        history.replaceState({ view: 'map' }, '', currentMapTarget());
+        history.pushState({ view: 'detail' }, '', detailUrl);
       }
       window.addEventListener('popstate', function(e) {
-        window.location.href = mapTarget;
+        window.location.href = currentMapTarget();
         window.location.reload();
       });
     } catch (err) {}

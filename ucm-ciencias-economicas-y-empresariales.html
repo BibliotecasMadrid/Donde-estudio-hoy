@@ -306,6 +306,7 @@
       .card-main-col > .addr { order: 2; }
       .card-main-col > .capacity-tag { order: 3; }
       .card-main-col > .actions { order: 4; }
+      .btn-map { display: none; }
       .card-side-col > .today-card { order: 5; margin-top: 16px; }
       .card-main-col > .sched { order: 6; }
       .card-side-col > footer { order: 7; }
@@ -323,7 +324,7 @@
   <!-- Tarjeta horizontal centrada abajo -->
   <main class="card">
     <div class="card-header">
-      <a class="back" href="./">← Volver al mapa</a>
+      <a class="back" href="./" data-mobile-href="/?centro=ucm-ciencias-economicas-y-empresariales">← Volver al mapa</a>
       <span class="badge">Biblioteca universitaria</span>
     </div>
 
@@ -335,7 +336,7 @@
         <!-- Aforo no publicado por la fuente oficial -->
 
         <div class="actions">
-          <a class="btn btn-primary" href="./#ucm-ciencias-economicas-y-empresariales">Ver en el mapa</a>
+          <a class="btn btn-primary btn-map" href="./#ucm-ciencias-economicas-y-empresariales">Ver en el mapa</a>
           <a class="btn btn-ghost" href="https://biblioagenda.ucm.es/hours?lid=6051" target="_blank" rel="noopener noreferrer">Web oficial ↗</a>
           <a class="btn btn-ghost" href="https://www.google.com/maps/dir/?api=1&destination=40.431906,-3.789715" target="_blank" rel="noopener noreferrer">Cómo llegar ↗</a>
         </div>
@@ -369,15 +370,30 @@
   (function() {
     const d = {"tipo": "universidad", "nombre": "Biblioteca UCM – Ciencias Económicas y Empresariales", "distrito": "Pozuelo de Alarcón", "direccion": "Campus de Somosaguas, s/n, 28223 Pozuelo de Alarcón", "lat": 40.431906, "lng": -3.789715, "horario": "Lun–Vie 9–21h\n(Consulta ampliaciones en BiblioAgenda)", "web": "https://biblioagenda.ucm.es/hours?lid=6051", "libcal_lid": 6051, "libcal_iid": 4031};
     const slug = "ucm-ciencias-economicas-y-empresariales";
-    // Interceptar botón 'Atrás' del navegador para ir a "Ver en el mapa"
+    // En móvil, "Volver al mapa" centra este lugar sin abrir el panel. En escritorio se
+    // conserva la navegación existente y el botón independiente "Ver en el mapa".
     try {
-      const mapTarget = './#' + encodeURIComponent(slug);
+      const mobileDetailMedia = window.matchMedia('(max-width: 768px)');
+      const backLink = document.querySelector('.back');
+      const detailUrl = window.location.href;
+      const mobileMapTarget = '/?centro=' + encodeURIComponent(slug);
+      const desktopMapTarget = './#' + encodeURIComponent(slug);
+      const currentMapTarget = () => mobileDetailMedia.matches ? mobileMapTarget : desktopMapTarget;
+      const syncBackLink = () => {
+        if (backLink) backLink.href = mobileDetailMedia.matches ? mobileMapTarget : './';
+      };
+      syncBackLink();
+      if (typeof mobileDetailMedia.addEventListener === 'function') {
+        mobileDetailMedia.addEventListener('change', syncBackLink);
+      } else {
+        mobileDetailMedia.addListener(syncBackLink);
+      }
       if (!history.state || history.state.view !== 'detail') {
-        history.replaceState({ view: 'map' }, '', mapTarget);
-        history.pushState({ view: 'detail' }, '', window.location.href);
+        history.replaceState({ view: 'map' }, '', currentMapTarget());
+        history.pushState({ view: 'detail' }, '', detailUrl);
       }
       window.addEventListener('popstate', function(e) {
-        window.location.href = mapTarget;
+        window.location.href = currentMapTarget();
         window.location.reload();
       });
     } catch (err) {}

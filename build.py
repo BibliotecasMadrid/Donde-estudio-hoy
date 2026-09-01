@@ -966,6 +966,7 @@ def page_html(d, slug):
       .card-main-col > .addr {{ order: 2; }}
       .card-main-col > .capacity-tag {{ order: 3; }}
       .card-main-col > .actions {{ order: 4; }}
+      .btn-map {{ display: none; }}
       .card-side-col > .today-card {{ order: 5; margin-top: 16px; }}
       .card-main-col > .sched {{ order: 6; }}
       .card-side-col > footer {{ order: 7; }}
@@ -983,7 +984,7 @@ def page_html(d, slug):
   <!-- Tarjeta horizontal centrada abajo -->
   <main class="card">
     <div class="card-header">
-      <a class="back" href="./">← Volver al mapa</a>
+      <a class="back" href="./" data-mobile-href="/?centro={slug}">← Volver al mapa</a>
       <span class="badge">{e(c["label"])}</span>
     </div>
     
@@ -995,7 +996,7 @@ def page_html(d, slug):
         {capacity_html}
 
         <div class="actions">
-          <a class="btn btn-primary" href="./#{slug}">Ver en el mapa</a>
+          <a class="btn btn-primary btn-map" href="./#{slug}">Ver en el mapa</a>
           <a class="btn btn-ghost" href="{e(web)}" target="_blank" rel="noopener noreferrer">{e(web_label)} ↗</a>
           <a class="btn btn-ghost" href="https://www.google.com/maps/dir/?api=1&destination={lat},{lng}" target="_blank" rel="noopener noreferrer">Cómo llegar ↗</a>
         </div>
@@ -1029,15 +1030,30 @@ def page_html(d, slug):
   (function() {{
     const d = {d_json};
     const slug = "{slug}";
-    // Interceptar botón 'Atrás' del navegador para ir a "Ver en el mapa"
+    // En móvil, "Volver al mapa" centra este lugar sin abrir el panel. En escritorio se
+    // conserva la navegación existente y el botón independiente "Ver en el mapa".
     try {{
-      const mapTarget = './#' + encodeURIComponent(slug);
+      const mobileDetailMedia = window.matchMedia('(max-width: 768px)');
+      const backLink = document.querySelector('.back');
+      const detailUrl = window.location.href;
+      const mobileMapTarget = '/?centro=' + encodeURIComponent(slug);
+      const desktopMapTarget = './#' + encodeURIComponent(slug);
+      const currentMapTarget = () => mobileDetailMedia.matches ? mobileMapTarget : desktopMapTarget;
+      const syncBackLink = () => {{
+        if (backLink) backLink.href = mobileDetailMedia.matches ? mobileMapTarget : './';
+      }};
+      syncBackLink();
+      if (typeof mobileDetailMedia.addEventListener === 'function') {{
+        mobileDetailMedia.addEventListener('change', syncBackLink);
+      }} else {{
+        mobileDetailMedia.addListener(syncBackLink);
+      }}
       if (!history.state || history.state.view !== 'detail') {{
-        history.replaceState({{ view: 'map' }}, '', mapTarget);
-        history.pushState({{ view: 'detail' }}, '', window.location.href);
+        history.replaceState({{ view: 'map' }}, '', currentMapTarget());
+        history.pushState({{ view: 'detail' }}, '', detailUrl);
       }}
       window.addEventListener('popstate', function(e) {{
-        window.location.href = mapTarget;
+        window.location.href = currentMapTarget();
         window.location.reload();
       }});
     }} catch (err) {{}}

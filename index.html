@@ -63,6 +63,7 @@
       --c-sala:       #059669;
       --c-universidad:#7C3AED;
       --c-ubicacion:  #EA4335;
+      --mobile-map-bottom: calc(8px + env(safe-area-inset-bottom, 0px));
       --ink:    #1A1F36;
       --ink-2:  #5A6172;
       --ink-3:  #9AA0AE;
@@ -631,6 +632,9 @@
     }
 
     @media (max-width: 768px) {
+      html, body, #map {
+        height: var(--mobile-viewport-height, 100dvh);
+      }
       .topbar {
         top: 8px;
         left: 8px;
@@ -663,7 +667,8 @@
         border-radius: 10px;
       }
       .legend {
-        bottom: 50px;
+        position: fixed;
+        bottom: var(--mobile-map-bottom);
         left: 8px;
         gap: 4px;
         padding: 6px 8px;
@@ -716,7 +721,7 @@
       .study-tools-control {
         position: fixed;
         right: 8px;
-        bottom: 50px;
+        bottom: calc(var(--mobile-map-bottom) + 48px);
         left: auto;
         margin: 0 !important;
       }
@@ -727,6 +732,15 @@
         height: 44px;
         border-radius: 11px;
         box-shadow: 0 4px 18px rgba(20,30,60,0.14);
+      }
+      .leaflet-control-attribution {
+        position: fixed;
+        right: 0;
+        bottom: calc(var(--mobile-map-bottom) + 100px);
+        max-width: calc(100vw - 16px);
+        padding: 2px 4px;
+        font-size: 8px;
+        line-height: 1.15;
       }
       body.place-panel-open .topbar,
       body.place-panel-open .study-tools-control,
@@ -809,7 +823,8 @@
 
     @media (max-width: 768px) {
       .open-now-btn {
-        bottom: 102px;
+        position: fixed;
+        bottom: var(--mobile-map-bottom);
         top: auto;
         right: 8px;
         left: auto;
@@ -1364,6 +1379,7 @@ function syncSearchPlacement() {
 function onResponsiveLayoutChange() {
   syncSearchPlacement();
   window.requestAnimationFrame(separarHerramientasDelTitulo);
+  scheduleMobileMapMetrics();
 }
 
 syncSearchPlacement();
@@ -1371,6 +1387,34 @@ if (typeof MOBILE_UI_MEDIA.addEventListener === 'function') {
   MOBILE_UI_MEDIA.addEventListener('change', onResponsiveLayoutChange);
 } else {
   MOBILE_UI_MEDIA.addListener(onResponsiveLayoutChange);
+}
+
+// Los navegadores móviles cambian la altura visible cuando aparecen o desaparecen sus
+// barras. El mapa sigue el viewport visual real; los controles se anclan a su borde inferior
+// y la atribución obligatoria queda justo encima de la columna de botones.
+let mobileMapMetricsFrame = null;
+function updateMobileMapMetrics() {
+  mobileMapMetricsFrame = null;
+  const root = document.documentElement;
+  if (!MOBILE_UI_MEDIA.matches) {
+    root.style.removeProperty('--mobile-viewport-height');
+    return;
+  }
+
+  const viewportHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+  root.style.setProperty('--mobile-viewport-height', `${Math.round(viewportHeight)}px`);
+}
+
+function scheduleMobileMapMetrics() {
+  if (mobileMapMetricsFrame !== null) window.cancelAnimationFrame(mobileMapMetricsFrame);
+  mobileMapMetricsFrame = window.requestAnimationFrame(updateMobileMapMetrics);
+}
+
+scheduleMobileMapMetrics();
+window.addEventListener('load', scheduleMobileMapMetrics);
+window.addEventListener('resize', scheduleMobileMapMetrics);
+if (window.visualViewport) {
+  window.visualViewport.addEventListener('resize', scheduleMobileMapMetrics);
 }
 
 // El buscador y el boton de ubicacion caen en la misma esquina que el globo del titulo.
@@ -2298,11 +2342,46 @@ function placeFromUrl() {
   }
   return placeOf.get(decodeURIComponent(slug)) || null;
 }
+
+function placeFromMapFocusQuery() {
+  const slug = new URLSearchParams(location.search).get('centro');
+  return slug ? placeOf.get(slug) || null : null;
+}
+
+// Entrada desde la ficha móvil: centra el centro a nivel de calle, pero conserva el
+// mapa completamente visible y el panel cerrado.
+function focusPlaceWithoutPanel(d) {
+  if (!d) return;
+  if (current) {
+    closePanel(false);
+  } else {
+    setSelectedMarker(null);
+    panel.classList.remove('open');
+    panel.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('place-panel-open');
+  }
+
+  map.setView([d.lat, d.lng], URL_PLACE_MIN_ZOOM, { animate: false });
+  const marker = markerOfPlace.get(d);
+  window.setTimeout(() => triggerMarkerFeedback(marker), 120);
+}
+
 window.addEventListener('popstate', () => {
+  const focusOnly = placeFromMapFocusQuery();
+  if (focusOnly) {
+    focusPlaceWithoutPanel(focusOnly);
+    return;
+  }
   const d = placeFromUrl();
   if (d) openPlace(d, false, { minZoom: URL_PLACE_MIN_ZOOM }); else closePanel(false);
 });
 (function initFromUrl() {
+  const focusOnly = placeFromMapFocusQuery();
+  if (focusOnly) {
+    focusPlaceWithoutPanel(focusOnly);
+    history.replaceState({ focusSlug: slugOf.get(focusOnly) }, '', location.href);
+    return;
+  }
   const d = placeFromUrl();
   if (d) {
     openPlace(d, false, { minZoom: URL_PLACE_MIN_ZOOM });
