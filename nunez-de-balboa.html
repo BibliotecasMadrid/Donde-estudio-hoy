@@ -357,7 +357,7 @@
             <span class="status-badge status-info" id="status-badge">Cargando</span>
           </div>
           <div class="today-hours" id="today-hours">Cargando calendario…</div>
-
+          <div class="panel-live-tag" title="Horario actualizado según madrid.es"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>En directo · madrid.es</div>
           <div id="calendar-week" class="panel-live-week"></div>
         </a>
 
@@ -368,7 +368,7 @@
     </div>
   </main>
 
-  <script src="horarios.js"></script>
+  <script src="horarios.js?v=20260901-2"></script>
   <script>
   (function() {
     const d = {"tipo": "sala", "nombre": "Sala de Estudio Núñez de Balboa", "foto": "images/sala-de-estudio-n-ez-de-balboa.jpg", "distrito": "Salamanca", "direccion": "Calle Núñez de Balboa, 40, 28001 Madrid", "lat": 40.4268, "lng": -3.6825, "plazas": 75, "horario": "Lun–Dom 7:30–21:45h (festivos cerrado)", "web": "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=a2e4bc30bbd28810VgnVCM2000001f4a900aRCRD#:~:text=Horario%20del%20centro%3A,De%20lunes%20a%20domingo%2C%20de%207%3A30%20a%2021%3A45%20horas."};
@@ -466,8 +466,6 @@
           .then(data => {
             const loc = (data.locations || []).find(item => Number(item.lid) === Number(d.libcal_lid));
             if (!loc) return;
-            const label = container.querySelector('.panel-calendar-week-label');
-            if (label) label.textContent = 'Próximos 7 días · En directo (BiblioAgenda UAM)';
             for (const week of loc.weeks || []) {
               for (const dayInfo of Object.values(week || {})) {
                 if (!dayInfo || !dayInfo.date) continue;

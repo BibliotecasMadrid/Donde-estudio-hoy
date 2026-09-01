@@ -357,7 +357,7 @@
             <span class="status-badge status-info" id="status-badge">Cargando</span>
           </div>
           <div class="today-hours" id="today-hours">Cargando calendario…</div>
-
+          <div class="panel-live-tag" title="Horario actualizado según madrid.es"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>En directo · madrid.es</div>
           <div id="calendar-week" class="panel-live-week"></div>
         </a>
 
@@ -368,7 +368,7 @@
     </div>
   </main>
 
-  <script src="horarios.js"></script>
+  <script src="horarios.js?v=20260901-2"></script>
   <script>
   (function() {
     const d = {"tipo": "sala", "nombre": "Sala de Estudio Julio Cortázar", "foto": "images/julio-cortazar-exterior.jpg", "foto_credito": "David Poza Suárez", "foto_interior_credito": "V.", "foto_interior": "images/julio-cortazar-interior.jpg", "distrito": "Moncloa-Aravaca", "direccion": "Calle Antonio Machado, 20, 28035 Madrid", "lat": 40.4668, "lng": -3.7196, "plazas": 80, "horario": "Lun–Dom 9–21h (festivos cerrado)", "web": "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=53918917a2058110VgnVCM2000000c205a0aRCRD#:~:text=Horario%20del%20centro%3A,Del%208%20de%20enero%20al%208%20de%20febrero%2C%20de%20lunes%20a%20domingo%2C%20de%209%3A00%20a%2001%3A00%20hora%20a.m.."};
@@ -466,8 +466,6 @@
           .then(data => {
             const loc = (data.locations || []).find(item => Number(item.lid) === Number(d.libcal_lid));
             if (!loc) return;
-            const label = container.querySelector('.panel-calendar-week-label');
-            if (label) label.textContent = 'Próximos 7 días · En directo (BiblioAgenda UAM)';
             for (const week of loc.weeks || []) {
               for (const dayInfo of Object.values(week || {})) {
                 if (!dayInfo || !dayInfo.date) continue;

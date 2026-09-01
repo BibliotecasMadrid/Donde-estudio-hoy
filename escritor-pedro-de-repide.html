@@ -357,7 +357,7 @@
             <span class="status-badge status-info" id="status-badge">Cargando</span>
           </div>
           <div class="today-hours" id="today-hours">Cargando calendario…</div>
-
+          <div class="panel-live-tag" title="Horario actualizado según madrid.es"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>En directo · madrid.es</div>
           <div id="calendar-week" class="panel-live-week"></div>
         </a>
 
@@ -368,7 +368,7 @@
     </div>
   </main>
 
-  <script src="horarios.js"></script>
+  <script src="horarios.js?v=20260901-2"></script>
   <script>
   (function() {
     const d = {"tipo": "sala", "nombre": "Sala de Estudio Escritor Pedro de Répide", "foto": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Madrid_-_Distrito_de_Latina%2C_Barrio_de_Lucero_1.jpg/960px-Madrid_-_Distrito_de_Latina%2C_Barrio_de_Lucero_1.jpg", "distrito": "Latina", "direccion": "Calle María del Carmen, 65, 28011 Madrid", "lat": 40.4065, "lng": -3.7333, "plazas": 65, "horario": "Lun–Vie 9:30–21h · Sáb 10–13h", "web": "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=5e0861366ded5510VgnVCM1000001d4a900aRCRD#:~:text=Horario%20del%20centro%3A,Verano%3A%20de%20lunes%20a%20viernes%2C%20de%209%3A30%20a%2020%20horas."};
@@ -466,8 +466,6 @@
           .then(data => {
             const loc = (data.locations || []).find(item => Number(item.lid) === Number(d.libcal_lid));
             if (!loc) return;
-            const label = container.querySelector('.panel-calendar-week-label');
-            if (label) label.textContent = 'Próximos 7 días · En directo (BiblioAgenda UAM)';
             for (const week of loc.weeks || []) {
               for (const dayInfo of Object.values(week || {})) {
                 if (!dayInfo || !dayInfo.date) continue;

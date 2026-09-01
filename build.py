@@ -652,7 +652,13 @@ def page_html(d, slug):
     today_api_url = f"https://biblioagenda.ucm.es/api_hours_today.php?iid=4031&lid={libcal_lid}&format=json" if libcal_iid == 4031 else f"https://biblioagenda.uam.es/api_hours_today.php?iid=3941&lid={libcal_lid}&format=json"
     grid_api_url = "https://biblioagenda.ucm.es/api_hours_grid.php?iid=4031&format=json" if libcal_iid == 4031 else "https://biblioagenda.uam.es/api_hours_grid.php?iid=3941&format=json"
 
-    live_tag_html = ""
+    source_host = (urlparse(d.get("web") or "").hostname or "Fuente oficial").removeprefix("www.")
+    source_name = agenda_name if libcal_lid else source_host
+    live_tag_html = (
+        '<div class="panel-live-tag" title="Horario actualizado según %s">'
+        '<svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>'
+        'En directo · %s</div>' % (e(source_name), e(source_name))
+    )
     week_container_html = '<div id="calendar-week" class="panel-live-week"></div>'
 
     d_json = json.dumps(d, ensure_ascii=False)
@@ -1025,7 +1031,7 @@ def page_html(d, slug):
     </div>
   </main>
 
-  <script src="horarios.js"></script>
+  <script src="horarios.js?v=20260901-2"></script>
   <script>
   (function() {{
     const d = {d_json};
@@ -1123,8 +1129,6 @@ def page_html(d, slug):
           .then(data => {{
             const loc = (data.locations || []).find(item => Number(item.lid) === Number(d.libcal_lid));
             if (!loc) return;
-            const label = container.querySelector('.panel-calendar-week-label');
-            if (label) label.textContent = 'Próximos 7 días · En directo ({agenda_name})';
             for (const week of loc.weeks || []) {{
               for (const dayInfo of Object.values(week || {{}})) {{
                 if (!dayInfo || !dayInfo.date) continue;
@@ -1338,7 +1342,7 @@ def landing_page_html(lugares, slugs, calendario, modo):
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
-  <link rel="stylesheet" href="seo-landing.css">
+  <link rel="stylesheet" href="seo-landing.css?v=20260901-2">
 </head>
 <body>
   <header class="page-header">
@@ -1360,7 +1364,7 @@ def landing_page_html(lugares, slugs, calendario, modo):
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
   <script src="basemap.js"></script>
-  <script src="horarios.js"></script><script src="seo-landing.js"></script>
+  <script src="horarios.js?v=20260901-2"></script><script src="seo-landing.js?v=20260901-2"></script>
 </body>
 </html>'''
 

@@ -357,7 +357,7 @@
             <span class="status-badge status-info" id="status-badge">Cargando</span>
           </div>
           <div class="today-hours" id="today-hours">Cargando calendario…</div>
-
+          <div class="panel-live-tag" title="Horario actualizado según urjc.es"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>En directo · urjc.es</div>
           <div id="calendar-week" class="panel-live-week"></div>
         </a>
 
@@ -368,7 +368,7 @@
     </div>
   </main>
 
-  <script src="horarios.js"></script>
+  <script src="horarios.js?v=20260901-2"></script>
   <script>
   (function() {
     const d = {"tipo": "universidad", "nombre": "Biblioteca URJC – Campus Móstoles", "foto": "images/urjc-campus-mostoles-exterior.jpg", "foto_credito": "Antonio Pérez", "foto_interior_credito": "Antonio Pérez", "foto_interior": "images/urjc-campus-mostoles-interior.jpg", "distrito": "Móstoles", "direccion": "Calle Tulipán, s/n, 28933 Móstoles", "lat": 40.3219, "lng": -3.8651, "plazas": 850, "horario": "Lun–Vie 9–20:30h", "web": "https://www.urjc.es/burjc/tu-biblioteca/bibliotecas-de-campus#:~:text=Horario%20de%20lunes%20a%20viernes%20de%209%3A00h.%20a%2020%3A30h."};
@@ -466,8 +466,6 @@
           .then(data => {
             const loc = (data.locations || []).find(item => Number(item.lid) === Number(d.libcal_lid));
             if (!loc) return;
-            const label = container.querySelector('.panel-calendar-week-label');
-            if (label) label.textContent = 'Próximos 7 días · En directo (BiblioAgenda UAM)';
             for (const week of loc.weeks || []) {
               for (const dayInfo of Object.values(week || {})) {
                 if (!dayInfo || !dayInfo.date) continue;

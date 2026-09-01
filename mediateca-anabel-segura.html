@@ -357,7 +357,7 @@
             <span class="status-badge status-info" id="status-badge">Cargando</span>
           </div>
           <div class="today-hours" id="today-hours">Cargando calendario…</div>
-
+          <div class="panel-live-tag" title="Horario actualizado según comunidad.madrid"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>En directo · comunidad.madrid</div>
           <div id="calendar-week" class="panel-live-week"></div>
         </a>
 
@@ -368,7 +368,7 @@
     </div>
   </main>
 
-  <script src="horarios.js"></script>
+  <script src="horarios.js?v=20260901-2"></script>
   <script>
   (function() {
     const d = {"tipo": "biblioteca", "nombre": "Mediateca Anabel Segura", "foto": "images/mediateca-anabel-segura-exterior.jpg", "foto_credito": "ANTONIO JESÚS MARTIN", "distrito": "Alcobendas", "direccion": "Avenida de Bruselas, 19, 28108 Alcobendas", "lat": 40.531247, "lng": -3.636703, "plazas": 180, "horario": "Lun–Vie 9–21h", "web": "https://www.comunidad.madrid/centros/mediateca-anabel-segura#:~:text=Horario%20de%20atenci%C3%B3n%20al%20p%C3%BAblico,a%2021%3A00%20h.%20El%20horario%20est%C3%A1%20sometido%20a%20modificaci%C3%B3n%20en%20per%C3%ADodos%20vacacionales."};
@@ -466,8 +466,6 @@
           .then(data => {
             const loc = (data.locations || []).find(item => Number(item.lid) === Number(d.libcal_lid));
             if (!loc) return;
-            const label = container.querySelector('.panel-calendar-week-label');
-            if (label) label.textContent = 'Próximos 7 días · En directo (BiblioAgenda UAM)';
             for (const week of loc.weeks || []) {
               for (const dayInfo of Object.values(week || {})) {
                 if (!dayInfo || !dayInfo.date) continue;

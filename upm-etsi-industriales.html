@@ -357,7 +357,7 @@
             <span class="status-badge status-info" id="status-badge">Cargando</span>
           </div>
           <div class="today-hours" id="today-hours">Cargando calendario…</div>
-
+          <div class="panel-live-tag" title="Horario actualizado según upm.es"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>En directo · upm.es</div>
           <div id="calendar-week" class="panel-live-week"></div>
         </a>
 
@@ -368,7 +368,7 @@
     </div>
   </main>
 
-  <script src="horarios.js"></script>
+  <script src="horarios.js?v=20260901-2"></script>
   <script>
   (function() {
     const d = {"tipo": "universidad", "nombre": "Biblioteca UPM – ETSI Industriales", "foto": "https://upload.wikimedia.org/wikipedia/commons/5/5b/Escuela_de_industriales_de_Madrid_%28ETSIIM%29_DavidDaguerro_95331.jpg", "foto_interior_credito": "Biblioteca de la ETSI Industriales UPM", "foto_interior": "images/upm-etsi-industriales-interior.jpg", "distrito": "Chamartín", "direccion": "Calle José Gutiérrez Abascal, 2, 28006 Madrid", "lat": 40.4400129, "lng": -3.6896679, "plazas": 500, "horario": "Lun–Vie 9–21h\n(Ampliado en época de exámenes)", "web": "https://www.upm.es/UPM/Biblioteca/NuestraBiblioteca/Horarios#:~:text=Bib.%20ETSI%20Industriales,1.%20Horario%20de%20apertura%3A%209%2C00%20-%2021%2C00%20de%20lunes%20a%20viernres"};
@@ -466,8 +466,6 @@
           .then(data => {
             const loc = (data.locations || []).find(item => Number(item.lid) === Number(d.libcal_lid));
             if (!loc) return;
-            const label = container.querySelector('.panel-calendar-week-label');
-            if (label) label.textContent = 'Próximos 7 días · En directo (BiblioAgenda UAM)';
             for (const week of loc.weeks || []) {
               for (const dayInfo of Object.values(week || {})) {
                 if (!dayInfo || !dayInfo.date) continue;

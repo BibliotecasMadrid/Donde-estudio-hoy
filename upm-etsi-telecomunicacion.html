@@ -357,7 +357,7 @@
             <span class="status-badge status-info" id="status-badge">Cargando</span>
           </div>
           <div class="today-hours" id="today-hours">Cargando calendario…</div>
-
+          <div class="panel-live-tag" title="Horario actualizado según upm.es"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>En directo · upm.es</div>
           <div id="calendar-week" class="panel-live-week"></div>
         </a>
 
@@ -368,7 +368,7 @@
     </div>
   </main>
 
-  <script src="horarios.js"></script>
+  <script src="horarios.js?v=20260901-2"></script>
   <script>
   (function() {
     const d = {"tipo": "universidad", "nombre": "Biblioteca UPM – ETSI Telecomunicación", "foto": "images/upm-etsi-telecomunicacion-exterior.jpg", "foto_credito": "Louis Desmet", "foto_interior_credito": "biblioteca etsit", "foto_interior": "images/upm-etsi-telecomunicacion-interior.jpg", "distrito": "Moncloa (Ciudad Universitaria)", "direccion": "Avenida Complutense, 30, 28040 Madrid", "lat": 40.451972, "lng": -3.72586, "plazas": 480, "horario": "Lun–Dom 9–21h (festivos cerrado)\n(Ampliado en época de exámenes)", "web": "https://www.upm.es/UPM/Biblioteca/NuestraBiblioteca/Horarios#:~:text=Bib.%20ETSI%20Telecomunicaci%C3%B3n,1.%20Horario%20de%20apertura%3A%20de%209%3A00%20a%2021%3A00%20h.%20de%20lunes%20a%20domingo"};
@@ -466,8 +466,6 @@
           .then(data => {
             const loc = (data.locations || []).find(item => Number(item.lid) === Number(d.libcal_lid));
             if (!loc) return;
-            const label = container.querySelector('.panel-calendar-week-label');
-            if (label) label.textContent = 'Próximos 7 días · En directo (BiblioAgenda UAM)';
             for (const week of loc.weeks || []) {
               for (const dayInfo of Object.values(week || {})) {
                 if (!dayInfo || !dayInfo.date) continue;

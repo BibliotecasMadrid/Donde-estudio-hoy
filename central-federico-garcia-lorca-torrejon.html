@@ -357,7 +357,7 @@
             <span class="status-badge status-info" id="status-badge">Cargando</span>
           </div>
           <div class="today-hours" id="today-hours">Cargando calendario…</div>
-
+          <div class="panel-live-tag" title="Horario actualizado según comunidad.madrid"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>En directo · comunidad.madrid</div>
           <div id="calendar-week" class="panel-live-week"></div>
         </a>
 
@@ -368,7 +368,7 @@
     </div>
   </main>
 
-  <script src="horarios.js"></script>
+  <script src="horarios.js?v=20260901-2"></script>
   <script>
   (function() {
     const d = {"tipo": "biblioteca", "nombre": "Biblioteca Central Federico García Lorca (Torrejón)", "foto": "images/central-federico-garcia-lorca-torrejon-exterior.jpg", "foto_credito": "Alejandro González Fernández", "foto_interior_credito": "Daniel Benito", "foto_interior": "images/central-federico-garcia-lorca-torrejon-interior.jpg", "distrito": "Torrejón de Ardoz", "direccion": "Plaza del Maestro, s/n, 28850 Torrejón de Ardoz", "lat": 40.462122, "lng": -3.462952, "plazas": 290, "horario": "Lun–Vie 8:30–21h · Sáb 10:30–13:45h", "web": "https://www.comunidad.madrid/centros/biblioteca-municipal-central-federico-garcia-lorca#:~:text=Horario%20de%20atenci%C3%B3n%20al%20p%C3%BAblico,S%C3%A1bados%20de%2010%3A30%20a%2013%3A45%20h.%20Consultar%20s%C3%A1bados%20abiertos%20en%20la%20web."};
@@ -466,8 +466,6 @@
           .then(data => {
             const loc = (data.locations || []).find(item => Number(item.lid) === Number(d.libcal_lid));
             if (!loc) return;
-            const label = container.querySelector('.panel-calendar-week-label');
-            if (label) label.textContent = 'Próximos 7 días · En directo (BiblioAgenda UAM)';
             for (const week of loc.weeks || []) {
               for (const dayInfo of Object.values(week || {})) {
                 if (!dayInfo || !dayInfo.date) continue;

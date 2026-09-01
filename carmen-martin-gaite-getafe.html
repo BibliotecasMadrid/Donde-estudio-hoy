@@ -357,7 +357,7 @@
             <span class="status-badge status-info" id="status-badge">Cargando</span>
           </div>
           <div class="today-hours" id="today-hours">Cargando calendario…</div>
-
+          <div class="panel-live-tag" title="Horario actualizado según comunidad.madrid"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>En directo · comunidad.madrid</div>
           <div id="calendar-week" class="panel-live-week"></div>
         </a>
 
@@ -368,7 +368,7 @@
     </div>
   </main>
 
-  <script src="horarios.js"></script>
+  <script src="horarios.js?v=20260901-2"></script>
   <script>
   (function() {
     const d = {"tipo": "biblioteca", "nombre": "Biblioteca Municipal Carmen Martín Gaite (Getafe)", "distrito": "Getafe", "direccion": "Avenida de Buenos Aires, 2, 28907 Getafe", "lat": 40.3244, "lng": -3.73707, "plazas": 62, "horario": "Lun–Vie 16:30–21h · Sáb 10:30–13:30h", "web": "https://www.comunidad.madrid/centros/biblioteca-municipal-carmen-martin-gaite-getafe#:~:text=Horario%20de%20atenci%C3%B3n%20al%20p%C3%BAblico,h.%20%28Consultar%20calendario%20de%20s%C3%A1bados%20en%20la%20biblioteca%20y%20en%20redes%20sociales%29"};
@@ -466,8 +466,6 @@
           .then(data => {
             const loc = (data.locations || []).find(item => Number(item.lid) === Number(d.libcal_lid));
             if (!loc) return;
-            const label = container.querySelector('.panel-calendar-week-label');
-            if (label) label.textContent = 'Próximos 7 días · En directo (BiblioAgenda UAM)';
             for (const week of loc.weeks || []) {
               for (const dayInfo of Object.values(week || {})) {
                 if (!dayInfo || !dayInfo.date) continue;

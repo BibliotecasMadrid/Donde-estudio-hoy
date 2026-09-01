@@ -357,7 +357,7 @@
             <span class="status-badge status-info" id="status-badge">Cargando</span>
           </div>
           <div class="today-hours" id="today-hours">Cargando calendario…</div>
-
+          <div class="panel-live-tag" title="Horario actualizado según madrid.es"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>En directo · madrid.es</div>
           <div id="calendar-week" class="panel-live-week"></div>
         </a>
 
@@ -368,7 +368,7 @@
     </div>
   </main>
 
-  <script src="horarios.js"></script>
+  <script src="horarios.js?v=20260901-2"></script>
   <script>
   (function() {
     const d = {"tipo": "sala", "nombre": "Sala de Estudio Oporto", "foto": "images/oporto-exterior.jpg", "foto_credito": "Mónica BB", "distrito": "Carabanchel", "direccion": "Avenida de Oporto, 78, 28019 Madrid", "lat": 40.3868, "lng": -3.7277, "plazas": 75, "horario": "Lun–Sáb 8:30–21:30h · Dom 11:30–14:30h", "web": "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=0295d1a2d9058110VgnVCM1000000b205a0aRCRD#:~:text=Horario%20del%20centro%3A,De%20lunes%20a%20s%C3%A1bado%2C%20de%208%3A30%20a%2021%3A30%20horas.%20Domingos%2C%20de%2011%3A30%20a%2014%3A30%20horas."};
@@ -466,8 +466,6 @@
           .then(data => {
             const loc = (data.locations || []).find(item => Number(item.lid) === Number(d.libcal_lid));
             if (!loc) return;
-            const label = container.querySelector('.panel-calendar-week-label');
-            if (label) label.textContent = 'Próximos 7 días · En directo (BiblioAgenda UAM)';
             for (const week of loc.weeks || []) {
               for (const dayInfo of Object.values(week || {})) {
                 if (!dayInfo || !dayInfo.date) continue;

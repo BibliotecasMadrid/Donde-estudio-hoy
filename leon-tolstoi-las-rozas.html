@@ -357,7 +357,7 @@
             <span class="status-badge status-info" id="status-badge">Cargando</span>
           </div>
           <div class="today-hours" id="today-hours">Cargando calendario…</div>
-
+          <div class="panel-live-tag" title="Horario actualizado según comunidad.madrid"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>En directo · comunidad.madrid</div>
           <div id="calendar-week" class="panel-live-week"></div>
         </a>
 
@@ -368,7 +368,7 @@
     </div>
   </main>
 
-  <script src="horarios.js"></script>
+  <script src="horarios.js?v=20260901-2"></script>
   <script>
   (function() {
     const d = {"tipo": "biblioteca", "nombre": "Biblioteca Leon Tolstoi (Las Rozas)", "foto": "images/leon-tolstoi-las-rozas-exterior.jpg", "foto_credito": "Social Media DPA", "foto_interior_credito": "Raúl Lunar", "foto_interior": "images/leon-tolstoi-las-rozas-interior.jpg", "distrito": "Las Rozas de Madrid", "direccion": "Calle Octavio Paz, 2, 28232 Las Rozas de Madrid", "lat": 40.523749, "lng": -3.891299, "plazas": 350, "horario": "Lun–Vie 9–21h · Sáb 11–15h\n(Ampliado en exámenes)", "web": "https://www.comunidad.madrid/centros/biblioteca-municipal-leon-tolstoi#:~:text=Horario%20de%20atenci%C3%B3n%20al%20p%C3%BAblico,estudio%20los%20fines%20de%20semana%20y%20festivos%20de%209%3A00%20a%2021%3A00%20h."};
@@ -466,8 +466,6 @@
           .then(data => {
             const loc = (data.locations || []).find(item => Number(item.lid) === Number(d.libcal_lid));
             if (!loc) return;
-            const label = container.querySelector('.panel-calendar-week-label');
-            if (label) label.textContent = 'Próximos 7 días · En directo (BiblioAgenda UAM)';
             for (const week of loc.weeks || []) {
               for (const dayInfo of Object.values(week || {})) {
                 if (!dayInfo || !dayInfo.date) continue;

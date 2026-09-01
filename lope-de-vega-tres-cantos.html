@@ -357,7 +357,7 @@
             <span class="status-badge status-info" id="status-badge">Cargando</span>
           </div>
           <div class="today-hours" id="today-hours">Cargando calendario…</div>
-
+          <div class="panel-live-tag" title="Horario actualizado según comunidad.madrid"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>En directo · comunidad.madrid</div>
           <div id="calendar-week" class="panel-live-week"></div>
         </a>
 
@@ -368,7 +368,7 @@
     </div>
   </main>
 
-  <script src="horarios.js"></script>
+  <script src="horarios.js?v=20260901-2"></script>
   <script>
   (function() {
     const d = {"tipo": "biblioteca", "nombre": "Biblioteca Municipal Lope de Vega (Tres Cantos)", "foto": "images/lope-de-vega-tres-cantos-exterior.jpg", "foto_credito": "Jose Gomez", "foto_interior_credito": "Biblioteca Municipal Lope de Vega", "foto_interior": "images/lope-de-vega-tres-cantos-interior.jpg", "distrito": "Tres Cantos", "direccion": "Avenida de los Labradores, 28, 28760 Tres Cantos", "lat": 40.60105, "lng": -3.699463, "plazas": 280, "horario": "Lun–Vie 9–21h · Sáb 9–14h", "web": "https://www.comunidad.madrid/centros/biblioteca-municipal-lope-vega#:~:text=Horario%20de%20atenci%C3%B3n%20al%20p%C3%BAblico,per%C3%ADodos%20de%20ex%C3%A1mentes%20de%20lunes%20a%20domingo%20de%209%3A00%20a%201%3A00%20h."};
@@ -466,8 +466,6 @@
           .then(data => {
             const loc = (data.locations || []).find(item => Number(item.lid) === Number(d.libcal_lid));
             if (!loc) return;
-            const label = container.querySelector('.panel-calendar-week-label');
-            if (label) label.textContent = 'Próximos 7 días · En directo (BiblioAgenda UAM)';
             for (const week of loc.weeks || []) {
               for (const dayInfo of Object.values(week || {})) {
                 if (!dayInfo || !dayInfo.date) continue;

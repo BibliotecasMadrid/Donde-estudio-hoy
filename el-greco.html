@@ -357,7 +357,7 @@
             <span class="status-badge status-info" id="status-badge">Cargando</span>
           </div>
           <div class="today-hours" id="today-hours">Cargando calendario…</div>
-
+          <div class="panel-live-tag" title="Horario actualizado según madrid.es"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>En directo · madrid.es</div>
           <div id="calendar-week" class="panel-live-week"></div>
         </a>
 
@@ -368,7 +368,7 @@
     </div>
   </main>
 
-  <script src="horarios.js"></script>
+  <script src="horarios.js?v=20260901-2"></script>
   <script>
   (function() {
     const d = {"tipo": "sala", "nombre": "Sala de Estudio El Greco", "foto": "images/el-greco-exterior.jpg", "foto_credito": "Isabel María Payán Martín", "foto_interior_credito": "Franco Palazzo", "foto_interior": "images/el-greco-interior.jpg", "distrito": "Latina", "direccion": "Calle El Greco, 29, 28011 Madrid", "lat": 40.407241, "lng": -3.747338, "plazas": 75, "horario": "Lun–Vie 9–21:30h · Sáb 9–13:30h", "web": "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=bbad79e15d7ee510VgnVCM2000001f4a900aRCRD#:~:text=Horario%20de%20funcionamiento%20del%20centro%3A,Verano%3A%20de%20julio%20a%20septiembre%2C%20de%20lunes%20a%20viernes%2C%20de%209%20a%2021%20horas."};
@@ -466,8 +466,6 @@
           .then(data => {
             const loc = (data.locations || []).find(item => Number(item.lid) === Number(d.libcal_lid));
             if (!loc) return;
-            const label = container.querySelector('.panel-calendar-week-label');
-            if (label) label.textContent = 'Próximos 7 días · En directo (BiblioAgenda UAM)';
             for (const week of loc.weeks || []) {
               for (const dayInfo of Object.values(week || {})) {
                 if (!dayInfo || !dayInfo.date) continue;

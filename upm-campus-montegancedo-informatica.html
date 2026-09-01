@@ -357,7 +357,7 @@
             <span class="status-badge status-info" id="status-badge">Cargando</span>
           </div>
           <div class="today-hours" id="today-hours">Cargando calendario…</div>
-
+          <div class="panel-live-tag" title="Horario actualizado según upm.es"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>En directo · upm.es</div>
           <div id="calendar-week" class="panel-live-week"></div>
         </a>
 
@@ -368,7 +368,7 @@
     </div>
   </main>
 
-  <script src="horarios.js"></script>
+  <script src="horarios.js?v=20260901-2"></script>
   <script>
   (function() {
     const d = {"tipo": "universidad", "nombre": "Biblioteca UPM – Campus Montegancedo (Informática)", "foto": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/UPM-CeSViMa.jpg/960px-UPM-CeSViMa.jpg", "foto_interior_credito": "Biblioteca de la ETSI Informáticos UPM", "foto_interior": "images/upm-campus-montegancedo-informatica-interior.jpg", "distrito": "Boadilla del Monte / Pozuelo", "direccion": "Calle Cirilo Amorós, s/n, 28660 Boadilla del Monte", "lat": 40.4061, "lng": -3.8385, "plazas": 500, "horario": "Lun–Vie 8–20:45h\n(Facultad de Informática)", "web": "https://www.upm.es/UPM/Biblioteca/NuestraBiblioteca/Horarios#:~:text=Bib.%20ETSI%20Inform%C3%A1ticos,1.%20Horario%20de%20apertura%3A%208%3A00%20%E2%80%93%2020%3A45"};
@@ -466,8 +466,6 @@
           .then(data => {
             const loc = (data.locations || []).find(item => Number(item.lid) === Number(d.libcal_lid));
             if (!loc) return;
-            const label = container.querySelector('.panel-calendar-week-label');
-            if (label) label.textContent = 'Próximos 7 días · En directo (BiblioAgenda UAM)';
             for (const week of loc.weeks || []) {
               for (const dayInfo of Object.values(week || {})) {
                 if (!dayInfo || !dayInfo.date) continue;

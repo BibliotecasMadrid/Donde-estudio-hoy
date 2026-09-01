@@ -357,7 +357,7 @@
             <span class="status-badge status-info" id="status-badge">Cargando</span>
           </div>
           <div class="today-hours" id="today-hours">Cargando calendario…</div>
-
+          <div class="panel-live-tag" title="Horario actualizado según BiblioAgenda UAM"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>En directo · BiblioAgenda UAM</div>
           <div id="calendar-week" class="panel-live-week"></div>
         </a>
 
@@ -368,7 +368,7 @@
     </div>
   </main>
 
-  <script src="horarios.js"></script>
+  <script src="horarios.js?v=20260901-2"></script>
   <script>
   (function() {
     const d = {"tipo": "universidad", "nombre": "Biblioteca UAM – Ciencias Económicas (Cantoblanco)", "foto": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Madrid_-_Campus_de_la_Universidad_Aut%C3%B3noma_de_Madrid_%28UAM%29-Facultad_de_Ciencias_Econ%C3%B3micas_y_Empresariales_2.JPG/960px-Madrid_-_Campus_de_la_Universidad_Aut%C3%B3noma_de_Madrid_%28UAM%29-Facultad_de_Ciencias_Econ%C3%B3micas_y_Empresariales_2.JPG", "foto_interior_credito": "Biblioteca de Ciencias Económicas y Empresariales | UAM", "foto_interior": "images/uam-ciencias-economicas-cantoblanco-interior.jpg", "distrito": "Madrid (Fuencarral-El Pardo / Cantoblanco)", "direccion": "Calle Francisco Tomás y Valiente, 5, 28049 Madrid", "lat": 40.544872, "lng": -3.696607, "plazas": 600, "horario": "Lun–Vie 8:30–21h\n(Ampliado en época de exámenes)", "web": "https://biblioagenda.uam.es/hours?lid=5665", "libcal_lid": 5665, "libcal_iid": 3941};
@@ -466,8 +466,6 @@
           .then(data => {
             const loc = (data.locations || []).find(item => Number(item.lid) === Number(d.libcal_lid));
             if (!loc) return;
-            const label = container.querySelector('.panel-calendar-week-label');
-            if (label) label.textContent = 'Próximos 7 días · En directo (BiblioAgenda UAM)';
             for (const week of loc.weeks || []) {
               for (const dayInfo of Object.values(week || {})) {
                 if (!dayInfo || !dayInfo.date) continue;

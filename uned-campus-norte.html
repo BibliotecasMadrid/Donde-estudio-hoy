@@ -354,7 +354,7 @@
             <span class="status-badge status-info" id="status-badge">Cargando</span>
           </div>
           <div class="today-hours" id="today-hours">Cargando calendario…</div>
-
+          <div class="panel-live-tag" title="Horario actualizado según uned.es"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>En directo · uned.es</div>
           <div id="calendar-week" class="panel-live-week"></div>
         </a>
 
@@ -365,7 +365,7 @@
     </div>
   </main>
 
-  <script src="horarios.js"></script>
+  <script src="horarios.js?v=20260901-2"></script>
   <script>
   (function() {
     const d = {"tipo": "universidad", "nombre": "Biblioteca UNED – Campus Norte", "distrito": "Moncloa (Ciudad Universitaria)", "direccion": "Calle Juan del Rosal, 14, 28040 Madrid", "lat": 40.451281, "lng": -3.737564, "horario": "Lun–Vie 9–19h\n(Sala de lectura cerrada hasta septiembre de 2026)", "web": "https://www.uned.es/universidad/biblioteca/contacto.html#:~:text=HORARIO%20DE%20VERANO%20%28del%201%20de%20junio%20al%2015%20de%20septiembre%29,a%2019%3A00%20h.%20En%20julio%20y%20agosto%20de%209%20a%2014%3A00%20h."};
@@ -463,8 +463,6 @@
           .then(data => {
             const loc = (data.locations || []).find(item => Number(item.lid) === Number(d.libcal_lid));
             if (!loc) return;
-            const label = container.querySelector('.panel-calendar-week-label');
-            if (label) label.textContent = 'Próximos 7 días · En directo (BiblioAgenda UAM)';
             for (const week of loc.weeks || []) {
               for (const dayInfo of Object.values(week || {})) {
                 if (!dayInfo || !dayInfo.date) continue;

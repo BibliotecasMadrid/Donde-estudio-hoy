@@ -357,7 +357,7 @@
             <span class="status-badge status-info" id="status-badge">Cargando</span>
           </div>
           <div class="today-hours" id="today-hours">Cargando calendario…</div>
-
+          <div class="panel-live-tag" title="Horario actualizado según comunidad.madrid"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>En directo · comunidad.madrid</div>
           <div id="calendar-week" class="panel-live-week"></div>
         </a>
 
@@ -368,7 +368,7 @@
     </div>
   </main>
 
-  <script src="horarios.js"></script>
+  <script src="horarios.js?v=20260901-2"></script>
   <script>
   (function() {
     const d = {"tipo": "biblioteca", "nombre": "Biblioteca Federico García Lorca (Rivas)", "foto": "images/federico-garcia-lorca-rivas-exterior.jpg", "foto_credito": "S20D4F6", "foto_interior_credito": "Alejandro Manzano", "foto_interior": "images/federico-garcia-lorca-rivas-interior.jpg", "distrito": "Rivas-Vaciamadrid", "direccion": "Plaza de la Constitución, 1, 28522 Rivas-Vaciamadrid", "lat": 40.3512, "lng": -3.5315, "plazas": 190, "horario": "Lun–Jue 10–21h · Vie 10–14h", "web": "https://www.comunidad.madrid/centros/biblioteca-municipal-federico-garcia-lorca#:~:text=Horario%20de%20atenci%C3%B3n%20al%20p%C3%BAblico,De%20lunes%20a%20jueves%20de%2010%3A00%20a%2021%3A00%20h.%20Viernes%20de%2010%3A00%20a%2014%3A00%20h."};
@@ -466,8 +466,6 @@
           .then(data => {
             const loc = (data.locations || []).find(item => Number(item.lid) === Number(d.libcal_lid));
             if (!loc) return;
-            const label = container.querySelector('.panel-calendar-week-label');
-            if (label) label.textContent = 'Próximos 7 días · En directo (BiblioAgenda UAM)';
             for (const week of loc.weeks || []) {
               for (const dayInfo of Object.values(week || {})) {
                 if (!dayInfo || !dayInfo.date) continue;

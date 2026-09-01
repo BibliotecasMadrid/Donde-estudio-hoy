@@ -357,7 +357,7 @@
             <span class="status-badge status-info" id="status-badge">Cargando</span>
           </div>
           <div class="today-hours" id="today-hours">Cargando calendario…</div>
-
+          <div class="panel-live-tag" title="Horario actualizado según comunidad.madrid"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>En directo · comunidad.madrid</div>
           <div id="calendar-week" class="panel-live-week"></div>
         </a>
 
@@ -368,7 +368,7 @@
     </div>
   </main>
 
-  <script src="horarios.js"></script>
+  <script src="horarios.js?v=20260901-2"></script>
   <script>
   (function() {
     const d = {"tipo": "biblioteca", "nombre": "Biblioteca Municipal Jorge Luis Borges (Getafe)", "foto": "images/jorge-luis-borges-getafe-exterior.jpg", "foto_credito": "Tesorillo .com", "distrito": "Getafe", "direccion": "Avenida Arcas del Agua, s/n, 28905 Getafe", "lat": 40.2939, "lng": -3.74497, "plazas": 65, "horario": "Lun–Vie 10–14:30h y 16:30–21h · Sáb 10:30–13:30h", "web": "https://www.comunidad.madrid/centros/biblioteca-municipal-jorge-luis-borges#:~:text=Horario%20de%20atenci%C3%B3n%20al%20p%C3%BAblico,De%20lunes%20a%20viernes%20de%2010%3A00%20a%2014%3A30h.%20y%20de%2016%3A30%20a%2021%3A00%20h.%20%3BS%C3%A1bados%20de%2010%3A30%20a%2013%3A30%20h."};
@@ -466,8 +466,6 @@
           .then(data => {
             const loc = (data.locations || []).find(item => Number(item.lid) === Number(d.libcal_lid));
             if (!loc) return;
-            const label = container.querySelector('.panel-calendar-week-label');
-            if (label) label.textContent = 'Próximos 7 días · En directo (BiblioAgenda UAM)';
             for (const week of loc.weeks || []) {
               for (const dayInfo of Object.values(week || {})) {
                 if (!dayInfo || !dayInfo.date) continue;

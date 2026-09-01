@@ -18,7 +18,7 @@
   });
   const dateFormatter = new Intl.DateTimeFormat('es-ES', {
     timeZone: TIME_ZONE,
-    weekday: 'long', day: 'numeric', month: 'long'
+    weekday: 'short', day: 'numeric', month: 'short'
   });
 
   function madridParts(date) {
@@ -150,8 +150,12 @@
     const parts = partsFromKey(key);
     // Al mediodía UTC el día siempre coincide con el de Madrid, incluso con DST.
     const reference = new Date(Date.UTC(parts.year, parts.month - 1, parts.day, 12));
-    const label = dateFormatter.format(reference);
-    return label.charAt(0).toUpperCase() + label.slice(1);
+    const values = {};
+    for (const part of dateFormatter.formatToParts(reference)) {
+      if (part.type !== 'literal') values[part.type] = part.value.replace(/\.$/, '');
+    }
+    const capitalise = value => value ? value.charAt(0).toUpperCase() + value.slice(1) : '';
+    return `${capitalise(values.weekday)} ${values.day} ${capitalise(values.month)}`;
   }
 
   function displayFor(entry, key, now) {

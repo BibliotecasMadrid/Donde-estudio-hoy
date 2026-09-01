@@ -357,7 +357,7 @@
             <span class="status-badge status-info" id="status-badge">Cargando</span>
           </div>
           <div class="today-hours" id="today-hours">Cargando calendario…</div>
-
+          <div class="panel-live-tag" title="Horario actualizado según biblioteca.cchs.csic.es"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>En directo · biblioteca.cchs.csic.es</div>
           <div id="calendar-week" class="panel-live-week"></div>
         </a>
 
@@ -368,7 +368,7 @@
     </div>
   </main>
 
-  <script src="horarios.js"></script>
+  <script src="horarios.js?v=20260901-2"></script>
   <script>
   (function() {
     const d = {"tipo": "universidad", "nombre": "Biblioteca CSIC – Tomás Navarro Tomás", "foto": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Centro_de_Ciencias_Humanas_y_Sociales_del_CSIC_%28Madrid%29_02.jpg/960px-Centro_de_Ciencias_Humanas_y_Sociales_del_CSIC_%28Madrid%29_02.jpg", "foto_interior_credito": "Esther Khara", "foto_interior": "images/csic-tomas-navarro-tomas-interior.jpg", "distrito": "Madrid (San Blas-Canillejas)", "direccion": "Calle Albasanz, 26, 28037 Madrid", "lat": 40.4358, "lng": -3.6305, "plazas": 220, "horario": "Lun–Vie 9–14:30h\n(Centro de Ciencias Humanas y Sociales)", "web": "https://biblioteca.cchs.csic.es/#:~:text=Horario%20de%20la%20biblioteca%3A%20de%209%3A00%20a%2014%3A30%20horas%20de%20lunes%20a%20viernes."};
@@ -466,8 +466,6 @@
           .then(data => {
             const loc = (data.locations || []).find(item => Number(item.lid) === Number(d.libcal_lid));
             if (!loc) return;
-            const label = container.querySelector('.panel-calendar-week-label');
-            if (label) label.textContent = 'Próximos 7 días · En directo (BiblioAgenda UAM)';
             for (const week of loc.weeks || []) {
               for (const dayInfo of Object.values(week || {})) {
                 if (!dayInfo || !dayInfo.date) continue;

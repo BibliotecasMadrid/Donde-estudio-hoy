@@ -357,7 +357,7 @@
             <span class="status-badge status-info" id="status-badge">Cargando</span>
           </div>
           <div class="today-hours" id="today-hours">Cargando calendario…</div>
-
+          <div class="panel-live-tag" title="Horario actualizado según upm.es"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>En directo · upm.es</div>
           <div id="calendar-week" class="panel-live-week"></div>
         </a>
 
@@ -368,7 +368,7 @@
     </div>
   </main>
 
-  <script src="horarios.js"></script>
+  <script src="horarios.js?v=20260901-2"></script>
   <script>
   (function() {
     const d = {"tipo": "universidad", "nombre": "Biblioteca UPM – ETSI Agronómica (ETSIAAB)", "foto": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Escuela_T%C3%A9cnica_Superior_de_Ingenieros_Agr%C3%B3nomos%2C_con_una_muestra_de_maquinaria_agr%C3%ADcola%3B_Madrid%2C_Espa%C3%B1a.jpg/960px-Escuela_T%C3%A9cnica_Superior_de_Ingenieros_Agr%C3%B3nomos%2C_con_una_muestra_de_maquinaria_agr%C3%ADcola%3B_Madrid%2C_Espa%C3%B1a.jpg", "foto_interior_credito": "Sandra Rodriguez", "foto_interior": "images/upm-etsi-agronomica-etsiaab-interior.jpg", "distrito": "Moncloa (Ciudad Universitaria)", "direccion": "Avenida Puerta de Hierro, 2, 28040 Madrid", "lat": 40.443231, "lng": -3.729152, "plazas": 320, "horario": "Lun–Vie 9–20:30h\n(Ampliado en época de exámenes)", "web": "https://www.upm.es/UPM/Biblioteca/NuestraBiblioteca/Horarios#:~:text=Bib.%20ETSI%20Agron%C3%B3mica%2C%20Alimentaria%20y%20de%20Biosistemas,1.%20Horario%20de%20apertura%20%289%2700%20a%2020%2730%20h.%29"};
@@ -466,8 +466,6 @@
           .then(data => {
             const loc = (data.locations || []).find(item => Number(item.lid) === Number(d.libcal_lid));
             if (!loc) return;
-            const label = container.querySelector('.panel-calendar-week-label');
-            if (label) label.textContent = 'Próximos 7 días · En directo (BiblioAgenda UAM)';
             for (const week of loc.weeks || []) {
               for (const dayInfo of Object.values(week || {})) {
                 if (!dayInfo || !dayInfo.date) continue;

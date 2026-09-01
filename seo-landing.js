@@ -20,6 +20,45 @@
 
   const map = L.map('map', { center: [40.4168, -3.7038], zoom: 11 });
   window.Basemap.add(map);
+  const mobileMapMedia = window.matchMedia('(max-width: 768px)');
+  const mapAttribution = map.attributionControl.getContainer();
+
+  function setAttributionExpanded(expanded) {
+    mapAttribution.classList.toggle('is-expanded', expanded);
+    mapAttribution.setAttribute('aria-expanded', String(expanded));
+    mapAttribution.setAttribute('aria-label', expanded ? 'Ocultar créditos del mapa' : 'Mostrar créditos del mapa');
+  }
+
+  function syncAttribution() {
+    if (mobileMapMedia.matches) {
+      mapAttribution.tabIndex = 0;
+      mapAttribution.setAttribute('role', 'button');
+      mapAttribution.title = 'Créditos del mapa';
+      if (!mapAttribution.hasAttribute('aria-expanded')) setAttributionExpanded(false);
+    } else {
+      mapAttribution.classList.remove('is-expanded');
+      mapAttribution.removeAttribute('tabindex');
+      mapAttribution.removeAttribute('role');
+      mapAttribution.removeAttribute('title');
+      mapAttribution.removeAttribute('aria-label');
+      mapAttribution.removeAttribute('aria-expanded');
+    }
+  }
+
+  mapAttribution.addEventListener('click', event => {
+    if (!mobileMapMedia.matches) return;
+    event.preventDefault();
+    event.stopPropagation();
+    setAttributionExpanded(!mapAttribution.classList.contains('is-expanded'));
+  });
+  mapAttribution.addEventListener('keydown', event => {
+    if (!mobileMapMedia.matches || (event.key !== 'Enter' && event.key !== ' ')) return;
+    event.preventDefault();
+    setAttributionExpanded(!mapAttribution.classList.contains('is-expanded'));
+  });
+  if (typeof mobileMapMedia.addEventListener === 'function') mobileMapMedia.addEventListener('change', syncAttribution);
+  else mobileMapMedia.addListener(syncAttribution);
+  syncAttribution();
   const clusters = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 45 }).addTo(map);
   const markers = new Map();
 

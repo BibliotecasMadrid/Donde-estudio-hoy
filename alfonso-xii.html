@@ -357,7 +357,7 @@
             <span class="status-badge status-info" id="status-badge">Cargando</span>
           </div>
           <div class="today-hours" id="today-hours">Cargando calendario…</div>
-
+          <div class="panel-live-tag" title="Horario actualizado según madrid.es"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>En directo · madrid.es</div>
           <div id="calendar-week" class="panel-live-week"></div>
         </a>
 
@@ -368,7 +368,7 @@
     </div>
   </main>
 
-  <script src="horarios.js"></script>
+  <script src="horarios.js?v=20260901-2"></script>
   <script>
   (function() {
     const d = {"tipo": "sala", "nombre": "Sala de Estudio Alfonso XII", "foto": "images/alfonso-xii-exterior.jpg", "foto_credito": "maria do ceu molina ribeiropinto", "distrito": "Fuencarral-El Pardo", "direccion": "Calle Mira el Río, 4, 28048 Madrid", "lat": 40.5197, "lng": -3.7779, "plazas": 90, "horario": "Lun–Vie 8:30–21h · Sáb–Dom 9:30–20h", "web": "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=2e7a8917a2058110VgnVCM2000000c205a0aRCRD#:~:text=De%20lunes%20a%20viernes%20de%208%3A30%20a%2021%3A00%20horas.,8%3A30%20a%2021%3A00%20horas.%20S%C3%A1bados%20y%20domingos%2C%20de%209%3A30%20a%2020%3A00%20h."};
@@ -466,8 +466,6 @@
           .then(data => {
             const loc = (data.locations || []).find(item => Number(item.lid) === Number(d.libcal_lid));
             if (!loc) return;
-            const label = container.querySelector('.panel-calendar-week-label');
-            if (label) label.textContent = 'Próximos 7 días · En directo (BiblioAgenda UAM)';
             for (const week of loc.weeks || []) {
               for (const dayInfo of Object.values(week || {})) {
                 if (!dayInfo || !dayInfo.date) continue;

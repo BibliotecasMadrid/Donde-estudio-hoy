@@ -108,6 +108,7 @@
       text-decoration: none; border-bottom: 1px solid rgba(49,82,127,.3);
     }
     .topbar-links a:hover, .topbar-links a:focus-visible { color: #1d4ed8; border-color: currentColor; }
+    .mobile-link-label { display: none; }
     .topbar-search-slot { display: none; }
 
     /* ── Legend ──────────────────────────────────── */
@@ -537,6 +538,7 @@
       position: relative;
       width: min(300px, calc(100vw - 84px));
     }
+    .study-search-icon { display: none; }
     .study-search-input {
       display: block;
       width: 100%;
@@ -638,33 +640,74 @@
       .topbar {
         top: 8px;
         left: 8px;
-        right: auto;
-        width: 66.667vw;
-        max-width: calc(100vw - 16px);
-        padding: 8px 10px 9px;
-        border-radius: 12px;
-        box-shadow: 0 4px 18px rgba(20,30,60,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset;
+        right: 8px;
+        width: auto;
+        max-width: none;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 0;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
       }
-      .topbar h1 { font-size: 14px; }
+      .topbar h1 { display: none; }
       .topbar p { display: none; }
       .topbar-links {
-        gap: 7px;
-        margin-top: 4px;
-        flex-wrap: wrap;
-        row-gap: 2px;
-        white-space: normal;
+        order: 2;
+        gap: 6px;
+        margin-top: 0;
+        overflow-x: auto;
+        padding: 0 1px 3px;
+        white-space: nowrap;
+        scrollbar-width: none;
       }
-      .topbar-links a { font-size: 9.5px; }
+      .topbar-links::-webkit-scrollbar { display: none; }
+      .topbar-links a {
+        flex: 0 0 auto;
+        display: inline-flex;
+        min-height: 42px;
+        align-items: center;
+        padding: 0 10px;
+        border: 0;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.94);
+        box-shadow: 0 4px 14px rgba(20,30,60,0.15);
+        color: var(--ink);
+        font-size: 11px;
+        font-weight: 650;
+      }
+      .desktop-link-label { display: none; }
+      .mobile-link-label { display: inline; }
       .topbar-search-slot {
+        order: 1;
         display: block;
-        margin-top: 7px;
+        margin-top: 0;
       }
       .topbar-search-slot .study-search { width: 100%; }
+      .topbar-search-slot .study-search-icon {
+        position: absolute;
+        top: 50%;
+        left: 17px;
+        z-index: 2;
+        display: block;
+        width: 24px;
+        height: 24px;
+        color: #536074;
+        pointer-events: none;
+        transform: translateY(-50%);
+      }
       .topbar-search-slot .study-search-input {
-        height: 36px;
-        border-radius: 9px;
-        box-shadow: 0 1px 5px rgba(20,30,60,0.1);
+        height: 56px;
+        padding: 0 16px 0 50px;
+        border: 0;
+        border-radius: 18px;
+        background: rgba(255,255,255,0.96);
+        box-shadow: 0 5px 18px rgba(20,30,60,0.18);
         font-size: 16px;
+        font-weight: 650;
       }
       .topbar-search-slot .study-search-results {
         max-height: min(42vh, 320px);
@@ -712,12 +755,27 @@
         width: 44px;
         height: 5px;
         border-radius: 999px;
-        background: #CBD5E1;
+        background: rgba(226,232,240,0.94);
+        box-shadow: 0 1px 2px rgba(20,30,60,0.18);
         transform: translateX(-50%);
       }
+      .panel-inner {
+        padding: 0 18px 28px;
+      }
       .panel-cover {
+        width: calc(100% + 36px);
+        height: 180px;
+        margin: 0 -18px 16px;
         border-top-left-radius: 20px;
         border-top-right-radius: 20px;
+      }
+      .panel-close {
+        top: 20px;
+        right: 20px;
+        width: 48px;
+        height: 48px;
+        background: rgba(254,226,226,0.94);
+        font-size: 22px;
       }
       .leaflet-control-zoom {
         display: none; /* Map zooming is usually handled by pinch on mobile */
@@ -725,7 +783,7 @@
       .study-tools-control {
         position: fixed;
         right: 8px;
-        bottom: calc(var(--mobile-map-bottom) + 48px);
+        bottom: var(--mobile-map-bottom);
         left: auto;
         margin: 0 !important;
       }
@@ -873,16 +931,14 @@
 
     @media (max-width: 768px) {
       .open-now-btn {
-        position: fixed;
-        bottom: var(--mobile-map-bottom);
-        top: auto;
-        right: 8px;
-        left: auto;
+        position: static;
+        flex: 0 0 auto;
         min-height: 40px;
-        padding: 8px 10px;
-        border-radius: 11px;
-        box-shadow: 0 4px 18px rgba(20,30,60,0.14), 0 0 0 1px rgba(255,255,255,0.6) inset;
-        font-size: 11.5px;
+        padding: 0 10px;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.94);
+        box-shadow: 0 4px 14px rgba(20,30,60,0.15);
+        font-size: 11px;
       }
     }
   </style>
@@ -893,8 +949,8 @@
   <h1>Dónde estudiar en Madrid</h1>
   <p>Bibliotecas, salas de estudio y universidades · pulsa un punto</p>
   <nav class="topbar-links" aria-label="Horarios especiales">
-    <a href="/bibliotecas-abiertas-fin-de-semana-madrid">Abiertas durante el fin de semana</a>
-    <a href="/bibliotecas-24-horas-madrid">Abiertas 24 h</a>
+    <a href="/bibliotecas-24-horas-madrid"><span class="desktop-link-label">Abiertas 24 h</span><span class="mobile-link-label">Abierto 24 h ↗</span></a>
+    <a href="/bibliotecas-abiertas-fin-de-semana-madrid"><span class="desktop-link-label">Abiertas durante el fin de semana</span><span class="mobile-link-label">Abierto fin de semana ↗</span></a>
   </nav>
   <div class="topbar-search-slot" id="topbar-search-slot"></div>
 </div>
@@ -925,7 +981,7 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 <script src="basemap.js"></script>
-<script src="horarios.js"></script>
+<script src="horarios.js?v=20260901-2"></script>
 <script>
 // ─────────────────────────────────────────────
 //  DATOS
@@ -1220,7 +1276,8 @@ const LocateAndSearchControl = L.Control.extend({
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
         </button>
         <div class="study-search">
-          <input id="library-search-input" class="study-search-input" type="search" placeholder="Buscar biblioteca…" autocomplete="off" role="combobox" aria-label="Buscar una biblioteca o sala de estudio" aria-autocomplete="list" aria-expanded="false" aria-controls="library-search-results">
+          <svg class="study-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.7-3.7"></path></svg>
+          <input id="library-search-input" class="study-search-input" type="search" placeholder="Buscar biblioteca o barrio" autocomplete="off" role="combobox" aria-label="Buscar una biblioteca, sala de estudio o barrio" aria-autocomplete="list" aria-expanded="false" aria-controls="library-search-results">
           <div id="library-search-results" class="study-search-results" role="listbox" aria-label="Resultados de búsqueda" hidden></div>
         </div>
       </div>`;
@@ -1421,9 +1478,17 @@ function syncSearchPlacement() {
   const search = document.querySelector('.study-search');
   const desktopRow = document.querySelector('.study-tools-row');
   const mobileSlot = document.getElementById('topbar-search-slot');
-  if (!search || !desktopRow || !mobileSlot) return;
+  const openNowButton = document.getElementById('open-now-btn');
+  const mobileLinks = document.querySelector('.topbar-links');
+  const panelElement = document.getElementById('panel');
+  if (!search || !desktopRow || !mobileSlot || !openNowButton || !mobileLinks || !panelElement) return;
   const destination = MOBILE_UI_MEDIA.matches ? mobileSlot : desktopRow;
   if (search.parentElement !== destination) destination.append(search);
+  if (MOBILE_UI_MEDIA.matches) {
+    if (openNowButton.parentElement !== mobileLinks) mobileLinks.prepend(openNowButton);
+  } else if (openNowButton.parentElement !== document.body) {
+    document.body.insertBefore(openNowButton, panelElement);
+  }
 }
 
 function onResponsiveLayoutChange() {
@@ -1475,6 +1540,7 @@ function setMobileAttributionExpanded(expanded) {
   if (!mapAttribution) return;
   mapAttribution.classList.toggle('is-expanded', expanded);
   mapAttribution.setAttribute('aria-expanded', String(expanded));
+  mapAttribution.setAttribute('aria-label', expanded ? 'Ocultar créditos del mapa' : 'Mostrar créditos del mapa');
 }
 
 function syncMobileAttribution() {
@@ -1497,10 +1563,11 @@ function syncMobileAttribution() {
 
 if (mapAttribution) {
   mapAttribution.addEventListener('click', event => {
-    if (!MOBILE_UI_MEDIA.matches || event.target.closest('a')) return;
+    if (!MOBILE_UI_MEDIA.matches) return;
     event.preventDefault();
     event.stopPropagation();
-    setMobileAttributionExpanded(!mapAttribution.classList.contains('is-expanded'));
+    const expanded = mapAttribution.classList.contains('is-expanded');
+    setMobileAttributionExpanded(!expanded);
   });
   mapAttribution.addEventListener('keydown', event => {
     if (!MOBILE_UI_MEDIA.matches || (event.key !== 'Enter' && event.key !== ' ')) return;
@@ -2020,12 +2087,9 @@ function renderCalendarWeek(d, containerEl) {
 function renderLibCalWeek(d, containerEl) {
   const iid = getLibcalIid(d);
   if (!d.libcal_lid || !iid || !containerEl) return;
-  const config = LIBCAL_INSTITUTIONS[iid] || { name: 'BiblioAgenda' };
   fetchLibCalGrid(iid).then(grid => {
     if (!grid || !grid[d.libcal_lid] || current !== d || !containerEl.isConnected) return;
     const location = grid[d.libcal_lid];
-    const label = containerEl.querySelector('.panel-calendar-week-label');
-    if (label) label.textContent = `Próximos 7 días · En directo (${config.name})`;
     for (const week of location.weeks || []) {
       for (const dayInfo of Object.values(week || {})) {
         if (!dayInfo || !dayInfo.date) continue;
@@ -2045,6 +2109,17 @@ function renderLibCalWeek(d, containerEl) {
   }).catch(() => {});
 }
 
+function sourceNameForPlace(d) {
+  const iid = getLibcalIid(d);
+  if (d.libcal_lid && iid && LIBCAL_INSTITUTIONS[iid]) return LIBCAL_INSTITUTIONS[iid].name;
+  if (!d.web) return 'Fuente oficial';
+  try {
+    return new URL(d.web).hostname.replace(/^www\./, '');
+  } catch (_) {
+    return 'Fuente oficial';
+  }
+}
+
 function panelHtml(d) {
   const c = colores[d.tipo];
   const today = getTodayInfo(d);
@@ -2053,13 +2128,12 @@ function panelHtml(d) {
   const imgUrl = getPlaceImage(d);
   // El credito acompana a la imagen que se acaba de elegir, no a la otra.
   const imgCredit = d.foto_interior ? d.foto_interior_credito : d.foto_credito;
-  const iid = getLibcalIid(d);
-  const agendaName = (iid && LIBCAL_INSTITUTIONS[iid]) ? LIBCAL_INSTITUTIONS[iid].name : 'BiblioAgenda';
-  const liveTag = (d.libcal_lid || today.isLive) ? `
-    <div class="panel-live-tag" title="Sincronizado en tiempo real con ${agendaName}">
+  const sourceName = sourceNameForPlace(d);
+  const liveTag = `
+    <div class="panel-live-tag" title="Horario actualizado según ${escapeCalendarText(sourceName)}">
       <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-      En directo · ${agendaName}
-    </div>` : '';
+      En directo · ${escapeCalendarText(sourceName)}
+    </div>`;
 
   const countdown = getCountdown(d);
   const countdownHtml = countdown
@@ -2213,6 +2287,7 @@ function openPlace(d, push, options = {}) {
   if (calendarContainer) renderCalendarWeek(d, calendarContainer);
 }
 function closePanel(push) {
+  const closingPlace = current;
   panelDragState = null;
   panel.classList.remove('dragging');
   panel.style.removeProperty('transform');
@@ -2222,6 +2297,9 @@ function closePanel(push) {
   panel.setAttribute('aria-hidden', 'true');
   document.body.classList.remove('place-panel-open');
   document.getElementById('map').focus();
+  if (closingPlace && MOBILE_PANEL_MEDIA.matches) {
+    map.setView([closingPlace.lat, closingPlace.lng], map.getZoom(), { animate: true });
+  }
   if (push) history.pushState({}, '', './');
 }
 

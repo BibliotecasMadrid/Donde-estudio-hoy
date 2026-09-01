@@ -357,7 +357,7 @@
             <span class="status-badge status-info" id="status-badge">Cargando</span>
           </div>
           <div class="today-hours" id="today-hours">Cargando calendario…</div>
-
+          <div class="panel-live-tag" title="Horario actualizado según uned.es"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>En directo · uned.es</div>
           <div id="calendar-week" class="panel-live-week"></div>
         </a>
 
@@ -368,7 +368,7 @@
     </div>
   </main>
 
-  <script src="horarios.js"></script>
+  <script src="horarios.js?v=20260901-2"></script>
   <script>
   (function() {
     const d = {"tipo": "universidad", "nombre": "Biblioteca UNED – Central", "foto": "images/uned-sede-central-exterior.jpg", "foto_credito": "Lily Tsola", "foto_interior_credito": "Biblioteca Central de la UNED", "foto_interior": "images/uned-sede-central-interior.jpg", "distrito": "Moncloa (Ciudad Universitaria)", "direccion": "Paseo Senda del Rey, 5, 28040 Madrid", "lat": 40.4361, "lng": -3.734958, "plazas": 450, "horario": "Lun–Vie 9–20:30h\n(Verano 9–19:30h · Sábados solo en fechas señaladas)", "web": "https://www.uned.es/universidad/biblioteca/contacto.html#:~:text=HORARIO%20DE%20VERANO%20%28del%201%20de%20junio%20al%2015%20de%20septiembre%29,Biblioteca%20Central%3A%20de%20lunes%20a%20viernes%2C%20de%209%20a%2019%3A30%20h."};
@@ -466,8 +466,6 @@
           .then(data => {
             const loc = (data.locations || []).find(item => Number(item.lid) === Number(d.libcal_lid));
             if (!loc) return;
-            const label = container.querySelector('.panel-calendar-week-label');
-            if (label) label.textContent = 'Próximos 7 días · En directo (BiblioAgenda UAM)';
             for (const week of loc.weeks || []) {
               for (const dayInfo of Object.values(week || {})) {
                 if (!dayInfo || !dayInfo.date) continue;

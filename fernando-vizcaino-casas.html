@@ -357,7 +357,7 @@
             <span class="status-badge status-info" id="status-badge">Cargando</span>
           </div>
           <div class="today-hours" id="today-hours">Cargando calendario…</div>
-
+          <div class="panel-live-tag" title="Horario actualizado según madrid.es"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>En directo · madrid.es</div>
           <div id="calendar-week" class="panel-live-week"></div>
         </a>
 
@@ -368,7 +368,7 @@
     </div>
   </main>
 
-  <script src="horarios.js"></script>
+  <script src="horarios.js?v=20260901-2"></script>
   <script>
   (function() {
     const d = {"tipo": "sala", "nombre": "Sala de Estudio Fernando Vizcaíno Casas", "foto": "images/fernando-vizcaino-casas-exterior.jpg", "foto_credito": "Daniel Nieto", "foto_interior_credito": "Hotel Louzao", "foto_interior": "images/fernando-vizcaino-casas-interior.jpg", "distrito": "Chamberí", "direccion": "Calle Blasco de Garay, 40, 28015 Madrid", "lat": 40.4338, "lng": -3.7114, "plazas": 70, "horario": "Lun–Dom 8:30–21:30h (festivos cerrado)", "web": "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=08a9964bd47a9210VgnVCM1000000b205a0aRCRD#:~:text=De%20lunes%20a%20domingo%2C%20de%208%3A30%20a%2021%3A30%20horas.,24%20y%2031%20de%20diciembre%20horario%20especial%2C%20de%208%3A30%20a%2015%20horas."};
@@ -466,8 +466,6 @@
           .then(data => {
             const loc = (data.locations || []).find(item => Number(item.lid) === Number(d.libcal_lid));
             if (!loc) return;
-            const label = container.querySelector('.panel-calendar-week-label');
-            if (label) label.textContent = 'Próximos 7 días · En directo (BiblioAgenda UAM)';
             for (const week of loc.weeks || []) {
               for (const dayInfo of Object.values(week || {})) {
                 if (!dayInfo || !dayInfo.date) continue;

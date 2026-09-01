@@ -357,7 +357,7 @@
             <span class="status-badge status-info" id="status-badge">Cargando</span>
           </div>
           <div class="today-hours" id="today-hours">Cargando calendario…</div>
-
+          <div class="panel-live-tag" title="Horario actualizado según madrid.es"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>En directo · madrid.es</div>
           <div id="calendar-week" class="panel-live-week"></div>
         </a>
 
@@ -368,7 +368,7 @@
     </div>
   </main>
 
-  <script src="horarios.js"></script>
+  <script src="horarios.js?v=20260901-2"></script>
   <script>
   (function() {
     const d = {"tipo": "sala", "nombre": "Sala de Estudio Montecarmelo", "foto": "images/montecarmelo-exterior.jpg", "foto_credito": "Pedro", "foto_interior_credito": "Andres Garcia Martin", "foto_interior": "images/montecarmelo-interior.jpg", "distrito": "Fuencarral-El Pardo", "direccion": "Avenida Santuario de Valverde, 114, 28049 Madrid", "lat": 40.515501, "lng": -3.686396, "plazas": 80, "horario": "Lun–Vie 8:30–14:30h y 16–21h · Sáb 9–14:30h y 16–20:45h · Dom 10–14:30h", "web": "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=ae87964bd47a9210VgnVCM1000000b205a0aRCRD#:~:text=De%20lunes%20a%20viernes%2C%20de%208%3A30%20a%2014%3A30%20horas%20y%20de%2016%3A00%20a%2021%3A00%20horas.,Domingos%20y%20festivos%20de%20julio%2C%20de%2010%3A00%20a%2014%3A30%20horas."};
@@ -466,8 +466,6 @@
           .then(data => {
             const loc = (data.locations || []).find(item => Number(item.lid) === Number(d.libcal_lid));
             if (!loc) return;
-            const label = container.querySelector('.panel-calendar-week-label');
-            if (label) label.textContent = 'Próximos 7 días · En directo (BiblioAgenda UAM)';
             for (const week of loc.weeks || []) {
               for (const dayInfo of Object.values(week || {})) {
                 if (!dayInfo || !dayInfo.date) continue;

@@ -354,7 +354,7 @@
             <span class="status-badge status-info" id="status-badge">Cargando</span>
           </div>
           <div class="today-hours" id="today-hours">Cargando calendario…</div>
-
+          <div class="panel-live-tag" title="Horario actualizado según gestiona.comunidad.madrid"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>En directo · gestiona.comunidad.madrid</div>
           <div id="calendar-week" class="panel-live-week"></div>
         </a>
 
@@ -365,7 +365,7 @@
     </div>
   </main>
 
-  <script src="horarios.js"></script>
+  <script src="horarios.js?v=20260901-2"></script>
   <script>
   (function() {
     const d = {"tipo": "biblioteca", "nombre": "Biblioteca Municipal Julio Caro Baroja (Leganés)", "foto": "images/central-julio-caro-baroja-leganes-exterior.jpg", "foto_credito": "Fco. Cecilia", "foto_interior_credito": "Fco. Cecilia", "foto_interior": "images/central-julio-caro-baroja-leganes-interior.jpg", "distrito": "Leganés", "direccion": "Avenida del Mar Mediterráneo, 24, 28918 Leganés", "lat": 40.3361, "lng": -3.77241, "horario": "Sala de estudio: Lun–Vie 9–21h\nBiblioteca: Lun–Vie 14–20h", "web": "https://gestiona.comunidad.madrid/directorio_publicacion/comunidades/registro.cmd?id=360"};
@@ -463,8 +463,6 @@
           .then(data => {
             const loc = (data.locations || []).find(item => Number(item.lid) === Number(d.libcal_lid));
             if (!loc) return;
-            const label = container.querySelector('.panel-calendar-week-label');
-            if (label) label.textContent = 'Próximos 7 días · En directo (BiblioAgenda UAM)';
             for (const week of loc.weeks || []) {
               for (const dayInfo of Object.values(week || {})) {
                 if (!dayInfo || !dayInfo.date) continue;

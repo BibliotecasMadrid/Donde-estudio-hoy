@@ -357,7 +357,7 @@
             <span class="status-badge status-info" id="status-badge">Cargando</span>
           </div>
           <div class="today-hours" id="today-hours">Cargando calendario…</div>
-
+          <div class="panel-live-tag" title="Horario actualizado según BiblioAgenda UCM"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>En directo · BiblioAgenda UCM</div>
           <div id="calendar-week" class="panel-live-week"></div>
         </a>
 
@@ -368,7 +368,7 @@
     </div>
   </main>
 
-  <script src="horarios.js"></script>
+  <script src="horarios.js?v=20260901-2"></script>
   <script>
   (function() {
     const d = {"tipo": "universidad", "nombre": "Biblioteca UCM – Ciencias de la Información", "foto": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Facultad_de_Ciencias_de_la_Informaci%C3%B3n_de_la_UCM_5.jpg/960px-Facultad_de_Ciencias_de_la_Informaci%C3%B3n_de_la_UCM_5.jpg", "foto_interior_credito": "Biblioteca Facultad Ciencias de la Información", "foto_interior": "images/ucm-ciencias-de-la-informacion-interior.jpg", "distrito": "Moncloa (Ciudad Universitaria)", "direccion": "Avenida Complutense, s/n, 28040 Madrid", "lat": 40.4456975, "lng": -3.7284329, "plazas": 480, "horario": "Lun–Vie 9–21h\n(Ampliado en época de exámenes)", "web": "https://biblioagenda.ucm.es/hours?lid=6050", "libcal_lid": 6050, "libcal_iid": 4031};
@@ -466,8 +466,6 @@
           .then(data => {
             const loc = (data.locations || []).find(item => Number(item.lid) === Number(d.libcal_lid));
             if (!loc) return;
-            const label = container.querySelector('.panel-calendar-week-label');
-            if (label) label.textContent = 'Próximos 7 días · En directo (BiblioAgenda UCM)';
             for (const week of loc.weeks || []) {
               for (const dayInfo of Object.values(week || {})) {
                 if (!dayInfo || !dayInfo.date) continue;

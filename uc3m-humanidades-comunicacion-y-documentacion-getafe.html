@@ -354,7 +354,7 @@
             <span class="status-badge status-info" id="status-badge">Cargando</span>
           </div>
           <div class="today-hours" id="today-hours">Cargando calendario…</div>
-
+          <div class="panel-live-tag" title="Horario actualizado según uc3m.es"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>En directo · uc3m.es</div>
           <div id="calendar-week" class="panel-live-week"></div>
         </a>
 
@@ -365,7 +365,7 @@
     </div>
   </main>
 
-  <script src="horarios.js"></script>
+  <script src="horarios.js?v=20260901-2"></script>
   <script>
   (function() {
     const d = {"tipo": "universidad", "nombre": "Biblioteca UC3M – Humanidades, Comunicación y Documentación (Getafe)", "distrito": "Getafe (sur de Madrid)", "direccion": "Calle Madrid, 135, edificio Carmen Martín Gaite, 28903 Getafe", "lat": 40.3184564, "lng": -3.7275829, "horario": "Lun–Vie 9–21h\n(Consulta periodos especiales)", "web": "https://www.uc3m.es/biblioteca/horarios-calendario"};
@@ -463,8 +463,6 @@
           .then(data => {
             const loc = (data.locations || []).find(item => Number(item.lid) === Number(d.libcal_lid));
             if (!loc) return;
-            const label = container.querySelector('.panel-calendar-week-label');
-            if (label) label.textContent = 'Próximos 7 días · En directo (BiblioAgenda UAM)';
             for (const week of loc.weeks || []) {
               for (const dayInfo of Object.values(week || {})) {
                 if (!dayInfo || !dayInfo.date) continue;

@@ -357,7 +357,7 @@
             <span class="status-badge status-info" id="status-badge">Cargando</span>
           </div>
           <div class="today-hours" id="today-hours">Cargando calendario…</div>
-
+          <div class="panel-live-tag" title="Horario actualizado según madrid.es"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>En directo · madrid.es</div>
           <div id="calendar-week" class="panel-live-week"></div>
         </a>
 
@@ -368,7 +368,7 @@
     </div>
   </main>
 
-  <script src="horarios.js"></script>
+  <script src="horarios.js?v=20260901-2"></script>
   <script>
   (function() {
     const d = {"tipo": "biblioteca", "nombre": "Biblioteca Pública Rafael Alberti", "foto": "images/rafael-alberti-exterior.jpg", "foto_credito": "Mariano Navarro Sánchez", "foto_interior_credito": "VictorR", "foto_interior": "images/rafael-alberti-interior.jpg", "distrito": "Fuencarral-El Pardo", "direccion": "Calle de Sangenjo, 38, 28034 Madrid", "lat": 40.488, "lng": -3.69815, "plazas": 200, "horario": "Lun–Vie 9–21h · Sáb 9–14h\n(Horario 24h en época de exámenes)", "web": "https://www.madrid.es/sites/v/index.jsp?vgnextchannel=bfa48ab43d6bb410VgnVCM100000171f5a0aRCRD&vgnextoid=260e995a8bf5d010VgnVCM2000000c205a0aRCRD#:~:text=Apertura%20de%20lunes%20a%20s%C3%A1bado.,S%C3%A1bados%20de%209%20a%2014%20horas."};
@@ -466,8 +466,6 @@
           .then(data => {
             const loc = (data.locations || []).find(item => Number(item.lid) === Number(d.libcal_lid));
             if (!loc) return;
-            const label = container.querySelector('.panel-calendar-week-label');
-            if (label) label.textContent = 'Próximos 7 días · En directo (BiblioAgenda UAM)';
             for (const week of loc.weeks || []) {
               for (const dayInfo of Object.values(week || {})) {
                 if (!dayInfo || !dayInfo.date) continue;

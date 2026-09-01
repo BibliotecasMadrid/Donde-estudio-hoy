@@ -357,7 +357,7 @@
             <span class="status-badge status-info" id="status-badge">Cargando</span>
           </div>
           <div class="today-hours" id="today-hours">Cargando calendario…</div>
-
+          <div class="panel-live-tag" title="Horario actualizado según upm.es"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>En directo · upm.es</div>
           <div id="calendar-week" class="panel-live-week"></div>
         </a>
 
@@ -368,7 +368,7 @@
     </div>
   </main>
 
-  <script src="horarios.js"></script>
+  <script src="horarios.js?v=20260901-2"></script>
   <script>
   (function() {
     const d = {"tipo": "universidad", "nombre": "Biblioteca UPM – ETSI Caminos", "foto": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/ETSI_de_Caminos%2C_canales_y_puertos%2C_Madrid%2C_20241107_161308.jpg/960px-ETSI_de_Caminos%2C_canales_y_puertos%2C_Madrid%2C_20241107_161308.jpg", "foto_interior_credito": "Biblioteca de la ETSI de Caminos, Canales y Puertos UPM - Edificio Moncloa", "foto_interior": "images/upm-etsi-caminos-interior.jpg", "distrito": "Moncloa (Ciudad Universitaria)", "direccion": "Calle Profesor Aranguren, s/n, 28040 Madrid", "lat": 40.4467, "lng": -3.7335, "plazas": 420, "horario": "Lun–Vie 8:30–21h", "web": "https://www.upm.es/UPM/Biblioteca/NuestraBiblioteca/Horarios#:~:text=Bib.%20ETSI%20Caminos%2C%20Canales%20y%20Puertos%20-%20Edificio%20Moncloa,1.%20Horario%20de%20apertura%3A%208%3A30%20a%2021%3A00%20h."};
@@ -466,8 +466,6 @@
           .then(data => {
             const loc = (data.locations || []).find(item => Number(item.lid) === Number(d.libcal_lid));
             if (!loc) return;
-            const label = container.querySelector('.panel-calendar-week-label');
-            if (label) label.textContent = 'Próximos 7 días · En directo (BiblioAgenda UAM)';
             for (const week of loc.weeks || []) {
               for (const dayInfo of Object.values(week || {})) {
                 if (!dayInfo || !dayInfo.date) continue;
