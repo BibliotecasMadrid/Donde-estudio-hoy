@@ -638,7 +638,9 @@
       .topbar {
         top: 8px;
         left: 8px;
-        right: 8px;
+        right: auto;
+        width: 66.667vw;
+        max-width: calc(100vw - 16px);
         padding: 8px 10px 9px;
         border-radius: 12px;
         box-shadow: 0 4px 18px rgba(20,30,60,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset;
@@ -648,7 +650,9 @@
       .topbar-links {
         gap: 7px;
         margin-top: 4px;
-        white-space: nowrap;
+        flex-wrap: wrap;
+        row-gap: 2px;
+        white-space: normal;
       }
       .topbar-links a { font-size: 9.5px; }
       .topbar-search-slot {
@@ -735,12 +739,58 @@
       }
       .leaflet-control-attribution {
         position: fixed;
-        right: 0;
-        bottom: calc(var(--mobile-map-bottom) + 100px);
+        left: 50%;
+        right: auto;
+        bottom: var(--mobile-map-bottom);
+        transform: translateX(-50%);
+        width: 28px;
+        height: 28px;
+        max-width: none;
+        padding: 0;
+        overflow: hidden;
+        border-radius: 50%;
+        background: transparent !important;
+        box-shadow: none;
+        color: transparent;
+        font-size: 0;
+        line-height: 1;
+        cursor: pointer;
+      }
+      .leaflet-control-attribution::before {
+        content: "©";
+        display: flex;
+        width: 28px;
+        height: 28px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.86);
+        box-shadow: 0 2px 8px rgba(20,30,60,0.12);
+        color: #475569;
+        font-size: 12px;
+        font-weight: 700;
+      }
+      .leaflet-control-attribution a { display: none; }
+      .leaflet-control-attribution:focus-visible::before {
+        outline: 3px solid rgba(37,99,235,0.35);
+        outline-offset: 2px;
+      }
+      .leaflet-control-attribution.is-expanded {
+        bottom: calc(var(--mobile-map-bottom) + 68px);
+        width: min(320px, calc(100vw - 16px));
+        height: auto;
         max-width: calc(100vw - 16px);
-        padding: 2px 4px;
+        padding: 4px 6px;
+        overflow: visible;
+        border-radius: 8px;
+        background: rgba(255,255,255,0.9) !important;
+        box-shadow: 0 3px 14px rgba(20,30,60,0.14);
+        color: #475569;
         font-size: 8px;
-        line-height: 1.15;
+        line-height: 1.2;
+      }
+      .leaflet-control-attribution.is-expanded::before { display: none; }
+      .leaflet-control-attribution.is-expanded a { display: inline; }
       }
       body.place-panel-open .topbar,
       body.place-panel-open .study-tools-control,
@@ -1380,6 +1430,7 @@ function onResponsiveLayoutChange() {
   syncSearchPlacement();
   window.requestAnimationFrame(separarHerramientasDelTitulo);
   scheduleMobileMapMetrics();
+  syncMobileAttribution();
 }
 
 syncSearchPlacement();
@@ -1416,6 +1467,48 @@ window.addEventListener('resize', scheduleMobileMapMetrics);
 if (window.visualViewport) {
   window.visualViewport.addEventListener('resize', scheduleMobileMapMetrics);
 }
+
+// En móvil los créditos obligatorios se reducen a un discreto ©. Al pulsarlo se puede
+// consultar el texto completo; en escritorio se conserva la atribución normal de Leaflet.
+const mapAttribution = document.querySelector('.leaflet-control-attribution');
+function setMobileAttributionExpanded(expanded) {
+  if (!mapAttribution) return;
+  mapAttribution.classList.toggle('is-expanded', expanded);
+  mapAttribution.setAttribute('aria-expanded', String(expanded));
+}
+
+function syncMobileAttribution() {
+  if (!mapAttribution) return;
+  if (MOBILE_UI_MEDIA.matches) {
+    mapAttribution.setAttribute('tabindex', '0');
+    mapAttribution.setAttribute('role', 'button');
+    mapAttribution.setAttribute('title', 'Créditos del mapa');
+    mapAttribution.setAttribute('aria-label', 'Mostrar créditos del mapa');
+    if (!mapAttribution.hasAttribute('aria-expanded')) setMobileAttributionExpanded(false);
+  } else {
+    mapAttribution.classList.remove('is-expanded');
+    mapAttribution.removeAttribute('tabindex');
+    mapAttribution.removeAttribute('role');
+    mapAttribution.removeAttribute('title');
+    mapAttribution.removeAttribute('aria-label');
+    mapAttribution.removeAttribute('aria-expanded');
+  }
+}
+
+if (mapAttribution) {
+  mapAttribution.addEventListener('click', event => {
+    if (!MOBILE_UI_MEDIA.matches || event.target.closest('a')) return;
+    event.preventDefault();
+    event.stopPropagation();
+    setMobileAttributionExpanded(!mapAttribution.classList.contains('is-expanded'));
+  });
+  mapAttribution.addEventListener('keydown', event => {
+    if (!MOBILE_UI_MEDIA.matches || (event.key !== 'Enter' && event.key !== ' ')) return;
+    event.preventDefault();
+    setMobileAttributionExpanded(!mapAttribution.classList.contains('is-expanded'));
+  });
+}
+syncMobileAttribution();
 
 // El buscador y el boton de ubicacion caen en la misma esquina que el globo del titulo.
 // El hueco estaba fijado a ojo y se solapaban 10px. Fijar otro numero a ojo aguanta hasta
