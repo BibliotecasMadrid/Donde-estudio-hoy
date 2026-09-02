@@ -589,6 +589,11 @@
     .study-search-result.is-active {
       background: #EFF6FF;
     }
+    .study-search-result.is-area .study-search-result-type::before {
+      border: 1.5px solid var(--type-color);
+      border-radius: 2px;
+      background: color-mix(in srgb, var(--type-color) 18%, white);
+    }
     /* Un tap de touchpad se desvia un par de pixeles entre el down y el up. Si caen en
        hijos distintos, el click se dispara en el ancestro comun y la seleccion se pierde.
        Neutralizando los hijos, el objetivo del evento es siempre el boton. */
@@ -631,6 +636,31 @@
       padding: 10px;
       color: var(--ink-2);
       font-size: 12px;
+    }
+    .study-area-label {
+      border: 0;
+      background: transparent;
+    }
+    .study-area-label span {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+      max-width: min(260px, calc(100vw - 40px));
+      overflow: hidden;
+      padding: 6px 10px;
+      transform: translate(-50%, -50%);
+      border: 1px solid rgba(255,255,255,0.9);
+      border-radius: 999px;
+      background: rgba(26,31,54,0.88);
+      box-shadow: 0 3px 12px rgba(20,30,60,0.2);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 750;
+      line-height: 1.2;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      pointer-events: none;
     }
 
     @media (max-width: 768px) {
@@ -1252,7 +1282,7 @@ const map = L.map('map', {
 });
 
 // Base limpia y moderna (Positron). El proveedor y la clave se eligen en basemap.js.
-Basemap.add(map, 'Datos: <a href="https://datos.madrid.es">datos.madrid.es</a> (CC BY 4.0)');
+Basemap.add(map, 'Centros: <a href="https://datos.madrid.es">datos.madrid.es</a> · Límites: <a href="https://geoportal.madrid.es">Ayuntamiento de Madrid</a> / <a href="https://www.ign.es">IGN-CNIG</a> (CC BY 4.0)');
 
 const colores = {
   biblioteca:  { fill: '#2563EB', label: 'Biblioteca pública' },
@@ -1263,6 +1293,31 @@ const colores = {
 let suppressMapCloseUntil = 0;
 const MOBILE_UI_MEDIA = window.matchMedia('(max-width: 768px)');
 let locateButtonElement = null;
+
+const AREA_TYPES = {
+  barrio:    { fill: '#D97706', label: 'Barrio'    },
+  distrito:  { fill: '#EA580C', label: 'Distrito'  },
+  municipio: { fill: '#0F766E', label: 'Municipio' }
+};
+let geographicAreas = [];
+let geographicAreasStatus = 'loading';
+const geographicAreasPromise = fetch('zonas-madrid.geojson', { cache: 'no-cache' })
+  .then(response => {
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return response.json();
+  })
+  .then(collection => {
+    geographicAreas = Array.isArray(collection.features)
+      ? collection.features.map(feature => ({ ...feature.properties, feature }))
+      : [];
+    geographicAreasStatus = 'ready';
+    return geographicAreas;
+  })
+  .catch(error => {
+    geographicAreasStatus = 'error';
+    console.warn('No se ha podido cargar el catálogo de zonas de Madrid:', error);
+    return [];
+  });
 
 // Control de geolocalización y buscador local de centros.
 const LocateAndSearchControl = L.Control.extend({
@@ -1286,7 +1341,7 @@ const LocateAndSearchControl = L.Control.extend({
     locateButtonElement = locateButton;
     const searchInput = container.querySelector('#library-search-input');
     const resultsList = container.querySelector('#library-search-results');
-    let matchedPlaces = [];
+    let matchedResults = [];
     let activeResultIndex = -1;
 
     const normaliseSearch = value => String(value || '')
@@ -1307,39 +1362,47 @@ const LocateAndSearchControl = L.Control.extend({
       resultsList.replaceChildren();
       searchInput.removeAttribute('aria-activedescendant');
 
-      if (!matchedPlaces.length) {
+      if (!matchedResults.length) {
         const empty = document.createElement('div');
         empty.className = 'study-search-empty';
-        empty.textContent = 'No hemos encontrado ningún centro con ese nombre.';
+        empty.textContent = geographicAreasStatus === 'loading'
+          ? 'Buscando también barrios y municipios…'
+          : 'No hemos encontrado ningún centro ni zona con ese nombre.';
         resultsList.append(empty);
       } else {
-        matchedPlaces.forEach((place, index) => {
+        matchedResults.forEach((match, index) => {
+          const item = match.item;
+          const isArea = match.kind === 'area';
+          const typeConfig = isArea ? AREA_TYPES[item.tipo] : colores[item.tipo];
           const result = document.createElement('button');
           const resultId = `library-search-option-${index}`;
           result.type = 'button';
           result.id = resultId;
           result.tabIndex = -1;
-          result.className = `study-search-result${index === activeResultIndex ? ' is-active' : ''}`;
+          result.className = `study-search-result${isArea ? ' is-area' : ''}${index === activeResultIndex ? ' is-active' : ''}`;
           result.dataset.searchIndex = String(index);
           result.setAttribute('role', 'option');
           result.setAttribute('aria-selected', String(index === activeResultIndex));
 
           const name = document.createElement('span');
           name.className = 'study-search-result-name';
-          name.textContent = place.nombre;
+          name.textContent = match.displayName || item.nombre;
 
           const meta = document.createElement('span');
           meta.className = 'study-search-result-meta';
           const type = document.createElement('span');
           type.className = 'study-search-result-type';
-          type.style.setProperty('--type-color', colores[place.tipo].fill);
-          type.textContent = colores[place.tipo].label;
+          type.style.setProperty('--type-color', typeConfig.fill);
+          type.textContent = match.isAlias ? 'Zona' : typeConfig.label;
           meta.append(type);
 
-          if (place.distrito) {
+          const context = isArea
+            ? `${match.isAlias ? `Barrio ${item.nombre} · ` : ''}${item.contexto}`
+            : item.distrito;
+          if (context) {
             const district = document.createElement('span');
             district.className = 'study-search-result-district';
-            district.textContent = `· ${place.distrito}`;
+            district.textContent = `· ${context}`;
             meta.append(district);
           }
 
@@ -1350,45 +1413,112 @@ const LocateAndSearchControl = L.Control.extend({
 
       resultsList.hidden = false;
       searchInput.setAttribute('aria-expanded', 'true');
-      if (activeResultIndex >= 0 && matchedPlaces[activeResultIndex]) {
+      if (activeResultIndex >= 0 && matchedResults[activeResultIndex]) {
         searchInput.setAttribute('aria-activedescendant', `library-search-option-${activeResultIndex}`);
       }
+    }
+
+    function scoreSearchValue(value, query) {
+      if (!value || !query) return Number.POSITIVE_INFINITY;
+      if (value === query) return 0;
+      if (value.startsWith(query)) return 10;
+      if (value.split(' ').some(word => word.startsWith(query))) return 20;
+      if (value.includes(query)) return 30;
+      return Number.POSITIVE_INFINITY;
+    }
+
+    function areaQueryVariants(query) {
+      const withoutType = query.replace(
+        /^(?:barrio|distrito|municipio|pueblo|localidad|zona)\s+(?:(?:de|del|de la|de las|de los)\s+)?/,
+        ''
+      );
+      const withoutMadrid = query.replace(/^madrid\s+/, '');
+      return [...new Set([query, withoutType, withoutMadrid].filter(Boolean))];
+    }
+
+    function searchMatches(query) {
+      const placeMatches = lugares.map((place, order) => ({
+        kind: 'place',
+        item: place,
+        order,
+        score: scoreSearchValue(normaliseSearch(place.nombre), query)
+      })).filter(match => Number.isFinite(match.score));
+
+      const queries = areaQueryVariants(query);
+      const areaMatches = geographicAreas.map((area, order) => {
+        const labels = [area.nombre, ...(area.aliases || [])];
+        const values = labels.map(normaliseSearch);
+        let score = Number.POSITIVE_INFINITY;
+        let matchedValueIndex = 0;
+        queries.forEach((variant, variantIndex) => {
+          values.forEach((value, valueIndex) => {
+            const aliasPenalty = valueIndex === 0 ? 0 : 2;
+            const candidate = scoreSearchValue(value, variant) + aliasPenalty + variantIndex;
+            if (candidate < score) {
+              score = candidate;
+              matchedValueIndex = valueIndex;
+            }
+          });
+        });
+        return {
+          kind: 'area', item: area, order, score,
+          displayName: labels[matchedValueIndex],
+          isAlias: matchedValueIndex > 0
+        };
+      }).filter(match => Number.isFinite(match.score));
+
+      return placeMatches.concat(areaMatches)
+        .sort((a, b) => a.score - b.score
+          || (a.kind === 'area' ? 0 : 1) - (b.kind === 'area' ? 0 : 1)
+          || a.order - b.order)
+        .slice(0, 10);
     }
 
     function updateSearchResults() {
       const query = normaliseSearch(searchInput.value);
       activeResultIndex = -1;
       if (!query) {
-        matchedPlaces = [];
+        matchedResults = [];
         closeSearchResults();
         return;
       }
 
-      matchedPlaces = lugares
-        .filter(place => normaliseSearch(place.nombre).includes(query))
-        .slice(0, 8);
+      matchedResults = searchMatches(query);
       renderSearchResults();
+
+      if (geographicAreasStatus === 'loading') {
+        geographicAreasPromise.then(() => {
+          if (normaliseSearch(searchInput.value) === query) updateSearchResults();
+        });
+      }
     }
 
     function setActiveResult(direction) {
-      if (!matchedPlaces.length) return;
+      if (!matchedResults.length) return;
       if (activeResultIndex === -1) {
-        activeResultIndex = direction > 0 ? 0 : matchedPlaces.length - 1;
+        activeResultIndex = direction > 0 ? 0 : matchedResults.length - 1;
       } else {
-        activeResultIndex = (activeResultIndex + direction + matchedPlaces.length) % matchedPlaces.length;
+        activeResultIndex = (activeResultIndex + direction + matchedResults.length) % matchedResults.length;
       }
       renderSearchResults();
       const active = document.getElementById(`library-search-option-${activeResultIndex}`);
       if (active) active.scrollIntoView({ block: 'nearest' });
     }
 
-    function selectSearchResult(place, suppressPointerupMapClick = false) {
-      if (!place) return;
-      searchInput.value = place.nombre;
+    function selectSearchResult(match, suppressPointerupMapClick = false) {
+      if (!match) return;
+      searchInput.value = match.displayName || match.item.nombre;
       closeSearchResults();
       // Al retirar el desplegable en pointerdown, el pointerup puede caer sobre el mapa y
       // sintetizar un click alli. Se ignora solo esa ventana minima para no cerrar la ficha.
       if (suppressPointerupMapClick) suppressMapCloseUntil = performance.now() + 300;
+
+      if (match.kind === 'area') {
+        showGeographicArea(match.item, match.displayName);
+        return;
+      }
+
+      const place = match.item;
 
       // El panel se abre SIEMPRE y primero. Antes colgaba del callback de zoomToShowLayer,
       // que markercluster no llega a invocar cuando el marcador emerge del cluster sin
@@ -1424,14 +1554,14 @@ const LocateAndSearchControl = L.Control.extend({
         event.preventDefault();
         event.stopPropagation();
         setActiveResult(event.key === 'ArrowDown' ? 1 : -1);
-      } else if (event.key === 'Enter' && matchedPlaces.length) {
+      } else if (event.key === 'Enter' && matchedResults.length) {
         event.preventDefault();
         event.stopPropagation();
-        selectSearchResult(matchedPlaces[activeResultIndex >= 0 ? activeResultIndex : 0]);
+        selectSearchResult(matchedResults[activeResultIndex >= 0 ? activeResultIndex : 0]);
       } else if (event.key === 'Escape') {
         event.preventDefault();
         event.stopPropagation();
-        closeSearchResults();
+        if (resultsList.hidden && selectedArea) clearSelectedArea(); else closeSearchResults();
       } else if (event.key === 'Tab') {
         closeSearchResults();
       }
@@ -1441,6 +1571,18 @@ const LocateAndSearchControl = L.Control.extend({
     // lista sin elegir nada. Se elige ya en 'pointerdown' y se evita que el input pierda el
     // foco (asi no se arma el temporizador del blur).
     let selectedByPointer = false;
+    function guardAgainstRetargetedClick() {
+      const stopUnderlyingClick = event => {
+        // Si el navegador conserva como objetivo el resultado original, su click accesible
+        // puede seguir su curso. Si lo redirige al mapa o a un enlace que ha quedado debajo
+        // al ocultarse la lista, se neutraliza ese unico click fantasma.
+        if (event.target.closest && event.target.closest('.study-search-result')) return;
+        event.preventDefault();
+        event.stopImmediatePropagation();
+      };
+      document.addEventListener('click', stopUnderlyingClick, { capture: true, once: true });
+      window.setTimeout(() => document.removeEventListener('click', stopUnderlyingClick, true), 450);
+    }
     resultsList.addEventListener('pointerdown', event => {
       selectedByPointer = false;
       // En tactil NO se adelanta la seleccion: preventDefault aqui impediria arrastrar
@@ -1450,7 +1592,8 @@ const LocateAndSearchControl = L.Control.extend({
       if (!result) return;
       event.preventDefault();
       selectedByPointer = true;
-      selectSearchResult(matchedPlaces[Number(result.dataset.searchIndex)], true);
+      guardAgainstRetargetedClick();
+      selectSearchResult(matchedResults[Number(result.dataset.searchIndex)], true);
     });
     // Se conserva el click para clics sinteticos (tecnologia asistiva) que no pasan por
     // pointerdown; el flag evita elegir dos veces cuando llegan los dos eventos.
@@ -1458,7 +1601,7 @@ const LocateAndSearchControl = L.Control.extend({
       if (selectedByPointer) { selectedByPointer = false; return; }
       const result = event.target.closest('[data-search-index]');
       if (!result) return;
-      selectSearchResult(matchedPlaces[Number(result.dataset.searchIndex)]);
+      selectSearchResult(matchedResults[Number(result.dataset.searchIndex)]);
     });
 
     // El control es interactivo: sus gestos no deben arrastrar, hacer zoom ni cerrar el mapa.
@@ -1660,6 +1803,7 @@ function showUserLocation(location, options = {}) {
   const { center = false, feedback = false } = options;
   const marker = ensureUserMarker(location.latlng);
   if (center) {
+    clearSelectedArea();
     map.setView(location.latlng, Math.max(map.getZoom(), 14), { animate: true });
   }
   if (feedback) triggerMarkerFeedback(marker);
@@ -2186,8 +2330,71 @@ function panelHtml(d) {
 
 let current = null;
 let selectedMarker = null;
+let selectedArea = null;
+let selectedAreaLayer = null;
+let selectedAreaLabel = null;
 const MOBILE_PANEL_MEDIA = MOBILE_UI_MEDIA;
 const URL_PLACE_MIN_ZOOM = 16;
+
+function escapeAreaLabel(value) {
+  return String(value).replace(/[&<>"']/g, character => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  })[character]);
+}
+
+function clearSelectedArea() {
+  if (selectedAreaLayer) map.removeLayer(selectedAreaLayer);
+  if (selectedAreaLabel) map.removeLayer(selectedAreaLabel);
+  selectedArea = null;
+  selectedAreaLayer = null;
+  selectedAreaLabel = null;
+}
+
+function showGeographicArea(area, displayName = area && area.nombre) {
+  if (!area || !area.feature) return;
+  if (current) closePanel(true);
+  clearSelectedArea();
+  setSelectedMarker(null);
+
+  const config = AREA_TYPES[area.tipo] || AREA_TYPES.barrio;
+  selectedArea = area;
+  selectedAreaLayer = L.geoJSON(area.feature, {
+    interactive: false,
+    style: {
+      color: config.fill,
+      weight: 3,
+      opacity: 0.95,
+      fillColor: config.fill,
+      fillOpacity: 0.14,
+      lineCap: 'round',
+      lineJoin: 'round'
+    }
+  }).addTo(map);
+  if (typeof selectedAreaLayer.bringToBack === 'function') selectedAreaLayer.bringToBack();
+
+  const bounds = selectedAreaLayer.getBounds();
+  if (!bounds.isValid()) return;
+  selectedAreaLabel = L.marker(bounds.getCenter(), {
+    interactive: false,
+    keyboard: false,
+    zIndexOffset: 850,
+    icon: L.divIcon({
+      className: 'study-area-label',
+      html: `<span>${escapeAreaLabel(displayName)}</span>`,
+      iconSize: [0, 0],
+      iconAnchor: [0, 0]
+    })
+  }).addTo(map);
+
+  const maxZoom = area.tipo === 'barrio' ? 15 : area.tipo === 'distrito' ? 13 : 12;
+  map.flyToBounds(bounds, {
+    animate: true,
+    duration: 0.65,
+    maxZoom,
+    paddingTopLeft: MOBILE_PANEL_MEDIA.matches ? [18, 118] : [34, 76],
+    paddingBottomRight: [24, 36]
+  });
+}
 
 function setSelectedMarker(d) {
   if (selectedMarker) {
@@ -2236,6 +2443,7 @@ function focusAfterMarkerReveal(d, marker) {
 
 function openPlace(d, push, options = {}) {
   const { focus = true, minZoom = null } = options;
+  clearSelectedArea();
   current = d;
   setSelectedMarker(d);
   panelBody.innerHTML = panelHtml(d);
@@ -2304,10 +2512,13 @@ function closePanel(push) {
 }
 
 document.getElementById('panel-close').addEventListener('click', () => closePanel(true));
-document.addEventListener('keydown', e => { if (e.key === 'Escape' && current) closePanel(true); });
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Escape') return;
+  if (current) closePanel(true); else if (selectedArea) clearSelectedArea();
+});
 map.on('click', () => {
   if (performance.now() < suppressMapCloseUntil) return;
-  if (current) closePanel(true);
+  if (current) closePanel(true); else if (selectedArea) clearSelectedArea();
 });
 
 let panelDragState = null;
@@ -2523,6 +2734,7 @@ function placeFromMapFocusQuery() {
 // mapa completamente visible y el panel cerrado.
 function focusPlaceWithoutPanel(d) {
   if (!d) return;
+  clearSelectedArea();
   if (current) {
     closePanel(false);
   } else {

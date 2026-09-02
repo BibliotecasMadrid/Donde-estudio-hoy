@@ -66,6 +66,7 @@ PRIVADO=(
   "sync_uam.py"
   "test_build.py"
   "fotos.py"                             # herramienta de fotos, no su salida
+  "generar_zonas.py"                     # genera la cartografia local del buscador
   ".fotos-cache"                         # originales descargados de Google Places
   ".env"                                 # claves de API: NUNCA en dist/
   "*.env"
@@ -111,6 +112,7 @@ fallo() { echo "ERROR: $1" >&2; exit 1; }
 [[ -f "$SALIDA/sitemap.xml" ]] || fallo "falta sitemap.xml"
 [[ -f "$SALIDA/horarios.js" ]] || fallo "falta horarios.js"
 [[ -f "$SALIDA/basemap.js" ]] || fallo "falta basemap.js (los mapas se quedarian sin capa base)"
+[[ -f "$SALIDA/zonas-madrid.geojson" ]] || fallo "falta zonas-madrid.geojson (el buscador no encontraria barrios ni municipios)"
 [[ -f "$SALIDA/manifest.json" ]] || fallo "falta manifest.json (la PWA dejaria de instalarse)"
 [[ -f "$SALIDA/sw.js" ]] || fallo "falta sw.js (la PWA dejaria de instalarse)"
 [[ -f "$SALIDA/.well-known/assetlinks.json" ]] || fallo "falta .well-known/assetlinks.json (la app Android dejaria de validar el dominio)"

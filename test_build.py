@@ -1,6 +1,8 @@
 import copy
+import json
 import os
 import unittest
+from collections import Counter
 
 import build
 
@@ -51,6 +53,29 @@ class BuildTests(unittest.TestCase):
         self.assertEqual(sitemap.count(build.BASE + build.WEEKEND_ROUTE), 1)
         self.assertEqual(sitemap.count(build.BASE + build.FULL_DAY_ROUTE), 1)
         self.assertEqual(sitemap.count("<url>"), len(self.slugs) + 3)
+
+    def test_search_area_catalog_is_complete_and_valid(self):
+        path = os.path.join(build.ROOT, "zonas-madrid.geojson")
+        with open(path, encoding="utf-8") as source:
+            collection = json.load(source)
+        self.assertEqual(collection["type"], "FeatureCollection")
+        counts = Counter(feature["properties"]["tipo"] for feature in collection["features"])
+        self.assertEqual(counts, {"barrio": 131, "distrito": 21, "municipio": 179})
+        self.assertEqual(len(collection["features"]), 331)
+        for feature in collection["features"]:
+            self.assertTrue(feature["properties"]["nombre"].strip())
+            self.assertIn(feature["geometry"]["type"], {"Polygon", "MultiPolygon"})
+
+    def test_popular_area_aliases_are_in_the_catalog(self):
+        path = os.path.join(build.ROOT, "zonas-madrid.geojson")
+        with open(path, encoding="utf-8") as source:
+            collection = json.load(source)
+        aliases = {
+            alias
+            for feature in collection["features"]
+            for alias in feature["properties"].get("aliases", [])
+        }
+        self.assertTrue({"Malasaña", "Chueca", "Lavapiés", "Valdebebas"} <= aliases)
 
 
 if __name__ == "__main__":
