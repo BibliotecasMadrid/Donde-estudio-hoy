@@ -1,10 +1,14 @@
 import copy
 import json
 import os
+import tempfile
 import unittest
 from collections import Counter
+from pathlib import Path
 
 import build
+import fotos
+from PIL import Image
 
 
 class BuildTests(unittest.TestCase):
@@ -76,6 +80,54 @@ class BuildTests(unittest.TestCase):
             for alias in feature["properties"].get("aliases", [])
         }
         self.assertTrue({"Malasaña", "Chueca", "Lavapiés", "Valdebebas"} <= aliases)
+
+    def test_photo_field_can_be_inserted_without_existing_photo(self):
+        line = '  { tipo: "biblioteca", nombre: "Centro nuevo", distrito: "Madrid" },'
+        result = fotos.fijar_campo(line, "foto_interior", "images/centro-interior.jpg")
+        self.assertIn('foto_interior: "images/centro-interior.jpg"', result)
+        self.assertTrue(result.endswith(" },"), result)
+
+    def test_photo_field_replacement_preserves_other_visual_fields(self):
+        line = ('  { tipo: "biblioteca", nombre: "Centro", '
+                'foto: "images/vieja.jpg", foto_credito: "Autora", distrito: "Madrid" },')
+        result = fotos.fijar_campo(line, "foto", "images/nueva.jpg")
+        self.assertEqual(result.count("foto:"), 1)
+        self.assertIn('foto: "images/nueva.jpg"', result)
+        self.assertIn('foto_credito: "Autora"', result)
+
+    def test_photo_choices_reject_same_image_for_both_uses(self):
+        with tempfile.TemporaryDirectory() as temporal:
+            cache = Path(temporal)
+            destino = cache / "centro"
+            destino.mkdir()
+            Image.new("RGB", (20, 20)).save(destino / "01.jpg", "JPEG")
+            (destino / "meta.json").write_text(json.dumps({
+                "fotos": [{"n": 1, "archivo": "01.jpg", "autor": "Autora"}],
+            }), encoding="utf-8")
+            with self.assertRaisesRegex(SystemExit, "fotos distintas"):
+                fotos.preparar_elecciones(
+                    {"centro": {"interior": 1, "exterior": 1}},
+                    {"centro": {"nombre": "Centro"}},
+                    ['{ nombre: "Centro" },'],
+                    cache,
+                )
+
+    def test_photo_choices_require_attribution(self):
+        with tempfile.TemporaryDirectory() as temporal:
+            cache = Path(temporal)
+            destino = cache / "centro"
+            destino.mkdir()
+            Image.new("RGB", (20, 20)).save(destino / "01.jpg", "JPEG")
+            (destino / "meta.json").write_text(json.dumps({
+                "fotos": [{"n": 1, "archivo": "01.jpg", "autor": ""}],
+            }), encoding="utf-8")
+            with self.assertRaisesRegex(SystemExit, "no trae atribucion"):
+                fotos.preparar_elecciones(
+                    {"centro": {"interior": 1}},
+                    {"centro": {"nombre": "Centro"}},
+                    ['{ nombre: "Centro" },'],
+                    cache,
+                )
 
 
 if __name__ == "__main__":

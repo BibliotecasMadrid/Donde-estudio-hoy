@@ -485,63 +485,125 @@ def fijar_campo(linea, campo, valor):
     nuevo = campo + ': "' + valor + '"'
     if patron.search(linea):
         return patron.sub(lambda _: nuevo, linea, count=1)
-    # Nuevo: colgarlo detras de `foto`, que es donde vive el resto de lo visual.
-    ancla = re.compile(r'(?<![\w])foto:\s*"(?:[^"\\]|\\.)*"')
-    coincidencia = ancla.search(linea)
-    if coincidencia is None:
-        raise ValueError("la linea no tiene campo foto donde anclar " + campo)
-    fin = coincidencia.end()
-    return linea[:fin] + ", " + nuevo + linea[fin:]
+    # Los centros recien incorporados no tienen aun ningun campo visual. Insertar al
+    # final del objeto evita depender de que `foto` exista como ancla y mantiene el
+    # parser de build.py intacto: cada lugar sigue ocupando una sola linea.
+    cierre = re.search(r'\s*}\s*,?\s*$', linea)
+    if cierre is None:
+        raise ValueError("la linea no termina en un objeto de lugares")
+    prefijo = linea[:cierre.start()].rstrip()
+    separador = "" if prefijo.endswith("{") else ","
+    return prefijo + separador + " " + nuevo + " " + linea[cierre.start():].lstrip()
+
+
+def preparar_elecciones(elecciones, centros, lineas, cache=CACHE):
+    """Valida el lote completo antes de escribir una sola imagen o tocar index.html."""
+    errores = []
+    preparadas = []
+
+    if not isinstance(elecciones, dict):
+        raise SystemExit("Elecciones invalidas: el JSON raiz debe ser un objeto.")
+
+    for slug, eleccion in elecciones.items():
+        lugar = centros.get(slug)
+        if lugar is None:
+            errores.append("%s: no existe ese slug" % slug)
+            continue
+        if not isinstance(eleccion, dict):
+            errores.append("%s: la eleccion debe ser un objeto" % slug)
+            continue
+
+        numeros = {}
+        for clase in ("interior", "exterior"):
+            numero = eleccion.get(clase)
+            if numero in (None, 0):
+                continue
+            if isinstance(numero, bool) or not isinstance(numero, int) or numero < 1:
+                errores.append("%s: %s debe ser un numero entero positivo o null"
+                                % (slug, clase))
+                continue
+            numeros[clase] = numero
+        if not numeros:
+            continue
+        if len(numeros) == 2 and numeros["interior"] == numeros["exterior"]:
+            errores.append("%s: interior y exterior deben ser fotos distintas" % slug)
+
+        meta_ruta = Path(cache) / slug / "meta.json"
+        if not meta_ruta.is_file():
+            errores.append("%s: sin cache" % slug)
+            continue
+        try:
+            meta = json.loads(meta_ruta.read_text(encoding="utf-8"))
+        except (OSError, ValueError) as error:
+            errores.append("%s: meta.json invalido (%s)" % (slug, error))
+            continue
+        por_numero = {foto.get("n"): foto for foto in meta.get("fotos", [])}
+
+        fotos = {}
+        for clase, numero in numeros.items():
+            foto = por_numero.get(numero)
+            if foto is None:
+                errores.append("%s: no hay foto %s para %s" % (slug, numero, clase))
+                continue
+            if not foto.get("autor", "").strip():
+                errores.append("%s: la foto %s de %s no trae atribucion"
+                                % (slug, numero, clase))
+                continue
+            origen = Path(cache) / slug / foto.get("archivo", "")
+            if not origen.is_file():
+                errores.append("%s: falta el archivo de la foto %s" % (slug, numero))
+                continue
+            try:
+                with Image.open(origen) as imagen:
+                    imagen.verify()
+            except (OSError, ValueError) as error:
+                errores.append("%s: la foto %s no es una imagen valida (%s)"
+                                % (slug, numero, error))
+                continue
+            fotos[clase] = foto
+
+        aguja = 'nombre: "' + lugar["nombre"] + '"'
+        indices = [n for n, linea in enumerate(lineas) if aguja in linea]
+        if len(indices) != 1:
+            errores.append("%s: %d lineas con ese nombre" % (slug, len(indices)))
+            continue
+        if len(fotos) == len(numeros):
+            preparadas.append((slug, lugar, indices[0], fotos))
+
+    if errores:
+        raise SystemExit("Elecciones invalidas; no se ha cambiado nada:\n- "
+                         + "\n- ".join(errores))
+    return preparadas
 
 
 def cmd_apply(ruta_elecciones):
     elecciones = json.loads(Path(ruta_elecciones).read_text(encoding="utf-8"))
     centros = catalogo()
-    IMAGENES.mkdir(exist_ok=True)
 
     with INDEX.open(encoding="utf-8", newline="") as fuente:
         texto = fuente.read()
     salto = "\r\n" if "\r\n" in texto else "\n"
     lineas = texto.split(salto)
+    preparadas = preparar_elecciones(elecciones, centros, lineas)
+
+    IMAGENES.mkdir(exist_ok=True)
     cambios = 0
 
-    for slug, eleccion in elecciones.items():
-        lugar = centros.get(slug)
-        if lugar is None:
-            print("  ! %s: no existe ese slug" % slug)
-            continue
-        meta_ruta = CACHE / slug / "meta.json"
-        if not meta_ruta.is_file():
-            print("  ! %s: sin cache" % slug)
-            continue
-        meta = json.loads(meta_ruta.read_text(encoding="utf-8"))
-        por_numero = {foto["n"]: foto for foto in meta["fotos"]}
-
-        # La linea del objeto se localiza por su nombre exacto, nunca por posicion.
-        aguja = 'nombre: "' + lugar["nombre"] + '"'
-        indices = [n for n, linea in enumerate(lineas) if aguja in linea]
-        if len(indices) != 1:
-            print("  ! %s: %d lineas con ese nombre, no se toca" % (slug, len(indices)))
-            continue
-        n_linea = indices[0]
+    for slug, lugar, n_linea, fotos in preparadas:
         linea = lineas[n_linea]
 
         for clase, campo, credito, guardar in (
             ("interior", "foto_interior", "foto_interior_credito", guardar_interior),
             ("exterior", "foto", "foto_credito", guardar_exterior),
         ):
-            numero = eleccion.get(clase)
-            if not numero:
-                continue
-            foto = por_numero.get(numero)
+            foto = fotos.get(clase)
             if foto is None:
-                print("  ! %s: no hay foto %s para %s" % (slug, numero, clase))
                 continue
+            numero = foto["n"]
             nombre_archivo = "%s-%s.jpg" % (slug, clase)
             guardar(CACHE / slug / foto["archivo"], IMAGENES / nombre_archivo)
             linea = fijar_campo(linea, campo, "images/" + nombre_archivo)
-            if foto["autor"]:
-                linea = fijar_campo(linea, credito, foto["autor"].replace('"', "'"))
+            linea = fijar_campo(linea, credito, foto["autor"].replace('"', "'"))
             kb = (IMAGENES / nombre_archivo).stat().st_size / 1024
             print("  + %s  (%.0f KB, foto %s, %s)"
                   % (nombre_archivo, kb, numero, foto["autor"] or "sin autor"))
