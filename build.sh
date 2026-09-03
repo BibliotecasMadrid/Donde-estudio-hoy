@@ -110,6 +110,7 @@ fallo() { echo "ERROR: $1" >&2; exit 1; }
 
 [[ -f "$SALIDA/index.html" ]] || fallo "falta index.html"
 [[ -f "$SALIDA/sitemap.xml" ]] || fallo "falta sitemap.xml"
+[[ -f "$SALIDA/directorio.html" ]] || fallo "falta directorio.html (las fichas volverian a ser huerfanas para Google)"
 [[ -f "$SALIDA/horarios.js" ]] || fallo "falta horarios.js"
 [[ -f "$SALIDA/basemap.js" ]] || fallo "falta basemap.js (los mapas se quedarian sin capa base)"
 [[ -f "$SALIDA/zonas-madrid.geojson" ]] || fallo "falta zonas-madrid.geojson (el buscador no encontraria barrios ni municipios)"

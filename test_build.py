@@ -1,6 +1,7 @@
 import copy
 import json
 import os
+import re
 import tempfile
 import unittest
 from collections import Counter
@@ -56,7 +57,36 @@ class BuildTests(unittest.TestCase):
         sitemap = build.sitemap_xml(self.slugs, self.calendario)
         self.assertEqual(sitemap.count(build.BASE + build.WEEKEND_ROUTE), 1)
         self.assertEqual(sitemap.count(build.BASE + build.FULL_DAY_ROUTE), 1)
-        self.assertEqual(sitemap.count("<url>"), len(self.slugs) + 3)
+        self.assertEqual(sitemap.count(build.BASE + build.DIRECTORY_ROUTE), 1)
+        self.assertEqual(sitemap.count("<url>"), len(self.slugs) + 4)
+
+    def test_place_titles_lead_with_the_schedule_prefix(self):
+        for lugar, slug in list(zip(self.lugares, self.slugs))[:20]:
+            page = build.page_html(lugar, slug)
+            expected = f'<title>{build.TITLE_PREFIX} · {lugar["nombre"]}</title>'
+            self.assertIn(expected, page)
+            self.assertIn(
+                f'<meta property="og:title" content="{build.TITLE_PREFIX} · {lugar["nombre"]}">',
+                page,
+            )
+
+    def test_directory_links_every_place_in_static_html(self):
+        page = build.directorio_page_html(self.lugares, self.slugs)
+        # El valor de la página es que los enlaces estén en el HTML servido, no que los
+        # ponga JavaScript: se comprueba sobre el documento con los <script> quitados.
+        sin_script = re.sub(r"<script.*?</script>", "", page, flags=re.S)
+        enlaces = set(re.findall(r'href="/([a-z0-9-]+)"', sin_script))
+        self.assertTrue(set(self.slugs) <= enlaces, set(self.slugs) - enlaces)
+        self.assertIn(f'<link rel="canonical" href="{build.BASE}{build.DIRECTORY_ROUTE}">', page)
+
+    def test_home_links_to_the_directory(self):
+        with open(os.path.join(build.ROOT, "index.html"), encoding="utf-8") as source:
+            home = source.read()
+        self.assertIn(f'href="/{build.DIRECTORY_ROUTE}"', home)
+
+    def test_places_link_back_to_the_directory(self):
+        page = build.page_html(self.lugares[0], self.slugs[0])
+        self.assertIn(f'href="/{build.DIRECTORY_ROUTE}"', page)
 
     def test_search_area_catalog_is_complete_and_valid(self):
         path = os.path.join(build.ROOT, "zonas-madrid.geojson")

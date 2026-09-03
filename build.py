@@ -26,6 +26,17 @@ LASTMOD = "2026-08-31"
 WEEKEND_ROUTE = "bibliotecas-abiertas-fin-de-semana-madrid"
 FULL_DAY_ROUTE = "bibliotecas-24-horas-madrid"
 
+# El directorio existe por indexación, no por diseño: el mapa de index.html es la
+# interfaz real, pero sus marcadores los pinta JavaScript y no dejan ni un <a href>
+# en el HTML. Sin esta página las 249 fichas son huérfanas —solo el sitemap sabe que
+# existen— y Google las deja en "Descubierta: actualmente sin indexar" sin rastrearlas.
+DIRECTORY_ROUTE = "directorio"
+
+# Va delante del nombre en el <title> de cada ficha. El horario es lo que se viene a
+# buscar y lo que de verdad diferencia a esta web de la ficha oficial del ayuntamiento,
+# así que ocupa el sitio con más peso del resultado de búsqueda.
+TITLE_PREFIX = "HORARIO ACTUALIZADO"
+
 PREFIJOS = [
     "biblioteca pública ",
     "biblioteca municipal ",
@@ -673,13 +684,13 @@ def page_html(d, slug):
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="64x64" href="icons/favicon-64.png">
-  <title>{e(d["nombre"])} · Horario y dirección · Madrid</title>
+  <title>{TITLE_PREFIX} · {e(d["nombre"])}</title>
   <meta name="description" content="{e(desc)}">
   <link rel="canonical" href="{e(canonical)}">
   <meta name="robots" content="index, follow">
   <meta property="og:type" content="article">
   <meta property="og:locale" content="es_ES">
-  <meta property="og:title" content="{e(d["nombre"])} · Horario y dirección">
+  <meta property="og:title" content="{TITLE_PREFIX} · {e(d["nombre"])}">
   <meta property="og:description" content="{e(desc)}">
   <meta property="og:url" content="{e(canonical)}">
   <meta property="og:image" content="{e(og_img)}">
@@ -1026,6 +1037,7 @@ def page_html(d, slug):
 
         <footer>
           Datos: <a href="https://datos.madrid.es" target="_blank" rel="noopener">datos.madrid.es</a> (CC BY 4.0).
+          <br><a href="/{DIRECTORY_ROUTE}">Todos los centros de Madrid</a>
         </footer>
       </div>
     </div>
@@ -1369,12 +1381,173 @@ def landing_page_html(lugares, slugs, calendario, modo):
 </html>'''
 
 
+def directorio_page_html(lugares, slugs):
+    """Índice navegable de todos los centros, agrupados por distrito o municipio.
+
+    Es HTML estático de principio a fin: ni un enlace lo pone JavaScript. Ese es todo
+    el propósito de la página, así que si alguna vez se le añade interactividad, la
+    lista de <a href> tiene que seguir estando en el HTML servido.
+    """
+    e = html.escape
+    fichas = sorted(
+        (
+            {
+                "slug": slug,
+                "nombre": lugar["nombre"],
+                "zona": lugar["distrito"],
+                "direccion": lugar["direccion"],
+                "tipo": COLORES[lugar["tipo"]]["label"],
+                "tipo_key": lugar["tipo"],
+            }
+            for lugar, slug in zip(lugares, slugs)
+        ),
+        key=lambda f: (normalizar(f["zona"]), normalizar(f["nombre"])),
+    )
+
+    zonas = []
+    for ficha in fichas:
+        if not zonas or zonas[-1]["nombre"] != ficha["zona"]:
+            zonas.append({"nombre": ficha["zona"], "id": identificador(ficha["zona"]), "fichas": []})
+        zonas[-1]["fichas"].append(ficha)
+
+    title = "Directorio de bibliotecas y salas de estudio de Madrid"
+    description = (
+        f"Listado completo de las {len(fichas)} bibliotecas públicas, salas de estudio y "
+        "bibliotecas universitarias de Madrid y su comunidad, ordenadas por distrito y municipio."
+    )
+    canonical = BASE + DIRECTORY_ROUTE
+
+    indice = "".join(
+        f'<li><a href="#{z["id"]}">{e(z["nombre"])} <span>{len(z["fichas"])}</span></a></li>'
+        for z in zonas
+    )
+    secciones = "".join(
+        '<section class="zona" id="{id}">\n'
+        '        <h2>{nombre} <span class="zona-count">{n} centro{plural}</span></h2>\n'
+        '        <ul>{items}</ul>\n'
+        '      </section>\n      '.format(
+            id=z["id"],
+            nombre=e(z["nombre"]),
+            n=len(z["fichas"]),
+            plural="" if len(z["fichas"]) == 1 else "s",
+            items="".join(
+                '<li><a href="/{slug}"><strong>{nombre}</strong>'
+                '<span class="meta"><em class="t-{tipo_key}">{tipo}</em> · {direccion}</span></a></li>'.format(
+                    slug=f["slug"],
+                    nombre=e(f["nombre"]),
+                    tipo_key=f["tipo_key"],
+                    tipo=e(f["tipo"]),
+                    direccion=e(f["direccion"]),
+                )
+                for f in z["fichas"]
+            ),
+        )
+        for z in zonas
+    )
+
+    # A propósito NO se emite un ItemList con los 249 centros: schema.org lo admite, pero
+    # no produce ningún resultado enriquecido para un directorio y añadía 37 KB —un tercio
+    # de la página— a la única página cuyo trabajo es ser barata de rastrear. Los enlaces
+    # del <main> ya dicen lo mismo y esos sí los sigue Google.
+    item_list = {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": title,
+        "description": description,
+        "url": canonical,
+        "inLanguage": "es-ES",
+        "about": {"@type": "Place", "name": "Comunidad de Madrid"},
+    }
+
+    return f'''<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#2563EB">
+  <title>{e(title)}</title>
+  <meta name="description" content="{e(description)}">
+  <link rel="canonical" href="{e(canonical)}">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="website"><meta property="og:locale" content="es_ES">
+  <meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(description)}">
+  <meta property="og:url" content="{e(canonical)}">
+  <script type="application/ld+json">{json.dumps(item_list, ensure_ascii=False)}</script>
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="64x64" href="icons/favicon-64.png">
+  <style>
+    :root {{ --ink:#1A1F36; --ink-2:#5A6172; --ink-3:#9AA0AE; --line:#ECEEF2; --bg:#F7F8FA; }}
+    * {{ margin:0; padding:0; box-sizing:border-box; }}
+    body {{
+      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+      -webkit-font-smoothing:antialiased; color:var(--ink); background:var(--bg);
+      line-height:1.5;
+    }}
+    .wrap {{ max-width:1080px; margin:0 auto; padding:28px 20px 64px; }}
+    a {{ color:inherit; }}
+    .back {{ display:inline-block; font-size:14px; color:var(--ink-2); text-decoration:none; margin-bottom:18px; }}
+    .back:hover {{ color:#2563EB; }}
+    h1 {{ font-size:27px; line-height:1.25; letter-spacing:-0.02em; }}
+    .intro {{ margin-top:10px; color:var(--ink-2); font-size:15px; max-width:64ch; }}
+    .nav-links {{ display:flex; flex-wrap:wrap; gap:10px; margin-top:16px; }}
+    .nav-links a {{
+      font-size:13.5px; text-decoration:none; color:#2563EB; background:#fff;
+      border:1px solid var(--line); border-radius:999px; padding:6px 13px;
+    }}
+    .nav-links a:hover {{ border-color:#2563EB; }}
+    .indice {{ margin:26px 0 8px; padding:16px 18px; background:#fff; border:1px solid var(--line); border-radius:14px; }}
+    .indice h2 {{ font-size:12px; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink-3); margin-bottom:11px; }}
+    .indice ul {{ list-style:none; display:flex; flex-wrap:wrap; gap:6px 8px; }}
+    .indice a {{ font-size:13.5px; text-decoration:none; color:var(--ink-2); }}
+    .indice a:hover {{ color:#2563EB; }}
+    .indice a span {{ color:var(--ink-3); font-size:12px; }}
+    .zona {{ margin-top:30px; scroll-margin-top:16px; }}
+    .zona h2 {{
+      font-size:17px; letter-spacing:-0.01em; padding-bottom:8px;
+      border-bottom:1px solid var(--line); display:flex; align-items:baseline; gap:10px;
+    }}
+    .zona-count {{ font-size:12.5px; font-weight:400; color:var(--ink-3); }}
+    .zona ul {{ list-style:none; display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:2px 18px; margin-top:6px; }}
+    .zona li a {{ display:block; text-decoration:none; padding:9px 10px; margin:0 -10px; border-radius:10px; }}
+    .zona li a:hover {{ background:#fff; }}
+    .zona li strong {{ display:block; font-size:14.5px; font-weight:600; }}
+    .zona li .meta {{ display:block; font-size:12.5px; color:var(--ink-3); margin-top:1px; }}
+    .zona li em {{ font-style:normal; font-weight:600; }}
+    .t-biblioteca {{ color:#2563EB; }} .t-sala {{ color:#059669; }} .t-universidad {{ color:#7C3AED; }}
+    footer {{ margin-top:44px; padding-top:16px; border-top:1px solid var(--line); font-size:12.5px; color:var(--ink-3); }}
+    @media (max-width:560px) {{ h1 {{ font-size:23px; }} .wrap {{ padding:20px 16px 48px; }} }}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <a class="back" href="/">← Volver al mapa</a>
+    <h1>{e(title)}</h1>
+    <p class="intro">{e(description)} Cada ficha incluye el horario actualizado, la dirección y cómo llegar.</p>
+    <nav class="nav-links" aria-label="Páginas relacionadas">
+      <a href="/{FULL_DAY_ROUTE}">Bibliotecas 24 horas</a>
+      <a href="/{WEEKEND_ROUTE}">Abiertas el fin de semana</a>
+    </nav>
+    <nav class="indice" aria-label="Índice de zonas">
+      <h2>{len(zonas)} distritos y municipios</h2>
+      <ul>{indice}</ul>
+    </nav>
+    <main>
+      {secciones}
+    </main>
+    <footer>Datos: datos.madrid.es (CC BY 4.0) y webs oficiales de cada centro.</footer>
+  </div>
+</body>
+</html>'''
+
+
 def sitemap_xml(slugs, calendario=None):
     lastmod_landing = max(LASTMOD, (calendario or {}).get("last_updated", LASTMOD))
     urls = [f"  <url><loc>{BASE}</loc><lastmod>{LASTMOD}</lastmod><changefreq>monthly</changefreq><priority>1.0</priority></url>"]
     urls.extend([
         f"  <url><loc>{BASE}{WEEKEND_ROUTE}</loc><lastmod>{lastmod_landing}</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>",
         f"  <url><loc>{BASE}{FULL_DAY_ROUTE}</loc><lastmod>{lastmod_landing}</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>",
+        f"  <url><loc>{BASE}{DIRECTORY_ROUTE}</loc><lastmod>{LASTMOD}</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>",
     ])
     for s in slugs:
         urls.append(
@@ -1428,12 +1601,17 @@ def main(argv=None):
             html = landing_page_html(lugares, slugs, calendario, mode)
             f.write("\n".join(line.rstrip() for line in html.splitlines()) + "\n")
 
+    directorio_path = os.path.join(ROOT, f"{DIRECTORY_ROUTE}.html")
+    with open(directorio_path, "w", encoding="utf-8") as f:
+        html_directorio = directorio_page_html(lugares, slugs)
+        f.write("\n".join(line.rstrip() for line in html_directorio.splitlines()) + "\n")
+
     # 2. Generar sitemap.xml
     sitemap_path = os.path.join(ROOT, "sitemap.xml")
     with open(sitemap_path, "w", encoding="utf-8") as f:
         f.write(sitemap_xml(slugs, calendario))
 
-    print(f"Generadas {len(lugares)} fichas + 2 páginas temáticas + sitemap.xml ({len(slugs) + 3} URLs).")
+    print(f"Generadas {len(lugares)} fichas + 2 páginas temáticas + directorio + sitemap.xml ({len(slugs) + 4} URLs).")
     print(f"Calendario compilado: {total_dias} días en {HORARIOS_DIR}.")
     for s, d in list(zip(slugs, lugares))[:6]:
         print(f"  {s:42s} <- {d['nombre']}")
