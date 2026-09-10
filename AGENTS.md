@@ -26,6 +26,9 @@ Minimalista: solo mapa + marcadores + panel. Sin menús, buscador ni backend.
   `#:~:text=` para que el enlace resalte el horario, deriva el semanal y avisa de lo que no
   sabe interpretar en vez de escribirlo a ciegas. Ver "Horarios y fuentes oficiales".
 - **`sitemap.xml`** — generado por `build.py`.
+- **`.claude/skills/revision-semanal/`** — el repaso de los viernes: `comprobar.py` lanza
+  de una vez la auditoría de horarios, los tests, el build y el estado de la web publicada,
+  y `SKILL.md` dice cómo leer lo que sale. Es solo lectura: informa, no arregla.
 - **`build.sh`** — lo que ejecuta Cloudflare Pages: lanza `build.py` y arma `dist/` con solo
   lo que es web. Aborta el despliegue si el material de firma de la app se cuela en `dist/`.
 - **`_headers`** — cabeceras HTTP (seguridad y caché) que aplica Cloudflare Pages.
