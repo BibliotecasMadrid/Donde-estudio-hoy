@@ -361,6 +361,14 @@ def periodo_de(texto, year):
     return None
 
 
+# Nombres de fiesta que llevan dentro un dia de la semana. Se citan tal cual en las
+# lineas de cierre y no se refieren al dia semanal, sino a una fecha del calendario.
+SEMANA_SANTA = re.compile(
+    r"(jueves|viernes|s[áa]bado)\s+santos?|"
+    r"domingo\s+de\s+(resurrecci[óo]n|ramos|pascua)|"
+    r"lunes\s+de\s+pascua", re.I)
+
+
 def dias_cerrados(texto):
     """Dias de la semana que una frase de cierre deja cerrados TODA la temporada.
 
@@ -373,6 +381,10 @@ def dias_cerrados(texto):
     # Los parentesis aclaran un periodo ('Semana Santa (de jueves a domingo)'), no
     # anuncian un cierre semanal.
     cuerpo = re.sub(r"\([^)]*\)", " ", cuerpo)
+    # 'de Jueves Santo a Domingo de Resurreccion' nombra las fiestas de un ano concreto,
+    # no los jueves y domingos de la temporada. Sin quitarlas, un centro que cierra en
+    # Semana Santa acaba con el jueves cerrado las 52 semanas.
+    cuerpo = re.sub(SEMANA_SANTA, " ", cuerpo)
     dias = set()
     for trozo in re.split(r"[;.,]", cuerpo):
         if re.search(r"\d", trozo):
