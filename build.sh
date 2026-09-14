@@ -64,6 +64,7 @@ PRIVADO=(
   "build.py"                             # el generador, no su salida
   "build.sh"                             # este mismo script
   "sync_uam.py"
+  "auditar_horarios.py"                  # herramienta de auditoria, no contenido web
   "test_build.py"
   "fotos.py"                             # herramienta de fotos, no su salida
   "generar_zonas.py"                     # genera la cartografia local del buscador
