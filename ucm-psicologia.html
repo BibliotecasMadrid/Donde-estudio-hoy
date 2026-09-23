@@ -374,29 +374,54 @@
     // En móvil, "Volver al mapa" centra este lugar sin abrir el panel. En escritorio se
     // conserva la navegación existente y el botón independiente "Ver en el mapa".
     try {
-      const mobileDetailMedia = window.matchMedia('(max-width: 768px)');
       const backLink = document.querySelector('.back');
-      const detailUrl = window.location.href;
-      const mobileMapTarget = '/?centro=' + encodeURIComponent(slug);
-      const desktopMapTarget = './#' + encodeURIComponent(slug);
-      const currentMapTarget = () => mobileDetailMedia.matches ? mobileMapTarget : desktopMapTarget;
-      const syncBackLink = () => {
-        if (backLink) backLink.href = mobileDetailMedia.matches ? mobileMapTarget : './';
+      // Si se llega desde las páginas de fin de semana o 24 h, "atrás" (el enlace y el
+      // botón del navegador) devuelve a esa página, no al mapa. Por eso aquí no se monta
+      // la entrada de historial del mapa: el navegador ya tiene la buena.
+      const landings = {
+        'bibliotecas-abiertas-fin-de-semana-madrid': 'Volver a abiertas el fin de semana',
+        'bibliotecas-24-horas-madrid': 'Volver a bibliotecas 24 horas'
       };
-      syncBackLink();
-      if (typeof mobileDetailMedia.addEventListener === 'function') {
-        mobileDetailMedia.addEventListener('change', syncBackLink);
+      let origen = null;
+      try {
+        const ref = new URL(document.referrer);
+        const ruta = ref.pathname.replace(/^\/|\.html$/g, '');
+        if (ref.origin === location.origin && landings[ruta]) origen = { url: ref.pathname + '#' + encodeURIComponent(slug), label: landings[ruta] };
+      } catch (err) {}
+      if (origen) {
+        if (backLink) {
+          backLink.textContent = '← ' + origen.label;
+          backLink.href = origen.url;
+          backLink.addEventListener('click', function(e) {
+            if (history.length < 2) return;
+            e.preventDefault();
+            history.back();
+          });
+        }
       } else {
-        mobileDetailMedia.addListener(syncBackLink);
+        const mobileDetailMedia = window.matchMedia('(max-width: 768px)');
+        const detailUrl = window.location.href;
+        const mobileMapTarget = '/?centro=' + encodeURIComponent(slug);
+        const desktopMapTarget = './#' + encodeURIComponent(slug);
+        const currentMapTarget = () => mobileDetailMedia.matches ? mobileMapTarget : desktopMapTarget;
+        const syncBackLink = () => {
+          if (backLink) backLink.href = mobileDetailMedia.matches ? mobileMapTarget : './';
+        };
+        syncBackLink();
+        if (typeof mobileDetailMedia.addEventListener === 'function') {
+          mobileDetailMedia.addEventListener('change', syncBackLink);
+        } else {
+          mobileDetailMedia.addListener(syncBackLink);
+        }
+        if (!history.state || history.state.view !== 'detail') {
+          history.replaceState({ view: 'map' }, '', currentMapTarget());
+          history.pushState({ view: 'detail' }, '', detailUrl);
+        }
+        window.addEventListener('popstate', function(e) {
+          window.location.href = currentMapTarget();
+          window.location.reload();
+        });
       }
-      if (!history.state || history.state.view !== 'detail') {
-        history.replaceState({ view: 'map' }, '', currentMapTarget());
-        history.pushState({ view: 'detail' }, '', detailUrl);
-      }
-      window.addEventListener('popstate', function(e) {
-        window.location.href = currentMapTarget();
-        window.location.reload();
-      });
     } catch (err) {}
 
     function updateToday() {

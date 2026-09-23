@@ -1051,29 +1051,54 @@ def page_html(d, slug):
     // En móvil, "Volver al mapa" centra este lugar sin abrir el panel. En escritorio se
     // conserva la navegación existente y el botón independiente "Ver en el mapa".
     try {{
-      const mobileDetailMedia = window.matchMedia('(max-width: 768px)');
       const backLink = document.querySelector('.back');
-      const detailUrl = window.location.href;
-      const mobileMapTarget = '/?centro=' + encodeURIComponent(slug);
-      const desktopMapTarget = './#' + encodeURIComponent(slug);
-      const currentMapTarget = () => mobileDetailMedia.matches ? mobileMapTarget : desktopMapTarget;
-      const syncBackLink = () => {{
-        if (backLink) backLink.href = mobileDetailMedia.matches ? mobileMapTarget : './';
+      // Si se llega desde las páginas de fin de semana o 24 h, "atrás" (el enlace y el
+      // botón del navegador) devuelve a esa página, no al mapa. Por eso aquí no se monta
+      // la entrada de historial del mapa: el navegador ya tiene la buena.
+      const landings = {{
+        '{WEEKEND_ROUTE}': 'Volver a abiertas el fin de semana',
+        '{FULL_DAY_ROUTE}': 'Volver a bibliotecas 24 horas'
       }};
-      syncBackLink();
-      if (typeof mobileDetailMedia.addEventListener === 'function') {{
-        mobileDetailMedia.addEventListener('change', syncBackLink);
+      let origen = null;
+      try {{
+        const ref = new URL(document.referrer);
+        const ruta = ref.pathname.replace(/^\/|\.html$/g, '');
+        if (ref.origin === location.origin && landings[ruta]) origen = {{ url: ref.pathname + '#' + encodeURIComponent(slug), label: landings[ruta] }};
+      }} catch (err) {{}}
+      if (origen) {{
+        if (backLink) {{
+          backLink.textContent = '← ' + origen.label;
+          backLink.href = origen.url;
+          backLink.addEventListener('click', function(e) {{
+            if (history.length < 2) return;
+            e.preventDefault();
+            history.back();
+          }});
+        }}
       }} else {{
-        mobileDetailMedia.addListener(syncBackLink);
+        const mobileDetailMedia = window.matchMedia('(max-width: 768px)');
+        const detailUrl = window.location.href;
+        const mobileMapTarget = '/?centro=' + encodeURIComponent(slug);
+        const desktopMapTarget = './#' + encodeURIComponent(slug);
+        const currentMapTarget = () => mobileDetailMedia.matches ? mobileMapTarget : desktopMapTarget;
+        const syncBackLink = () => {{
+          if (backLink) backLink.href = mobileDetailMedia.matches ? mobileMapTarget : './';
+        }};
+        syncBackLink();
+        if (typeof mobileDetailMedia.addEventListener === 'function') {{
+          mobileDetailMedia.addEventListener('change', syncBackLink);
+        }} else {{
+          mobileDetailMedia.addListener(syncBackLink);
+        }}
+        if (!history.state || history.state.view !== 'detail') {{
+          history.replaceState({{ view: 'map' }}, '', currentMapTarget());
+          history.pushState({{ view: 'detail' }}, '', detailUrl);
+        }}
+        window.addEventListener('popstate', function(e) {{
+          window.location.href = currentMapTarget();
+          window.location.reload();
+        }});
       }}
-      if (!history.state || history.state.view !== 'detail') {{
-        history.replaceState({{ view: 'map' }}, '', currentMapTarget());
-        history.pushState({{ view: 'detail' }}, '', detailUrl);
-      }}
-      window.addEventListener('popstate', function(e) {{
-        window.location.href = currentMapTarget();
-        window.location.reload();
-      }});
     }} catch (err) {{}}
     
     function updateToday() {{
@@ -1287,10 +1312,14 @@ def landing_page_html(lugares, slugs, calendario, modo):
         if is_weekend else
         "Bibliotecas y salas de estudio 24 horas en Madrid durante exámenes. Consulta qué centros tienen apertura 24 h confirmada y sus fechas oficiales."
     )
+    # En la de fin de semana, seo-landing.js cambia "el próximo sábado y domingo" por las
+    # fechas exactas del fin de semana en curso: el HTML se genera en cada despliegue, no a
+    # diario, así que una fecha escrita aquí se quedaría vieja.
     intro = (
-        "Consulta qué bibliotecas y salas de estudio abren el próximo sábado y domingo. Los resultados se actualizan con festivos, verano y excepciones de cada centro."
+        'Consulta qué bibliotecas y salas de estudio abren <span id="weekend-dates">el próximo sábado y domingo</span>. '
+        "Los resultados se actualizan con festivos, verano y excepciones de cada centro."
         if is_weekend else
-        "Las aperturas 24 horas no son permanentes: se activan en fechas concretas de exámenes. Aquí solo aparecen periodos confirmados en una fuente oficial."
+        e("Las aperturas 24 horas no son permanentes: se activan en fechas concretas de exámenes. Aquí solo aparecen periodos confirmados en una fuente oficial.")
     )
     capital = [sitio for sitio in sitios if sitio["municipality"] == "madrid"]
     comunidad = [sitio for sitio in sitios if sitio["municipality"] != "madrid"]
@@ -1354,29 +1383,30 @@ def landing_page_html(lugares, slugs, calendario, modo):
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
-  <link rel="stylesheet" href="seo-landing.css?v=20260901-2">
+  <link rel="stylesheet" href="seo-landing.css?v=20260923-1">
 </head>
 <body>
   <header class="page-header">
     <a class="home-link" href="/">← Volver al mapa</a>
-    <h1>{e(title)}</h1><p>{e(intro)}</p>
+    <h1>{e(title)}</h1><p>{intro}</p>
     <nav class="intent-links" aria-label="Páginas relacionadas"><a href="{other_href}">{other_label}</a></nav>
-    <p class="updated">Calendario {year} · revisado el {e(updated)}</p>
+    <p class="updated" id="updated">Horarios actualizados a diario</p>
   </header>
   <main>
-    <section class="map-column" aria-label="Mapa de resultados"><div id="map"></div></section>
+    <section class="map-column" aria-label="Mapa de resultados"><div id="map"></div>
+      <aside class="place-panel" id="place-panel" aria-label="Centro seleccionado" hidden><button id="panel-close" type="button" aria-label="Cerrar">×</button><div id="panel-content"></div></aside>
+    </section>
     <section class="results-column" aria-live="polite">
       <div class="results-toolbar"><p class="summary" id="summary">{e(summary_initial)}</p>{filters}<div class="notice" id="notice" hidden></div></div>
       <div id="results">{grupos}</div>
     </section>
   </main>
-  <aside class="place-panel" id="place-panel" aria-hidden="true"><button id="panel-close" aria-label="Cerrar">×</button><div id="panel-content"></div></aside>
   <noscript><p class="noscript">El listado muestra los horarios habituales o periodos confirmados. Activa JavaScript para comprobar las próximas fechas y usar el mapa.</p></noscript>
   <script>window.LANDING_DATA={page_data};window.LANDING_LASTMOD={json.dumps(lastmod)};</script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
   <script src="basemap.js"></script>
-  <script src="horarios.js?v=20260901-2"></script><script src="seo-landing.js?v=20260901-2"></script>
+  <script src="horarios.js?v=20260901-2"></script><script src="seo-landing.js?v=20260923-1"></script>
 </body>
 </html>'''
 
