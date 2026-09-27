@@ -63,7 +63,7 @@
       --c-sala:       #059669;
       --c-universidad:#7C3AED;
       --c-ubicacion:  #EA4335;
-      --mobile-map-bottom: calc(106px + env(safe-area-inset-bottom, 0px));
+      --mobile-map-bottom: calc(94px + env(safe-area-inset-bottom, 0px));
       --ink:    #1A1F36;
       --ink-2:  #5A6172;
       --ink-3:  #9AA0AE;
@@ -126,13 +126,14 @@
       font-size: 12.5px;
       display: flex;
       flex-direction: column;
-      gap: 7px;
+      gap: 2px;
     }
-    .legend-item { display: flex; align-items: center; gap: 9px; width: 100%; border: 0; border-radius: 9px; padding: 4px 6px; background: transparent; color: var(--ink); font: inherit; font-weight: 600; text-align: left; cursor: pointer; }
+    .legend-item { display: flex; align-items: center; gap: 9px; width: 100%; border: 0; border-radius: 9px; padding: 2px 6px; background: transparent; color: var(--ink); font: inherit; font-weight: 600; text-align: left; cursor: pointer; }
     .legend-item:hover, .legend-item[aria-pressed="true"] { background: color-mix(in srgb, var(--type-color) 12%, white); }
     .legend-item:focus-visible { outline: 3px solid rgba(37,99,235,.35); outline-offset: 2px; }
-    .legend-icon { display: inline-flex; flex: 0 0 auto; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; background: var(--type-color); color: #fff; }
-    .legend-icon svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+    .legend-icon { display: inline-flex; flex: 0 0 auto; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 9px; background: color-mix(in srgb, var(--type-color) 10%, white); color: var(--type-color); }
+    .legend-icon svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .mobile-label-break { display: none; }
 
     /* ── Markers ─────────────────────────────────── */
     .study-marker {
@@ -480,13 +481,6 @@
     .panel-page { background: #F1F3F7; color: var(--ink); }
     .panel-page:hover { background: #E7EAF0; }
 
-    /* Zoom control: softer, modern */
-    .leaflet-control-zoom a {
-      border-radius: 10px !important;
-      color: var(--ink) !important;
-      box-shadow: 0 2px 8px rgba(20,30,60,0.12);
-      border: none !important;
-    }
     .leaflet-bar { border: none !important; }
     .leaflet-control-attribution {
       background: rgba(255,255,255,0.75) !important;
@@ -750,8 +744,8 @@
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 4px;
-        min-height: calc(94px + env(safe-area-inset-bottom, 0px));
-        padding: 10px max(12px, env(safe-area-inset-right, 0px)) max(10px, env(safe-area-inset-bottom, 0px)) max(12px, env(safe-area-inset-left, 0px));
+        min-height: calc(82px + env(safe-area-inset-bottom, 0px));
+        padding: 6px max(12px, env(safe-area-inset-right, 0px)) max(8px, env(safe-area-inset-bottom, 0px)) max(12px, env(safe-area-inset-left, 0px));
         border-radius: 20px 20px 0 0;
         background: rgba(255,255,255,0.96);
         box-shadow: 0 -5px 24px rgba(20,30,60,0.16);
@@ -760,16 +754,17 @@
       .legend-item {
         flex-direction: column;
         justify-content: center;
-        gap: 5px;
-        min-height: 72px;
-        padding: 5px 2px;
+        gap: 3px;
+        min-height: 62px;
+        padding: 3px 2px;
         border-radius: 14px;
         text-align: center;
         line-height: 1.12;
       }
       .legend-item > span:last-child { min-height: 24px; }
-      .legend-icon { width: 32px; height: 32px; }
-      .legend-icon svg { width: 21px; height: 21px; }
+      .legend-icon { width: 30px; height: 30px; }
+      .legend-icon svg { width: 24px; height: 24px; }
+      .mobile-label-break { display: revert; }
       .legend-item[aria-pressed="true"] {
         color: var(--type-color);
         font-weight: 800;
@@ -821,9 +816,6 @@
         height: 48px;
         background: rgba(254,226,226,0.94);
         font-size: 22px;
-      }
-      .leaflet-control-zoom {
-        display: none; /* Map zooming is usually handled by pinch on mobile */
       }
       .study-tools-control {
         position: fixed;
@@ -965,10 +957,13 @@
     .marker-cluster-large {
       background: rgba(37,99,235,0.15) !important;
     }
+    .marker-cluster-sala { --cluster-color: #059669; background: rgba(5,150,105,0.15) !important; }
+    .marker-cluster-universidad { --cluster-color: #7C3AED; background: rgba(124,58,237,0.15) !important; }
+    .marker-cluster-mixto { --cluster-color: #475569; background: rgba(71,85,105,0.15) !important; }
     .marker-cluster-small div,
     .marker-cluster-medium div,
     .marker-cluster-large div {
-      background: #2563EB !important;
+      background: var(--cluster-color, #2563EB) !important;
       color: #fff !important;
       font-weight: 700;
       font-size: 12px;
@@ -1004,13 +999,13 @@
 </div>
 <nav class="legend" aria-label="Filtrar centros por tipo">
   <button class="legend-item" type="button" data-type="biblioteca" aria-pressed="false" style="--type-color:#2563EB">
-    <span class="legend-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5c-2.3-1.3-5-1.5-8-1v14c3-.5 5.7-.3 8 1 2.3-1.3 5-1.5 8-1V4c-3-.5-5.7-.3-8 1Z"/><path d="M12 5v14"/></svg></span><span>Bibliotecas públicas</span>
+    <span class="legend-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 6c-2.5-1.5-5.5-1.8-9-1v14c3.5-.8 6.5-.5 9 1 2.5-1.5 5.5-1.8 9-1V5c-3.5-.8-6.5-.5-9 1Z"/><path d="M12 6v14M5.5 8.5c1.5-.2 3.1 0 4.5.6m4 0c1.4-.6 3-.8 4.5-.6"/></svg></span><span>Bibliotecas<br class="mobile-label-break"> públicas</span>
   </button>
   <button class="legend-item" type="button" data-type="universidad" aria-pressed="false" style="--type-color:#7C3AED">
-    <span class="legend-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m2 8 10-5 10 5H2ZM3 21h18M4 18h16M5 9v9m4-9v9m6-9v9m4-9v9"/></svg></span><span>Bibliotecas universitarias</span>
+    <span class="legend-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m2 8 10-5 10 5v2H2V8Zm2 3v8m5-8v8m6-8v8m5-8v8M3 19h18v2H3v-2Z"/><path d="M2 10h20"/></svg></span><span>Bibliotecas<br class="mobile-label-break"> universitarias</span>
   </button>
   <button class="legend-item" type="button" data-type="sala" aria-pressed="false" style="--type-color:#059669">
-    <span class="legend-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 3h11v18H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Zm-2 14h13M6 3v14M19 5l2 1v11l-1 3-1-3V5Zm0 3h2"/></svg></span><span>Salas de estudio</span>
+    <span class="legend-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 4h11v16H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Zm3 0v16M9.5 8h3M9.5 12h3"/><path d="M18 5.5a1.5 1.5 0 0 1 3 0V16l-1.5 4-1.5-4V5.5ZM18 8h3M18 16h3"/></svg></span><span>Salas<br class="mobile-label-break"> de estudio</span>
   </button>
 </nav>
 
@@ -1302,7 +1297,7 @@ const lugares = [
 const map = L.map('map', {
   center: [40.4168, -3.7038],
   zoom: 12,
-  zoomControl: true
+  zoomControl: false
 });
 
 // Base limpia y moderna (Positron). El proveedor y la clave se eligen en basemap.js.
@@ -2633,7 +2628,18 @@ const clusterGroup = L.markerClusterGroup({
   spiderfyOnMaxZoom: true,
   showCoverageOnHover: false,
   zoomToBoundsOnClick: true,
-  disableClusteringAtZoom: 16
+  disableClusteringAtZoom: 16,
+  iconCreateFunction(cluster) {
+    const types = new Set(cluster.getAllChildMarkers().map(marker => marker._placeData.tipo));
+    const type = types.size === 1 ? [...types][0] : types.has('biblioteca') ? 'biblioteca' : 'mixto';
+    const count = cluster.getChildCount();
+    const size = count < 10 ? 'small' : count < 100 ? 'medium' : 'large';
+    return L.divIcon({
+      html: `<div><span>${count}</span></div>`,
+      className: `marker-cluster marker-cluster-${size} marker-cluster-${type}`,
+      iconSize: L.point(40, 40)
+    });
+  }
 });
 
 const allMarkers = [];
