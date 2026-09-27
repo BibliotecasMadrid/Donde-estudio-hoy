@@ -16,6 +16,7 @@
   let visiblePlaces = [...data.places];
   let selectedSlug = null;
   let userLocation = null;
+  let resultsExpanded = false;
 
   const escapeHtml = value => String(value == null ? '' : value)
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -219,20 +220,26 @@
 
   function renderGroups(places) {
     if (!places.length) {
+      results.classList.remove('is-collapsible', 'expanded');
       results.innerHTML = `<div class="empty-state">No hay centros que coincidan con este filtro. Prueba con otro día o consulta las fichas individuales.</div>`;
       return;
     }
+    results.classList.add('is-collapsible');
+    results.classList.toggle('expanded', resultsExpanded);
+    const toggle = `<button class="results-toggle" type="button" aria-expanded="${resultsExpanded}" aria-controls="results-groups">${resultsExpanded ? 'Ocultar centros' : 'Ver centros'} <span>${places.length}</span><span class="toggle-chevron" aria-hidden="true">⌄</span></button>`;
+    let groupsHtml;
     if (userLocation) {
-      results.innerHTML = `<section class="result-group"><h2>Más cerca de ti <span>${places.length}</span></h2><div class="cards">${sortPlaces(places).map(placeCard).join('')}</div></section>`;
-      return;
+      groupsHtml = `<section class="result-group"><h2>Más cerca de ti <span>${places.length}</span></h2><div class="cards">${sortPlaces(places).map(placeCard).join('')}</div></section>`;
+    } else {
+      const groups = [
+        ['Madrid capital', places.filter(place => place.municipality === 'madrid')],
+        ['Otros municipios', places.filter(place => place.municipality !== 'madrid')]
+      ];
+      groupsHtml = groups.filter(([, items]) => items.length).map(([label, items]) =>
+        `<section class="result-group"><h2>${label} <span>${items.length}</span></h2><div class="cards">${sortPlaces(items).map(placeCard).join('')}</div></section>`
+      ).join('');
     }
-    const groups = [
-      ['Madrid capital', places.filter(place => place.municipality === 'madrid')],
-      ['Otros municipios', places.filter(place => place.municipality !== 'madrid')]
-    ];
-    results.innerHTML = groups.filter(([, items]) => items.length).map(([label, items]) =>
-      `<section class="result-group"><h2>${label} <span>${items.length}</span></h2><div class="cards">${sortPlaces(items).map(placeCard).join('')}</div></section>`
-    ).join('');
+    results.innerHTML = `${toggle}<div id="results-groups">${groupsHtml}</div>`;
   }
 
   function renderMarkers(places, fit) {
@@ -400,6 +407,14 @@
   }
 
   results.addEventListener('click', event => {
+    if (event.target.closest('.results-toggle')) {
+      resultsExpanded = !resultsExpanded;
+      results.classList.toggle('expanded', resultsExpanded);
+      const button = results.querySelector('.results-toggle');
+      button.setAttribute('aria-expanded', String(resultsExpanded));
+      button.firstChild.textContent = resultsExpanded ? 'Ocultar centros ' : 'Ver centros ';
+      return;
+    }
     if (event.target.closest('a')) return;
     const card = event.target.closest('.place-card');
     if (card) openPanel(data.places.find(place => place.slug === card.dataset.slug), true);

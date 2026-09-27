@@ -1056,7 +1056,7 @@ def page_html(d, slug):
       // botón del navegador) devuelve a esa página, no al mapa. Por eso aquí no se monta
       // la entrada de historial del mapa: el navegador ya tiene la buena.
       const landings = {{
-        '{WEEKEND_ROUTE}': 'Volver a abiertas el fin de semana',
+        '{WEEKEND_ROUTE}': 'Volver a abiertas este fin de semana',
         '{FULL_DAY_ROUTE}': 'Volver a bibliotecas 24 horas'
       }};
       let origen = null;
@@ -1306,17 +1306,17 @@ def landing_page_html(lugares, slugs, calendario, modo):
     updated = calendario["last_updated"]
     is_weekend = modo == "weekend"
     route = WEEKEND_ROUTE if is_weekend else FULL_DAY_ROUTE
-    title = "Bibliotecas abiertas el fin de semana en Madrid" if is_weekend else "Bibliotecas 24 horas en Madrid: aperturas en época de exámenes"
+    title = "Bibliotecas abiertas este fin de semana en Madrid" if is_weekend else "Bibliotecas 24 horas en Madrid: aperturas en época de exámenes"
     description = (
-        "Bibliotecas y salas de estudio abiertas los sábados y domingos en Madrid. Consulta horarios actualizados, dirección y mapa para este fin de semana."
+        "Bibliotecas y salas de estudio abiertas este fin de semana en Madrid. Consulta horarios actualizados del sábado y domingo, dirección y mapa."
         if is_weekend else
         "Bibliotecas y salas de estudio 24 horas en Madrid durante exámenes. Consulta qué centros tienen apertura 24 h confirmada y sus fechas oficiales."
     )
-    # En la de fin de semana, seo-landing.js cambia "el próximo sábado y domingo" por las
+    # En la de fin de semana, seo-landing.js cambia "este fin de semana" por las
     # fechas exactas del fin de semana en curso: el HTML se genera en cada despliegue, no a
     # diario, así que una fecha escrita aquí se quedaría vieja.
     intro = (
-        'Consulta qué bibliotecas y salas de estudio abren <span id="weekend-dates">el próximo sábado y domingo</span>. '
+        'Consulta qué bibliotecas y salas de estudio abren <span id="weekend-dates">este fin de semana</span>. '
         "Los resultados se actualizan con festivos, verano y excepciones de cada centro."
         if is_weekend else
         e("Las aperturas 24 horas no son permanentes: se activan en fechas concretas de exámenes. Aquí solo aparecen periodos confirmados en una fuente oficial.")
@@ -1353,7 +1353,7 @@ def landing_page_html(lugares, slugs, calendario, modo):
         "places": sitios,
     }, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
     other_href = f'/{FULL_DAY_ROUTE}' if is_weekend else f'/{WEEKEND_ROUTE}'
-    other_label = "Ver bibliotecas 24 horas" if is_weekend else "Ver bibliotecas abiertas el fin de semana"
+    other_label = "Ver bibliotecas 24 horas" if is_weekend else "Ver bibliotecas abiertas este fin de semana"
     filters = '''<div class="filters" id="filters" aria-label="Filtrar por día">
       <button class="active" data-filter="all">Todos</button><button data-filter="saturday">Sábado</button>
       <button data-filter="sunday">Domingo</button><button data-filter="both">Ambos días</button>
@@ -1383,7 +1383,7 @@ def landing_page_html(lugares, slugs, calendario, modo):
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
-  <link rel="stylesheet" href="seo-landing.css?v=20260923-1">
+  <link rel="stylesheet" href="seo-landing.css?v=20260927-1">
 </head>
 <body>
   <header class="page-header">
@@ -1406,7 +1406,7 @@ def landing_page_html(lugares, slugs, calendario, modo):
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
   <script src="basemap.js"></script>
-  <script src="horarios.js?v=20260901-2"></script><script src="seo-landing.js?v=20260923-1"></script>
+  <script src="horarios.js?v=20260901-2"></script><script src="seo-landing.js?v=20260927-1"></script>
 </body>
 </html>'''
 
@@ -1556,7 +1556,7 @@ def directorio_page_html(lugares, slugs):
     <p class="intro">{e(description)} Cada ficha incluye el horario actualizado, la dirección y cómo llegar.</p>
     <nav class="nav-links" aria-label="Páginas relacionadas">
       <a href="/{FULL_DAY_ROUTE}">Bibliotecas 24 horas</a>
-      <a href="/{WEEKEND_ROUTE}">Abiertas el fin de semana</a>
+      <a href="/{WEEKEND_ROUTE}">Abiertas este fin de semana</a>
     </nav>
     <nav class="indice" aria-label="Índice de zonas">
       <h2>{len(zonas)} distritos y municipios</h2>

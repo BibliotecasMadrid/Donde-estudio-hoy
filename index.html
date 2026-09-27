@@ -287,6 +287,8 @@
     }
     .panel-name { font-size: 21px; font-weight: 800; letter-spacing: -0.01em; line-height: 1.25; color: var(--ink); margin-bottom: 8px; }
     .panel-address { font-size: 13px; color: var(--ink-3); margin-bottom: 16px; line-height: 1.5; }
+    .panel-address a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+    .panel-address a:hover { color: #2563EB; }
     
     /* ── Sección HOY ───────────────────────────── */
     
@@ -294,12 +296,10 @@
     /* Cover foto limpia en el panel lateral */
     .panel-cover {
       position: relative;
-      width: calc(100% + 48px);
-      margin: -24px -24px 16px -24px;
+      width: calc(100% + 52px);
+      margin: -56px -26px 16px;
       height: 160px;
       overflow: hidden;
-      border-top-left-radius: 18px;
-      border-top-right-radius: 18px;
       background: #E2E8F0;
     }
     .panel-img {
@@ -720,20 +720,20 @@
       .topbar-search-slot .study-search-icon {
         position: absolute;
         top: 50%;
-        left: 17px;
+        left: 13px;
         z-index: 2;
         display: block;
-        width: 24px;
-        height: 24px;
+        width: 20px;
+        height: 20px;
         color: #536074;
         pointer-events: none;
         transform: translateY(-50%);
       }
       .topbar-search-slot .study-search-input {
-        height: 56px;
-        padding: 0 16px 0 50px;
+        height: 40px;
+        padding: 0 14px 0 42px;
         border: 0;
-        border-radius: 18px;
+        border-radius: 13px;
         background: rgba(255,255,255,0.96);
         box-shadow: 0 5px 18px rgba(20,30,60,0.18);
         font-size: 16px;
@@ -879,7 +879,6 @@
       }
       .leaflet-control-attribution.is-expanded::before { display: none; }
       .leaflet-control-attribution.is-expanded a { display: inline; }
-      }
       body.place-panel-open .topbar,
       body.place-panel-open .study-tools-control,
       body.place-panel-open .open-now-btn {
@@ -896,7 +895,7 @@
 
     /* ── Botón "Abierto ahora" ──────────────── */
     .open-now-btn {
-      position: absolute;
+      position: fixed;
       bottom: 22px;
       right: 14px;
       z-index: 1000;
@@ -961,8 +960,8 @@
 
     @media (max-width: 768px) {
       .open-now-btn {
-        position: static;
-        flex: 0 0 auto;
+        right: 60px;
+        bottom: var(--mobile-map-bottom);
         min-height: 40px;
         padding: 0 10px;
         border-radius: 999px;
@@ -980,7 +979,7 @@
   <p>Bibliotecas, salas de estudio y universidades · pulsa un punto</p>
   <nav class="topbar-links" aria-label="Horarios especiales">
     <a href="/bibliotecas-24-horas-madrid"><span class="desktop-link-label">Abiertas 24 h</span><span class="mobile-link-label">Abierto 24 h ↗</span></a>
-    <a href="/bibliotecas-abiertas-fin-de-semana-madrid"><span class="desktop-link-label">Abiertas durante el fin de semana</span><span class="mobile-link-label">Abierto fin de semana ↗</span></a>
+    <a href="/bibliotecas-abiertas-fin-de-semana-madrid"><span class="desktop-link-label">Abiertas este fin de semana</span><span class="mobile-link-label">Este fin de semana ↗</span></a>
     <!-- El mapa pinta sus marcadores con JavaScript y no deja ningun <a href> en el HTML.
          Este enlace es el unico camino rastreable de la home a las 249 fichas. No quitar. -->
     <a href="/directorio"><span class="desktop-link-label">Todos los centros</span><span class="mobile-link-label">Todos los centros ↗</span></a>
@@ -1624,17 +1623,9 @@ function syncSearchPlacement() {
   const search = document.querySelector('.study-search');
   const desktopRow = document.querySelector('.study-tools-row');
   const mobileSlot = document.getElementById('topbar-search-slot');
-  const openNowButton = document.getElementById('open-now-btn');
-  const mobileLinks = document.querySelector('.topbar-links');
-  const panelElement = document.getElementById('panel');
-  if (!search || !desktopRow || !mobileSlot || !openNowButton || !mobileLinks || !panelElement) return;
+  if (!search || !desktopRow || !mobileSlot) return;
   const destination = MOBILE_UI_MEDIA.matches ? mobileSlot : desktopRow;
   if (search.parentElement !== destination) destination.append(search);
-  if (MOBILE_UI_MEDIA.matches) {
-    if (openNowButton.parentElement !== mobileLinks) mobileLinks.prepend(openNowButton);
-  } else if (openNowButton.parentElement !== document.body) {
-    document.body.insertBefore(openNowButton, panelElement);
-  }
 }
 
 function onResponsiveLayoutChange() {
@@ -2294,7 +2285,7 @@ function panelHtml(d) {
       ${imgCredit ? `<span class="panel-credit">Foto: ${escapeCalendarText(imgCredit)}</span>` : ''}
     </div>
     <h2 class="panel-name">${d.nombre}</h2>
-    <p class="panel-address">${d.distrito} · ${d.direccion}</p>
+    <p class="panel-address">${d.distrito} · <a href="https://www.google.com/maps/dir/?api=1&destination=${d.lat},${d.lng}" target="_blank" rel="noopener noreferrer" title="Ver cómo llegar">${d.direccion}</a></p>
     
     ${d.plazas ? `
     <div class="panel-capacity">
@@ -2319,15 +2310,11 @@ function panelHtml(d) {
     </div>
     
     <div class="panel-actions">
-      <a class="panel-link" style="background:${c.fill}" href="${webUrl(d)}" target="_blank" rel="noopener noreferrer">
+      <a class="panel-link" style="background:${c.fill}" href="${slugOf.get(d)}">Página de este centro ↗</a>
+      <a class="panel-page" href="${webUrl(d)}" target="_blank" rel="noopener noreferrer">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
         ${label}
       </a>
-      <a class="panel-page" href="https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(d.direccion)}" target="_blank" rel="noopener noreferrer">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
-        Cómo llegar
-      </a>
-      <a class="panel-page" href="${slugOf.get(d)}">Página de este centro ↗</a>
     </div>`;
 }
 

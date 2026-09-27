@@ -38,6 +38,13 @@ import sys
 import unicodedata
 from urllib.parse import quote
 
+if sys.platform == "win32" and hasattr(sys.stdout, "reconfigure"):
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+        sys.stderr.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
+
 RAIZ = os.path.dirname(os.path.abspath(__file__))
 INDEX = os.path.join(RAIZ, "index.html")
 CALENDARIO = os.path.join(RAIZ, "calendario.json")
@@ -391,7 +398,7 @@ def dias_cerrados(texto):
             continue
         if re.search(NOMBRE_MES, sin_tildes(trozo)):
             continue
-        if re.search(r"semana santa|navidad|pascua", sin_tildes(trozo)):
+        if re.search(r"semana santa|navidad|pascua|jueves santo|viernes santo|resurrecci", sin_tildes(trozo)):
             continue
         dias.update(dias_de(trozo))
     for m in re.finditer(r"(lunes|martes|mi[ée]rcoles|jueves|viernes|s[áa]bados?|domingos?)"
