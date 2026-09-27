@@ -976,6 +976,7 @@ def page_html(d, slug):
       .card-grid {{
         display: flex;
         flex-direction: column;
+        align-items: stretch;
         gap: 0;
       }}
       .card-main-col, .card-side-col {{ display: contents; }}
@@ -983,6 +984,7 @@ def page_html(d, slug):
       .card-main-col > .addr {{ order: 2; }}
       .card-main-col > .capacity-tag {{ order: 3; }}
       .card-main-col > .actions {{ order: 4; }}
+      .actions .btn {{ flex: 1 1 100%; justify-content: center; }}
       .btn-map {{ display: none; }}
       .card-side-col > .today-card {{ order: 5; margin-top: 16px; }}
       .card-main-col > .sched {{ order: 6; }}

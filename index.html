@@ -63,7 +63,7 @@
       --c-sala:       #059669;
       --c-universidad:#7C3AED;
       --c-ubicacion:  #EA4335;
-      --mobile-map-bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+      --mobile-map-bottom: calc(106px + env(safe-area-inset-bottom, 0px));
       --ink:    #1A1F36;
       --ink-2:  #5A6172;
       --ink-3:  #9AA0AE;
@@ -128,12 +128,11 @@
       flex-direction: column;
       gap: 7px;
     }
-    .legend-item { display: flex; align-items: center; gap: 9px; color: var(--ink); font-weight: 500; }
-    .dot {
-      width: 12px; height: 12px; border-radius: 50%;
-      box-shadow: 0 0 0 2px #fff, 0 1px 3px rgba(0,0,0,0.3);
-      flex-shrink: 0;
-    }
+    .legend-item { display: flex; align-items: center; gap: 9px; width: 100%; border: 0; border-radius: 9px; padding: 4px 6px; background: transparent; color: var(--ink); font: inherit; font-weight: 600; text-align: left; cursor: pointer; }
+    .legend-item:hover, .legend-item[aria-pressed="true"] { background: color-mix(in srgb, var(--type-color) 12%, white); }
+    .legend-item:focus-visible { outline: 3px solid rgba(37,99,235,.35); outline-offset: 2px; }
+    .legend-icon { display: inline-flex; flex: 0 0 auto; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; background: var(--type-color); color: #fff; }
+    .legend-icon svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
 
     /* ── Markers ─────────────────────────────────── */
     .study-marker {
@@ -745,19 +744,35 @@
       }
       .legend {
         position: fixed;
-        bottom: var(--mobile-map-bottom);
-        left: 8px;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 4px;
-        padding: 6px 8px;
-        border-radius: 10px;
-        box-shadow: 0 4px 18px rgba(20,30,60,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset;
-        font-size: 10px;
+        min-height: calc(94px + env(safe-area-inset-bottom, 0px));
+        padding: 10px max(12px, env(safe-area-inset-right, 0px)) max(10px, env(safe-area-inset-bottom, 0px)) max(12px, env(safe-area-inset-left, 0px));
+        border-radius: 20px 20px 0 0;
+        background: rgba(255,255,255,0.96);
+        box-shadow: 0 -5px 24px rgba(20,30,60,0.16);
+        font-size: 10.5px;
       }
-      .legend-item { gap: 6px; }
-      .dot {
-        width: 8px;
-        height: 8px;
-        box-shadow: 0 0 0 1px #fff, 0 1px 2px rgba(0,0,0,0.28);
+      .legend-item {
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        min-height: 72px;
+        padding: 5px 2px;
+        border-radius: 14px;
+        text-align: center;
+        line-height: 1.12;
+      }
+      .legend-item > span:last-child { min-height: 24px; }
+      .legend-icon { width: 32px; height: 32px; }
+      .legend-icon svg { width: 21px; height: 21px; }
+      .legend-item[aria-pressed="true"] {
+        color: var(--type-color);
+        font-weight: 800;
       }
       .panel {
         top: auto;
@@ -800,8 +815,8 @@
         border-top-right-radius: 20px;
       }
       .panel-close {
-        top: 20px;
-        right: 20px;
+        top: 8px;
+        right: 8px;
         width: 48px;
         height: 48px;
         background: rgba(254,226,226,0.94);
@@ -812,7 +827,7 @@
       }
       .study-tools-control {
         position: fixed;
-        right: 8px;
+        right: max(16px, env(safe-area-inset-right, 0px));
         bottom: var(--mobile-map-bottom);
         left: auto;
         margin: 0 !important;
@@ -827,10 +842,10 @@
       }
       .leaflet-control-attribution {
         position: fixed;
-        left: 50%;
+        left: max(16px, env(safe-area-inset-left, 0px));
         right: auto;
         bottom: var(--mobile-map-bottom);
-        transform: translateX(-50%);
+        transform: none;
         width: 28px;
         height: 28px;
         max-width: none;
@@ -864,6 +879,7 @@
         outline-offset: 2px;
       }
       .leaflet-control-attribution.is-expanded {
+        left: 8px;
         bottom: calc(var(--mobile-map-bottom) + 68px);
         width: min(320px, calc(100vw - 16px));
         height: auto;
@@ -960,7 +976,7 @@
 
     @media (max-width: 768px) {
       .open-now-btn {
-        right: 60px;
+        right: calc(68px + env(safe-area-inset-right, 0px));
         bottom: var(--mobile-map-bottom);
         min-height: 40px;
         padding: 0 10px;
@@ -986,11 +1002,17 @@
   </nav>
   <div class="topbar-search-slot" id="topbar-search-slot"></div>
 </div>
-<div class="legend">
-  <div class="legend-item" data-type="biblioteca"><span class="dot" style="background:#2563EB"></span> Biblioteca pública</div>
-  <div class="legend-item" data-type="sala"><span class="dot" style="background:#059669"></span> Sala de estudio</div>
-  <div class="legend-item" data-type="universidad"><span class="dot" style="background:#7C3AED"></span> Universidad</div>
-</div>
+<nav class="legend" aria-label="Filtrar centros por tipo">
+  <button class="legend-item" type="button" data-type="biblioteca" aria-pressed="false" style="--type-color:#2563EB">
+    <span class="legend-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5c-2.3-1.3-5-1.5-8-1v14c3-.5 5.7-.3 8 1 2.3-1.3 5-1.5 8-1V4c-3-.5-5.7-.3-8 1Z"/><path d="M12 5v14"/></svg></span><span>Bibliotecas públicas</span>
+  </button>
+  <button class="legend-item" type="button" data-type="universidad" aria-pressed="false" style="--type-color:#7C3AED">
+    <span class="legend-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m2 8 10-5 10 5H2ZM3 21h18M4 18h16M5 9v9m4-9v9m6-9v9m4-9v9"/></svg></span><span>Bibliotecas universitarias</span>
+  </button>
+  <button class="legend-item" type="button" data-type="sala" aria-pressed="false" style="--type-color:#059669">
+    <span class="legend-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 3h11v18H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Zm-2 14h13M6 3v14M19 5l2 1v11l-1 3-1-3V5Zm0 3h2"/></svg></span><span>Salas de estudio</span>
+  </button>
+</nav>
 
 <button class="open-now-btn" id="open-now-btn" title="Mostrar solo los centros abiertos ahora">
   <span class="pulse-dot"></span> Abierto ahora
@@ -2632,7 +2654,7 @@ lugares.forEach(d => {
 map.addLayer(clusterGroup);
 
 // ── Filtro por tipo y "Abierto ahora" ────────
-const hiddenTypes = new Set();
+let selectedType = null;
 let openNowActive = false;
 
 function refreshVisibleMarkers() {
@@ -2644,7 +2666,7 @@ function refreshVisibleMarkers() {
   clusterGroup.clearLayers();
   allMarkers.forEach(marker => {
     const d = marker._placeData;
-    if (hiddenTypes.has(d.tipo)) return;
+    if (selectedType && d.tipo !== selectedType) return;
     if (openNowActive && calendarReady) {
       const info = getTodayInfo(d);
       if (info.isOpen !== true) return;
@@ -2654,17 +2676,11 @@ function refreshVisibleMarkers() {
 }
 
 document.querySelectorAll('.legend-item').forEach(item => {
-  item.style.cursor = 'pointer';
-  item.title = "Haz clic para mostrar/ocultar";
   item.addEventListener('click', () => {
-    const type = item.dataset.type;
-    if (hiddenTypes.has(type)) {
-      hiddenTypes.delete(type);
-      item.style.opacity = '1';
-    } else {
-      hiddenTypes.add(type);
-      item.style.opacity = '0.4';
-    }
+    selectedType = selectedType === item.dataset.type ? null : item.dataset.type;
+    document.querySelectorAll('.legend-item').forEach(button => {
+      button.setAttribute('aria-pressed', String(button.dataset.type === selectedType));
+    });
     refreshVisibleMarkers();
   });
 });
