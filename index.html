@@ -129,9 +129,10 @@
       gap: 2px;
     }
     .legend-item { display: flex; align-items: center; gap: 9px; width: 100%; border: 0; border-radius: 9px; padding: 2px 6px; background: transparent; color: var(--ink); font: inherit; font-weight: 600; text-align: left; cursor: pointer; }
-    .legend-item:hover, .legend-item[aria-pressed="true"] { background: color-mix(in srgb, var(--type-color) 12%, white); }
+    .legend-item[aria-pressed="true"] .legend-icon { background: color-mix(in srgb, var(--type-color) 20%, white); }
+    .legend-item[aria-pressed="true"] { font-weight: 800; }
     .legend-item:focus-visible { outline: 3px solid rgba(37,99,235,.35); outline-offset: 2px; }
-    .legend-icon { display: inline-flex; flex: 0 0 auto; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 9px; background: color-mix(in srgb, var(--type-color) 10%, white); color: var(--type-color); }
+    .legend-icon { display: inline-flex; flex: 0 0 auto; align-items: center; justify-content: center; width: 42px; height: 28px; border-radius: 999px; background: transparent; color: var(--type-color); }
     .legend-icon svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
     .mobile-label-break { display: none; }
 
@@ -515,6 +516,7 @@
       cursor: pointer;
     }
     .study-locate-button:hover { background: #F1F5F9; }
+    .study-locate-button.is-active { color: #2563EB; }
     .study-locate-button.is-locating { color: #2563EB; }
     .study-locate-button.is-locating svg { animation: locate-button-pulse 0.8s ease-in-out infinite alternate; }
     @keyframes locate-button-pulse {
@@ -762,13 +764,9 @@
         line-height: 1.12;
       }
       .legend-item > span:last-child { min-height: 24px; }
-      .legend-icon { width: 30px; height: 30px; }
+      .legend-icon { width: 48px; height: 30px; }
       .legend-icon svg { width: 24px; height: 24px; }
       .mobile-label-break { display: revert; }
-      .legend-item[aria-pressed="true"] {
-        color: var(--type-color);
-        font-weight: 800;
-      }
       .panel {
         top: auto;
         bottom: 0;
@@ -959,12 +957,12 @@
     }
     .marker-cluster-sala { --cluster-color: #059669; background: rgba(5,150,105,0.15) !important; }
     .marker-cluster-universidad { --cluster-color: #7C3AED; background: rgba(124,58,237,0.15) !important; }
-    .marker-cluster-mixto { --cluster-color: #475569; background: rgba(71,85,105,0.15) !important; }
+    .marker-cluster-mixto { --cluster-color: #93C5FD; --cluster-ink: #1E3A8A; background: rgba(147,197,253,0.25) !important; }
     .marker-cluster-small div,
     .marker-cluster-medium div,
     .marker-cluster-large div {
       background: var(--cluster-color, #2563EB) !important;
-      color: #fff !important;
+      color: var(--cluster-ink, #fff) !important;
       font-weight: 700;
       font-size: 12px;
     }
@@ -1346,7 +1344,7 @@ const LocateAndSearchControl = L.Control.extend({
     container.setAttribute('aria-label', 'Herramientas del mapa');
     container.innerHTML = `
       <div class="study-tools-row">
-        <button class="study-locate-button" type="button" title="Mi ubicación" aria-label="Centrar el mapa en mi ubicación">
+        <button class="study-locate-button" type="button" title="Mi ubicación" aria-label="Centrar el mapa en mi ubicación" aria-pressed="false">
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
         </button>
         <div class="study-search">
@@ -1813,6 +1811,10 @@ function ensureUserMarker(latlng) {
 function showUserLocation(location, options = {}) {
   const { center = false, feedback = false } = options;
   const marker = ensureUserMarker(location.latlng);
+  if (locateButtonElement) {
+    locateButtonElement.classList.add('is-active');
+    locateButtonElement.setAttribute('aria-pressed', 'true');
+  }
   if (center) {
     clearSelectedArea();
     map.setView(location.latlng, Math.max(map.getZoom(), 14), { animate: true });
@@ -2631,7 +2633,7 @@ const clusterGroup = L.markerClusterGroup({
   disableClusteringAtZoom: 16,
   iconCreateFunction(cluster) {
     const types = new Set(cluster.getAllChildMarkers().map(marker => marker._placeData.tipo));
-    const type = types.size === 1 ? [...types][0] : types.has('biblioteca') ? 'biblioteca' : 'mixto';
+    const type = types.size === 1 ? [...types][0] : 'mixto';
     const count = cluster.getChildCount();
     const size = count < 10 ? 'small' : count < 100 ? 'medium' : 'large';
     return L.divIcon({
